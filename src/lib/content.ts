@@ -19,6 +19,18 @@ export interface NovelWithAuthor extends Novel {
   authorName: string;
 }
 
+/** Alias for component compatibility (HeroCarousel, HighSocietySection). */
+export type FeaturedNovel = NovelWithAuthor;
+
+/** Current reading for registered reader (Current Affairs section). */
+export interface CurrentReading {
+  novel: NovelWithAuthor;
+  chapterNumber: number;
+  chapterTitle: string;
+  scrollPercent: number;
+  chapterId: string;
+}
+
 /** Novel row from DB with optional author name (snake_case) */
 interface NovelRow {
   id: string;
@@ -131,6 +143,37 @@ export async function getTrendingNovels(limit: number = 10): Promise<NovelWithAu
     return rows.map(rowToNovelWithAuthor);
   });
 }
+
+/**
+ * Get current reading for a registered reader.
+ * Returns mock data until reading_progress is wired; then replace with real query.
+ */
+export async function getCurrentReading(readerId: string): Promise<CurrentReading | null> {
+  void readerId;
+  return MOCK_CURRENT_READING;
+}
+
+const MOCK_CURRENT_READING: CurrentReading = {
+  novel: {
+    id: "novel-5",
+    title: "Velvet & Steel",
+    seriesId: null,
+    authorId: "author-5",
+    coverImageUrl:
+      "https://lh3.googleusercontent.com/aida-public/AB6AXuAWXl4paH8tw-7BvkMnhTPKLjxmH8nThGmIcJeuhJZPdKWjxlAWYmi7DyGcd_N69mMiQbQWRhAEEfrTzdg0ytX2spYJAfUvK078OxLP-FJc6Z-Va0c2GDJZokObdYp6apJxfZTlK3I1AjePZQ4kBh4PEVaFWCjwuhVIx86uIvZpPwEJ3AlnUzGm6iKE-z4IaiLpULC0-FB6UxQR9b8DNqQUHNoY4B_myjf3pILuGeYPCSzWmmH0vvDG_zsU8gekBdSPvpsal41NIU4",
+    synopsis: null,
+    genreTags: [],
+    rating: 0,
+    ratingCount: 0,
+    publicationDate: null,
+    createdAt: new Date(),
+    authorName: "Lady Margaret Thorne",
+  },
+  chapterNumber: 4,
+  chapterTitle: "Chapter IV",
+  scrollPercent: 65,
+  chapterId: "chapter-4",
+};
 
 /**
  * Get all novels for Library catalog.
