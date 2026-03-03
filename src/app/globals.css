@@ -1,4 +1,8 @@
 :root {
+  /* Safe area insets for notched devices */
+  --safe-area-inset-top: env(safe-area-inset-top, 0px);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+
   /* Midnight Satin Color Palette */
   --primary: #D4AF37;
   /* Metallic Gold */
@@ -148,4 +152,12 @@ h4,
   line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* Safe area utilities */
+.pt-safe-top {
+  padding-top: var(--safe-area-inset-top);
+}
+.pb-safe-bottom {
+  padding-bottom: var(--safe-area-inset-bottom);
 }

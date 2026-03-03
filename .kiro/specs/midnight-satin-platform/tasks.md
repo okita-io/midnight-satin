@@ -15,10 +15,10 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [ ]* 1.3 Write property test for entity storage round-trip
     - **Property 1: Entity storage round-trip** — **Validates: Requirements 10.1-10.10**
 - [ ] 2. Authentication system and session management
-  - [ ] 2.1 Implement auth server actions and Edge middleware
+  - [x] 2.1 Implement auth server actions and Edge middleware
     - Create password.ts, session.ts, auth actions, middleware.ts; 200 credit welcome bonus
     - _Requirements: 9.1-9.6, 17.6_
-  - [ ] 2.2 Create auth UI pages
+  - [x] 2.2 Create auth UI pages
     - Create login page (email, password, link to register), register page (email, password, confirmation, display name, link to login), and auth-prompt.tsx modal; validate input and show errors (invalid email/password, email in use, min password length); redirect to intended page or Boudoir on success
     - _Requirements: 9.2, 9.4, 9.7-9.9_
   - [ ]* 2.3 Write property tests for auth
