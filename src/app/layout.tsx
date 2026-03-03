@@ -1,30 +1,43 @@
 import type { Metadata } from "next";
-import { Playfair_Display, Cinzel, Literata, Marcellus } from "next/font/google";
+import {
+  Playfair_Display,
+  Cinzel,
+  Literata,
+  Marcellus,
+  Pinyon_Script,
+} from "next/font/google";
 import "./globals.css";
 
 const playfair = Playfair_Display({
   variable: "--font-display",
   subsets: ["latin"],
-  display: 'swap',
+  display: "swap",
 });
 
 const cinzel = Cinzel({
   variable: "--font-header",
   subsets: ["latin"],
-  display: 'swap',
+  display: "swap",
 });
 
 const literata = Literata({
   variable: "--font-body",
   subsets: ["latin"],
-  display: 'swap',
+  display: "swap",
 });
 
 const marcellus = Marcellus({
   weight: "400",
   variable: "--font-ui",
   subsets: ["latin"],
-  display: 'swap',
+  display: "swap",
+});
+
+const pinyon = Pinyon_Script({
+  weight: "400",
+  variable: "--font-script",
+  subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -42,7 +55,9 @@ export default function RootLayout({
       <head>
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
       </head>
-      <body className={`${playfair.variable} ${cinzel.variable} ${literata.variable} ${marcellus.variable} bg-void text-text-main font-body antialiased`}>
+      <body
+        className={`${playfair.variable} ${cinzel.variable} ${literata.variable} ${marcellus.variable} ${pinyon.variable} bg-void text-text-main font-body antialiased`}
+      >
         <div className="mobile-container bg-silk-noise">
           {children}
         </div>
