@@ -144,35 +144,47 @@ export async function getTrendingNovels(limit: number = 10): Promise<NovelWithAu
 }
 
 /**
- * Get current reading for a registered reader.
- * Returns mock data until reading_progress is wired; then replace with real query.
+ * Get current reading for a registered reader (Property 12, Req 1.2, 16.3).
+ * Returns the novel associated with the reading progress record that has the
+ * most recent last_read_at timestamp, along with chapter number and completion percentage.
  */
 export async function getCurrentReading(readerId: string): Promise<CurrentReading | null> {
-  void readerId;
-  return MOCK_CURRENT_READING;
+  try {
+    const { rows } = await sql<
+      NovelRow & {
+        author_name: string;
+        chapter_id: string;
+        chapter_number: number;
+        chapter_title: string;
+        scroll_percent: number;
+      }
+    >`
+      SELECT n.id, n.title, n.series_id, n.author_id, n.cover_image_url,
+             n.synopsis, n.genre_tags, n.rating, n.rating_count, n.publication_date, n.created_at,
+             COALESCE(a.name, 'Unknown') AS author_name,
+             c.id AS chapter_id, c.chapter_number, c.title AS chapter_title,
+             rp.scroll_percent
+      FROM reading_progress rp
+      JOIN chapters c ON c.id = rp.chapter_id
+      JOIN novels n ON n.id = c.novel_id
+      LEFT JOIN author_profiles a ON a.id = n.author_id
+      WHERE rp.reader_id = ${readerId}
+      ORDER BY rp.last_read_at DESC
+      LIMIT 1
+    `;
+    if (rows.length === 0) return null;
+    const row = rows[0];
+    return {
+      novel: rowToNovelWithAuthor(row),
+      chapterNumber: row.chapter_number,
+      chapterTitle: row.chapter_title,
+      scrollPercent: Number(row.scroll_percent),
+      chapterId: row.chapter_id,
+    };
+  } catch {
+    return null;
+  }
 }
-
-const MOCK_CURRENT_READING: CurrentReading = {
-  novel: {
-    id: "novel-5",
-    title: "Velvet & Steel",
-    seriesId: null,
-    authorId: "author-5",
-    coverImageUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAWXl4paH8tw-7BvkMnhTPKLjxmH8nThGmIcJeuhJZPdKWjxlAWYmi7DyGcd_N69mMiQbQWRhAEEfrTzdg0ytX2spYJAfUvK078OxLP-FJc6Z-Va0c2GDJZokObdYp6apJxfZTlK3I1AjePZQ4kBh4PEVaFWCjwuhVIx86uIvZpPwEJ3AlnUzGm6iKE-z4IaiLpULC0-FB6UxQR9b8DNqQUHNoY4B_myjf3pILuGeYPCSzWmmH0vvDG_zsU8gekBdSPvpsal41NIU4",
-    synopsis: null,
-    genreTags: [],
-    rating: 0,
-    ratingCount: 0,
-    publicationDate: null,
-    createdAt: new Date(),
-    authorName: "Lady Margaret Thorne",
-  },
-  chapterNumber: 4,
-  chapterTitle: "Chapter IV",
-  scrollPercent: 65,
-  chapterId: "chapter-4",
-};
 
 /**
  * Get all novels for Library catalog.
