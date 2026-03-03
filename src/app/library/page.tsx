@@ -1,44 +1,30 @@
-import { NavigationBar } from "../_components/navigation-bar";
-import { NovelCard } from "../_components/novel-card";
-import { EmptyState } from "../_components/empty-state";
 import { getAllNovels } from "@/lib/content";
+import { NavigationBar } from "../_components/navigation-bar";
+import { LibraryClient } from "../_components/library-client";
 
-export const revalidate = 60;
+export const revalidate = 60; // ISR: 60s revalidation per design doc
 
 export default async function LibraryPage() {
   let novels: Awaited<ReturnType<typeof getAllNovels>> = [];
   try {
     novels = await getAllNovels(100);
   } catch {
-    // DB may not be configured
+    // DB may not be configured; show empty state
   }
 
+  const catalogNovels = novels.map((n) => ({
+    id: n.id,
+    title: n.title,
+    authorName: n.authorName,
+    coverImageUrl: n.coverImageUrl,
+    rating: n.rating > 0 ? n.rating : null,
+    ratingCount: n.ratingCount,
+  }));
+
   return (
-    <>
-      <main style={{ flex: 1, paddingBottom: "6rem", padding: "1.5rem" }}>
-        <h1 className="font-header" style={{ fontSize: "1rem", letterSpacing: "0.15em", color: "rgba(255,255,255,0.9)", marginBottom: "1.5rem" }}>
-          Library
-        </h1>
-        {novels.length > 0 ? (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "1rem" }}>
-            {novels.map((novel) => (
-              <NovelCard
-                key={novel.id}
-                novel={{
-                  id: novel.id,
-                  title: novel.title,
-                  authorName: novel.authorName,
-                  coverImageUrl: novel.coverImageUrl,
-                  rating: novel.rating > 0 ? novel.rating : null,
-                }}
-              />
-            ))}
-          </div>
-        ) : (
-          <EmptyState message="Your shelf is waiting." />
-        )}
-      </main>
+    <div className="relative flex min-h-screen flex-col">
+      <LibraryClient novels={catalogNovels} />
       <NavigationBar activeTab="library" />
-    </>
+    </div>
   );
 }

@@ -47,7 +47,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [ ]* 6.2 Property test: current reading identification
     - **Property 12: Current reading identification** — **Validates: Requirements 1.2, 16.3**
 - [ ] 6a. Library (Full Catalog) Screen
-  - [ ] 6a.1 Implement Library page
+  - [x] 6a.1 Implement Library page
     - Create src/app/library/page.tsx; LibraryCatalog list/grid, same Navigation_Bar; optional filter when search used; empty state; safe area insets
     - _Requirements: 1a.1-1a.7_
 - [ ] 7. Novel Detail Screen
