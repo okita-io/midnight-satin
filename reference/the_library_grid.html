@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&amp;family=Playfair+Display:ital,wght@1,400..900&amp;family=Marcellus&amp;family=Cinzel:wght@400..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d4af35",
+                        "background-light": "#f8f7f6",
+                        "background-dark": "#050505",
+                        "surface": "#121212",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "serif": ["Playfair Display", "serif"],
+                        "heading": ["Cinzel", "serif"],
+                        "accent": ["Marcellus", "serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "2px",
+                        "lg": "4px",
+                        "xl": "8px",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .silk-texture {
+            background-image: radial-gradient(circle at 50% 50%, rgba(212, 175, 53, 0.03) 0%, transparent 80%);
+        }
+        .gold-glow {
+            box-shadow: 0 4px 20px -5px rgba(212, 175, 53, 0.3);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="relative flex min-h-screen w-full flex-col silk-texture overflow-x-hidden">
+<!-- Sticky Header -->
+<header class="sticky top-0 z-50 flex items-center bg-background-dark/95 backdrop-blur-md px-6 py-4 justify-between border-b border-primary/10">
+<div class="w-10"></div>
+<h1 class="text-primary text-xl font-heading tracking-[0.2em] flex-1 text-center uppercase">Library</h1>
+<div class="flex w-10 items-center justify-end">
+<button class="flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">search</span>
+</button>
+</div>
+</header>
+<!-- Toolbar -->
+<div class="flex items-center justify-between px-6 py-4">
+<p class="font-accent text-slate-400 text-sm tracking-wide uppercase">12 novels</p>
+<div class="flex items-center gap-4">
+<button class="text-primary flex items-center">
+<span class="material-symbols-outlined text-[20px] fill-1">grid_view</span>
+</button>
+<button class="text-slate-500 flex items-center hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">view_list</span>
+</button>
+</div>
+</div>
+<!-- Novel Grid -->
+<main class="grid grid-cols-2 gap-x-5 gap-y-8 px-6 pb-24">
+<!-- Novel Card 1 -->
+<div class="flex flex-col gap-3 group">
+<div class="relative w-full aspect-[2/3] bg-surface rounded-sm overflow-hidden gold-glow border border-primary/5 transition-transform duration-500 group-hover:scale-[1.02]">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Dark moody book cover with gold accents" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBZL_vmqC_i6hMF6N_22EUoU5PApJmki35QZt1X-IDq78x2lDumF0Zkleuqq98-V6sf8DnjeXK0xQLOXHA_QLGDSqg4Ebud7PROsXKIepcV5mC5tZ9HNXxaniwp1CcgOCO4zby9EKDFxnNNeNjQh1j1VLZfRETA-2PK9zJorwnLEQ6q-AruikQ2xsclOwfnakV9vWvjOf9f1Z5xCAilHymfqwz5-sSNkT9fWnyaWqSF1UpMCQr1PhpF_FxmQxBdlsUFCGTtWW4Asnc')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute top-2 right-2 bg-black/80 backdrop-blur-sm border border-primary/30 px-1.5 py-0.5 rounded-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-[12px] fill-1">star</span>
+<span class="text-primary text-[10px] font-bold">4.9</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-slate-100 text-base font-serif italic leading-tight">Velvet Obsession</h3>
+<p class="font-accent text-slate-500 text-xs tracking-wider">Seraphina Thorne</p>
+</div>
+</div>
+<!-- Novel Card 2 -->
+<div class="flex flex-col gap-3 group">
+<div class="relative w-full aspect-[2/3] bg-surface rounded-sm overflow-hidden gold-glow border border-primary/5 transition-transform duration-500 group-hover:scale-[1.02]">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Minimalist elegant book cover with silk textures" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCRtcW4oArqbumkcFgOAEGwAJeryooEYooZie7I87KcsAGxH689_AwWDA6OOzWheAnYVC8AdNpQ35CWVbMwgCUDsLfAxGR4h2mU5gIGOD0lPvtGxCUa3-tW9etiqHwRh1tBjvqZOjaaiKL00v_nEVPrxb48fcnBvT78PZ3_GB1P20r9QA0CLqVDz8bqp1gJ7V3ZNHBk_k9aALtBcUwNekrmW_aXC1reR25-5xlI5I1G54937a0_YD3JPLA-d-2dbYMNi7xbhzefpdw')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute top-2 right-2 bg-black/80 backdrop-blur-sm border border-primary/30 px-1.5 py-0.5 rounded-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-[12px] fill-1">star</span>
+<span class="text-primary text-[10px] font-bold">4.8</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-slate-100 text-base font-serif italic leading-tight">Gilded Secrets</h3>
+<p class="font-accent text-slate-500 text-xs tracking-wider">Julian Vance</p>
+</div>
+</div>
+<!-- Novel Card 3 -->
+<div class="flex flex-col gap-3 group">
+<div class="relative w-full aspect-[2/3] bg-surface rounded-sm overflow-hidden gold-glow border border-primary/5 transition-transform duration-500 group-hover:scale-[1.02]">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Aesthetic dark romance book cover" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAMJWSKPF6ElVBIaH2FjQCgbqeidv_sfqUNTrqUgZwlyYKMEmt5dYhKgRXHpRYE5sKB5F4iuNDpl_Zl8Z-xbamlZNiD7pGv98AQqdj1Z8rfvuhlDxoiwNKxfHnZWH_19zGp-qzL00HRi5lMIPXRpBQQ3uGDQ-jpWaXxuTIJZNd7m9_TKiB1RM1pCE7xTsWnX8iK6kodcdk7qyqg_KkMt2ITb1GTc2kTTRLzYwQ6Fn-yENRu0_gysoAcMHZ-Mrywlp9sAbLPcAEP1uo')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute top-2 right-2 bg-black/80 backdrop-blur-sm border border-primary/30 px-1.5 py-0.5 rounded-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-[12px] fill-1">star</span>
+<span class="text-primary text-[10px] font-bold">5.0</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-slate-100 text-base font-serif italic leading-tight">Midnight Lace</h3>
+<p class="font-accent text-slate-500 text-xs tracking-wider">Elena Rose</p>
+</div>
+</div>
+<!-- Novel Card 4 -->
+<div class="flex flex-col gap-3 group">
+<div class="relative w-full aspect-[2/3] bg-surface rounded-sm overflow-hidden gold-glow border border-primary/5 transition-transform duration-500 group-hover:scale-[1.02]">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Classic library aesthetic book cover" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCHdiaq3_FWN_WXXB3OWh2eK0AfGAM4q8b5D0Zy7LglmqhroeQQRnkLfoa1psnnH17mzrRl-wLvdHD0Rzs1oRsByHjjI8SVb1gSBYi_kXuabTralk3ronBkd6yVyhQdf9d2jVUJKSPTBZ0bZf4HkYhRaIVwj9i41YnVtjxzMYYohRl20fhiKgtMiodDiB_JQaWFbT1SzS2md79ZIOXHPzHmQE6xZuTA444h6HLZAvXsMbI7rxEOSExJ6xSOusVGv8kQqhXmlBjzsZo')"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute top-2 right-2 bg-black/80 backdrop-blur-sm border border-primary/30 px-1.5 py-0.5 rounded-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-primary text-[12px] fill-1">star</span>
+<span class="text-primary text-[10px] font-bold">4.7</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<h3 class="text-slate-100 text-base font-serif italic leading-tight">Satin Vows</h3>
+<p class="font-accent text-slate-500 text-xs tracking-wider">Marcus Gold</p>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="fixed bottom-0 left-0 right-0 z-50 bg-surface/90 backdrop-blur-xl border-t border-white/5 pb-8 pt-2 px-6">
+<div class="flex justify-between items-center max-w-md mx-auto">
+<a class="flex flex-col items-center gap-1 text-slate-500 transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<span class="text-[10px] font-accent uppercase tracking-wider">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px] fill-1">library_books</span>
+<span class="text-[10px] font-accent uppercase tracking-wider">Library</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">auto_stories</span>
+<span class="text-[10px] font-accent uppercase tracking-wider">Reading</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 transition-colors" href="#">
+<span class="material-symbols-outlined text-[24px]">person_2</span>
+<span class="text-[10px] font-accent uppercase tracking-wider">Profile</span>
+</a>
+</div>
+</nav>
+</div>
+</body></html>

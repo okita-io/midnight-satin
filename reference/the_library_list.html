@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;700&amp;family=Playfair+Display:ital,wght@1,700&amp;family=Cinzel:wght@700&amp;family=Marcellus&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#d4af35",
+              "background-light": "#f8f7f6",
+              "background-dark": "#050505",
+              "surface": "#121212",
+              "ivory": "#EAEAEA",
+            },
+            fontFamily: {
+              "display": ["Manrope", "sans-serif"],
+              "serif-italic": ["Playfair Display", "serif"],
+              "accent": ["Cinzel", "serif"],
+              "subhead": ["Marcellus", "serif"],
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .silk-texture {
+            background-image: radial-gradient(circle at 2px 2px, rgba(212, 175, 53, 0.05) 1px, transparent 0);
+            background-size: 24px 24px;
+        }
+        .gold-sheen {
+            background: linear-gradient(135deg, rgba(212, 175, 53, 0) 0%, rgba(212, 175, 53, 0.05) 50%, rgba(212, 175, 53, 0) 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark text-ivory font-display silk-texture min-h-screen flex flex-col">
+<!-- Sticky Header -->
+<header class="sticky top-0 z-50 bg-background-dark/95 backdrop-blur-md border-b border-primary/10 px-6 py-4 flex items-center justify-between">
+<h1 class="text-primary font-accent text-xl tracking-widest">LIBRARY</h1>
+<button class="text-primary hover:text-primary/80 transition-colors">
+<span class="material-symbols-outlined text-2xl">search</span>
+</button>
+</header>
+<!-- Toolbar -->
+<div class="px-6 py-4 flex items-center justify-between border-b border-primary/5">
+<span class="font-subhead text-primary/70 text-sm tracking-wide">12 NOVELS</span>
+<div class="flex gap-4">
+<button class="text-primary/40 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">grid_view</span>
+</button>
+<button class="text-primary">
+<span class="material-symbols-outlined">view_list</span>
+</button>
+</div>
+</div>
+<!-- Main Content: List View -->
+<main class="flex-1 overflow-y-auto px-4 py-2 space-y-3">
+<!-- Novel Card 1 -->
+<div class="relative overflow-hidden group rounded-lg bg-surface border border-primary/10 p-3 flex gap-4 shadow-2xl">
+<div class="gold-sheen absolute inset-0 pointer-events-none"></div>
+<div class="w-20 h-28 bg-background-dark rounded shadow-inner overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" data-alt="Dark romantic book cover with gold accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFmF3fA7CTXrG-2-BNZFWBpI7zObFvODxdNAUDEapacNBWeJ-KosETwahacNKNmemUFb4KBN1Capt3tZCYEmsTFdQwXOmLArS0MUK2QTg1KRiij9pstf5OPxOEuVgopiRxUaKRLVoYAAwL3JfIB3eH1-z3b_KarPRew8RMqcv7yMK7G3ulF0OIUjY4fTHv0zV-X0EIZTgKJETKbqtqTHpAnXQf_MSrnQUwruPQm2kFqKMeoPIbPyuVNvo13bjCCBoCYCjeqSvLg1c"/>
+</div>
+<div class="flex flex-col justify-center flex-1">
+<h3 class="font-serif-italic text-xl text-primary leading-tight mb-1">The Midnight Vow</h3>
+<p class="font-subhead text-ivory/60 text-xs uppercase tracking-widest">Julianne Sterling</p>
+<div class="mt-2 flex items-center gap-2">
+<div class="h-0.5 w-12 bg-primary/20 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-3/4"></div>
+</div>
+<span class="text-[10px] text-primary/40 font-bold">75%</span>
+</div>
+</div>
+</div>
+<!-- Novel Card 2 -->
+<div class="relative overflow-hidden group rounded-lg bg-surface border border-primary/10 p-3 flex gap-4 shadow-2xl">
+<div class="gold-sheen absolute inset-0 pointer-events-none"></div>
+<div class="w-20 h-28 bg-background-dark rounded shadow-inner overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" data-alt="Vintage gothic novel cover design" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJrpEoDGwbjjV8554e_zNHodKc4MhuU6tJQs1y_EpGB2SqKjbJ7UDxmtznaDSK7tKseNwdcUuz28XQSLqxpr83PDEPTQpWJSRKeoL-_QMICAqtdfCLc1ExYeheIwFeqmc0fGUiJQ-RcsNuq2u0dov8k2OwFrHQYuEeg0CYep3qhCfljHSY1wuME2StSFPOi-myatj8Z-mFOrRUPBfTQafF4fGpyP0lGSgvOkxB0BLWxEsZ4cg1bjtlNBahnvrQn1z2nbb8GAXn4cw"/>
+</div>
+<div class="flex flex-col justify-center flex-1">
+<h3 class="font-serif-italic text-xl text-primary leading-tight mb-1">Satin &amp; Shadows</h3>
+<p class="font-subhead text-ivory/60 text-xs uppercase tracking-widest">Victor Thorne</p>
+<div class="mt-2 flex items-center gap-2">
+<div class="h-0.5 w-12 bg-primary/20 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-1/4"></div>
+</div>
+<span class="text-[10px] text-primary/40 font-bold">22%</span>
+</div>
+</div>
+</div>
+<!-- Novel Card 3 -->
+<div class="relative overflow-hidden group rounded-lg bg-surface border border-primary/10 p-3 flex gap-4 shadow-2xl">
+<div class="gold-sheen absolute inset-0 pointer-events-none"></div>
+<div class="w-20 h-28 bg-background-dark rounded shadow-inner overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" data-alt="Elegant book cover with rose petals" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBWMLwEgGvhY-_jcSckJphAqR0piWlaNbpH9QxoQfv9ebKqdde_U0i0yazoj_poAYCW7tVEp_5AIo8DIPgki_Cbpcd1NY3pX9PVkcAPw3QF0PpG3LdmNi1V7hHmO9Ord6UvpYQYaeov4lyG0T6WHb0cNGs8wpcO4eZPmUxe-GoBRgnsAZ9Y8Z1PzE-KaKruYW0YG7kn6ng3f1ZxoXf9Ix5jmODdw1sMiiG4NTW2rd5AUcH74wZwVmhfRS5_qu1eaJjWPnGD4rewf-I"/>
+</div>
+<div class="flex flex-col justify-center flex-1">
+<h3 class="font-serif-italic text-xl text-primary leading-tight mb-1">Velvet Desires</h3>
+<p class="font-subhead text-ivory/60 text-xs uppercase tracking-widest">Evelyn Sinclair</p>
+<div class="mt-2 flex items-center gap-2">
+<div class="h-0.5 w-12 bg-primary/20 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-full"></div>
+</div>
+<span class="text-[10px] text-primary/40 font-bold">COMPLETED</span>
+</div>
+</div>
+</div>
+<!-- Novel Card 4 -->
+<div class="relative overflow-hidden group rounded-lg bg-surface border border-primary/10 p-3 flex gap-4 shadow-2xl">
+<div class="gold-sheen absolute inset-0 pointer-events-none"></div>
+<div class="w-20 h-28 bg-background-dark rounded shadow-inner overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" data-alt="Mystery romance book cover art" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB51NQlZuVCQxRoYiauwNpD2umOfuOON3kprzsO2dOK48ttS5fYl_bxfpIWk-yHPRowAY7Iv0zRDIOBnXw62P9X33zy7sHj0zlRi5QBGxCYrzodVh4Np4OmwpX8Enzrz-AK-O985ENOD0Ro-YdWoPff-FeUsNJeFRwxzVwSn_uGPsg5j0JGaof5na5hO2GHvnA813HWNUTpY_XZiwSGNZu8ciefEvbwWRkwdwJvu_OEmhzhbXi4sgGRwOw1goPvpcdTFDTAhMZUAI4"/>
+</div>
+<div class="flex flex-col justify-center flex-1">
+<h3 class="font-serif-italic text-xl text-primary leading-tight mb-1">The Gilded Cage</h3>
+<p class="font-subhead text-ivory/60 text-xs uppercase tracking-widest">Aria Montague</p>
+<div class="mt-2 flex items-center gap-2">
+<div class="h-0.5 w-12 bg-primary/20 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-1/2"></div>
+</div>
+<span class="text-[10px] text-primary/40 font-bold">50%</span>
+</div>
+</div>
+</div>
+<!-- Novel Card 5 -->
+<div class="relative overflow-hidden group rounded-lg bg-surface border border-primary/10 p-3 flex gap-4 shadow-2xl opacity-80">
+<div class="gold-sheen absolute inset-0 pointer-events-none"></div>
+<div class="w-20 h-28 bg-background-dark rounded shadow-inner overflow-hidden flex-shrink-0">
+<img class="w-full h-full object-cover opacity-50" data-alt="Antique book texture with gold foil" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCn-WghKJQOOBInV_eq-A-iliMNq0hhQD2usroQQmblXUNGuXyxYPTzgYZ4TDlWDh6867DnSJ7O1DQFsf8bkbdChmn3NYa70dH9j-mtlWj4ChPDE4soTBkST5AKY1FRHf8B0J5HjjuowxADbYt9HLvwrcBZrEQz6dgremSlWeH8MrLbidcYiZ-ilXeNH94Jz8jaTv3QLtTsHR6Uz7bXHlYhmlyXfbN7IlS66FNP7g7BLU5j9sqaX1bNbNzejvOS9nAyFmG4MVw3Oxs"/>
+</div>
+<div class="flex flex-col justify-center flex-1">
+<h3 class="font-serif-italic text-xl text-primary leading-tight mb-1">Silk Secrets</h3>
+<p class="font-subhead text-ivory/60 text-xs uppercase tracking-widest">Isabella Vance</p>
+<div class="mt-2 flex items-center gap-2">
+<span class="text-[10px] text-primary/40 font-bold tracking-widest">TAP TO DOWNLOAD</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar -->
+<nav class="sticky bottom-0 bg-background-dark border-t border-primary/20 px-6 pb-6 pt-3 flex items-center justify-between">
+<a class="flex flex-col items-center gap-1 text-ivory/40 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">home</span>
+<span class="text-[10px] font-subhead uppercase tracking-wider">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1">auto_stories</span>
+<span class="text-[10px] font-subhead uppercase tracking-wider">Library</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-ivory/40 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">explore</span>
+<span class="text-[10px] font-subhead uppercase tracking-wider">Discover</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-ivory/40 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined text-2xl">person</span>
+<span class="text-[10px] font-subhead uppercase tracking-wider">Profile</span>
+</a>
+</nav>
+<!-- iOS Home Indicator -->
+<div class="bg-background-dark flex justify-center pb-2">
+<div class="w-32 h-1 bg-ivory/10 rounded-full"></div>
+</div>
+</body></html>

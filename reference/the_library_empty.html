@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&amp;family=Pinyon+Script&amp;family=Manrope:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d4af35",
+                        "background-light": "#f8f7f6",
+                        "background-dark": "#050505",
+                        "surface": "#121212",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"],
+                        "cinzel": ["Cinzel", "serif"],
+                        "pinyon": ["Pinyon Script", "cursive"],
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .silk-texture {
+            background-image: radial-gradient(circle at 50% 50%, rgba(212, 175, 53, 0.03) 0%, transparent 80%);
+        }
+        .gold-gradient {
+            background: linear-gradient(135deg, #d4af35 0%, #f9e297 50%, #b8860b 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased">
+<div class="relative flex h-screen w-full flex-col overflow-hidden silk-texture">
+<header class="sticky top-0 z-10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-primary/10 px-4 pt-12 pb-4">
+<div class="flex items-center justify-between mb-4">
+<div class="w-10">
+<span class="material-symbols-outlined text-primary">menu</span>
+</div>
+<h1 class="font-cinzel text-primary text-xl font-bold tracking-[0.2em]">LIBRARY</h1>
+<div class="w-10 flex justify-end">
+<span class="material-symbols-outlined text-primary">account_circle</span>
+</div>
+</div>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+<span class="material-symbols-outlined text-primary/60 text-xl">search</span>
+</div>
+<input class="block w-full pl-10 pr-4 py-2 bg-surface border border-primary/20 rounded-lg focus:ring-1 focus:ring-primary focus:border-primary text-slate-100 placeholder-slate-500 text-sm" placeholder="Search your collection..." type="text"/>
+</div>
+</header>
+<main class="flex-1 flex flex-col items-center justify-center px-8 relative">
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 bg-primary/5 rounded-full blur-3xl"></div>
+<div class="relative flex flex-col items-center gap-8">
+<div class="w-24 h-24 flex items-center justify-center rounded-full border border-primary/20 bg-primary/5 mb-2">
+<span class="material-symbols-outlined text-5xl text-primary/40 font-light">auto_stories</span>
+</div>
+<div class="text-center space-y-4">
+<p class="font-pinyon text-primary text-3xl opacity-90">Your shelf is waiting.</p>
+<p class="text-slate-400 text-sm max-w-[240px] leading-relaxed mx-auto italic">
+                        Discover stories of midnight passion and satin whispers.
+                    </p>
+</div>
+<button class="mt-4 px-8 py-3 bg-primary text-background-dark font-bold text-xs tracking-widest uppercase rounded shadow-[0_0_20px_rgba(212,175,53,0.2)] hover:shadow-[0_0_30px_rgba(212,175,53,0.4)] transition-all">
+                    Browse Catalog
+                </button>
+</div>
+</main>
+<nav class="flex border-t border-primary/10 bg-surface/90 backdrop-blur-lg px-4 pb-8 pt-3">
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0">home</span>
+<p class="text-[10px] font-medium uppercase tracking-wider">Home</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">auto_stories</span>
+<p class="text-[10px] font-medium uppercase tracking-wider">Library</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0">explore</span>
+<p class="text-[10px] font-medium uppercase tracking-wider">Discover</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-center gap-1 text-slate-500" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 0">settings</span>
+<p class="text-[10px] font-medium uppercase tracking-wider">Settings</p>
+</a>
+</nav>
+<div class="absolute bottom-1 left-1/2 -translate-x-1/2 w-32 h-1 bg-primary/20 rounded-full"></div>
+</div>
+</body></html>

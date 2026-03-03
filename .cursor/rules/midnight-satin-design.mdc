@@ -17,6 +17,11 @@ This project is a premium romance reading app called **Midnight Satin**. All imp
 - `reference/the_cast_gallery_with_endorsements.html` — The Cast Gallery with Endorsements variant
 - `reference/the_authors_study.html` — The Author's Study screen
 - `reference/the_vault_store.html` — The Vault (Store) screen
+- `reference/the_library_grid.html` — The Library (Full Catalog) screen, grid view
+- `reference/the_library_list.html` — The Library (Full Catalog) screen, list view
+- `reference/the_library_empty.html` — The Library empty state
+- `reference/the_login.html` — The Login / Sign In screen
+- `reference/the_register.html` — The Registration / Create Account screen
 
 ## Design Direction
 

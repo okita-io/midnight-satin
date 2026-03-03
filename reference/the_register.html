@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Midnight Satin - Registration</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Marcellus&amp;family=Cinzel:wght@400..900&amp;family=Manrope:wght@200..800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#d4af35",
+                "background-light": "#f8f7f6",
+                "background-dark": "#050505",
+                "surface-dark": "#1A1A1A",
+              },
+              fontFamily: {
+                "display": ["Playfair Display", "serif"],
+                "marcellus": ["Marcellus", "serif"],
+                "cinzel": ["Cinzel", "serif"],
+                "sans": ["Manrope", "sans-serif"]
+              },
+              borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+            },
+          },
+        }
+    </script>
+<style>
+        .silk-texture {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+        }
+        .gold-glow {
+            text-shadow: 0 0 20px rgba(212, 175, 53, 0.4);
+        }
+        .btn-glow {
+            box-shadow: 0 4px 20px rgba(212, 175, 53, 0.25);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-dark text-slate-100 font-sans selection:bg-primary selection:text-background-dark overflow-x-hidden">
+<div class="relative flex min-h-screen w-full flex-col silk-texture overflow-x-hidden">
+<div class="flex items-center justify-between p-6">
+<div class="text-primary flex items-center justify-center w-full">
+<span class="material-symbols-outlined text-3xl">menu_book</span>
+</div>
+</div>
+<main class="flex-1 flex flex-col items-center px-8 pb-12 max-w-md mx-auto w-full">
+<header class="text-center mb-8">
+<h1 class="text-primary font-display italic font-bold text-[32px] leading-tight mb-2 gold-glow">
+                    Join Midnight Satin
+                </h1>
+<p class="font-marcellus text-slate-400 text-sm tracking-wide">
+                    Create an account and receive 200 credits to start
+                </p>
+</header>
+<div class="relative w-full flex justify-center items-center mb-10">
+<div class="absolute inset-0 flex items-center justify-center opacity-10">
+<span class="font-display font-black text-[140px] leading-none text-primary gold-glow">200</span>
+</div>
+<div class="z-10 bg-surface-dark/80 backdrop-blur-sm border border-primary/20 rounded-lg p-6 w-full text-center">
+<p class="font-cinzel text-primary text-xs tracking-[0.2em] uppercase mb-1">Welcome Gift</p>
+<p class="font-display italic text-3xl text-white">200 Credits</p>
+</div>
+</div>
+<form class="w-full space-y-5">
+<div class="space-y-1.5">
+<label class="block font-marcellus text-[10px] uppercase tracking-[0.15em] text-slate-500 ml-1">
+                        Display Name
+                    </label>
+<input class="w-full h-14 bg-surface-dark border-2 border-slate-800 focus:border-primary text-white font-marcellus px-4 outline-none transition-colors duration-300 rounded-none placeholder:text-slate-600" placeholder="Your Name" type="text"/>
+</div>
+<div class="space-y-1.5">
+<label class="block font-marcellus text-[10px] uppercase tracking-[0.15em] text-slate-500 ml-1">
+                        Email Address
+                    </label>
+<input class="w-full h-14 bg-surface-dark border-2 border-slate-800 focus:border-primary text-white font-marcellus px-4 outline-none transition-colors duration-300 rounded-none placeholder:text-slate-600" placeholder="email@example.com" type="email"/>
+</div>
+<div class="space-y-1.5 relative">
+<label class="block font-marcellus text-[10px] uppercase tracking-[0.15em] text-slate-500 ml-1">
+                        Password
+                    </label>
+<div class="relative">
+<input class="w-full h-14 bg-surface-dark border-2 border-slate-800 focus:border-primary text-white font-marcellus px-4 outline-none transition-colors duration-300 rounded-none placeholder:text-slate-600" placeholder="••••••••" type="password"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 text-xl cursor-pointer">visibility</span>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="block font-marcellus text-[10px] uppercase tracking-[0.15em] text-slate-500 ml-1">
+                        Confirm Password
+                    </label>
+<input class="w-full h-14 bg-surface-dark border-2 border-slate-800 focus:border-primary text-white font-marcellus px-4 outline-none transition-colors duration-300 rounded-none placeholder:text-slate-600" placeholder="••••••••" type="password"/>
+</div>
+<div class="pt-6">
+<button class="w-full h-14 bg-primary text-background-dark font-cinzel font-bold text-sm tracking-[0.2em] btn-glow hover:bg-white transition-all duration-300 rounded-none" type="submit">
+                        CREATE ACCOUNT
+                    </button>
+</div>
+</form>
+<footer class="mt-auto pt-10 text-center">
+<p class="font-marcellus text-slate-400 text-sm">
+                    Already have an account? 
+                    <a class="text-primary underline decoration-primary/40 underline-offset-4 hover:decoration-primary" href="#">Sign in</a>
+</p>
+</footer>
+</main>
+<div class="h-10 bg-background-dark silk-texture"></div>
+</div>
+</body></html>

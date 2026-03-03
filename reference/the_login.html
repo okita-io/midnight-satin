@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,700;1,400;1,700&amp;family=Playfair+Display:ital,wght@0,700;1,700&amp;family=Marcellus&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d4af35",
+                        "background-light": "#f8f7f6",
+                        "background-dark": "#050505",
+                        "neutral-dark": "#1A1A1A",
+                        "muted-gold": "#8A8A8A",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader", "serif"],
+                        "playfair": ["Playfair Display", "serif"],
+                        "marcellus": ["Marcellus", "serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .silk-texture {
+            background-image: radial-gradient(circle at 2px 2px, rgba(212, 175, 53, 0.03) 1px, transparent 0);
+            background-size: 40px 40px;
+        }
+        .gold-glow {
+            box-shadow: 0 0 15px rgba(212, 175, 53, 0.2);
+        }
+        .border-sharp {
+            border-width: 2px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased">
+<div class="relative flex h-screen w-full flex-col bg-background-light dark:bg-background-dark overflow-hidden silk-texture">
+<!-- Top Navigation Area -->
+<div class="flex items-center p-6 justify-between">
+<div class="text-slate-900 dark:text-slate-100 flex size-12 shrink-0 items-center">
+<span class="material-symbols-outlined text-2xl">menu</span>
+</div>
+<div class="flex w-12 items-center justify-end">
+<button class="flex items-center justify-center text-slate-900 dark:text-slate-100">
+<span class="material-symbols-outlined text-2xl">bolt</span>
+</button>
+</div>
+</div>
+<div class="flex-1 flex flex-col items-center justify-center px-8 max-w-md mx-auto w-full">
+<!-- Branding Icon -->
+<div class="mb-8 text-primary">
+<span class="material-symbols-outlined text-5xl" style="font-variation-settings: 'FILL' 1">menu_book</span>
+</div>
+<!-- Header Section -->
+<div class="text-center mb-10">
+<h1 class="text-primary font-playfair italic text-4xl font-bold leading-tight mb-2">Welcome back</h1>
+<p class="text-muted-gold font-marcellus text-sm tracking-widest uppercase">Sign in to continue</p>
+</div>
+<!-- Login Form -->
+<form class="w-full space-y-6">
+<div class="flex flex-col gap-2">
+<label class="text-muted-gold font-marcellus text-xs uppercase tracking-widest ml-1">Email</label>
+<input class="form-input block w-full border-sharp border-neutral-dark bg-neutral-dark text-slate-100 focus:border-primary focus:ring-0 h-14 px-4 font-marcellus transition-colors duration-300 rounded" placeholder="your@email.com" type="email"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-muted-gold font-marcellus text-xs uppercase tracking-widest ml-1">Password</label>
+<div class="relative">
+<input class="form-input block w-full border-sharp border-neutral-dark bg-neutral-dark text-slate-100 focus:border-primary focus:ring-0 h-14 px-4 font-marcellus transition-colors duration-300 rounded" placeholder="••••••••" type="password"/>
+<button class="absolute right-4 top-1/2 -translate-y-1/2 text-muted-gold hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined text-xl">visibility_off</span>
+</button>
+</div>
+</div>
+<div class="flex justify-end pt-1">
+<a class="text-muted-gold font-marcellus text-xs uppercase tracking-widest hover:text-primary transition-colors" href="#">Forgot Password?</a>
+</div>
+<!-- Action Button -->
+<button class="w-full h-14 bg-primary text-background-dark font-marcellus font-bold uppercase tracking-[0.2em] rounded-lg gold-glow hover:bg-primary/90 transition-all active:scale-[0.98] mt-4" type="submit">
+                    Sign In
+                </button>
+</form>
+<!-- Social Login Divider -->
+<div class="flex items-center w-full my-10 gap-4">
+<div class="h-[1px] flex-1 bg-neutral-dark"></div>
+<span class="text-muted-gold font-marcellus text-[10px] uppercase tracking-widest">Or enter with</span>
+<div class="h-[1px] flex-1 bg-neutral-dark"></div>
+</div>
+<div class="flex gap-4 w-full">
+<button class="flex-1 h-12 border border-neutral-dark bg-transparent text-slate-100 flex items-center justify-center hover:bg-neutral-dark transition-colors rounded">
+<span class="material-symbols-outlined text-lg mr-2">fingerprint</span>
+<span class="font-marcellus text-xs uppercase tracking-widest">Biometric</span>
+</button>
+</div>
+</div>
+<!-- Footer -->
+<div class="p-8 text-center mt-auto">
+<p class="text-muted-gold font-marcellus text-sm tracking-wide">
+                Don't have an account? 
+                <a class="text-primary border-b border-primary/50 pb-0.5 hover:text-primary/80 transition-colors ml-1" href="#">Register</a>
+</p>
+</div>
+<!-- Decorative elements -->
+<div class="absolute -bottom-24 -left-24 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none"></div>
+<div class="absolute -top-24 -right-24 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none"></div>
+</div>
+</body></html>
