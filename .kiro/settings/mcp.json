@@ -8,10 +8,6 @@
             "autoApprove": [
                 "get_screen"
             ]
-        },
-        "vercel": {
-            "command": "npx",
-            "args": ["mcp-remote", "https://mcp.vercel.com"]
         }
     }
 }
