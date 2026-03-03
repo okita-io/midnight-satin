@@ -32,6 +32,8 @@ CREATE TABLE novels (
   rating DECIMAL(3,2) DEFAULT 0.00,
   rating_count INT DEFAULT 0,
   publication_date DATE,
+  is_featured BOOLEAN DEFAULT FALSE,
+  featured_order INT,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
 

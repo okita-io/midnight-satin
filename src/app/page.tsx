@@ -1,6 +1,35 @@
+import Link from "next/link";
 import { NavigationBar } from "./_components/navigation-bar";
+import { NovelCard } from "./_components/novel-card";
+import { EmptyState } from "./_components/empty-state";
+import { getFeaturedNovels, getTrendingNovels } from "@/lib/content";
+import { novelDetailPath } from "@/lib/navigation";
 
-export default function Home() {
+export const revalidate = 60;
+
+export default async function Home() {
+  let featured: Awaited<ReturnType<typeof getFeaturedNovels>> = [];
+  let trending: Awaited<ReturnType<typeof getTrendingNovels>> = [];
+  try {
+    [featured, trending] = await Promise.all([
+      getFeaturedNovels(5),
+      getTrendingNovels(10),
+    ]);
+  } catch {
+    // DB/KV may not be configured; show empty sections
+  }
+
+  const heroNovel = featured[0];
+  const heroCard = heroNovel
+    ? {
+        id: heroNovel.id,
+        title: heroNovel.title,
+        authorName: heroNovel.authorName,
+        coverImageUrl: heroNovel.coverImageUrl,
+        rating: heroNovel.rating || null,
+      }
+    : null;
+
   return (
     <>
       {/* Header / Status Bar Area */}
@@ -25,7 +54,11 @@ export default function Home() {
         {/* Hero Carousel */}
         <section style={{ position: 'relative', height: '480px', width: '100%', overflow: 'hidden' }}>
           <div style={{ position: 'absolute', inset: 0, backgroundColor: 'var(--void)' }}>
-            <img alt="Abstract moody dark romance book cover atmosphere" style={{ height: '100%', width: '100%', objectFit: 'cover', opacity: 0.6 }} src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0FWAoY-qpFwIzQY_6NmtA-SM2ncwUiYZAEuYUEBom83LsxojIR6fgowWoE7PdG45wh2SSerECtQEUEHwxh6gRhXL-oNcyaZnuPwqItJdMvc-t7COhLSmV-06APiGC5HxJHdnezjXuFWJq0Fb5YZGjzyZ2qWd7Fq4ZLmiYLQK5LhcyaZl5pnP1XTbM51FlwZgCE5UOUSmdUXEkF48IbBGIejauxbuRCBVIt-yzfoiuyZK2WXMMIlJ2pnr6kn0_HXLqvqcwecc6uPg" />
+            {heroCard?.coverImageUrl ? (
+              <img alt="" style={{ height: '100%', width: '100%', objectFit: 'cover', opacity: 0.6 }} src={heroCard.coverImageUrl} />
+            ) : (
+              <div style={{ height: '100%', width: '100%', background: 'var(--surface)' }} />
+            )}
           </div>
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to top, var(--void), rgba(5,5,5,0.4), transparent)' }}></div>
           <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(5,5,5,0.6), transparent)' }}></div>
@@ -33,11 +66,17 @@ export default function Home() {
 
           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '1.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', zIndex: 10, paddingBottom: '3rem' }}>
             <span className="font-header" style={{ fontSize: '10px', letterSpacing: '0.3em', color: 'var(--primary)', marginBottom: '0.75rem', textTransform: 'uppercase', borderBottom: '1px solid rgba(212, 175, 55, 0.3)', paddingBottom: '0.25rem' }}>Editor's Choice</span>
-            <h1 className="font-display gold-text-shadow" style={{ fontStyle: 'italic', fontWeight: 'bold', fontSize: '2.5rem', lineHeight: 1.1, color: 'white', margin: '0 0 0.5rem 0' }}>
-              The Duke’s <br /> Forbidden Vow
-            </h1>
-            <p className="font-ui" style={{ color: 'var(--text-muted)', fontSize: '0.875rem', marginBottom: '1.5rem', letterSpacing: '0.025em' }}>By Eleanor Vane</p>
-            <button className="btn-gold">Start Reading</button>
+            {heroCard ? (
+              <>
+                <h1 className="font-display gold-text-shadow" style={{ fontStyle: 'italic', fontWeight: 'bold', fontSize: '2.5rem', lineHeight: 1.1, color: 'white', margin: '0 0 0.5rem 0' }}>
+                  {heroCard.title}
+                </h1>
+                <p className="font-ui" style={{ color: 'var(--text-muted)', fontSize: '0.875rem', marginBottom: '1.5rem', letterSpacing: '0.025em' }}>By {heroCard.authorName}</p>
+                <Link href={novelDetailPath(heroCard.id)} className="btn-gold">Start Reading</Link>
+              </>
+            ) : (
+              <EmptyState message="Nothing featured yet" />
+            )}
           </div>
         </section>
 
@@ -76,39 +115,22 @@ export default function Home() {
             <h2 className="font-header" style={{ fontSize: '0.875rem', letterSpacing: '0.15em', color: 'rgba(255,255,255,0.9)' }}>High Society</h2>
           </div>
           <div className="no-scrollbar" style={{ display: 'flex', overflowX: 'auto', gap: '1.25rem', paddingBottom: '2rem', paddingRight: '1.5rem', scrollSnapType: 'x mandatory' }}>
-
-            <div style={{ display: 'flex', flexDirection: 'column', width: '130px', flexShrink: 0, scrollSnapAlign: 'start', cursor: 'pointer' }}>
-              <div style={{ position: 'relative', width: '100%', aspectRatio: '2/3', borderRadius: '0.125rem', overflow: 'hidden', marginBottom: '0.75rem', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.6)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                <img alt="Gothic castle silhouette" style={{ width: '100%', height: '100%', objectFit: 'cover' }} src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-jy2ntZScXPc-EgaGAc38KBI_YhRUYl1mRN7RcxuAMIkJKii9F6LQVCyKNHjGMkG-bpoQHKVUgshJTcK7ahZLGBwx4-q33Y93lGSjfvWRqUOAY7lVcD7HlnrVjx2U_fOeB7BCQ50F9uXL6xQutaqSXbeCFakke4N5xVonnwcoNHlOLL25VqfbCQvEIUL0FU-cItwo0L9VDmlz6HoE9jYd8iT4eM7fGYnw-9FuYJW0T_JRCQAYNxCg-zHtXE9_kMGAtQ0Bpw3KjfM" />
-                <div style={{ position: 'absolute', top: '0.5rem', right: '0.5rem', backgroundColor: 'rgba(5,5,5,0.8)', backdropFilter: 'blur(4px)', padding: '0.125rem 0.375rem', borderRadius: '0.125rem', border: '1px solid rgba(212,175,55,0.2)', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: '10px', color: 'var(--primary)' }}>star</span>
-                  <span className="font-ui" style={{ fontSize: '10px', color: 'white' }}>4.9</span>
-                </div>
-              </div>
-              <h3 className="font-display truncate" style={{ fontWeight: 'bold', fontStyle: 'italic', fontSize: '1rem', color: 'white', lineHeight: 1.25, marginBottom: '0.25rem' }}>Midnight Masquerade</h3>
-              <p className="font-ui truncate" style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Viscount Blackwood</p>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', width: '130px', flexShrink: 0, scrollSnapAlign: 'start', cursor: 'pointer' }}>
-              <div style={{ position: 'relative', width: '100%', aspectRatio: '2/3', borderRadius: '0.125rem', overflow: 'hidden', marginBottom: '0.75rem', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.6)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                <img alt="Abstract dark red rose petals" style={{ width: '100%', height: '100%', objectFit: 'cover' }} src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4ZMzPWHir-QvitLQbaWtq4dkFiPYU6TuxAkUlh8e7EMYfQCA7XGHEMxZ5kCmImqqWOoprsDJulEVGttbT5dft2cwYphTirdVBL94HfJ0wmaYZRRLv8VfS_pJ_wnuXW9RVHpyXkQz70b7yfeWSI-F_Bx_l041NwTTtKRAEkqWusrevXWjry40WUbYn_JUMwutYWxNCAmpWktj9wUfZeBxzQyDuY_ZoGn92IsqH_XNeiTWQPNweIcCVrfq2kcs2IBjk9Y_8h_BejII" />
-              </div>
-              <h3 className="font-display truncate" style={{ fontWeight: 'bold', fontStyle: 'italic', fontSize: '1rem', color: 'white', lineHeight: 1.25, marginBottom: '0.25rem' }}>The Scarlet Letter</h3>
-              <p className="font-ui truncate" style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Nathaniel H.</p>
-            </div>
-
-            <div style={{ display: 'flex', flexDirection: 'column', width: '130px', flexShrink: 0, scrollSnapAlign: 'start', cursor: 'pointer' }}>
-              <div style={{ position: 'relative', width: '100%', aspectRatio: '2/3', borderRadius: '0.125rem', overflow: 'hidden', marginBottom: '0.75rem', boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.6)', border: '1px solid rgba(255,255,255,0.05)' }}>
-                <img alt="Vintage leather texture" style={{ width: '100%', height: '100%', objectFit: 'cover' }} src="https://lh3.googleusercontent.com/aida-public/AB6AXuCY1pJAtpkQP521addbeH3ObF1aIwimoWU1DKFSD9KynOt_BOaB1S2m7uqIVRyb5AL0met6Ksqfu4FZnafL-cxBD6qjY4o14ty_pGBrHDuRO4Lov2i6I9nwy5NbNlT3Sb0Z0XPPrHOmPiu55QEn8xdsSKgGWRSG66m06bAJjx7x4kqvDJdvUC3QTpWrzhqiuG_-25bLbaD6dee6titau2aXK4weEE8FKdOJYuvZ8bKQLuFqEzCEhlM7TNoHI6QFNQPVD7GJVw9UTII" />
-                <div style={{ position: 'absolute', top: '0.5rem', right: '0.5rem', backgroundColor: 'rgba(5,5,5,0.8)', backdropFilter: 'blur(4px)', padding: '0.125rem 0.375rem', borderRadius: '0.125rem', border: '1px solid rgba(212,175,55,0.2)', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: '10px', color: 'var(--primary)' }}>star</span>
-                  <span className="font-ui" style={{ fontSize: '10px', color: 'white' }}>4.7</span>
-                </div>
-              </div>
-              <h3 className="font-display truncate" style={{ fontWeight: 'bold', fontStyle: 'italic', fontSize: '1rem', color: 'white', lineHeight: 1.25, marginBottom: '0.25rem' }}>Bound by Silk</h3>
-              <p className="font-ui truncate" style={{ fontSize: '11px', color: 'var(--text-muted)' }}>Eliza Montrose</p>
-            </div>
-
+            {trending.length > 0 ? (
+              trending.map((novel) => (
+                <NovelCard
+                  key={novel.id}
+                  novel={{
+                    id: novel.id,
+                    title: novel.title,
+                    authorName: novel.authorName,
+                    coverImageUrl: novel.coverImageUrl,
+                    rating: novel.rating > 0 ? novel.rating : null,
+                  }}
+                />
+              ))
+            ) : (
+              <EmptyState message="Nothing in high society yet" />
+            )}
           </div>
         </section>
 
