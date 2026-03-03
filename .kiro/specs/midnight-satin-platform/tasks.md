@@ -40,7 +40,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - content.ts (getFeaturedNovels: admin-curated or default; getTrendingNovels: metric e.g. engagement last 7 days), cache.ts (KV TTL 300s), blob.ts; ISR 60s for Boudoir, Library, Novel Detail, Author Study
     - _Requirements: 1.10, 11.1-11.5_
 - [ ] 6. The Boudoir (Home Screen)
-  - [ ] 6.1 Implement The Boudoir page and components
+  - [x] 6.1 Implement The Boudoir page and components
     - Create src/app/page.tsx as ISR page matching reference/midnight_satin_home.html
     - Implement HeroCarousel, CurrentAffairsSection (View All → /profile for registered, auth prompt for guests), HighSocietySection, VaultTeaserCard, header bar with search and notification buttons
     - _Requirements: 1.1-1.10, 15.5_
