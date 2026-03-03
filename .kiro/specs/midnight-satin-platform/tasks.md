@@ -6,12 +6,12 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
 ## Tasks
 - [ ] 1. Project scaffolding, design system, and database foundation
   - [ ] 1.1 Initialize Next.js 16 project with design system and dependencies
-    - Create root layout with Google Fonts, globals.css with design tokens, tailwind.config.ts, and mobile-first responsive container (max-w-md centered on desktop)
+    - Create root layout with Google Fonts (Literata, Playfair Display, Cinzel, Marcellus, Pinyon Script), globals.css with design tokens and safe area inset variables, tailwind.config.ts, mobile-first max-w-md centered container
     - Install: @vercel/postgres, @vercel/blob, @vercel/kv, fast-check, vitest, bcryptjs, jose
-    - _Requirements: 14.1-14.6, 17.1-17.5_
+    - _Requirements: 14.1-14.8, 17.1-17.5_
   - [ ] 1.2 Create database schema and TypeScript types
-    - Create src/lib/db/schema.sql (10 tables), types.ts, index.ts per design document
-    - _Requirements: 10.1-10.10, 17.2_
+    - Create src/lib/db/schema.sql (reader_bookmarks, novels.rating_count, chapters.updated_at, comments content CHECK ≤800), types.ts, index.ts per design document
+    - _Requirements: 10.1-10.11, 17.2_
   - [ ]* 1.3 Write property test for entity storage round-trip
     - **Property 1: Entity storage round-trip** — **Validates: Requirements 10.1-10.10**
 - [ ] 2. Authentication system and session management
@@ -19,8 +19,8 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Create password.ts, session.ts, auth actions, middleware.ts; 200 credit welcome bonus
     - _Requirements: 9.1-9.6, 17.6_
   - [ ] 2.2 Create auth UI pages
-    - Create login, register pages and auth-prompt.tsx modal
-    - _Requirements: 9.2, 9.4_
+    - Create login page (email, password, link to register), register page (email, password, confirmation, display name, link to login), and auth-prompt.tsx modal; validate input and show errors (invalid email/password, email in use, min password length); redirect to intended page or Boudoir on success
+    - _Requirements: 9.2, 9.4, 9.7-9.9_
   - [ ]* 2.3 Write property tests for auth
     - **Property 7: Registration welcome bonus** — **Property 8: Password hashing**
     - **Validates: Requirements 9.3, 9.4**
@@ -31,34 +31,41 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - Ensure all tests pass, ask the user if questions arise.
 - [ ] 4. Shared UI components and navigation
   - [ ] 4.1 Implement shared UI components
-    - navigation-bar.tsx, shimmer-placeholder.tsx, empty-state.tsx, credit-balance.tsx, novel-card.tsx, character-portrait.tsx
-    - _Requirements: 1.7, 1.8, 14.1-14.6, 15.1-15.5_
+    - navigation-bar.tsx (same four items on Boudoir, Library, Novel Detail, Author Study, Vault, Profile; safe area insets), shimmer-placeholder.tsx, empty-state.tsx (Pinyon Script gold, e.g. "No current affairs", "Nothing in high society yet"), credit-balance.tsx, novel-card.tsx, character-portrait.tsx, search-overlay.tsx (novels by title, authors by name), not-found.tsx (themed 404), error.tsx (themed error boundary); ensure aria-labels for icon-only controls and focus trap in modals
+    - _Requirements: 1.7, 1.8, 14.1-14.8, 15.1-15.8, 20.1-20.3, 21.1-21.5_
   - [ ]* 4.2 Property test: navigation links
     - **Property 13: Navigation link construction** — **Validates: Requirements 1.5, 2.8, 2.9, 7.7**
 - [ ] 5. Content data layer and caching
   - [ ] 5.1 Implement content fetching and caching
-    - content.ts, cache.ts (KV TTL 300s), blob.ts; ISR 60s for Boudoir, Novel Detail, Author Study
-    - _Requirements: 11.1-11.5_
+    - content.ts (getFeaturedNovels: admin-curated or default; getTrendingNovels: metric e.g. engagement last 7 days), cache.ts (KV TTL 300s), blob.ts; ISR 60s for Boudoir, Library, Novel Detail, Author Study
+    - _Requirements: 1.10, 11.1-11.5_
 - [ ] 6. The Boudoir (Home Screen)
-- [ ] 6.1 Implement The Boudoir page and components
+  - [ ] 6.1 Implement The Boudoir page and components
     - Create src/app/page.tsx as ISR page matching reference/midnight_satin_home.html
-    - Implement HeroCarousel, CurrentAffairsSection, HighSocietySection, VaultTeaserCard, header bar
-    - _Requirements: 1.1-1.8, 15.5_
+    - Implement HeroCarousel, CurrentAffairsSection (View All → /profile for registered, auth prompt for guests), HighSocietySection, VaultTeaserCard, header bar with search and notification buttons
+    - _Requirements: 1.1-1.10, 15.5_
   - [ ]* 6.2 Property test: current reading identification
     - **Property 12: Current reading identification** — **Validates: Requirements 1.2, 16.3**
+- [ ] 6a. Library (Full Catalog) Screen
+  - [ ] 6a.1 Implement Library page
+    - Create src/app/library/page.tsx; LibraryCatalog list/grid, same Navigation_Bar; optional filter when search used; empty state; safe area insets
+    - _Requirements: 1a.1-1a.7_
 - [ ] 7. Novel Detail Screen
   - [ ] 7.1 Implement Novel Detail page
     - Create src/app/novel/[novelId]/page.tsx as ISR page matching reference/the_novel_detail.html
-    - Implement ParallaxHero, MetadataPills, SynopsisSection, PlayersSection, ChapterList, FloatingActionButton
-    - _Requirements: 2.1-2.9_
-  - [ ]* 7.2 Property tests: chapter access and first unread
+    - Implement ParallaxHero, MetadataPills, SynopsisSection, PlayersSection (View All opens Cast Gallery with first character), ChapterList (optional "Updated X ago" from latest chapter), RatingDisplay (rating + rating_count), FloatingActionButton; header: back, bookmark (toggleBookmark), share (Web Share API or copy link); same Navigation_Bar as other primary screens
+    - _Requirements: 2.1-2.15_
+  - [ ] 7.2 Implement bookmark server actions and UI
+    - toggleBookmark(novelId, chapterId?), getBookmarks(readerId); Reader_Bookmark persistence
+    - _Requirements: 2.13, 10.11_
+  - [ ]* 7.3 Property tests: chapter access and first unread
     - **Property 14: Chapter access status** — **Property 15: First unread chapter**
     - **Validates: Requirements 2.6, 2.7, 16.4**
 - [ ] 8. The Reading Room and The Veil
   - [ ] 8.1 Implement The Reading Room page
     - Create src/app/novel/[novelId]/read/[chapterId]/page.tsx matching reference/the_reading_room.html
-    - Implement ChapterContent, DropCap, OrnamentalDivider, ReadingHUD, ProgressBar; hide nav bar
-    - _Requirements: 3.1-3.6, 15.4_
+    - Implement ChapterContent, DropCap, OrnamentalDivider, ReadingHUD (font settings: size 16/18/20px, optional line spacing; persist in localStorage/per-Reader; optional bookmark), ProgressBar; hide nav bar; safe area insets for HUD
+    - _Requirements: 3.1-3.10, 15.4_
   - [ ] 8.2 Implement reading progress tracking
     - saveReadingProgress (10s debounce), getReadingProgress, scroll position restoration
     - _Requirements: 3.7, 16.1, 16.2_
@@ -95,10 +102,10 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Validates: Requirements 7.5-7.7**
 - [ ] 12. Vault, payments, and credit packs
   - [ ] 12.1 Implement Vault page UI and credit packs
-    - Create src/app/vault/page.tsx matching `reference/the_vault_store.html`, including CreditBalanceDisplay, CreditPackGrid, PopularRibbon, CoinRainAnimation, and LegalLinks.
-    - _Requirements: 8.1-8.3, 11.1, 14.1-14.6_
+    - Create src/app/vault/page.tsx matching `reference/the_vault_store.html`, including CreditBalanceDisplay, CreditPackGrid, PopularRibbon, CoinRainAnimation, RestoreButton (when provider supports restore), and LegalLinks.
+    - _Requirements: 8.1-8.3, 8.8, 11.1, 14.1-14.6_
   - [ ] 12.2 Implement purchaseCredits action and payment webhook
-    - Implement purchaseCredits server action and `/api/webhooks/payment` route to handle success/failure callbacks from the payment provider.
+    - Implement purchaseCredits server action and `/api/webhooks/payment` route; integrate Payment_Provider (e.g., Stripe Checkout) with idempotent webhook handling for credit grant.
     - _Requirements: 8.4-8.6, 10.8, 11.3-11.5, 17.2-17.5_
   - [ ]* 12.3 Property tests: payment and credit invariants
     - **Property 6: Payment processing credit invariant**
@@ -108,8 +115,8 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Implement `/api/mcp` route exposing create/list/update tools for Author_Profiles, Series, Novels, Chapters, and Characters with API key auth.
     - _Requirements: 11.5, 12.1-12.9_
   - [ ] 13.2 Implement admin dashboard routes and CRUD screens
-    - Create admin layout and pages for authors, series, novels, chapters, characters, users, and comment moderation (hide/soft-delete abusive comments).
-    - _Requirements: 13.1-13.7_
+    - Create admin layout and pages for authors, series, novels, chapters, characters, users, and comment moderation (hide/soft-delete abusive comments). Optional: allow marking novels/series as featured or ordering for trending (for hero and High Society).
+    - _Requirements: 1.10, 13.1-13.7_
   - [ ]* 13.3 Property tests: MCP and admin analytics
     - **Property 19: MCP content creation round-trip** — **Property 20: MCP content filtering** — **Property 21: MCP content update** — **Property 22: MCP input validation** — **Property 24: Admin analytics accuracy**
     - **Validates: Requirements 12.1-12.8, 13.2, 13.4, 13.7**
@@ -118,8 +125,8 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Create src/app/profile/page.tsx with ProfileHeader, ReadingStatsRow, LibrarySectionList, LibraryNovelCard, FollowedAuthorsStrip, and AccountActionsList.
     - _Requirements: 15.1-15.3, 16.3, 18.1-18.9_
   - [ ] 14.2 Implement comments data layer and server actions
-    - Implement comments database access layer, getChapterComments, postComment, editComment, deleteComment, likeComment, and unlikeComment server actions.
-    - _Requirements: 10.1-10.10, 19.1-19.10_
+    - Implement comments database access layer with content length validation (max 800 characters) client and server; getChapterComments, postComment, editComment, deleteComment, likeComment, unlikeComment server actions.
+    - _Requirements: 10.1-10.10, 19.1-19.10, 19.12_
   - [ ] 14.3 Implement CommentsSection UI in Reading Room
     - Add CommentsSection bottom sheet/overlay to the Reading_Room with list rendering, input form, and like/unlike interactions.
     - _Requirements: 3.1-3.7, 15.4, 19.1-19.4, 19.8-19.10_

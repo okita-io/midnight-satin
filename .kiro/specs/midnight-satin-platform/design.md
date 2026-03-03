@@ -24,6 +24,8 @@ src/app/
 ├── author/
 │   └── [authorId]/
 │       └── page.tsx              # The Author's Study
+├── library/
+│   └── page.tsx                  # Library (full catalog)
 ├── vault/
 │   └── page.tsx                  # The Vault (Store)
 ├── profile/
@@ -57,6 +59,8 @@ src/app/
 │   └── webhooks/
 │       └── payment/
 │           └── route.ts          # Payment webhook handler
+├── not-found.tsx                 # Themed 404 page
+├── error.tsx                     # Themed error boundary (optional)
 └── _components/                  # Shared components
     ├── navigation-bar.tsx        # Sticky bottom nav
     ├── hero-carousel.tsx         # Home hero section
@@ -66,14 +70,17 @@ src/app/
     ├── the-veil.tsx              # Chapter paywall overlay
     ├── credit-balance.tsx        # Credit display widget
     ├── shimmer-placeholder.tsx   # Loading skeleton
-    └── empty-state.tsx           # Empty state message
+    ├── empty-state.tsx           # Empty state message (Pinyon Script, gold copy)
+    ├── auth-prompt.tsx           # Modal for guest auth prompt
+    └── search-overlay.tsx       # Search UI (novels by title, authors by name)
 ```
 
 ### Route Layout
 
 ```mermaid
 graph TD
-    A[Root Layout<br/>fonts, providers, metadata] --> B["/  — The Boudoir"]
+    A[Root Layout<br/>fonts, providers, metadata, safe area] --> B["/  — The Boudoir"]
+    A --> L["/library — Library (catalog)"]
     A --> C["/novel/[id] — Novel Detail"]
     C --> D["/novel/[id]/read/[chapterId] — Reading Room"]
     A --> E["/author/[id] — Author's Study"]
@@ -90,13 +97,14 @@ graph TD
 
 ### Component Hierarchy
 
-The Navigation Bar renders on all primary screens (Boudoir, Profile, Vault) but is hidden on the Reading Room and Cast Gallery modal. The Cast Gallery renders as a modal overlay triggered from the Novel Detail screen. The Veil component renders conditionally within the Reading Room when a reader scrolls past free content.
+The Navigation Bar renders on all primary screens: Boudoir, Library, Novel Detail, Author's Study, Vault, and Profile. It uses the same four items (Boudoir, Library, Vault, Profile) and icons (history_edu, local_library, storefront, person_3) on every screen where it appears. The Navigation Bar is hidden on the Reading Room and Cast Gallery modal. The Boudoir header includes search and notification action buttons; search opens a search overlay (novels by title, authors by name). The Cast Gallery renders as a modal overlay triggered from the Novel Detail screen; "View All" in The Players opens it with the first character. The Veil component renders conditionally within the Reading Room when a reader scrolls past free content. Root layout and fixed UI apply safe area insets (e.g., env(safe-area-inset-top), env(safe-area-inset-bottom)) for notched devices.
 
 ### Rendering Strategy
 
 | Route | Strategy | Rationale |
 |-------|----------|-----------|
 | `/` (Boudoir) | ISR (60s revalidation) | Featured/trending content changes infrequently |
+| `/library` | ISR (60s revalidation) or SSR | Full catalog; can be ISR for performance |
 | `/novel/[id]` | ISR (60s revalidation) | Novel metadata is relatively static |
 | `/novel/[id]/read/[chapterId]` | SSR (dynamic) | Requires auth check for locked chapters |
 | `/author/[id]` | ISR (60s revalidation) | Author profiles change infrequently |
@@ -117,7 +125,16 @@ Components:
 - `VaultTeaserCard` — Gold gradient promo card linking to Vault
 - `NavigationBar` — Sticky bottom nav (Boudoir, Library, Vault, Profile) with active gold glow
 - `ShimmerPlaceholder` — Loading skeleton in dark grey/gold gradient
-- `EmptyState` — Pinyon Script gold text for empty sections
+- `EmptyState` — Pinyon Script gold text for empty sections (e.g., "No current affairs", "Nothing in high society yet")
+- "View All" (Current Affairs) links to `/profile` (Currently Reading); for guests, show auth prompt
+- Featured hero content: admin-curated or default (e.g., most recently updated); trending (High Society): metric-based (e.g., reading engagement last 7 days) with optional admin override
+
+#### 1a. Library — `library/page.tsx`
+
+- `LibraryCatalog` — Scrollable list/grid of all novels (cover, title, author, optional rating/count); same nav bar as Boudoir
+- Optional filter/search when header search is used
+- Empty state: Pinyon Script gold text
+- Safe area insets applied
 
 #### 2. Novel Detail Screen — `novel/[novelId]/page.tsx`
 
@@ -126,8 +143,11 @@ Components:
 - `MetadataPills` — Genre tags with 1px gold border
 - `SynopsisSection` — Expandable text (3 lines visible, "Read More" toggle)
 - `PlayersSection` — Horizontal scroll of circular character portraits (80px, gold border)
-- `ChapterList` — Vertical list with chapter number, title, "Free" text or gold lock icon
+- `ChapterList` — Vertical list with chapter number, title, "Free" text or gold lock icon; optional "Updated X ago" from latest chapter created_at/updated_at
 - `FloatingActionButton` — Gold circle (64px) bottom-right, navigates to first unread chapter
+- "View All" (The Players) opens Cast Gallery modal with first character
+- `RatingDisplay` — Novel rating and optional rating_count (e.g., "(4.8k reviews)")
+- Header: back, bookmark (toggle saved novel), share (Web Share API or copy link); same Navigation_Bar as other primary screens
 
 #### 3. The Reading Room — `novel/[novelId]/read/[chapterId]/page.tsx`
 
@@ -135,9 +155,10 @@ Components:
 - `ChapterContent` — Literata 18px, 1.6 line-height, justified, 24px margins, void black background
 - `DropCap` — First letter in Playfair Display 3.5rem, primary gold
 - `OrnamentalDivider` — Filigree SVG in gold between sections
-- `ReadingHUD` — Toggle overlay with back button, chapter title, font settings, progress %, chapter nav
+- `ReadingHUD` — Toggle overlay with back button, chapter title, optional bookmark, font settings (size 16/18/20px, optional line spacing), progress %, chapter nav; font preferences persisted in localStorage or per-Reader
 - `ProgressBar` — Gold line with glow at footer HUD
 - `TheVeil` — Paywall overlay with progressive blur (1px, 3px, 6px), lock icon, "The Veil is Drawn" heading (Cinzel), unlock button (5 credits), balance display
+- Safe area insets for HUD and content
 
 #### 4. The Cast Gallery — `_components/cast-gallery-modal.tsx`
 
@@ -166,7 +187,9 @@ Components:
 - `CreditPackGrid` — Grid of 4 packs: Pouch of Dust (50/$4.99), Handful of Gold (150/$12.99, "Most Popular"), Chest of Riches (500/$39.99), Royal Treasury (1200/$89.99)
 - `PopularRibbon` — Burgundy ribbon badge on highlighted pack with 1.02x scale and gold shimmer
 - `CoinRainAnimation` — CSS animation on successful purchase
+- `RestoreButton` — "RESTORE" control for restoring previous purchases when Payment_Provider supports it (e.g., store SDKs); hidden or explanatory when not supported (e.g., Stripe web-only)
 - `LegalLinks` — Terms of Service and Privacy Policy links
+- Payment flow: Payment_Provider (e.g., Stripe Checkout); webhook with idempotency for credit grant
 
 #### 7. Reader Profile & Library — `profile/page.tsx`
 
@@ -177,6 +200,21 @@ Components:
 - `LibraryNovelCard` — Compact novel card with cover thumbnail, title, author, last-read chapter, and "Resume" / "View Details" CTA
 - `FollowedAuthorsStrip` — Horizontally scrollable list of followed Author_Profile avatars linking to the Author's Study
 - `AccountActionsList` — List of actions: Edit Display Name, Manage Email (stub for future), View Transactions, Logout
+
+#### Auth pages — `auth/login/page.tsx`, `auth/register/page.tsx`
+
+- Login: email, password; link to register; validation and error messages (e.g., "Invalid email or password"); redirect to intended page or Boudoir on success
+- Register: email, password, password confirmation, display name; link to login; validation (email format, min password length, non-empty display name) and errors (e.g., "Email already in use"); redirect on success
+- Layout and styling: Design_System (void background, gold accents, Cinzel/Playfair, max-w-md)
+
+#### Error and Not-Found
+
+- `not-found.tsx`: Themed 404 (void background, gold accents, message e.g. "This page has slipped into the shadows", link to Boudoir)
+- `error.tsx` (optional): Themed 500/generic error with option to return home; no sensitive details exposed
+
+#### Accessibility (baseline)
+
+- Focus order and visible focus for interactive elements; aria-label or hidden text for icon-only controls; semantic HTML (nav, main, header, footer, article); focus trap in modals and restore on close; contrast per Design_System (WCAG 2.1 AA target)
 
 ### Server Actions
 
@@ -195,11 +233,13 @@ async function endorseCharacter(characterId: string): Promise<{ success: boolean
 async function followAuthor(authorId: string): Promise<{ success: boolean; newFollowerCount: number }>
 async function saveReadingProgress(chapterId: string, scrollPercent: number): Promise<void>
 async function getReadingProgress(readerId: string): Promise<ReadingProgress[]>
+async function toggleBookmark(novelId: string, chapterId?: string): Promise<{ bookmarked: boolean }>
+async function getBookmarks(readerId: string): Promise<Bookmark[]>
 
 // Comments
 async function getChapterComments(chapterId: string, options?: { cursor?: string; limit?: number }): Promise<CommentThreadPage>
-async function postComment(chapterId: string, content: string, parentCommentId?: string): Promise<Comment>
-async function editComment(commentId: string, content: string): Promise<Comment>
+async function postComment(chapterId: string, content: string, parentCommentId?: string): Promise<Comment>  // content max 800 chars
+async function editComment(commentId: string, content: string): Promise<Comment>  // content max 800 chars
 async function deleteComment(commentId: string): Promise<void>
 async function likeComment(commentId: string): Promise<{ newLikeCount: number }>
 async function unlikeComment(commentId: string): Promise<{ newLikeCount: number }>
@@ -289,6 +329,7 @@ erDiagram
         text synopsis
         text[] genre_tags
         decimal rating
+        int rating_count
         date publication_date
         timestamp created_at
     }
@@ -300,6 +341,7 @@ erDiagram
         text content
         boolean is_free
         timestamp created_at
+        timestamp updated_at
     }
     CHARACTERS {
         uuid id PK
@@ -349,6 +391,12 @@ erDiagram
         uuid author_id FK
         timestamp followed_at
     }
+    READER_BOOKMARKS {
+        uuid reader_id FK
+        uuid novel_id FK
+        uuid chapter_id
+        timestamp created_at
+    }
 
     COMMENTS {
       uuid id PK
@@ -379,6 +427,8 @@ erDiagram
     CHAPTERS ||--o{ READING_PROGRESS : "tracked in"
     CHAPTERS ||--o{ CHAPTER_UNLOCKS : "unlocked via"
     AUTHOR_PROFILES ||--o{ AUTHOR_FOLLOWS : "followed via"
+    READERS ||--o{ READER_BOOKMARKS : "has"
+    NOVELS ||--o{ READER_BOOKMARKS : "bookmarked in"
     CHAPTERS ||--o{ COMMENTS : "has many"
     READERS ||--o{ COMMENTS : "writes"
     READERS ||--o{ COMMENT_LIKES : "likes"
@@ -417,6 +467,7 @@ CREATE TABLE novels (
   synopsis TEXT,
   genre_tags TEXT[] DEFAULT '{}',
   rating DECIMAL(3,2) DEFAULT 0.00,
+  rating_count INT DEFAULT 0,
   publication_date DATE,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
@@ -429,6 +480,7 @@ CREATE TABLE chapters (
   content TEXT NOT NULL,
   is_free BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
   UNIQUE(novel_id, chapter_number)
 );
 
@@ -489,12 +541,20 @@ CREATE TABLE author_follows (
   PRIMARY KEY (reader_id, author_id)
 );
 
+CREATE TABLE reader_bookmarks (
+  reader_id UUID NOT NULL REFERENCES readers(id) ON DELETE CASCADE,
+  novel_id UUID NOT NULL REFERENCES novels(id) ON DELETE CASCADE,
+  chapter_id UUID REFERENCES chapters(id) ON DELETE SET NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  PRIMARY KEY (reader_id, novel_id)
+);
+
 CREATE TABLE comments (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   chapter_id UUID NOT NULL REFERENCES chapters(id) ON DELETE CASCADE,
   reader_id UUID NOT NULL REFERENCES readers(id) ON DELETE CASCADE,
   parent_comment_id UUID REFERENCES comments(id) ON DELETE SET NULL,
-  content TEXT NOT NULL,
+  content TEXT NOT NULL CHECK (char_length(content) <= 800),
   like_count INT DEFAULT 0,
   is_deleted BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMPTZ DEFAULT NOW(),
@@ -517,6 +577,7 @@ CREATE INDEX idx_reading_progress_reader ON reading_progress(reader_id);
 CREATE INDEX idx_credit_transactions_reader ON credit_transactions(reader_id);
 CREATE INDEX idx_chapter_unlocks_reader ON chapter_unlocks(reader_id);
 CREATE INDEX idx_author_follows_reader ON author_follows(reader_id);
+CREATE INDEX idx_reader_bookmarks_reader ON reader_bookmarks(reader_id);
 CREATE INDEX idx_readers_email ON readers(email);
 CREATE INDEX idx_comments_chapter ON comments(chapter_id, created_at DESC);
 CREATE INDEX idx_comments_reader ON comments(reader_id);
@@ -555,6 +616,7 @@ interface Novel {
   synopsis: string | null;
   genreTags: string[];
   rating: number;
+  ratingCount?: number;
   publicationDate: Date | null;
   createdAt: Date;
 }
@@ -566,6 +628,14 @@ interface Chapter {
   title: string;
   content: string;
   isFree: boolean;
+  createdAt: Date;
+  updatedAt?: Date;
+}
+
+interface Bookmark {
+  readerId: string;
+  novelId: string;
+  chapterId?: string | null;
   createdAt: Date;
 }
 

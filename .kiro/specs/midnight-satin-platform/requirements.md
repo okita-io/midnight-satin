@@ -7,7 +7,8 @@ Midnight Satin is a premium romance reading web application designed as a "Tacti
 ## Glossary
 
 - **Platform**: The Midnight Satin web application as a whole
-- **Boudoir**: The home/library screen serving as the main navigation hub
+- **Boudoir**: The home screen serving as the main navigation hub, showcasing featured and trending content and current reading
+- **Library**: The full catalog screen at `/library` displaying all Novels available on the Platform, accessible from the Navigation_Bar
 - **Novel_Detail_Screen**: The screen displaying a specific novel's summary, cast, and chapter list
 - **Reading_Room**: The distraction-free reading screen for chapter content
 - **Cast_Gallery**: The full-screen character profile viewer with endorsement functionality
@@ -36,6 +37,11 @@ Midnight Satin is a premium romance reading web application designed as a "Tacti
 - **Vercel_Postgres**: The managed PostgreSQL database service on Vercel
 - **Vercel_Blob**: The managed object storage service on Vercel for images and assets
 - **Vercel_KV**: The managed Redis-compatible key-value store on Vercel for caching
+- **Featured_Content**: Novels selected for the hero carousel, either admin-curated or determined by a defined algorithm (e.g., most recently promoted)
+- **Trending_Content**: Novels displayed in the "High Society" section, ordered by a defined metric (e.g., reading activity or engagement over a time window), with optional admin override
+- **Bookmark**: A saved reference by a Reader to a Novel or Chapter for later access; stored in a Reader_Bookmark or similar record
+- **Safe_Area**: The region of the viewport that remains visible and unobstructed on devices with notches, rounded corners, or home indicators (e.g., iOS safe area insets)
+- **Payment_Provider**: The third-party service used for credit purchases (e.g., Stripe); handles checkout sessions and webhooks for success/failure
 
 ## Requirements
 
@@ -51,8 +57,24 @@ Midnight Satin is a premium romance reading web application designed as a "Tacti
 4. THE Boudoir SHALL display a Vault teaser card promoting credit purchases with gold gradient styling
 5. WHEN a Reader taps a Novel card in any section, THE Boudoir SHALL navigate to the Novel_Detail_Screen for that Novel
 6. THE Boudoir SHALL render the sticky Navigation_Bar at the bottom with icons for Boudoir (active), Library, Vault, and Profile, where the active icon glows gold per the Design_System
-7. WHEN the Boudoir has no content to display for a section, THE Boudoir SHALL show an empty state message in Pinyon Script font with gold color text
+7. WHEN the Boudoir has no content to display for a section, THE Boudoir SHALL show an empty state message in Pinyon Script font with gold color text (e.g., "No current affairs" for an empty Current Affairs section, "Nothing in high society yet" for an empty High Society section)
 8. WHILE the Boudoir is loading content, THE Boudoir SHALL display shimmer placeholder animations in dark grey and gold gradient
+9. WHEN a Reader taps "View All" in the Current Affairs section, THE Boudoir SHALL navigate to the Reader Profile & Library screen (`/profile`) with focus on the "Currently Reading" section; for Guest_Readers, THE Platform SHALL show the authentication prompt
+10. Featured Novels in the hero carousel SHALL be determined by admin curation (e.g., a featured flag or ordered list on Novel/Series) or by a documented default (e.g., most recently updated); trending Novels in High Society SHALL be determined by a documented metric (e.g., aggregate reading progress or engagement over the last 7 days), with optional admin override via Admin_Dashboard
+
+### Requirement 1a: Library (Full Catalog) Screen
+
+**User Story:** As a Reader, I want a dedicated Library screen that shows the full catalog of novels, so that I can browse and discover all available content.
+
+#### Acceptance Criteria
+
+1. THE Platform SHALL provide a Library screen at the `/library` route, accessible from the Navigation_Bar "Library" icon (local_library)
+2. THE Library screen SHALL display the same Navigation_Bar as the Boudoir, Vault, and Profile screens (Boudoir, Library, Vault, Profile), with the Library icon active
+3. THE Library screen SHALL display a scrollable list or grid of all Novels (or paginated subset) with cover image, title, Author_Profile name, and optional rating/rating count, consistent with the Design_System
+4. WHEN a Reader taps a Novel card on the Library screen, THE Platform SHALL navigate to the Novel_Detail_Screen for that Novel
+5. THE Library screen SHALL support optional filtering or search (e.g., by genre or author) when the global search or filter UI is invoked from the header
+6. WHEN the Library has no Novels to display, THE Library SHALL show an empty state message in Pinyon Script font with gold color text
+7. THE Library screen SHALL respect Safe_Area insets for viewport padding (e.g., top and bottom safe areas on notched devices)
 
 ### Requirement 2: Novel Detail Screen
 
@@ -69,6 +91,12 @@ Midnight Satin is a premium romance reading web application designed as a "Tacti
 7. THE Novel_Detail_Screen SHALL display a floating action button (gold circle, 64px diameter) in the bottom-right corner that navigates to the Reading_Room for the first unread Chapter
 8. WHEN a Reader taps a free Chapter in the chapter list, THE Novel_Detail_Screen SHALL navigate to the Reading_Room for that Chapter
 9. THE Novel_Detail_Screen SHALL display the Author_Profile name as a tappable link that navigates to the Authors_Study
+10. WHEN a Reader taps "View All" in The Players section, THE Novel_Detail_Screen SHALL open the Cast_Gallery modal with the first Character in the novel's cast
+11. THE Novel_Detail_Screen SHALL display the Novel's aggregate rating (when available) and an optional rating count label (e.g., "(4.8k reviews)" or "Based on X ratings") using the Novel's stored rating and optional rating_count; the source of rating and count SHALL be documented (e.g., derived from future review data or admin-set)
+12. THE Novel_Detail_Screen SHALL display an optional "Updated X ago" label for the chapter list, derived from the most recent Chapter creation or update timestamp for that Novel
+13. THE Novel_Detail_Screen SHALL provide a bookmark control (e.g., outline bookmark icon) in the header that allows a Registered_Reader to save the Novel to their bookmarks; WHEN the Novel is bookmarked, THE control SHALL show a filled state; bookmark state SHALL persist across sessions
+14. THE Novel_Detail_Screen SHALL provide a share control in the header that invokes the Web Share API when available (sharing the Novel_Detail_Screen URL and title), or falls back to copying the link to the clipboard
+15. THE Novel_Detail_Screen SHALL display the same Navigation_Bar as the Boudoir, Library, Vault, and Profile screens when rendered as a primary screen (same four items and styling)
 
 ### Requirement 3: The Reading Room
 
@@ -80,9 +108,12 @@ Midnight Satin is a premium romance reading web application designed as a "Tacti
 2. THE Reading_Room SHALL render the first letter of each chapter as a drop cap in Playfair Display font at 3.5rem size in primary gold color
 3. THE Reading_Room SHALL display ornamental dividers (filigree SVG in gold) between chapter sections
 4. THE Reading_Room SHALL hide all navigation controls by default, showing only the reading text
-5. WHEN a Reader taps the center of the Reading_Room screen, THE Reading_Room SHALL toggle the HUD overlay showing a header with back button and chapter title, and a footer with font settings, progress percentage, and chapter navigation controls (previous/next)
+5. WHEN a Reader taps the center of the Reading_Room screen, THE Reading_Room SHALL toggle the HUD overlay showing a header with back button, chapter title, and optional bookmark control, and a footer with font settings, progress percentage, and chapter navigation controls (previous/next)
 6. THE Reading_Room SHALL display a progress bar at the bottom of the footer HUD showing the Reader's position within the current Chapter as a gold line with glow effect
 7. THE Reading_Room SHALL persist the Reader's scroll position as Reading_Progress so the Reader can resume from the same position on return
+8. THE Reading_Room font settings SHALL allow the Reader to adjust font size (e.g., 16px, 18px, 20px) and optionally line spacing; the selected settings SHALL persist in localStorage (or per-Reader preferences when authenticated) and apply to the current and subsequent chapter views
+9. THE Reading_Room HUD MAY display a bookmark control that adds the current Chapter or Novel to the Reader's bookmarks when activated by a Registered_Reader
+10. THE Reading_Room SHALL respect Safe_Area insets for the HUD and content padding (e.g., pt-safe-top, pb-safe-bottom) on notched devices
 
 ### Requirement 4: The Veil (Chapter Paywall)
 
@@ -147,10 +178,11 @@ Midnight Satin is a premium romance reading web application designed as a "Tacti
 1. THE Vault SHALL display the Reader's current Credit balance as a large number in Playfair Display italic bold at 6xl size with a gold text gradient, matching the layout in `reference/the_vault_store.html`
 2. THE Vault SHALL display Credit_Pack options in a grid layout with the following packs: "Pouch of Dust" (50 Credits, $4.99), "Handful of Gold" (150 Credits, $12.99), "Chest of Riches" (500 Credits, $39.99), and "Royal Treasury" (1200 Credits, $89.99)
 3. THE Vault SHALL visually highlight the "Handful of Gold" pack as "Most Popular" with a burgundy ribbon badge, elevated scale (1.02x), and a gold shimmer animation on the purchase button
-4. WHEN a Reader taps a Credit_Pack purchase button, THE Platform SHALL initiate a payment flow through the configured payment provider
+4. WHEN a Reader taps a Credit_Pack purchase button, THE Platform SHALL initiate a payment flow through the configured Payment_Provider (e.g., Stripe Checkout); the integration SHALL support webhook callbacks for success and failure with idempotency to avoid duplicate credit grants
 5. WHEN a payment is successfully completed, THE Platform SHALL add the purchased Credits to the Reader's balance and display a coin rain CSS animation as confirmation
 6. IF a payment fails, THEN THE Platform SHALL display an error message and retain the Reader's original Credit balance unchanged
 7. THE Vault SHALL display links to Terms of Service and Privacy Policy at the bottom of the store
+8. THE Vault SHALL provide a "Restore" or "RESTORE" control that allows a Registered_Reader to restore previously purchased credits (e.g., after reinstall or device change) when the Payment_Provider supports restore; WHEN the provider does not support restore (e.g., web-only Stripe), THE control MAY be hidden or display an explanatory message
 
 ### Requirement 9: Guest Access and Authentication
 
@@ -164,6 +196,9 @@ Midnight Satin is a premium romance reading web application designed as a "Tacti
 4. THE Platform SHALL support email-based authentication with secure password hashing
 5. WHILE a Reader is authenticated, THE Platform SHALL maintain the session and display the Reader's Credit balance and Reading_Progress across all screens
 6. WHEN a Reader logs out, THE Platform SHALL clear the session data and return the Reader to Guest_Reader state
+7. THE Platform SHALL provide a login page at `/auth/login` and a registration page at `/auth/register` with layout and styling consistent with the Design_System; the login page SHALL include email and password fields and a link to registration; the registration page SHALL include email, password, and display name fields, password confirmation, and a link to login
+8. THE Platform SHALL validate login and registration input (e.g., valid email format, minimum password length, non-empty display name) and display inline or toast error messages for invalid input (e.g., "Invalid email or password", "Email already in use", "Password must be at least 8 characters")
+9. AFTER successful login or registration, THE Platform SHALL redirect the Reader to the originally requested page (e.g., Vault or Novel Detail) or to the Boudoir
 
 ### Requirement 10: Database and Data Models
 
@@ -173,14 +208,15 @@ Midnight Satin is a premium romance reading web application designed as a "Tacti
 
 1. THE Platform SHALL store Author_Profile records in Vercel_Postgres with fields for id, name, avatar URL, biography, style tags, follower count, and creation timestamp
 2. THE Platform SHALL store Series records with fields for id, title, Author_Profile reference, description, genre tags, completion status, and creation timestamp
-3. THE Platform SHALL store Novel records with fields for id, title, Series reference, Author_Profile reference, cover image URL, synopsis, genre tags, rating, and publication date
-4. THE Platform SHALL store Chapter records with fields for id, Novel reference, chapter number, title, content text, free/locked status, and creation timestamp
+3. THE Platform SHALL store Novel records with fields for id, title, Series reference, Author_Profile reference, cover image URL, synopsis, genre tags, rating, optional rating_count (for display as "X reviews"), and publication date
+4. THE Platform SHALL store Chapter records with fields for id, Novel reference, chapter number, title, content text, free/locked status, creation timestamp, and optional updated_at timestamp (for "Updated X ago" display)
 5. THE Platform SHALL store Character records with fields for id, Novel reference, name, role subtitle, portrait image URL, description, backstory, stats (age, status, height, occupation, zodiac sign, blood type, birthday, favorites and dislikes), secrets, endorsement count, and trophy status
 6. THE Platform SHALL store Registered_Reader records with fields for id, email, password hash, display name, credit balance, creation timestamp, and last login timestamp
 7. THE Platform SHALL store Reading_Progress records with fields for Reader reference, Chapter reference, scroll position percentage, and last read timestamp
 8. THE Platform SHALL store Credit_Transaction records with fields for id, Reader reference, amount, transaction type (purchase, chapter_unlock, endorsement, welcome_bonus), related entity reference, and timestamp
 9. THE Platform SHALL store Chapter_Unlock records with fields for Reader reference and Chapter reference to track permanent access
 10. THE Platform SHALL store Author_Follow records with fields for Reader reference and Author_Profile reference
+11. THE Platform SHALL store Reader_Bookmark records (or equivalent) with fields for Reader reference and Novel reference (and optionally Chapter reference) to support the bookmark feature
 
 ### Requirement 11: Content Delivery and Asset Storage
 
@@ -236,6 +272,8 @@ Midnight Satin is a premium romance reading web application designed as a "Tacti
 4. THE Platform SHALL use gold-tinted drop shadows (0px 4px 20px rgba(212, 175, 55, 0.15)) on elevated elements instead of standard dark shadows
 5. THE Platform SHALL use sharp corner radii (2px for small elements, 4px for large elements) across all components
 6. THE Platform SHALL implement a mobile-first responsive layout with a maximum content width of 448px (max-w-md) centered on larger viewports with dark border accents on the sides
+7. THE Platform SHALL use Literata as the canonical body font (18px default for reading); no alternate body font (e.g., Newsreader) SHALL be used in production unless explicitly added as a future design variant
+8. THE Platform SHALL apply Safe_Area insets (e.g., padding-top for status bar/notch, padding-bottom for home indicator) to root layout and fixed elements so that content is not clipped or obscured on devices with notches or rounded corners
 
 ### Requirement 15: Navigation System
 
@@ -243,11 +281,14 @@ Midnight Satin is a premium romance reading web application designed as a "Tacti
 
 #### Acceptance Criteria
 
-1. THE Navigation_Bar SHALL be fixed at the bottom of the viewport on all primary screens (Boudoir, Library, Vault, Profile) with a void black background and a subtle top border
-2. THE Navigation_Bar SHALL display four navigation items with Material Symbols icons: Boudoir (history_edu), Library (local_library), Vault (storefront), and Profile (person_3)
+1. THE Navigation_Bar SHALL be fixed at the bottom of the viewport on all primary screens (Boudoir, Library, Vault, Profile) and SHALL also appear on the Novel_Detail_Screen and the Authors_Study so that navigation is consistent; it SHALL have a void black background and a subtle top border
+2. THE Navigation_Bar SHALL display four navigation items with Material Symbols icons: Boudoir (history_edu), Library (local_library), Vault (storefront), and Profile (person_3); the same icons and order SHALL be used on every screen where the Navigation_Bar is shown
 3. WHEN a Reader taps a Navigation_Bar item, THE Platform SHALL navigate to the corresponding screen and update the active icon to primary gold with a glow drop-shadow effect
 4. THE Navigation_Bar SHALL not be visible on the Reading_Room screen or the Cast_Gallery modal to preserve the immersive experience
 5. THE Platform SHALL display a header bar on the Boudoir with the "Midnight Satin" brand name in Cinzel font with a book icon, and search and notification action buttons
+6. THE search action button SHALL open a search experience (e.g., full-screen or inline) that allows the Reader to search Novels by title and Author_Profile by name; search results SHALL link to the corresponding Novel_Detail_Screen or Authors_Study
+7. THE notification action button SHALL display a badge or indicator when the Reader has unread notifications; notifications MAY include system announcements, new chapters for followed authors or bookmarked novels, or other platform-defined events; the notification data model and delivery mechanism (e.g., in-app list, optional push) SHALL be documented
+8. THE Navigation_Bar and all primary screens SHALL respect Safe_Area insets so that content and controls are not obscured by device notches or home indicators
 
 ### Requirement 16: Reading Progress Tracking
 
@@ -306,3 +347,26 @@ Midnight Satin is a premium romance reading web application designed as a "Tacti
 9. THE Platform SHALL ensure that the visible like count on a comment equals the number of distinct Reader likes recorded in the underlying Comment_Likes table.
 10. Liking or unliking a comment SHALL NOT affect the Reader's Credit balance and SHALL NOT create Credit_Transaction records.
 11. THE Admin_Dashboard SHALL provide a way for administrators to hide or soft-delete abusive comments, which SHALL map to the same `is_deleted` behavior used when a Reader deletes their own comment.
+12. THE Platform SHALL enforce a maximum comment length of 800 characters; client-side validation SHALL show a character counter and prevent submission over the limit; server-side validation SHALL reject content exceeding 800 characters with a descriptive error.
+
+### Requirement 20: Error and Not-Found Pages
+
+**User Story:** As a Reader or developer, I want clear and themed error pages when something goes wrong, so that I understand what happened and can navigate back.
+
+#### Acceptance Criteria
+
+1. WHEN a Reader requests a non-existent or invalid resource (e.g., invalid novel ID, author ID, or chapter ID), THE Platform SHALL respond with a 404 status and render a themed 404 page consistent with the Design_System (void background, gold accents, Cinzel/Playfair typography, and a clear message such as "This page has slipped into the shadows" with a link or button to return to the Boudoir)
+2. THE 404 page SHALL be the default Not Found UI for the Next.js app (e.g., `notFound()` or `app/not-found.tsx`)
+3. WHEN an unhandled server error occurs, THE Platform SHALL display a themed error page (e.g., 500) with a generic message and option to return home, without exposing sensitive error details to the user
+
+### Requirement 21: Accessibility (Baseline)
+
+**User Story:** As a Reader using assistive technology or keyboard navigation, I want the platform to be usable and predictable, so that I can read and navigate the app.
+
+#### Acceptance Criteria
+
+1. THE Platform SHALL ensure that interactive elements (links, buttons, form controls) are focusable and receive visible focus in a logical order when using keyboard navigation
+2. THE Platform SHALL provide accessible names or labels for icon-only controls (e.g., Material Symbols) via aria-label or visually hidden text so that screen readers can announce their purpose
+3. THE Platform SHALL maintain sufficient color contrast between text and backgrounds as specified in the Design_System (e.g., text #EAEAEA on void #050505, primary gold on dark surfaces) to meet a minimum contrast ratio consistent with WCAG 2.1 Level AA for normal text
+4. THE Platform SHALL use semantic HTML where appropriate (e.g., nav, main, header, footer, article for chapter content) to support assistive technology
+5. WHEN modal or overlay content (e.g., Cast_Gallery, The Veil, auth prompt) is shown, THE Platform SHALL trap focus within the modal and restore focus to the trigger element when the modal is closed
