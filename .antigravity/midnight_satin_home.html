@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Midnight Satin - The Boudoir</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&amp;family=Literata:opsz,wght@7..72,200..900&amp;family=Marcellus&amp;family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#D4AF37", // Metallic Gold
+              "void": "#050505", // True Void Black
+              "surface": "#121212",
+              "surface-highlight": "#1A1A1A",
+              "text-main": "#EAEAEA",
+              "text-muted": "#8A8A8A",
+              "accent": "#800020", // Burgundy
+            },
+            fontFamily: {
+              "display": ["Playfair Display", "serif"],
+              "header": ["Cinzel", "serif"],
+              "body": ["Literata", "serif"],
+              "ui": ["Marcellus", "serif"],
+            },
+            backgroundImage: {
+              'silk-gradient': 'linear-gradient(180deg, rgba(5,5,5,0) 0%, rgba(5,5,5,0.8) 70%, #050505 100%)',
+              'gold-sheen': 'linear-gradient(45deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0) 100%)',
+            },
+            boxShadow: {
+              'gold-glow': '0px 4px 20px rgba(212, 175, 55, 0.15)',
+              'card-depth': '0 10px 30px -10px rgba(0, 0, 0, 0.8)',
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        /* Custom noise texture for silk effect */
+        .bg-silk-noise {
+            background-color: #050505;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+        }
+        
+        /* Hide scrollbar for clean horizontal scrolling */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .gold-text-shadow {
+            text-shadow: 0px 0px 10px rgba(212, 175, 55, 0.3);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-void text-text-main font-body antialiased selection:bg-primary selection:text-void">
+<div class="relative flex min-h-screen w-full flex-col bg-silk-noise overflow-x-hidden max-w-md mx-auto shadow-2xl shadow-black border-x border-[#1A1A1A]">
+<!-- Header / Status Bar Area -->
+<div class="absolute top-0 left-0 right-0 z-20 flex justify-between items-center p-6 bg-gradient-to-b from-black/80 to-transparent">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-xl">menu_book</span>
+<span class="font-header text-sm tracking-[0.2em] text-primary">Midnight Satin</span>
+</div>
+<div class="flex gap-4">
+<button class="text-white/80 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">search</span>
+</button>
+<button class="text-white/80 hover:text-primary transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-accent rounded-full border border-void"></span>
+</button>
+</div>
+</div>
+<!-- Main Content Area -->
+<main class="flex-1 pb-24">
+<!-- Hero Carousel -->
+<section class="relative h-[480px] w-full overflow-hidden group">
+<!-- Background Image -->
+<div class="absolute inset-0 bg-void">
+<img alt="Abstract moody dark romance book cover atmosphere with smoke and dim lighting" class="h-full w-full object-cover opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0FWAoY-qpFwIzQY_6NmtA-SM2ncwUiYZAEuYUEBom83LsxojIR6fgowWoE7PdG45wh2SSerECtQEUEHwxh6gRhXL-oNcyaZnuPwqItJdMvc-t7COhLSmV-06APiGC5HxJHdnezjXuFWJq0Fb5YZGjzyZ2qWd7Fq4ZLmiYLQK5LhcyaZl5pnP1XTbM51FlwZgCE5UOUSmdUXEkF48IbBGIejauxbuRCBVIt-yzfoiuyZK2WXMMIlJ2pnr6kn0_HXLqvqcwecc6uPg"/>
+</div>
+<!-- Vignette & Gradient Overlays -->
+<div class="absolute inset-0 bg-gradient-to-t from-void via-void/40 to-transparent"></div>
+<div class="absolute inset-0 bg-gradient-to-b from-void/60 via-transparent to-transparent"></div>
+<div class="absolute inset-0 bg-gold-sheen opacity-30 mix-blend-overlay"></div>
+<!-- Content -->
+<div class="absolute bottom-0 left-0 right-0 p-6 flex flex-col items-center text-center z-10 pb-12">
+<span class="font-header text-[10px] tracking-[0.3em] text-primary mb-3 uppercase border-b border-primary/30 pb-1">Editor's Choice</span>
+<h1 class="font-display italic font-bold text-4xl leading-tight text-white mb-2 gold-text-shadow">
+                        The Duke’s <br/> Forbidden Vow
+                    </h1>
+<p class="font-ui text-text-muted text-sm mb-6 tracking-wide">By Eleanor Vane</p>
+<button class="bg-primary text-void font-ui font-bold text-sm px-8 py-3 rounded-sm hover:bg-white transition-colors duration-300 shadow-gold-glow uppercase tracking-wider">
+                        Start Reading
+                    </button>
+</div>
+</section>
+<!-- Current Affairs (Currently Reading) -->
+<section class="px-6 mb-10 relative z-10 -mt-4">
+<div class="flex items-center justify-between mb-6">
+<h2 class="font-header text-sm tracking-[0.15em] text-white/90">Current Affairs</h2>
+<button class="text-[10px] font-ui text-primary uppercase tracking-widest hover:text-white transition-colors">View All</button>
+</div>
+<!-- Active Book Card -->
+<div class="bg-surface border border-white/5 p-4 rounded-sm flex gap-4 shadow-card-depth relative overflow-hidden group">
+<div class="absolute inset-0 bg-gold-sheen opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+<!-- Cover -->
+<div class="w-[80px] h-[120px] shrink-0 rounded-sm overflow-hidden shadow-lg shadow-black/50 relative">
+<img alt="Dark floral pattern book cover design" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAWXl4paH8tw-7BvkMnhTPKLjxmH8nThGmIcJeuhJZPdKWjxlAWYmi7DyGcd_N69mMiQbQWRhAEEfrTzdg0ytX2spYJAfUvK078OxLP-FJc6Z-Va0c2GDJZokObdYp6apJxfZTlK3I1AjePZQ4kBh4PEVaFWCjwuhVIx86uIvZpPwEJ3AlnUzGm6iKE-z4IaiLpULC0-FB6UxQR9b8DNqQUHNoY4B_myjf3pILuGeYPCSzWmmH0vvDG_zsU8gekBdSPvpsal41NIU4"/>
+<!-- Progress overlay on image -->
+<div class="absolute bottom-0 left-0 right-0 h-1 bg-white/20">
+<div class="h-full bg-primary w-[65%] shadow-[0_0_10px_rgba(212,175,55,0.8)]"></div>
+</div>
+</div>
+<!-- Details -->
+<div class="flex flex-col justify-center flex-1 min-w-0">
+<span class="text-[10px] text-primary/80 font-ui uppercase tracking-wider mb-1">Chapter IV</span>
+<h3 class="font-display font-bold italic text-xl text-white truncate pr-2 mb-1">Velvet &amp; Steel</h3>
+<p class="font-ui text-xs text-text-muted mb-4">Lady Margaret Thorne</p>
+<div class="flex items-center justify-between mt-auto">
+<span class="text-[10px] text-text-muted font-ui">65% Complete</span>
+<button class="text-primary hover:text-white transition-colors">
+<span class="material-symbols-outlined text-xl">play_circle</span>
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- High Society (Trending) -->
+<section class="mb-10 pl-6">
+<div class="flex items-center justify-between mb-6 pr-6">
+<h2 class="font-header text-sm tracking-[0.15em] text-white/90">High Society</h2>
+</div>
+<div class="flex overflow-x-auto gap-5 pb-8 no-scrollbar pr-6 snap-x snap-mandatory">
+<!-- Book Item 1 -->
+<div class="flex flex-col w-[130px] shrink-0 snap-start group cursor-pointer">
+<div class="relative w-full aspect-[2/3] rounded-sm overflow-hidden mb-3 shadow-lg shadow-black/60 border border-white/5 transition-transform duration-300 group-hover:-translate-y-1">
+<img alt="Gothic castle silhouette book cover" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-jy2ntZScXPc-EgaGAc38KBI_YhRUYl1mRN7RcxuAMIkJKii9F6LQVCyKNHjGMkG-bpoQHKVUgshJTcK7ahZLGBwx4-q33Y93lGSjfvWRqUOAY7lVcD7HlnrVjx2U_fOeB7BCQ50F9uXL6xQutaqSXbeCFakke4N5xVonnwcoNHlOLL25VqfbCQvEIUL0FU-cItwo0L9VDmlz6HoE9jYd8iT4eM7fGYnw-9FuYJW0T_JRCQAYNxCg-zHtXE9_kMGAtQ0Bpw3KjfM"/>
+<div class="absolute top-2 right-2 bg-void/80 backdrop-blur-sm px-1.5 py-0.5 rounded-sm border border-primary/20 flex items-center gap-1">
+<span class="material-symbols-outlined text-[10px] text-primary fill-1">star</span>
+<span class="text-[10px] font-ui text-white">4.9</span>
+</div>
+</div>
+<h3 class="font-display font-bold italic text-base text-white leading-tight mb-1 truncate group-hover:text-primary transition-colors">Midnight Masquerade</h3>
+<p class="font-ui text-[11px] text-text-muted truncate">Viscount Blackwood</p>
+</div>
+<!-- Book Item 2 -->
+<div class="flex flex-col w-[130px] shrink-0 snap-start group cursor-pointer">
+<div class="relative w-full aspect-[2/3] rounded-sm overflow-hidden mb-3 shadow-lg shadow-black/60 border border-white/5 transition-transform duration-300 group-hover:-translate-y-1">
+<img alt="Abstract dark red rose petals book cover" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA4ZMzPWHir-QvitLQbaWtq4dkFiPYU6TuxAkUlh8e7EMYfQCA7XGHEMxZ5kCmImqqWOoprsDJulEVGttbT5dft2cwYphTirdVBL94HfJ0wmaYZRRLv8VfS_pJ_wnuXW9RVHpyXkQz70b7yfeWSI-F_Bx_l041NwTTtKRAEkqWusrevXWjry40WUbYn_JUMwutYWxNCAmpWktj9wUfZeBxzQyDuY_ZoGn92IsqH_XNeiTWQPNweIcCVrfq2kcs2IBjk9Y_8h_BejII"/>
+</div>
+<h3 class="font-display font-bold italic text-base text-white leading-tight mb-1 truncate group-hover:text-primary transition-colors">The Scarlet Letter</h3>
+<p class="font-ui text-[11px] text-text-muted truncate">Nathaniel H.</p>
+</div>
+<!-- Book Item 3 -->
+<div class="flex flex-col w-[130px] shrink-0 snap-start group cursor-pointer">
+<div class="relative w-full aspect-[2/3] rounded-sm overflow-hidden mb-3 shadow-lg shadow-black/60 border border-white/5 transition-transform duration-300 group-hover:-translate-y-1">
+<img alt="Vintage leather texture book cover" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCY1pJAtpkQP521addbeH3ObF1aIwimoWU1DKFSD9KynOt_BOaB1S2m7uqIVRyb5AL0met6Ksqfu4FZnafL-cxBD6qjY4o14ty_pGBrHDuRO4Lov2i6I9nwy5NbNlT3Sb0Z0XPPrHOmPiu55QEn8xdsSKgGWRSG66m06bAJjx7x4kqvDJdvUC3QTpWrzhqiuG_-25bLbaD6dee6titau2aXK4weEE8FKdOJYuvZ8bKQLuFqEzCEhlM7TNoHI6QFNQPVD7GJVw9UTII"/>
+<div class="absolute top-2 right-2 bg-void/80 backdrop-blur-sm px-1.5 py-0.5 rounded-sm border border-primary/20 flex items-center gap-1">
+<span class="material-symbols-outlined text-[10px] text-primary fill-1">star</span>
+<span class="text-[10px] font-ui text-white">4.7</span>
+</div>
+</div>
+<h3 class="font-display font-bold italic text-base text-white leading-tight mb-1 truncate group-hover:text-primary transition-colors">Bound by Silk</h3>
+<p class="font-ui text-[11px] text-text-muted truncate">Eliza Montrose</p>
+</div>
+<!-- Book Item 4 -->
+<div class="flex flex-col w-[130px] shrink-0 snap-start group cursor-pointer">
+<div class="relative w-full aspect-[2/3] rounded-sm overflow-hidden mb-3 shadow-lg shadow-black/60 border border-white/5 transition-transform duration-300 group-hover:-translate-y-1">
+<div class="absolute inset-0 bg-surface-highlight flex items-center justify-center">
+<span class="material-symbols-outlined text-text-muted opacity-50 text-4xl">auto_stories</span>
+</div>
+</div>
+<h3 class="font-display font-bold italic text-base text-white leading-tight mb-1 truncate group-hover:text-primary transition-colors">Coming Soon</h3>
+<p class="font-ui text-[11px] text-text-muted truncate">Unknown Author</p>
+</div>
+</div>
+</section>
+<!-- The Vault Teaser -->
+<section class="px-6 mb-8">
+<div class="relative w-full bg-gradient-to-r from-[#1a1500] to-surface border border-primary/20 rounded-sm p-5 flex items-center justify-between overflow-hidden">
+<div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black/20 to-transparent pointer-events-none"></div>
+<!-- Sparkle effects -->
+<div class="absolute top-2 right-10 w-1 h-1 bg-primary rounded-full animate-pulse"></div>
+<div class="absolute bottom-4 right-20 w-1 h-1 bg-white rounded-full animate-pulse" style="animation-delay: 0.5s"></div>
+<div class="relative z-10">
+<h4 class="font-display italic text-lg text-primary mb-1">Refill your purse</h4>
+<p class="font-ui text-xs text-text-muted max-w-[180px]">Unlock exclusive chapters and endorse your favorite suitors.</p>
+</div>
+<div class="relative z-10 bg-primary/10 p-2 rounded-full border border-primary/30 text-primary">
+<span class="material-symbols-outlined">diamond</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Sticky Bottom Nav -->
+<nav class="fixed bottom-0 left-0 right-0 bg-[#080808] border-t border-[#1F1F1F] px-6 pb-6 pt-4 z-50 max-w-md mx-auto shadow-[0_-10px_40px_rgba(0,0,0,0.8)]">
+<div class="flex justify-between items-end">
+<!-- Home (Active) -->
+<button class="flex flex-col items-center gap-1.5 group flex-1">
+<div class="relative flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[28px] drop-shadow-[0_0_8px_rgba(212,175,55,0.6)]">history_edu</span>
+<!-- Active Indicator Dot -->
+<span class="absolute -bottom-2 w-1 h-1 bg-primary rounded-full shadow-[0_0_5px_#D4AF37]"></span>
+</div>
+<span class="text-[10px] font-ui font-medium text-primary tracking-wider opacity-100 transform translate-y-0 transition-all duration-300">Boudoir</span>
+</button>
+<!-- Library -->
+<button class="flex flex-col items-center gap-1.5 group flex-1">
+<span class="material-symbols-outlined text-text-muted group-hover:text-text-main transition-colors text-[24px]">local_library</span>
+<span class="text-[10px] font-ui font-medium text-text-muted group-hover:text-text-main tracking-wider">Library</span>
+</button>
+<!-- Store -->
+<button class="flex flex-col items-center gap-1.5 group flex-1">
+<span class="material-symbols-outlined text-text-muted group-hover:text-text-main transition-colors text-[24px]">storefront</span>
+<span class="text-[10px] font-ui font-medium text-text-muted group-hover:text-text-main tracking-wider">Vault</span>
+</button>
+<!-- Profile -->
+<button class="flex flex-col items-center gap-1.5 group flex-1">
+<span class="material-symbols-outlined text-text-muted group-hover:text-text-main transition-colors text-[24px]">person_3</span>
+<span class="text-[10px] font-ui font-medium text-text-muted group-hover:text-text-main tracking-wider">Profile</span>
+</button>
+</div>
+</nav>
+</div>
+<!-- Script to simulate the subtle particle/sparkle effect mentioned in PRD if desired, though CSS is handling most vibes -->
+<script>
+        // Simple console log to indicate readiness
+        console.log("Midnight Satin: Boudoir Loaded.");
+    </script>
+</body></html>

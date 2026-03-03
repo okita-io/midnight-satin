@@ -1,0 +1,17 @@
+{
+    "mcpServers": {
+        "stitch": {
+            "url": "https://stitch.googleapis.com/mcp",
+            "headers": {
+                "X-Goog-Api-Key": "AQ.Ab8RN6J5bfh_fs3pst9fPhWVgAEcx8mT0m1NE_YW_7Wmt6hy2g"
+            },
+            "autoApprove": [
+                "get_screen"
+            ]
+        },
+        "vercel": {
+            "command": "npx",
+            "args": ["mcp-remote", "https://mcp.vercel.com"]
+        }
+    }
+}

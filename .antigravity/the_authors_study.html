@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Midnight Satin - The Author's Study</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Cinzel:wght@400..900&amp;family=Pinyon+Script&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#D4AF37", // Gold from PRD
+                        "primary-dark": "#b08d1a",
+                        "background-light": "#f8f8f6",
+                        "background-dark": "#050505", // Void Black from PRD
+                        "surface-dark": "#121212", // Surface from PRD
+                        "accent": "#800020", // Burgundy
+                        "text-light": "#EAEAEA",
+                        "text-muted": "#8A8A8A",
+                    },
+                    fontFamily: {
+                        "display": ["Playfair Display", "serif"],
+                        "body": ["Newsreader", "serif"], // Mapping Newsreader as main body font per request
+                        "ui": ["Cinzel", "serif"],
+                        "script": ["Pinyon Script", "cursive"],
+                    },
+                    backgroundImage: {
+                        'silk-texture': "url('https://www.transparenttextures.com/patterns/dark-leather.png')", // Simulating the silk texture
+                    },
+                    boxShadow: {
+                        'gold-glow': '0px 4px 20px rgba(212, 175, 55, 0.15)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Hexagon Clip Path */
+        .hexagon-clip {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        
+        /* Simulating the silk texture overlay */
+        .bg-silk {
+            background-color: #050505;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        }
+
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-text-light font-body antialiased selection:bg-primary selection:text-black">
+<div class="relative flex h-full min-h-screen w-full flex-col bg-silk dark group/design-root overflow-x-hidden max-w-md mx-auto border-x border-[#222]">
+<!-- Header -->
+<header class="sticky top-0 z-50 flex items-center justify-between bg-background-dark/80 backdrop-blur-md border-b border-[#393528]/30 px-4 py-3">
+<button class="text-primary flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-2xl">arrow_back</span>
+</button>
+<h2 class="text-text-light font-ui tracking-widest text-sm font-medium uppercase text-center flex-1">The Author's Study</h2>
+<button class="text-primary flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/5 transition-colors">
+<span class="material-symbols-outlined text-2xl">share</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="flex-1 pb-24">
+<!-- Author Profile Hero -->
+<section class="relative px-6 pt-8 pb-10 flex flex-col items-center text-center">
+<!-- Decorative background glow -->
+<div class="absolute top-20 left-1/2 -translate-x-1/2 w-48 h-48 bg-primary/10 blur-[60px] rounded-full pointer-events-none"></div>
+<!-- Hexagon Avatar -->
+<div class="relative mb-6 group cursor-pointer">
+<div class="absolute -inset-[2px] bg-gradient-to-b from-primary to-[#8A7018] hexagon-clip opacity-100 shadow-gold-glow"></div>
+<div class="w-32 h-36 hexagon-clip bg-surface-dark relative overflow-hidden">
+<img alt="Portrait of author Genevieve D'Orsay with soft dramatic lighting" class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBixv27MT2puSBT-Uw-qqmEVbSU5xLGHOfoei7mq9GPeVMax46yGnQMGxMXlB-8IvNvEIqUHh9M2amvfMpkMw2yaS0GRd4TOXO-BUrnSDBCpWQE39CH58A1sLLUpgTOW5v_Lyv-QuAvJBriKWe9doJgfnboGi9h7LTgdI5nHz64EvgbF2up_HxpMx1VZZvrjOH3ABH8DU-Eq1e6qtV-uRUN3CXivh1xtV1Ivt29EAC9ot2NidjFP3wVwIYV41ljyEsXtSonC799EE"/>
+</div>
+<!-- Status Indicator -->
+<div class="absolute bottom-2 right-0 bg-background-dark border border-primary rounded-full px-2 py-0.5 flex items-center gap-1 shadow-lg z-10">
+<span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+<span class="text-[10px] uppercase tracking-wider text-primary font-ui">Online</span>
+</div>
+</div>
+<!-- Name & Title -->
+<h1 class="text-3xl font-display italic text-text-light mb-1">Genevieve D'Orsay</h1>
+<p class="text-text-muted text-sm font-ui tracking-widest mb-4">Historical Romance • Gothic</p>
+<!-- Stats Row -->
+<div class="flex items-center gap-6 mb-6 text-sm text-text-light/80">
+<div class="flex flex-col items-center">
+<span class="font-display text-lg text-primary">12</span>
+<span class="text-[10px] uppercase tracking-wider text-text-muted">Works</span>
+</div>
+<div class="w-px h-8 bg-[#393528]"></div>
+<div class="flex flex-col items-center">
+<span class="font-display text-lg text-primary">4.5k</span>
+<span class="text-[10px] uppercase tracking-wider text-text-muted">Followers</span>
+</div>
+<div class="w-px h-8 bg-[#393528]"></div>
+<div class="flex flex-col items-center">
+<span class="font-display text-lg text-primary">4.9</span>
+<span class="text-[10px] uppercase tracking-wider text-text-muted">Rating</span>
+</div>
+</div>
+<!-- Actions -->
+<div class="flex gap-3 w-full max-w-xs">
+<button class="flex-1 bg-primary hover:bg-primary-dark text-background-dark font-ui font-bold text-xs uppercase tracking-wider py-3 rounded-sm transition-all shadow-gold-glow">
+                        Follow
+                    </button>
+<button class="px-4 border border-[#393528] hover:border-primary text-primary bg-transparent rounded-sm transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-xl">notifications</span>
+</button>
+</div>
+</section>
+<!-- Bio Section -->
+<section class="px-6 mb-10">
+<div class="relative">
+<span class="absolute -left-2 -top-2 text-4xl text-[#393528] font-display">"</span>
+<p class="text-text-light/90 text-lg leading-relaxed text-center italic font-light px-2">
+                        Weaving tales of forbidden desire in Victorian London. Lover of tea, rainstorms, and morally grey anti-heroes who would burn the world for her.
+                    </p>
+<span class="absolute -right-2 bottom-0 text-4xl text-[#393528] font-display transform rotate-180">"</span>
+</div>
+<!-- Tags -->
+<div class="flex flex-wrap justify-center gap-2 mt-6">
+<span class="px-3 py-1 rounded-full border border-[#393528] bg-white/5 text-xs text-primary/80 font-ui tracking-wide">#EnemiesToLovers</span>
+<span class="px-3 py-1 rounded-full border border-[#393528] bg-white/5 text-xs text-primary/80 font-ui tracking-wide">#SlowBurn</span>
+<span class="px-3 py-1 rounded-full border border-[#393528] bg-white/5 text-xs text-primary/80 font-ui tracking-wide">#HighHeat</span>
+</div>
+</section>
+<!-- Trophy Case -->
+<section class="mb-10 border-y border-[#393528]/30 bg-surface-dark/50 backdrop-blur-sm">
+<div class="px-6 py-4 flex items-center justify-between">
+<h3 class="font-ui text-primary text-xs tracking-[0.15em] uppercase">Trophy Case</h3>
+<button class="text-[10px] text-text-muted uppercase hover:text-primary transition-colors">View All</button>
+</div>
+<div class="grid grid-cols-3 divide-x divide-[#393528]/30 border-t border-[#393528]/30">
+<!-- Trophy 1 -->
+<div class="flex flex-col items-center justify-center py-6 px-2 gap-2 hover:bg-white/5 transition-colors cursor-pointer group">
+<div class="text-primary opacity-80 group-hover:opacity-100 transition-opacity drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]">
+<span class="material-symbols-outlined text-3xl">history_edu</span>
+</div>
+<div class="text-center">
+<p class="text-text-light text-xs font-display font-bold">Golden Quill</p>
+<p class="text-[10px] text-text-muted uppercase mt-0.5">Top Rated 2023</p>
+</div>
+</div>
+<!-- Trophy 2 -->
+<div class="flex flex-col items-center justify-center py-6 px-2 gap-2 hover:bg-white/5 transition-colors cursor-pointer group">
+<div class="text-primary opacity-80 group-hover:opacity-100 transition-opacity drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]">
+<span class="material-symbols-outlined text-3xl">favorite</span>
+</div>
+<div class="text-center">
+<p class="text-text-light text-xs font-display font-bold">Million Roses</p>
+<p class="text-[10px] text-text-muted uppercase mt-0.5">1M+ Endorsements</p>
+</div>
+</div>
+<!-- Trophy 3 -->
+<div class="flex flex-col items-center justify-center py-6 px-2 gap-2 hover:bg-white/5 transition-colors cursor-pointer group">
+<div class="text-primary opacity-80 group-hover:opacity-100 transition-opacity drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]">
+<span class="material-symbols-outlined text-3xl">dark_mode</span>
+</div>
+<div class="text-center">
+<p class="text-text-light text-xs font-display font-bold">Night Owl</p>
+<p class="text-[10px] text-text-muted uppercase mt-0.5">Most Read @ 3AM</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Bibliography / Series Lists -->
+<div class="px-6 space-y-8">
+<!-- Series 1 -->
+<section>
+<div class="flex items-end justify-between mb-4 border-b border-[#393528] pb-2">
+<h3 class="font-ui text-primary text-sm tracking-[0.15em] uppercase">The Gilded Cage Trilogy</h3>
+<span class="text-[10px] text-text-muted italic font-display">Completed</span>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Book Card 1 -->
+<div class="flex gap-4 group cursor-pointer">
+<div class="relative w-20 h-28 shrink-0 rounded-sm overflow-hidden shadow-lg border border-[#393528] group-hover:border-primary transition-colors">
+<img class="w-full h-full object-cover" data-alt="Dark moody book cover with a golden birdcage illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxZZxJobqEwhhhuamxNd3I74SmDKF7TNorWOGWWjgxJ6cP71LblWBQd0ErmULTtoZP3g8NjWHACjEvxuxVv_7bw5zVPF7mclcuTysmgysb2bgp-CVWklnPhQuTaRhOP4eJVnEh4w_07uBAu9Qz-mx7y7rQOoflNYg5DAv3XkZdiq-SiE8DsucLvVp-zMjm7Go4i59AxYKXJ8his1Jz9Xgqk36PvAJ6eLrYtquLl4K8R2pLNWwHwlkcZxikgf3slrUQrUKHzab8ZlE"/>
+<div class="absolute top-0 right-0 bg-primary text-background-dark text-[9px] font-bold px-1.5 py-0.5 rounded-bl-sm">OWNED</div>
+</div>
+<div class="flex flex-col justify-center flex-1 border-b border-[#393528]/30 pb-4">
+<div class="flex justify-between items-start">
+<h4 class="text-text-light font-display text-lg leading-tight mb-1 group-hover:text-primary transition-colors">The Duke's Prisoner</h4>
+</div>
+<p class="text-text-muted text-sm line-clamp-2 mb-3">
+                                    She was a pawn in a game of crowns, until she captured the King's heart.
+                                </p>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1 text-primary text-xs">
+<span class="material-symbols-outlined text-[14px]">star</span>
+<span>4.8</span>
+</div>
+<span class="text-text-muted text-[10px] uppercase tracking-wider">Book 1 • 2021</span>
+</div>
+</div>
+</div>
+<!-- Book Card 2 -->
+<div class="flex gap-4 group cursor-pointer">
+<div class="relative w-20 h-28 shrink-0 rounded-sm overflow-hidden shadow-lg border border-[#393528] group-hover:border-primary transition-colors">
+<img class="w-full h-full object-cover" data-alt="Abstract dark book cover with a wilted rose illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiFlajTLQkfwPLuXLk1ZOj5BjcxyXE4pYGtWMYxV9DzH3Xrle4TvE_YZ0nIDZb1fSNdQBSw_a9GbXAuEm9IdgElZvJnjjvuxSsr3QKNs_QhLevHe4cZrdYFg-wqcxl0BlcF3POSVvVrb7UutBLfHS71yHSGm4g3BDWchblIURvgq_HOB0dA68ECRI_3mDZgH5NAL_o0uboSwY_Y558-V3g-znGsBZ5pOv0o3qXinKhxrRL93_Q0pmqPGEYep_DS2rmF0igC7H4KUM"/>
+<!-- Progress Bar -->
+<div class="absolute bottom-0 left-0 w-full h-1 bg-background-dark/50">
+<div class="h-full bg-primary w-[65%]"></div>
+</div>
+</div>
+<div class="flex flex-col justify-center flex-1 border-b border-[#393528]/30 pb-4">
+<div class="flex justify-between items-start">
+<h4 class="text-text-light font-display text-lg leading-tight mb-1 group-hover:text-primary transition-colors">The Countess's Secret</h4>
+</div>
+<p class="text-text-muted text-sm line-clamp-2 mb-3">
+                                    Masks fall away at midnight balls, revealing truths that could destroy an empire.
+                                </p>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1 text-primary text-xs">
+<span class="material-symbols-outlined text-[14px]">star</span>
+<span>4.9</span>
+</div>
+<span class="text-text-muted text-[10px] uppercase tracking-wider">Book 2 • 2022</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Series 2 -->
+<section>
+<div class="flex items-end justify-between mb-4 border-b border-[#393528] pb-2">
+<h3 class="font-ui text-primary text-sm tracking-[0.15em] uppercase">Standalone Novels</h3>
+<span class="text-[10px] text-text-muted italic font-display">2 Titles</span>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Book Card 3 (New Release) -->
+<div class="flex gap-4 group cursor-pointer">
+<div class="relative w-20 h-28 shrink-0 rounded-sm overflow-hidden shadow-lg border border-[#393528] group-hover:border-primary transition-colors">
+<img class="w-full h-full object-cover" data-alt="Dark moody texture representing a stormy night book cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtHF0ffElzPhctc8CeEusj3ZetOmTa0Fj9SoSNPJLGrFtxpSic5lGI8Tf3LAw-V7zYXgdKcvQfA70si3B5tfW5gM-rTAQMO4qZTmyYfIPBXewlB8AV0CTmzmyefwJiUUZcOLlIGUXgNs2YvSdoYtPr2ssydKpGlZz2TCduJN-LDQ42B_iFFTNQ6Nl3F6znPfGb-NFykYvjukVtWkgUNgGGj99x2NVkMPVJeq4bO5HzHtG1QsNgXTYkW_p5G0Hm0IRCGm_TFHsdbfQ"/>
+<div class="absolute top-0 left-0 bg-accent text-white text-[9px] font-bold px-1.5 py-0.5 rounded-br-sm shadow-md">NEW</div>
+</div>
+<div class="flex flex-col justify-center flex-1 border-b border-[#393528]/30 pb-4">
+<div class="flex justify-between items-start w-full">
+<h4 class="text-text-light font-display text-lg leading-tight mb-1 group-hover:text-primary transition-colors">Velvet &amp; Steel</h4>
+<button class="flex items-center gap-1 bg-white/5 hover:bg-primary hover:text-background-dark border border-primary/30 rounded-sm px-2 py-1 transition-all">
+<span class="text-[10px] font-bold uppercase tracking-wide">Get</span>
+</button>
+</div>
+<p class="text-text-muted text-sm line-clamp-2 mb-3">
+                                    An industrialist and a seamstress find common ground in a city divided by coal and silk.
+                                </p>
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1 text-text-muted text-xs">
+<span class="material-symbols-outlined text-[14px]">trending_up</span>
+<span>Trending</span>
+</div>
+<span class="text-text-muted text-[10px] uppercase tracking-wider">2024</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div class="flex justify-center pt-4 pb-8">
+<p class="font-script text-2xl text-text-muted opacity-50">fin</p>
+</div>
+</div>
+</main>
+<!-- Bottom Nav Bar -->
+<div class="fixed bottom-0 left-0 right-0 z-50 border-t border-[#393528] bg-[#27241c] px-4 pb-5 pt-2 max-w-md mx-auto">
+<div class="flex gap-2 justify-between">
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-[#b9b29d] hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">history_edu</span>
+<p class="text-xs font-medium leading-normal tracking-[0.015em] font-ui">Home</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-[#b9b29d] hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">book_2</span>
+<p class="text-xs font-medium leading-normal tracking-[0.015em] font-ui">Library</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-primary" href="#">
+<span class="material-symbols-outlined text-2xl fill-current drop-shadow-[0_0_8px_rgba(212,175,55,0.5)]">face_3</span>
+<p class="text-xs font-medium leading-normal tracking-[0.015em] font-ui">Profile</p>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 text-[#b9b29d] hover:text-primary transition-colors group" href="#">
+<span class="material-symbols-outlined text-2xl group-hover:scale-110 transition-transform">monetization_on</span>
+<p class="text-xs font-medium leading-normal tracking-[0.015em] font-ui">Store</p>
+</a>
+</div>
+</div>
+</div>
+</body></html>

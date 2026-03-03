@@ -1,0 +1,75 @@
+# Implementation Plan: Midnight Satin Platform
+
+## Overview
+Build the Midnight Satin romance reading platform with Next.js 16, React 19, TypeScript, Tailwind CSS, Vercel. HTML mockups in `.antigravity/` are the UI source of truth.
+
+## Tasks
+- [ ] 1. Project scaffolding, design system, and database foundation
+  - [ ] 1.1 Initialize Next.js 16 project with design system and dependencies
+    - Create root layout with Google Fonts, globals.css with design tokens, tailwind.config.ts
+    - Install: @vercel/postgres, @vercel/blob, @vercel/kv, fast-check, vitest, bcryptjs, jose
+    - _Requirements: 14.1-14.6, 17.1-17.5_
+  - [ ] 1.2 Create database schema and TypeScript types
+    - Create src/lib/db/schema.sql (10 tables), types.ts, index.ts per design document
+    - _Requirements: 10.1-10.10, 17.2_
+  - [ ]* 1.3 Write property test for entity storage round-trip
+    - **Property 1: Entity storage round-trip** — **Validates: Requirements 10.1-10.10**
+- [ ] 2. Authentication system and session management
+  - [ ] 2.1 Implement auth server actions and Edge middleware
+    - Create password.ts, session.ts, auth actions, middleware.ts; 200 credit welcome bonus
+    - _Requirements: 9.1-9.6, 17.6_
+  - [ ] 2.2 Create auth UI pages
+    - Create login, register pages and auth-prompt.tsx modal
+    - _Requirements: 9.2, 9.4_
+  - [ ]* 2.3 Write property tests for auth
+    - **Property 7: Registration welcome bonus** — **Property 8: Password hashing**
+    - **Validates: Requirements 9.3, 9.4**
+  - [ ]* 2.4 Write property tests for access control
+    - **Property 9: Access control** — **Property 10: Session lifecycle**
+    - **Validates: Requirements 9.1, 9.2, 9.5, 9.6, 12.9, 13.1, 17.6**
+- [ ] 3. Checkpoint - Ensure all tests pass
+  - Ensure all tests pass, ask the user if questions arise.
+- [ ] 4. Shared UI components and navigation
+  - [ ] 4.1 Implement shared UI components
+    - navigation-bar.tsx, shimmer-placeholder.tsx, empty-state.tsx, credit-balance.tsx, novel-card.tsx, character-portrait.tsx
+    - _Requirements: 1.7, 1.8, 14.1-14.6, 15.1-15.5_
+  - [ ]* 4.2 Property test: navigation links
+    - **Property 13: Navigation link construction** — **Validates: Requirements 1.5, 2.8, 2.9, 7.7**
+- [ ] 5. Content data layer and caching
+  - [ ] 5.1 Implement content fetching and caching
+    - content.ts, cache.ts (KV TTL 300s), blob.ts; ISR 60s for Boudoir, Novel Detail, Author Study
+    - _Requirements: 11.1-11.5_
+- [ ] 6. The Boudoir (Home Screen)
+  - [ ] 6.1 Implement The Boudoir page and components
+    - Create src/app/page.tsx as ISR page matching .antigravity/midnight_satin_home.html
+    - Implement HeroCarousel, CurrentAffairsSection, HighSocietySection, VaultTeaserCard, header bar
+    - _Requirements: 1.1-1.8, 15.5_
+  - [ ]* 6.2 Property test: current reading identification
+    - **Property 12: Current reading identification** — **Validates: Requirements 1.2, 16.3**
+- [ ] 7. Novel Detail Screen
+  - [ ] 7.1 Implement Novel Detail page
+    - Create src/app/novel/[novelId]/page.tsx as ISR page matching .antigravity/the_novel_detail.html
+    - Implement ParallaxHero, MetadataPills, SynopsisSection, PlayersSection, ChapterList, FloatingActionButton
+    - _Requirements: 2.1-2.9_
+  - [ ]* 7.2 Property tests: chapter access and first unread
+    - **Property 14: Chapter access status** — **Property 15: First unread chapter**
+    - **Validates: Requirements 2.6, 2.7, 16.4**
+- [ ] 8. The Reading Room and The Veil
+  - [ ] 8.1 Implement The Reading Room page
+    - Create src/app/novel/[novelId]/read/[chapterId]/page.tsx matching .antigravity/the_reading_room.html
+    - Implement ChapterContent, DropCap, OrnamentalDivider, ReadingHUD, ProgressBar; hide nav bar
+    - _Requirements: 3.1-3.6, 15.4_
+  - [ ] 8.2 Implement reading progress tracking
+    - saveReadingProgress (10s debounce), getReadingProgress, scroll position restoration
+    - _Requirements: 3.7, 16.1, 16.2_
+  - [ ] 8.3 Implement The Veil (chapter paywall)
+    - Progressive blur, unlockChapter with DB transaction and row-level locking
+    - _Requirements: 4.1-4.6_
+  - [ ]* 8.4 Property tests: reading progress and veil
+    - **Property 11: Reading progress round-trip** — **Property 16: Veil display logic**
+    - **Validates: Requirements 3.7, 4.1, 16.1, 16.2**
+  - [ ]* 8.5 Property tests: chapter unlock credits
+    - **Property 2: Chapter unlock credit invariant** — **Property 3: Unlock idempotence**
+    - **Validates: Requirements 4.4, 4.5, 4.6**
+- [ ] 9. Checkpoint - Ensure all tests pass
+  - Ensure all tests pass, ask the user if questions arise.

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Midnight Satin - The Vault</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&amp;family=Literata:ital,opsz,wght@0,7..72,200..900;1,7..72,200..900&amp;family=Marcellus&amp;family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Pinyon+Script&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#D4AF37", // Metallic Gold
+                        "primary-dim": "#bfa030",
+                        "void": "#050505", // True Void Black
+                        "surface": "#121212", // Surface
+                        "accent": "#800020", // Burgundy
+                        "text-main": "#EAEAEA",
+                        "text-muted": "#8A8A8A",
+                        "gold-glow": "rgba(212, 175, 55, 0.15)",
+                    },
+                    fontFamily: {
+                        "display": ["Playfair Display", "serif"],
+                        "heading": ["Cinzel", "serif"],
+                        "body": ["Literata", "serif"],
+                        "ui": ["Marcellus", "serif"],
+                        "script": ["Pinyon Script", "cursive"],
+                    },
+                    backgroundImage: {
+                        'silk-texture': "url('https://grainy-gradients.vercel.app/noise.svg')", // Fallback noise texture
+                        'gold-gradient': "linear-gradient(135deg, #D4AF37 0%, #F9E076 50%, #D4AF37 100%)",
+                        'void-gradient': "radial-gradient(circle at center, #1a1810 0%, #050505 100%)",
+                    },
+                    boxShadow: {
+                        'glow': '0px 4px 20px rgba(212, 175, 55, 0.15)',
+                        'glow-intense': '0px 0px 30px rgba(212, 175, 55, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Scrollbar for dark theme */
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 2px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37;
+        }
+
+        .silk-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        .gold-text-gradient {
+            background: linear-gradient(to bottom, #F9E076, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        /* Shimmer effect for gold buttons */
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .animate-shimmer {
+            background: linear-gradient(90deg, rgba(212,175,55,0) 0%, rgba(255,255,255,0.4) 50%, rgba(212,175,55,0) 100%);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite;
+        }
+
+        /* Coin rain animation classes (triggered via JS in a real app, simulated here with CSS) */
+        @keyframes fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-void text-text-main font-body antialiased selection:bg-primary selection:text-void h-full min-h-screen flex flex-col relative overflow-x-hidden">
+<!-- Texture Overlay -->
+<div class="silk-overlay"></div>
+<!-- Background Gradient Spot -->
+<div class="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-lg h-[400px] bg-primary/5 blur-[120px] rounded-full pointer-events-none z-0"></div>
+<!-- Header -->
+<header class="relative z-10 pt-12 pb-6 px-6 text-center">
+<div class="flex items-center justify-between mb-2">
+<button class="text-text-muted hover:text-primary transition-colors p-2">
+<span class="material-symbols-outlined" style="font-size: 24px;">arrow_back</span>
+</button>
+<h1 class="font-heading text-sm tracking-[0.15em] text-primary uppercase">The Vault</h1>
+<button class="text-text-muted hover:text-primary transition-colors p-2 text-xs font-ui tracking-wide">
+                RESTORE
+            </button>
+</div>
+<div class="mt-8 mb-4 flex flex-col items-center justify-center">
+<div class="relative">
+<span class="font-display text-6xl italic font-bold gold-text-gradient drop-shadow-lg">1,250</span>
+<span class="absolute -top-2 -right-6 text-primary material-symbols-outlined animate-pulse" style="font-variation-settings: 'FILL' 1;">spark</span>
+</div>
+<p class="font-script text-2xl text-text-muted mt-2 opacity-80">Available Credits</p>
+<p class="text-xs font-ui text-text-muted mt-1 uppercase tracking-widest opacity-60">Acquire credits to unveil stories</p>
+</div>
+</header>
+<!-- Main Content: Store Grid -->
+<main class="relative z-10 flex-1 px-4 pb-24 overflow-y-auto">
+<!-- Decoration Line -->
+<div class="flex items-center justify-center gap-4 mb-8 opacity-40">
+<div class="h-[1px] w-12 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
+<span class="material-symbols-outlined text-primary text-[16px]">diamond</span>
+<div class="h-[1px] w-12 bg-gradient-to-r from-transparent via-primary to-transparent"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-lg mx-auto">
+<!-- Card 1: Smallest -->
+<div class="group relative bg-surface/80 border border-primary/20 hover:border-primary/50 rounded-sm p-4 flex flex-col items-center justify-between transition-all duration-300 hover:shadow-glow hover:-translate-y-1">
+<div class="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+<div class="w-16 h-16 rounded-full bg-void border border-primary/30 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+<span class="material-symbols-outlined text-primary text-3xl">savings</span>
+</div>
+<h3 class="font-display italic text-xl text-text-main mb-1">Pouch of Dust</h3>
+<p class="font-heading text-primary text-sm mb-4 tracking-widest">50 CREDITS</p>
+<button class="w-full py-2 border border-primary/40 text-primary font-ui text-sm hover:bg-primary hover:text-void transition-all duration-300 uppercase tracking-wide">
+                    $4.99
+                </button>
+</div>
+<!-- Card 2: Most Popular (Burgundy Ribbon) -->
+<div class="group relative bg-surface/80 border border-primary/60 rounded-sm p-4 flex flex-col items-center justify-between transition-all duration-300 shadow-glow hover:shadow-glow-intense transform scale-[1.02] z-10">
+<!-- Ribbon -->
+<div class="absolute -top-3 -right-3 z-20">
+<div class="bg-accent text-white text-[10px] font-heading py-1 px-3 shadow-md uppercase tracking-wider relative">
+                        Most Popular
+                        <div class="absolute top-full right-0 border-l-[6px] border-t-[6px] border-l-transparent border-t-[#500014]"></div>
+</div>
+</div>
+<div class="absolute inset-0 bg-gradient-to-b from-primary/10 to-transparent pointer-events-none"></div>
+<div class="w-20 h-20 rounded-full bg-void border border-primary flex items-center justify-center mb-3 group-hover:scale-105 transition-transform duration-300 shadow-lg relative overflow-hidden">
+<div class="absolute inset-0 animate-shimmer opacity-20"></div>
+<span class="material-symbols-outlined text-primary text-4xl" style="font-variation-settings: 'FILL' 1;">local_mall</span>
+</div>
+<h3 class="font-display italic text-2xl text-primary mb-1">Handful of Gold</h3>
+<p class="font-heading text-white text-base mb-4 tracking-widest font-bold">150 CREDITS</p>
+<button class="w-full py-3 bg-primary text-void font-heading font-bold text-sm shadow-lg hover:bg-white transition-all duration-300 uppercase tracking-wide relative overflow-hidden">
+<span class="relative z-10">$12.99</span>
+<div class="absolute inset-0 animate-shimmer opacity-30"></div>
+</button>
+</div>
+<!-- Card 3: Medium -->
+<div class="group relative bg-surface/80 border border-primary/20 hover:border-primary/50 rounded-sm p-4 flex flex-col items-center justify-between transition-all duration-300 hover:shadow-glow hover:-translate-y-1">
+<div class="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+<div class="w-16 h-16 rounded-full bg-void border border-primary/30 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+<span class="material-symbols-outlined text-primary text-3xl">rib_cage</span>
+</div>
+<h3 class="font-display italic text-xl text-text-main mb-1">Chest of Riches</h3>
+<p class="font-heading text-primary text-sm mb-4 tracking-widest">500 CREDITS</p>
+<button class="w-full py-2 border border-primary/40 text-primary font-ui text-sm hover:bg-primary hover:text-void transition-all duration-300 uppercase tracking-wide">
+                    $39.99
+                </button>
+</div>
+<!-- Card 4: High Value -->
+<div class="group relative bg-surface/80 border border-primary/20 hover:border-primary/50 rounded-sm p-4 flex flex-col items-center justify-between transition-all duration-300 hover:shadow-glow hover:-translate-y-1">
+<div class="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+<div class="w-16 h-16 rounded-full bg-void border border-primary/30 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform duration-300 shadow-lg">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">account_balance</span>
+</div>
+<h3 class="font-display italic text-xl text-text-main mb-1">Royal Treasury</h3>
+<p class="font-heading text-primary text-sm mb-4 tracking-widest">1200 CREDITS</p>
+<button class="w-full py-2 border border-primary/40 text-primary font-ui text-sm hover:bg-primary hover:text-void transition-all duration-300 uppercase tracking-wide">
+                    $89.99
+                </button>
+</div>
+</div>
+<!-- Terms Footer -->
+<div class="text-center mt-12 pb-8">
+<p class="font-ui text-[10px] text-text-muted/40 uppercase tracking-widest">
+                Secure Payment processed by App Store
+            </p>
+<div class="flex justify-center gap-4 mt-2">
+<a class="font-ui text-[10px] text-text-muted hover:text-primary underline decoration-primary/30 underline-offset-4" href="#">Terms of Service</a>
+<a class="font-ui text-[10px] text-text-muted hover:text-primary underline decoration-primary/30 underline-offset-4" href="#">Privacy Policy</a>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation (Fixed) -->
+<div class="fixed bottom-0 left-0 w-full z-40">
+<!-- Gradient fade for content scrolling behind nav -->
+<div class="h-12 bg-gradient-to-t from-void via-void to-transparent w-full absolute -top-12 pointer-events-none"></div>
+<div class="bg-void border-t border-primary/20 px-4 pb-6 pt-3 relative">
+<div class="flex justify-between items-end max-w-lg mx-auto">
+<a class="flex flex-1 flex-col items-center justify-end gap-1 group" href="#">
+<div class="text-text-muted group-hover:text-primary transition-colors duration-300 flex h-6 items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">history_edu</span>
+</div>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 group" href="#">
+<div class="text-text-muted group-hover:text-primary transition-colors duration-300 flex h-6 items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">auto_stories</span>
+</div>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 group" href="#">
+<div class="text-text-muted group-hover:text-primary transition-colors duration-300 flex h-6 items-center justify-center">
+<span class="material-symbols-outlined text-[24px]">theater_comedy</span>
+</div>
+</a>
+<a class="flex flex-1 flex-col items-center justify-end gap-1 group" href="#">
+<div class="text-primary flex h-6 items-center justify-center relative">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">monetization_on</span>
+<div class="absolute -bottom-2 w-1 h-1 rounded-full bg-primary shadow-[0_0_8px_2px_rgba(212,175,55,0.8)]"></div>
+</div>
+</a>
+</div>
+</div>
+</div>
+</body></html>

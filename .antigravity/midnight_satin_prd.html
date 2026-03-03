@@ -1,0 +1,214 @@
+# Midnight Satin
+
+## Product Overview
+
+**The Pitch:** A premium reading sanctuary for romance connoisseurs, elevating the digital novel experience from consumption to indulgence. Users don't just read; they unveil stories in an atmosphere of intimate luxury.
+
+**For:** Romance readers who value immersion and perceive reading as a treat. They care about high-quality curation, visual beauty, and supporting their favorite authors through tangible value (credits).
+
+**Device:** Mobile (iOS/Android)
+
+**Design Direction:** **Tactile Noir Luxury.** Deepest onyx backgrounds meet metallic gold accents. It feels like reading by candlelight in a velvet-draped room.
+
+**Inspired by:** The packaging of Pat McGrath Labs, the typography of *Vogue* Noir editions, and the interface of luxury watch apps like Hodinkee.
+
+---
+
+## Screens
+
+- **The Boudoir (Home/Library):** Browsing current reads and curated "Top Endorsed" collections.
+- **The novel Detail:** Book summary, cast list entry point, and chapter list.
+- **The Reading Room (Reader):** Distraction-free text rendering with chapter unlock mechanism.
+- **The Cast Gallery:** Character profiles with illustrations and backstory.
+- **The Author’s Study:** Author biography, style notes, and bibliography.
+- **The Vault (Store):** Purchasing credits for reading and social endorsement.
+
+---
+
+## Key Flows
+
+**Flow: Unlocking a Chapter**
+
+1. User is on **The Reading Room** -> scrolls to end of free preview.
+2. User sees **Veil Overlay** -> "Lift Veil for 5 Credits".
+3. User clicks **Lift Veil** -> Gold dust particle animation dissolves the veil, revealing text instantly.
+
+**Flow: Endorsing a Character**
+
+1. User is on **The Cast Gallery** -> viewing "Duke Alistair".
+2. User clicks **Rose Icon** (Like) -> Prompt: "Send a Rose? (1 Credit)".
+3. User confirms -> Rose fills with gold, counter increments. If count > 1000, a Trophy badge animates onto the profile.
+
+---
+
+<details>
+<summary>Design System</summary>
+
+## Color Palette
+
+- **Primary:** `#D4AF37` - Metallic Gold (Action buttons, active states, key icons)
+- **Background:** `#050505` - True Void Black (Main background)
+- **Surface:** `#121212` - Cards, elevated sections (with 2% opacity texture)
+- **Text:** `#EAEAEA` - Primary reading text (Off-white for eye comfort)
+- **Muted:** `#8A8A8A` - Secondary text, unselected states
+- **Accent:** `#800020` - Burgundy (Error states, "Rose" like interactions)
+- **Overlay:** `rgba(212, 175, 55, 0.08)` - Golden sheen on interactive elements
+
+## Typography
+
+- **Display (Titles):** *Playfair Display*, 700 Italic, 32px (High contrast serif)
+- **Headings:** *Cinzel*, 500, 18px (Uppercase, tracked out 1.5px)
+- **Body:** *Literata*, 400, 18px (High legibility serif for long-form)
+- **Script (Accents):** *Pinyon Script*, 400, 24px (Used for "The End" or chapter subtitles)
+- **UI:** *Marcellus*, 400, 14px (Clean serif-hybrid for buttons/labels)
+
+**Style notes:** The app relies on a subtle CSS texture overlay (`url('silk-noise.png')`) applied to dark surfaces to mimic fabric grain. Drop shadows are tight and gold-tinted (`0px 4px 12px rgba(212, 175, 55, 0.15)`), creating a glow rather than a shadow.
+
+## Design Tokens
+
+```css
+:root {
+  --color-primary: #D4AF37;
+  --color-background: #050505;
+  --color-surface: #121212;
+  --color-text: #EAEAEA;
+  --color-accent: #800020;
+  
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Literata', serif;
+  --font-ui: 'Marcellus', serif;
+  
+  --radius-sm: 2px; /* Sharp, elegant corners */
+  --radius-lg: 4px;
+  
+  --shadow-gold-glow: 0px 4px 20px rgba(212, 175, 55, 0.15);
+  --texture-silk: url('/assets/silk-grain-dark.png');
+}
+```
+
+</details>
+
+---
+
+<details>
+<summary>Screen Specifications</summary>
+
+### The Boudoir (Home)
+
+**Purpose:** Main navigation hub. Feels like browsing a private bookshelf.
+
+**Layout:** Single column vertical scroll. Sticky bottom nav bar.
+
+**Key Elements:**
+- **Hero Carousel:** 350px height. Large book covers with vignette edges fading into black.
+- **Section Headers:** *Cinzel* font, "CURRENT AFFAIRS" (Reading now) and "HIGH SOCIETY" (Trending/Trophy winners).
+- **Book Cards:** 120px height, horizontal flex. Left: Cover image (2:3 aspect). Right: Title (*Playfair*), Author (*Marcellus*), Progress bar (thin gold line).
+
+**States:**
+- **Empty:** "Your shelf is waiting." centered in *Pinyon Script*, gold color.
+- **Loading:** Shimmer effect in dark grey/gold gradient.
+
+**Components:**
+- **Bottom Nav:** Fixed, `#050505` background. Icons: Quill (Home), Open Book (Library), Mask (Profile), Coin (Store). Active icon glows gold.
+
+**Interactions:**
+- **Tap Book Card:** Transitions to **Novel Detail** via shared element transition (cover expands).
+
+### The Novel Detail
+
+**Purpose:** The "sales page" for a specific book.
+
+**Layout:** Parallax cover image top. Content scrolls over it.
+
+**Key Elements:**
+- **Cover Header:** Full width image, fades to black at bottom. Title overlay in white/gold.
+- **Metadata Row:** "Romance" • "Historical" • "Spicy" (Pill tags, 1px gold border).
+- **Synopsis:** First 3 lines visible, "Read More" expands inline.
+- **Cast Preview:** Horizontal scroll of circular character portraits. Label: "The Players".
+- **Chapter List:** Vertical list. Left: "Chapter I". Right: "Free" or "Lock Icon".
+
+**Interactions:**
+- **Tap "Start Reading":** Floating Action Button (FAB), bottom right. Gold circle, black play icon. Ripple effect on press.
+- **Tap Cast Member:** Opens **Cast Gallery** modal.
+
+### The Reading Room
+
+**Purpose:** Pure reading experience. Minimal UI.
+
+**Layout:** Edge-to-edge text. Controls hidden by default.
+
+**Key Elements:**
+- **Text Area:** Justified text, *Literata*, 18px, 1.6lh. Margins 24px.
+- **Chapter Break:** Ornamental divider (filigree SVG in gold).
+- **The Veil (Paywall):** At end of free content. Blurred text below. Button: "Unlock Chapter (5 Credits)".
+
+**Interactions:**
+- **Tap Center:** Toggles HUD (Header: Back button; Footer: Font settings, Chapter scrubber).
+- **Unlock:** Button press triggers "Gold Dust" particle explosion, blur removes.
+
+### The Cast Gallery
+
+**Purpose:** Deep dive into characters. Monetized social proof.
+
+**Layout:** Full-screen modal swiper (Tinder-style but static until swiped).
+
+**Key Elements:**
+- **Portrait:** Full height illustration.
+- **Nameplate:** Bottom gradient overlay. Name in *Playfair Display*.
+- **Backstory Card:** Tap to flip card. Reveals stats (Age, Occupation, Secrets).
+- **Endorsement Fab:** Bottom center. Rose icon. Badge count next to it.
+
+**Interactions:**
+- **Tap Rose:** `-1 Credit` toast appears at top. Rose pulses. Trophy appears if count is high.
+
+### The Author’s Study
+
+**Purpose:** Humanize the creator and cross-sell series.
+
+**Layout:** Standard profile layout with luxe touches.
+
+**Key Elements:**
+- **Avatar:** Hexagonal mask, gold border.
+- **Bio:** Short text. "Writing Style: [Tag] [Tag]".
+- **Series List:** Vertical list of books grouping by series.
+- **Trophy Case:** Grid of trophies earned by their characters/books.
+
+### The Vault (Store)
+
+**Purpose:** Credit purchasing.
+
+**Layout:** Grid of "Coin Purses".
+
+**Key Elements:**
+- **Credit Balance:** Huge number at top, *Playfair Display* Gold.
+- **Purchase Cards:** Rectangles.
+  - "Handful of Gold" (50 Credits) - $4.99
+  - "Chest of Gold" (500 Credits) - $39.99
+  - Highlight: "Most Popular" ribbon in Burgundy.
+
+**Interactions:**
+- **Tap Card:** Native OS payment sheet.
+- **Success:** Coins rain down screen (CSS animation).
+
+</details>
+
+---
+
+<details>
+<summary>Build Guide</summary>
+
+**Stack:** HTML + Tailwind CSS v3
+
+**Build Order:**
+1. **The Reading Room:** This is the core value. Perfect the typography rendering (`prose`, `prose-invert`) and the "Veil" blur mechanism. The atmosphere lives or dies here.
+2. **The Boudoir (Home):** Establish the navigation shell and card components.
+3. **The Novel Detail:** Connects home to reader. Implement parallax scrolling.
+4. **The Vault:** Essential for the economy logic (credits system).
+5. **The Cast Gallery:** Complex UI interactions (flip cards, endorsements).
+
+**Tailwind Config Notes:**
+- Extend colors with specific semantic names: `gold: '#D4AF37'`, `void: '#050505'`.
+- Add custom font families.
+- Add `backgroundImage` utility for the silk texture.
+
+</details>
