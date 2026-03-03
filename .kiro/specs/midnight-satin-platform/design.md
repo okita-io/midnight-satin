@@ -14,7 +14,7 @@ The architecture follows a server-first approach using React Server Components f
 src/app/
 ├── layout.tsx                    # Root layout (fonts, global providers, metadata)
 ├── globals.css                   # Design system CSS custom properties + Tailwind
-├── page.tsx                      # The Boudoir (Home) — "/" 
+├── page.tsx                      # The Boudoir (Home) — "/"
 ├── novel/
 │   └── [novelId]/
 │       ├── page.tsx              # Novel Detail Screen
@@ -144,7 +144,7 @@ Components:
 Components:
 - `CastGalleryModal` — Full-screen modal, swipeable cards at 75vh
 - `CharacterCard` — Full-height portrait background, gradient overlay, name (Playfair Display italic 4xl), role subtitle (Marcellus), description
-- `DossierCard` — 3D flip animation (700ms), stats grid (Age, Status, Height, Occupation), secrets section (burgundy accent bar), background text
+- `DossierCard` — 3D flip animation (700ms), stats grid (Age, Status, Height, Occupation, Zodiac Sign, Blood Type, Birthday), "Tastes & Temptations" subsection (character favorites and notable dislikes, e.g., foods, music, haunts), secrets section (burgundy accent bar), background text
 - `TrophyBadge` — Animated pulsing gold glow (3s cycle) when endorsements > 1000
 - `EndorsementFAB` — 64px burgundy circle with rose icon, endorsement count (Playfair Display bold gold)
 - `NavigationArrows` — Left/right arrows visible on tablet/desktop
@@ -168,6 +168,16 @@ Components:
 - `CoinRainAnimation` — CSS animation on successful purchase
 - `LegalLinks` — Terms of Service and Privacy Policy links
 
+#### 7. Reader Profile & Library — `profile/page.tsx`
+
+Components:
+- `ProfileHeader` — Reader avatar (initials-based or uploaded), display name in Playfair Display italic 2xl, obfuscated email, and credit balance pill
+- `ReadingStatsRow` — Horizontal pills showing chapters read, hours read estimate, roses sent, authors followed
+- `LibrarySectionList` — Two grouped lists: "Currently Reading" (active novels with incomplete chapters) and "Finished" (novels with all chapters completed)
+- `LibraryNovelCard` — Compact novel card with cover thumbnail, title, author, last-read chapter, and "Resume" / "View Details" CTA
+- `FollowedAuthorsStrip` — Horizontally scrollable list of followed Author_Profile avatars linking to the Author's Study
+- `AccountActionsList` — List of actions: Edit Display Name, Manage Email (stub for future), View Transactions, Logout
+
 ### Server Actions
 
 ```typescript
@@ -185,6 +195,14 @@ async function endorseCharacter(characterId: string): Promise<{ success: boolean
 async function followAuthor(authorId: string): Promise<{ success: boolean; newFollowerCount: number }>
 async function saveReadingProgress(chapterId: string, scrollPercent: number): Promise<void>
 async function getReadingProgress(readerId: string): Promise<ReadingProgress[]>
+
+// Comments
+async function getChapterComments(chapterId: string, options?: { cursor?: string; limit?: number }): Promise<CommentThreadPage>
+async function postComment(chapterId: string, content: string, parentCommentId?: string): Promise<Comment>
+async function editComment(commentId: string, content: string): Promise<Comment>
+async function deleteComment(commentId: string): Promise<void>
+async function likeComment(commentId: string): Promise<{ newLikeCount: number }>
+async function unlikeComment(commentId: string): Promise<{ newLikeCount: number }>
 
 // Auth
 async function registerReader(email: string, password: string, displayName: string): Promise<{ success: boolean; readerId: string }>
@@ -332,6 +350,23 @@ erDiagram
         timestamp followed_at
     }
 
+    COMMENTS {
+      uuid id PK
+      uuid chapter_id FK
+      uuid reader_id FK
+      uuid parent_comment_id
+      text content
+      int like_count
+      boolean is_deleted
+      timestamp created_at
+      timestamp updated_at
+    }
+    COMMENT_LIKES {
+      uuid reader_id FK
+      uuid comment_id FK
+      timestamp created_at
+    }
+
     AUTHOR_PROFILES ||--o{ SERIES : "has many"
     AUTHOR_PROFILES ||--o{ NOVELS : "has many"
     SERIES ||--o{ NOVELS : "contains"
@@ -344,6 +379,10 @@ erDiagram
     CHAPTERS ||--o{ READING_PROGRESS : "tracked in"
     CHAPTERS ||--o{ CHAPTER_UNLOCKS : "unlocked via"
     AUTHOR_PROFILES ||--o{ AUTHOR_FOLLOWS : "followed via"
+    CHAPTERS ||--o{ COMMENTS : "has many"
+    READERS ||--o{ COMMENTS : "writes"
+    READERS ||--o{ COMMENT_LIKES : "likes"
+    COMMENTS ||--o{ COMMENT_LIKES : "receives likes"
 ```
 
 ### SQL Schema
@@ -450,6 +489,25 @@ CREATE TABLE author_follows (
   PRIMARY KEY (reader_id, author_id)
 );
 
+CREATE TABLE comments (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  chapter_id UUID NOT NULL REFERENCES chapters(id) ON DELETE CASCADE,
+  reader_id UUID NOT NULL REFERENCES readers(id) ON DELETE CASCADE,
+  parent_comment_id UUID REFERENCES comments(id) ON DELETE SET NULL,
+  content TEXT NOT NULL,
+  like_count INT DEFAULT 0,
+  is_deleted BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE TABLE comment_likes (
+  reader_id UUID NOT NULL REFERENCES readers(id) ON DELETE CASCADE,
+  comment_id UUID NOT NULL REFERENCES comments(id) ON DELETE CASCADE,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  PRIMARY KEY (reader_id, comment_id)
+);
+
 -- Indexes for common queries
 CREATE INDEX idx_novels_author ON novels(author_id);
 CREATE INDEX idx_novels_series ON novels(series_id);
@@ -460,6 +518,9 @@ CREATE INDEX idx_credit_transactions_reader ON credit_transactions(reader_id);
 CREATE INDEX idx_chapter_unlocks_reader ON chapter_unlocks(reader_id);
 CREATE INDEX idx_author_follows_reader ON author_follows(reader_id);
 CREATE INDEX idx_readers_email ON readers(email);
+CREATE INDEX idx_comments_chapter ON comments(chapter_id, created_at DESC);
+CREATE INDEX idx_comments_reader ON comments(reader_id);
+CREATE INDEX idx_comment_likes_comment ON comment_likes(comment_id);
 ```
 
 ### TypeScript Types
@@ -513,6 +574,11 @@ interface CharacterStats {
   status: string;
   height: string;
   occupation: string;
+  zodiacSign: string;
+  bloodType: string;
+  birthday: string; // ISO 8601 date string or styled label (e.g., "March 14")
+  favorites: string[]; // e.g., ["dark chocolate", "late-night piano", "rain-streaked balconies"]
+  dislikes: string[]; // e.g., ["crowded ballrooms", "overly sweet desserts"]
 }
 
 interface Character {
@@ -554,6 +620,29 @@ interface CreditTransaction {
   transactionType: 'purchase' | 'chapter_unlock' | 'endorsement' | 'welcome_bonus' | 'admin_adjustment';
   relatedEntityId: string | null;
   createdAt: Date;
+}
+
+interface Comment {
+  id: string;
+  chapterId: string;
+  readerId: string;
+  parentCommentId: string | null;
+  content: string;
+  likeCount: number;
+  isDeleted: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+interface CommentLike {
+  readerId: string;
+  commentId: string;
+  createdAt: Date;
+}
+
+interface CommentThreadPage {
+  comments: Comment[];
+  nextCursor: string | null;
 }
 ```
 
@@ -706,6 +795,18 @@ interface CreditTransaction {
 
 **Validates: Requirements 13.2, 13.4, 13.7**
 
+### Property 25: Comment lifecycle and ownership
+
+*For any* reader and any chapter, creating a comment should associate the comment with that reader and chapter, set `is_deleted` to false, and persist the content text. Only the comment's author (or an admin) may edit or delete the comment. Deleting a comment should set `is_deleted` to true, optionally replace the content with a fixed placeholder, and leave existing like counts and comment_likes records intact.
+
+**Validates: Requirements 19.5, 19.6**
+
+### Property 26: Comment like invariant
+
+*For any* reader and any comment, if no `comment_likes` record exists for that reader/comment pair, calling `likeComment` should create exactly one record and increment the comment's `like_count` by 1. Calling `likeComment` again without an intervening `unlikeComment` should be idempotent (no extra record, no additional increment). Calling `unlikeComment` should remove the record (if present) and decrement `like_count` by 1 without going below 0.
+
+**Validates: Requirements 19.7**
+
 
 ## Error Handling
 
@@ -783,6 +884,7 @@ src/
 │   │   ├── chapter-access.test.ts        # Properties 14, 16
 │   │   ├── author.test.ts               # Properties 17, 18
 │   │   ├── mcp.test.ts                  # Properties 19, 20, 21, 22
+│   │   ├── comments.test.ts            # Properties 25, 26
 │   │   └── admin.test.ts               # Property 24
 │   ├── unit/                 # Unit tests
 │   │   ├── components/       # Component rendering tests
@@ -809,7 +911,7 @@ src/
 
 ### Property Test Focus Areas
 
-- All 24 correctness properties from the design document
+- All correctness properties from the design document
 - Custom generators for each domain type ensuring valid data
 - Edge case generation: empty strings, boundary credit values (0, 1, 4, 5), endorsement counts near 1000
 - Round-trip properties for all database entities and reading progress

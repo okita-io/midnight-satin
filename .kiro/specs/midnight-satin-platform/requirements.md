@@ -109,6 +109,7 @@ Midnight Satin is a premium romance reading web application designed as a "Tacti
 4. WHEN a Reader taps the "Tap to reveal dossier" prompt, THE Cast_Gallery SHALL perform a 3D card flip animation (700ms duration) revealing the backstory card with stats grid (Age, Status, Height, Occupation), known secrets section with burgundy accent bar, and background text
 5. WHEN a Character has more than 1000 Endorsements, THE Cast_Gallery SHALL display an animated Trophy badge in the top-right corner with a pulsing gold glow effect on a 3-second cycle
 6. THE Cast_Gallery SHALL display left and right navigation arrows on tablet and desktop viewports for browsing between Characters
+7. THE Cast_Gallery dossier view SHALL display additional persona details for each Character including zodiac sign, blood type, and birthday, and a "Tastes & Temptations" subsection listing at least one favorite and one notable dislike (e.g., foods, music, haunts) in a styled list consistent with the Design_System
 
 ### Requirement 6: Character Endorsement System
 
@@ -174,7 +175,7 @@ Midnight Satin is a premium romance reading web application designed as a "Tacti
 2. THE Platform SHALL store Series records with fields for id, title, Author_Profile reference, description, genre tags, completion status, and creation timestamp
 3. THE Platform SHALL store Novel records with fields for id, title, Series reference, Author_Profile reference, cover image URL, synopsis, genre tags, rating, and publication date
 4. THE Platform SHALL store Chapter records with fields for id, Novel reference, chapter number, title, content text, free/locked status, and creation timestamp
-5. THE Platform SHALL store Character records with fields for id, Novel reference, name, role subtitle, portrait image URL, description, backstory, stats (age, status, height, occupation), secrets, endorsement count, and trophy status
+5. THE Platform SHALL store Character records with fields for id, Novel reference, name, role subtitle, portrait image URL, description, backstory, stats (age, status, height, occupation, zodiac sign, blood type, birthday, favorites and dislikes), secrets, endorsement count, and trophy status
 6. THE Platform SHALL store Registered_Reader records with fields for id, email, password hash, display name, credit balance, creation timestamp, and last login timestamp
 7. THE Platform SHALL store Reading_Progress records with fields for Reader reference, Chapter reference, scroll position percentage, and last read timestamp
 8. THE Platform SHALL store Credit_Transaction records with fields for id, Reader reference, amount, transaction type (purchase, chapter_unlock, endorsement, welcome_bonus), related entity reference, and timestamp
@@ -271,3 +272,37 @@ Midnight Satin is a premium romance reading web application designed as a "Tacti
 4. THE Platform SHALL use Vercel_KV for caching frequently accessed data via the `@vercel/kv` SDK
 5. THE Platform SHALL configure environment variables for all Vercel service connections (POSTGRES_URL, BLOB_READ_WRITE_TOKEN, KV_REST_API_URL, KV_REST_API_TOKEN)
 6. THE Platform SHALL use Edge-compatible middleware for authentication checks on protected routes
+
+### Requirement 18: Reader Profile & Library
+
+**User Story:** As a Registered_Reader, I want a dedicated profile and library screen so that I can see my reading history, stats, followed authors, and manage my account in one place.
+
+#### Acceptance Criteria
+
+1. THE Platform SHALL provide a Reader Profile & Library screen at the `/profile` route, accessible from the Navigation_Bar "Profile" icon.
+2. THE Reader Profile & Library screen SHALL display a header section with the Reader's avatar (initials-based by default), display name, partially obfuscated email address, and current Credit balance.
+3. THE Reader Profile & Library screen SHALL display a stats row showing at minimum: total Chapters read, total Novels in progress, total Roses (Endorsements) sent, and Authors followed, derived from Reading_Progress, Chapter_Unlock, Credit_Transactions, and Author_Follow records.
+4. THE Reader Profile & Library screen SHALL display a "Currently Reading" section listing Novels for which the Reader has Reading_Progress with `scroll_percent` &gt; 0 and &lt; 100, ordered by `last_read_at` descending.
+5. THE Reader Profile & Library screen SHALL display a "Finished" section listing Novels for which all Chapters are either free or unlocked and have Reading_Progress with `scroll_percent` = 100, ordered by most recently completed.
+6. EACH item in the "Currently Reading" and "Finished" sections SHALL display the Novel cover thumbnail, title, Author_Profile name, current or last-read Chapter number, and a "Resume" or "View Details" CTA that navigates to the appropriate Reading_Room or Novel_Detail_Screen.
+7. THE Reader Profile & Library screen SHALL display a horizontal strip of followed Author_Profiles (avatars) that navigates to the Authors_Study when tapped.
+8. THE Reader Profile & Library screen SHALL provide account actions for updating the display name and logging out; logging out SHALL clear the session and return the Reader to Guest_Reader state on the Boudoir.
+9. WHEN a Guest_Reader navigates to `/profile`, THE Platform SHALL display an authentication prompt directing the Guest_Reader to log in or register.
+
+### Requirement 19: Chapter Comments & Reactions
+
+**User Story:** As a Registered_Reader, I want to read and write comments on chapters and like other readers' comments, so that I can discuss the story with the community.
+
+#### Acceptance Criteria
+
+1. THE Reading_Room SHALL provide access to a comments panel via a "Comments" control in the ReadingHUD footer that displays the total number of comments for the current Chapter.
+2. WHEN the Reader activates the "Comments" control, THE Reading_Room SHALL reveal a bottom sheet or overlay (`CommentsSection`) showing the list of comments for the current Chapter while keeping the chapter content visible behind.
+3. THE Platform SHALL associate all comments with a specific Chapter and Reader, and display them in reverse chronological order by creation time by default, grouped by top-level comment with an optional single level of replies.
+4. EACH comment item SHALL display the commenting Reader's display name, a relative timestamp (e.g., "5m ago", "Yesterday"), the comment text (with line breaks preserved), and a like count with a heart icon.
+5. Guest_Readers SHALL be allowed to view comments but SHALL NOT be allowed to post, edit, delete, or like comments; attempting any of these actions SHALL trigger an authentication prompt.
+6. Registered_Readers SHALL be able to post new top-level comments and replies from the CommentsSection with a client-side character limit (e.g., 800 characters) and server-side validation; empty or whitespace-only comments SHALL be rejected with an inline error.
+7. Registered_Readers SHALL be able to edit and delete only their own comments; deleting a comment SHALL mark it as deleted and display a placeholder message (e.g., "This comment has been removed") while preserving the thread structure and like counts.
+8. Registered_Readers SHALL be able to like or unlike any non-deleted comment via the heart icon; the like button SHALL represent a toggle where a Reader can have at most one active like per comment.
+9. THE Platform SHALL ensure that the visible like count on a comment equals the number of distinct Reader likes recorded in the underlying Comment_Likes table.
+10. Liking or unliking a comment SHALL NOT affect the Reader's Credit balance and SHALL NOT create Credit_Transaction records.
+11. THE Admin_Dashboard SHALL provide a way for administrators to hide or soft-delete abusive comments, which SHALL map to the same `is_deleted` behavior used when a Reader deletes their own comment.
