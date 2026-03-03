@@ -1,8 +1,6 @@
 ---
-description: Design reference and guidelines for the Midnight Satin premium romance reading app
 alwaysApply: true
 ---
-
 # Midnight Satin - Design Reference
 
 This project is a premium romance reading app called **Midnight Satin**. All implementation must follow the design screens and PRD in `reference/`.
