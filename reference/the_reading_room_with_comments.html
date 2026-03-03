@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Reading Room - Midnight Satin</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&amp;family=Marcellus&amp;family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#D4AF37", // Metallic Gold
+                        "primary-dim": "#8a701e",
+                        "void": "#050505",    // True Void Black
+                        "surface": "#121212",
+                        "text-main": "#EAEAEA",
+                        "text-muted": "#8A8A8A",
+                        "accent": "#800020",
+                    },
+                    fontFamily: {
+                        "display": ["Playfair Display", "serif"],
+                        "body": ["Newsreader", "serif"],
+                        "ui": ["Marcellus", "serif"],
+                        "heading": ["Cinzel", "serif"],
+                    },
+                    backgroundImage: {
+                        'silk-noise': "url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjMDUwNTA1Ii8+CjxyZWN0IHdpZHRoPSIxIiBoZWlnaHQ9IjEiIGZpbGw9InJnYmEoMjEyLCAxNzUsIDU1LCAwLjAzKSIvPgo8L3N2Zz4=')",
+                        'gradient-veil': "linear-gradient(to bottom, rgba(5,5,5,0) 0%, rgba(5,5,5,0.8) 40%, rgba(5,5,5,1) 100%)",
+                    },
+                    boxShadow: {
+                        'gold-glow': '0px 4px 20px rgba(212, 175, 55, 0.15)',
+                    }
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        ::-webkit-scrollbar {
+            width: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #050505; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333; 
+            border-radius: 2px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #D4AF37; 
+        }
+        .drop-cap::first-letter {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            line-height: 0.8;
+            float: left;
+            margin-right: 0.5rem;
+            margin-top: 0.2rem;
+            color: #D4AF37;
+        }
+        .bottom-sheet-gradient {
+            background: linear-gradient(180deg, #121212 0%, #050505 100%);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-void text-text-main font-body antialiased overflow-hidden h-screen flex flex-col bg-silk-noise selection:bg-primary/30 selection:text-white">
+<header class="fixed top-0 left-0 w-full z-40 transition-transform duration-300 bg-gradient-to-b from-void via-void/90 to-transparent pt-safe-top pb-8 pointer-events-none">
+<div class="flex items-center justify-between px-4 h-16 pointer-events-auto">
+<button class="w-10 h-10 flex items-center justify-center text-primary/80 hover:text-primary transition-colors active:scale-95">
+<span class="material-symbols-outlined" style="font-size: 28px;">arrow_back</span>
+</button>
+<div class="flex flex-col items-center">
+<span class="text-xs font-heading tracking-[0.15em] text-text-muted uppercase">Chapter IV</span>
+<span class="text-sm font-display text-text-main italic">The Gilded Cage</span>
+</div>
+<button class="w-10 h-10 flex items-center justify-center text-primary/80 hover:text-primary transition-colors active:scale-95">
+<span class="material-symbols-outlined" style="font-size: 24px;">bookmark_add</span>
+</button>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto relative h-full w-full scroll-smooth">
+<div class="max-w-xl mx-auto px-6 pt-24 pb-48">
+<div class="text-center mb-12">
+<div class="flex items-center justify-center gap-4 mb-4 opacity-50">
+<div class="h-[1px] w-8 bg-gradient-to-r from-transparent to-primary"></div>
+<span class="w-2 h-2 rotate-45 border border-primary bg-void"></span>
+<div class="h-[1px] w-8 bg-gradient-to-l from-transparent to-primary"></div>
+</div>
+<h1 class="font-display italic text-4xl text-primary mb-2 drop-shadow-md">The Gilded Cage</h1>
+<p class="font-ui text-xs tracking-widest text-text-muted uppercase">Midnight Satin • Vol. 1</p>
+</div>
+<article class="prose prose-invert prose-lg max-w-none text-text-main/90 leading-relaxed font-body text-lg text-justify">
+<p class="drop-cap mb-6">
+                    The ballroom was a sea of velvet and diamonds, a suffocating display of wealth that made Eleanor’s corset feel tighter than the laces allowed. She stood near the periphery, a shadow in emerald silk, watching the duke from across the room.
+                </p>
+<p class="mb-6">
+                    "He looks dangerous tonight," a voice murmured beside her. Eleanor didn't need to turn to know it was Julian. He smelled of cloves and old books, a comforting scent in this shark tank.
+                </p>
+<p class="mb-6">
+                    "He is always dangerous, Julian. That is the point of him," she replied, her gaze never wavering. The duke turned then, as if feeling the weight of her stare. His eyes, dark as the onyx ring on his finger, locked onto hers.
+                </p>
+<div aria-hidden="true" class="py-8 flex items-center justify-center opacity-80">
+<svg class="text-primary" fill="none" height="20" viewBox="0 0 120 20" width="120" xmlns="http://www.w3.org/2000/svg">
+<path d="M60 10C60 10 50 0 30 0C10 0 0 10 0 10C0 10 10 20 30 20C50 20 60 10 60 10Z" fill="currentColor" fill-opacity="0.2"></path>
+<path d="M60 10C60 10 70 0 90 0C110 0 120 10 120 10C120 10 110 20 90 20C70 20 60 10 60 10Z" fill="currentColor" fill-opacity="0.2"></path>
+<circle cx="60" cy="10" fill="#D4AF37" r="3"></circle>
+<path d="M40 10H80" stroke="#D4AF37" stroke-width="0.5"></path>
+</svg>
+</div>
+<p class="mb-6">
+                    He began to move through the crowd, parting the sea of aristocrats like a ship cutting through dark waters. Eleanor’s breath hitched. Every step he took was a promise, or perhaps a threat.
+                </p>
+</article>
+</div>
+</main>
+<div class="fixed inset-x-0 bottom-0 z-50 flex flex-col max-h-[70vh] bottom-sheet-gradient border-t border-primary/40 bg-silk-noise rounded-t-2xl shadow-[0_-10px_40px_rgba(0,0,0,0.8)]">
+<div class="w-full flex justify-center py-3">
+<div class="w-12 h-1 bg-white/10 rounded-full"></div>
+</div>
+<div class="px-6 pb-4 border-b border-white/5 flex items-center justify-between">
+<h2 class="font-heading text-sm tracking-[0.2em] text-primary uppercase">Thoughts from the Boudoir</h2>
+<span class="font-ui text-[10px] text-text-muted">124 ENTRIES</span>
+</div>
+<div class="flex-1 overflow-y-auto px-6 py-4 space-y-8">
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="font-heading text-xs text-text-main tracking-wider uppercase">Isabella.V</span>
+<span class="text-[10px] font-ui text-text-muted">2h ago</span>
+</div>
+<div class="flex items-center gap-1.5 text-primary">
+<span class="text-[10px] font-ui">42</span>
+<span class="material-symbols-outlined" style="font-size: 14px; font-variation-settings: 'FILL' 1">favorite</span>
+</div>
+</div>
+<p class="font-body text-sm leading-relaxed text-text-main/80 italic">
+                    The way he describes the onyx ring... the tension in this room is palpable. I can almost smell the cloves and old books.
+                </p>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="font-heading text-xs text-text-main tracking-wider uppercase">Julianne_Noir</span>
+<span class="text-[10px] font-ui text-text-muted">5h ago</span>
+</div>
+<div class="flex items-center gap-1.5 text-primary">
+<span class="text-[10px] font-ui">18</span>
+<span class="material-symbols-outlined" style="font-size: 14px;">favorite</span>
+</div>
+</div>
+<p class="font-body text-sm leading-relaxed text-text-main/80 italic">
+                    "He is always dangerous." Chills. Eleanor is playing a very high-stakes game.
+                </p>
+</div>
+<div class="flex flex-col gap-2">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="font-heading text-xs text-text-main tracking-wider uppercase">Lady_Whist</span>
+<span class="text-[10px] font-ui text-text-muted">1d ago</span>
+</div>
+<div class="flex items-center gap-1.5 text-primary">
+<span class="text-[10px] font-ui">124</span>
+<span class="material-symbols-outlined" style="font-size: 14px; font-variation-settings: 'FILL' 1">favorite</span>
+</div>
+</div>
+<p class="font-body text-sm leading-relaxed text-text-main/80 italic">
+                    The emerald silk vs the onyx ring. The color palette of this scene is as rich as the prose.
+                </p>
+</div>
+</div>
+<div class="px-6 py-6 pb-10 bg-void/50 border-t border-white/5">
+<div class="relative">
+<input class="w-full bg-transparent border-0 border-b border-primary/30 py-2 px-0 text-sm font-body italic focus:ring-0 focus:border-primary placeholder:text-text-muted text-text-main transition-colors" placeholder="Add a thought..." type="text"/>
+<button class="absolute right-0 bottom-2 text-primary">
+<span class="material-symbols-outlined" style="font-size: 20px;">history_edu</span>
+</button>
+</div>
+</div>
+</div>
+<footer class="fixed bottom-0 left-0 w-full z-40 bg-void border-t border-white/5 shadow-2xl pb-safe-bottom">
+<div class="w-full h-0.5 bg-white/5 relative">
+<div class="absolute left-0 top-0 h-full bg-primary/60 w-[35%]"></div>
+</div>
+<div class="px-6 py-3 flex items-center justify-between">
+<button class="flex flex-col items-center gap-1 text-text-muted hover:text-white transition-colors">
+<span class="material-symbols-outlined" style="font-size: 22px;">text_fields</span>
+<span class="text-[9px] font-ui uppercase tracking-wider">Type</span>
+</button>
+<div class="flex-1 px-4 flex flex-col items-center">
+<div class="flex items-center gap-8 text-text-main/80">
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined" style="font-size: 20px;">skip_previous</span></button>
+<div class="flex flex-col items-center">
+<span class="text-[10px] font-ui text-text-muted uppercase tracking-widest mb-0.5">35%</span>
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined" style="font-size: 28px;">play_circle</span></button>
+</div>
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined" style="font-size: 20px;">skip_next</span></button>
+</div>
+</div>
+<button class="relative flex flex-col items-center gap-1 text-primary transition-colors">
+<div class="relative">
+<span class="material-symbols-outlined" style="font-size: 24px;">history_edu</span>
+<div class="absolute -top-1.5 -right-2 bg-accent text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full border border-void min-w-[18px]">124</div>
+</div>
+<span class="text-[9px] font-ui uppercase tracking-wider">Notes</span>
+</button>
+</div>
+</footer>
+<div class="fixed inset-0 pointer-events-none opacity-[0.03] z-[60]" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJnoj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC42IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI2cpIiBvcGFjaXR5PSIwLjUiLz48L3N2Zz4='); mix-blend-mode: overlay;"></div>
+
+</body></html>

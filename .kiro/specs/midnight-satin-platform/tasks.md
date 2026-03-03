@@ -1,12 +1,12 @@
 # Implementation Plan: Midnight Satin Platform
 
 ## Overview
-Build the Midnight Satin romance reading platform with Next.js 16, React 19, TypeScript, Tailwind CSS, Vercel. HTML mockups in `.antigravity/` are the UI source of truth.
+Build the Midnight Satin romance reading platform with Next.js 16, React 19, TypeScript, Tailwind CSS, Vercel. HTML mockups in `reference/` are the UI source of truth.
 
 ## Tasks
 - [ ] 1. Project scaffolding, design system, and database foundation
   - [ ] 1.1 Initialize Next.js 16 project with design system and dependencies
-    - Create root layout with Google Fonts, globals.css with design tokens, tailwind.config.ts
+    - Create root layout with Google Fonts, globals.css with design tokens, tailwind.config.ts, and mobile-first responsive container (max-w-md centered on desktop)
     - Install: @vercel/postgres, @vercel/blob, @vercel/kv, fast-check, vitest, bcryptjs, jose
     - _Requirements: 14.1-14.6, 17.1-17.5_
   - [ ] 1.2 Create database schema and TypeScript types
@@ -40,15 +40,15 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - content.ts, cache.ts (KV TTL 300s), blob.ts; ISR 60s for Boudoir, Novel Detail, Author Study
     - _Requirements: 11.1-11.5_
 - [ ] 6. The Boudoir (Home Screen)
-  - [ ] 6.1 Implement The Boudoir page and components
-    - Create src/app/page.tsx as ISR page matching .antigravity/midnight_satin_home.html
+- [ ] 6.1 Implement The Boudoir page and components
+    - Create src/app/page.tsx as ISR page matching reference/midnight_satin_home.html
     - Implement HeroCarousel, CurrentAffairsSection, HighSocietySection, VaultTeaserCard, header bar
     - _Requirements: 1.1-1.8, 15.5_
   - [ ]* 6.2 Property test: current reading identification
     - **Property 12: Current reading identification** — **Validates: Requirements 1.2, 16.3**
 - [ ] 7. Novel Detail Screen
   - [ ] 7.1 Implement Novel Detail page
-    - Create src/app/novel/[novelId]/page.tsx as ISR page matching .antigravity/the_novel_detail.html
+    - Create src/app/novel/[novelId]/page.tsx as ISR page matching reference/the_novel_detail.html
     - Implement ParallaxHero, MetadataPills, SynopsisSection, PlayersSection, ChapterList, FloatingActionButton
     - _Requirements: 2.1-2.9_
   - [ ]* 7.2 Property tests: chapter access and first unread
@@ -56,7 +56,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Validates: Requirements 2.6, 2.7, 16.4**
 - [ ] 8. The Reading Room and The Veil
   - [ ] 8.1 Implement The Reading Room page
-    - Create src/app/novel/[novelId]/read/[chapterId]/page.tsx matching .antigravity/the_reading_room.html
+    - Create src/app/novel/[novelId]/read/[chapterId]/page.tsx matching reference/the_reading_room.html
     - Implement ChapterContent, DropCap, OrnamentalDivider, ReadingHUD, ProgressBar; hide nav bar
     - _Requirements: 3.1-3.6, 15.4_
   - [ ] 8.2 Implement reading progress tracking
@@ -75,7 +75,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - Ensure all tests pass, ask the user if questions arise.
 - [ ] 10. Cast Gallery and character endorsements
   - [ ] 10.1 Implement Cast Gallery modal and components
-    - Implement cast-gallery-modal.tsx with CharacterCard, DossierCard, TrophyBadge, EndorsementFAB, and NavigationArrows to match `.antigravity/the_cast_gallery_1.html` and `.antigravity/the_cast_gallery_2.html`, including extended dossier fields for zodiac sign, blood type, birthday, and a "Tastes & Temptations" section showing character favorites and dislikes.
+    - Implement cast-gallery-modal.tsx with CharacterCard, DossierCard, TrophyBadge, EndorsementFAB, and NavigationArrows to match `reference/the_cast_gallery_1.html` and `reference/the_cast_gallery_2.html`, including extended dossier fields for zodiac sign, blood type, birthday, and a "Tastes & Temptations" section showing character favorites and dislikes.
     - _Requirements: 5.1-5.7, 6.1-6.3_
   - [ ] 10.2 Implement endorsement server actions
     - Implement endorseCharacter server action and trophy threshold logic backed by CREDIT_TRANSACTIONS and CHARACTERS tables.
@@ -85,7 +85,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Validates: Requirements 5.5, 6.4, 6.5, 6.6**
 - [ ] 11. Author's Study and follow system
   - [ ] 11.1 Implement Author's Study page
-    - Create src/app/author/[authorId]/page.tsx matching `.antigravity/the_authors_study.html` (HexagonAvatar, BiographySection, TrophyCase, BibliographySection, FollowButton).
+    - Create src/app/author/[authorId]/page.tsx matching `reference/the_authors_study.html` (HexagonAvatar, BiographySection, TrophyCase, BibliographySection, FollowButton).
     - _Requirements: 7.1-7.5_
   - [ ] 11.2 Implement followAuthor action and bibliography query
     - Implement followAuthor server action with idempotent follow behavior and bibliography grouping by Series.
@@ -95,7 +95,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Validates: Requirements 7.5-7.7**
 - [ ] 12. Vault, payments, and credit packs
   - [ ] 12.1 Implement Vault page UI and credit packs
-    - Create src/app/vault/page.tsx matching `.antigravity/the_vault_store.html`, including CreditBalanceDisplay, CreditPackGrid, PopularRibbon, CoinRainAnimation, and LegalLinks.
+    - Create src/app/vault/page.tsx matching `reference/the_vault_store.html`, including CreditBalanceDisplay, CreditPackGrid, PopularRibbon, CoinRainAnimation, and LegalLinks.
     - _Requirements: 8.1-8.3, 11.1, 14.1-14.6_
   - [ ] 12.2 Implement purchaseCredits action and payment webhook
     - Implement purchaseCredits server action and `/api/webhooks/payment` route to handle success/failure callbacks from the payment provider.
@@ -108,7 +108,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Implement `/api/mcp` route exposing create/list/update tools for Author_Profiles, Series, Novels, Chapters, and Characters with API key auth.
     - _Requirements: 11.5, 12.1-12.9_
   - [ ] 13.2 Implement admin dashboard routes and CRUD screens
-    - Create admin layout and pages for authors, series, novels, chapters, characters, and users with basic CRUD.
+    - Create admin layout and pages for authors, series, novels, chapters, characters, users, and comment moderation (hide/soft-delete abusive comments).
     - _Requirements: 13.1-13.7_
   - [ ]* 13.3 Property tests: MCP and admin analytics
     - **Property 19: MCP content creation round-trip** — **Property 20: MCP content filtering** — **Property 21: MCP content update** — **Property 22: MCP input validation** — **Property 24: Admin analytics accuracy**

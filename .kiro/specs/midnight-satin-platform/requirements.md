@@ -45,7 +45,7 @@ Midnight Satin is a premium romance reading web application designed as a "Tacti
 
 #### Acceptance Criteria
 
-1. THE Boudoir SHALL render a hero carousel section with a height of 350px or greater, displaying featured Novel cover images with vignette edges fading into the void background, matching the layout in `.antigravity/midnight_satin_home.html`
+1. THE Boudoir SHALL render a hero carousel section with a height of 350px or greater, displaying featured Novel cover images with vignette edges fading into the void background, matching the layout in `reference/midnight_satin_home.html`
 2. THE Boudoir SHALL display a "Current Affairs" section showing the Registered_Reader's currently reading Novel with cover image (2:3 aspect ratio), title in Playfair Display font, Author_Profile name in Marcellus font, current Chapter indicator, and a gold progress bar showing completion percentage
 3. THE Boudoir SHALL display a "High Society" section with a horizontally scrollable list of trending Novels, each showing cover image, title, Author_Profile name, and optional star rating badge
 4. THE Boudoir SHALL display a Vault teaser card promoting credit purchases with gold gradient styling
@@ -60,7 +60,7 @@ Midnight Satin is a premium romance reading web application designed as a "Tacti
 
 #### Acceptance Criteria
 
-1. THE Novel_Detail_Screen SHALL render a parallax hero section occupying 65% of the viewport height with the Novel cover image, gradient overlay fading to void black, and the Novel title in Playfair Display italic bold at 4xl size, matching the layout in `.antigravity/the_novel_detail.html`
+1. THE Novel_Detail_Screen SHALL render a parallax hero section occupying 65% of the viewport height with the Novel cover image, gradient overlay fading to void black, and the Novel title in Playfair Display italic bold at 4xl size, matching the layout in `reference/the_novel_detail.html`
 2. THE Novel_Detail_Screen SHALL display metadata pills (genre tags) with 1px gold borders and primary gold text
 3. THE Novel_Detail_Screen SHALL display a synopsis section with the first 3 lines visible and a "Read More" button that expands the full text inline
 4. THE Novel_Detail_Screen SHALL display a "The Players" section with a horizontally scrollable list of circular Character portraits (80px diameter) with gold borders, each labeled with the Character name
@@ -76,7 +76,7 @@ Midnight Satin is a premium romance reading web application designed as a "Tacti
 
 #### Acceptance Criteria
 
-1. THE Reading_Room SHALL render chapter text in Literata font at 18px with 1.6 line-height, justified alignment, and 24px margins on a void black background, matching the layout in `.antigravity/the_reading_room.html`
+1. THE Reading_Room SHALL render chapter text in Literata font at 18px with 1.6 line-height, justified alignment, and 24px margins on a void black background, matching the layout in `reference/the_reading_room.html`
 2. THE Reading_Room SHALL render the first letter of each chapter as a drop cap in Playfair Display font at 3.5rem size in primary gold color
 3. THE Reading_Room SHALL display ornamental dividers (filigree SVG in gold) between chapter sections
 4. THE Reading_Room SHALL hide all navigation controls by default, showing only the reading text
@@ -103,7 +103,7 @@ Midnight Satin is a premium romance reading web application designed as a "Tacti
 
 #### Acceptance Criteria
 
-1. THE Cast_Gallery SHALL render as a full-screen modal with a swipeable card interface occupying 75% of the viewport height, matching the layout in `.antigravity/the_cast_gallery_1.html`
+1. THE Cast_Gallery SHALL render as a full-screen modal with a swipeable card interface occupying 75% of the viewport height, matching the layout in `reference/the_cast_gallery_1.html`
 2. THE Cast_Gallery SHALL display the Character portrait as a full-height background image with a gradient overlay fading to void black at the bottom
 3. THE Cast_Gallery SHALL display the Character name in Playfair Display italic at 4xl size, a role subtitle (e.g., "The Exiled Heir") in Marcellus font, and a short description in italic body text
 4. WHEN a Reader taps the "Tap to reveal dossier" prompt, THE Cast_Gallery SHALL perform a 3D card flip animation (700ms duration) revealing the backstory card with stats grid (Age, Status, Height, Occupation), known secrets section with burgundy accent bar, and background text
@@ -130,7 +130,7 @@ Midnight Satin is a premium romance reading web application designed as a "Tacti
 
 #### Acceptance Criteria
 
-1. THE Authors_Study SHALL display the Author_Profile avatar in a hexagonal mask with a gold gradient border, matching the layout in `.antigravity/the_authors_study.html`
+1. THE Authors_Study SHALL display the Author_Profile avatar in a hexagonal mask with a gold gradient border, matching the layout in `reference/the_authors_study.html`
 2. THE Authors_Study SHALL display the Author_Profile name in Playfair Display italic at 3xl size, genre tags in Marcellus font, and stats row showing works count, follower count, and average rating
 3. THE Authors_Study SHALL display the Author_Profile biography as a centered italic quote with decorative quotation marks and writing style hashtag pills
 4. THE Authors_Study SHALL display a Trophy Case section as a 3-column grid showing the Author_Profile's earned trophies with icons, names, and descriptions
@@ -144,7 +144,7 @@ Midnight Satin is a premium romance reading web application designed as a "Tacti
 
 #### Acceptance Criteria
 
-1. THE Vault SHALL display the Reader's current Credit balance as a large number in Playfair Display italic bold at 6xl size with a gold text gradient, matching the layout in `.antigravity/the_vault_store.html`
+1. THE Vault SHALL display the Reader's current Credit balance as a large number in Playfair Display italic bold at 6xl size with a gold text gradient, matching the layout in `reference/the_vault_store.html`
 2. THE Vault SHALL display Credit_Pack options in a grid layout with the following packs: "Pouch of Dust" (50 Credits, $4.99), "Handful of Gold" (150 Credits, $12.99), "Chest of Riches" (500 Credits, $39.99), and "Royal Treasury" (1200 Credits, $89.99)
 3. THE Vault SHALL visually highlight the "Handful of Gold" pack as "Most Popular" with a burgundy ribbon badge, elevated scale (1.02x), and a gold shimmer animation on the purchase button
 4. WHEN a Reader taps a Credit_Pack purchase button, THE Platform SHALL initiate a payment flow through the configured payment provider

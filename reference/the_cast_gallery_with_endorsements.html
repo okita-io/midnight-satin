@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Midnight Satin - The Cast Gallery</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&amp;family=Literata:opsz,wght@7..72,300;400;500&amp;family=Marcellus&amp;family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,700&amp;family=Pinyon+Script&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#D4AF37",
+                        "void": "#050505",
+                        "surface": "#121212",
+                        "accent": "#800020",
+                        "text-main": "#EAEAEA",
+                        "text-muted": "#8A8A8A",
+                    },
+                    fontFamily: {
+                        "display": ["Playfair Display", "serif"],
+                        "body": ["Literata", "serif"],
+                        "ui": ["Marcellus", "serif"],
+                        "script": ["Pinyon Script", "cursive"],
+                        "heading": ["Cinzel", "serif"],
+                    },
+                    boxShadow: {
+                        "gold-glow": "0px 4px 20px rgba(212, 175, 55, 0.15)",
+                    }
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        @layer utilities {
+            .no-scrollbar::-webkit-scrollbar { display: none; }
+            .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+            .perspective-1000 { perspective: 1000px; }
+            .transform-style-3d { transform-style: preserve-3d; }
+            .backface-hidden { backface-visibility: hidden; }
+            .rotate-y-180 { transform: rotateY(180deg); }
+        }
+        .gold-glow-text {
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+        .silk-overlay {
+            background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.05%22/%3E%3C/svg%3E');
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-void text-text-main h-screen w-full overflow-hidden flex flex-col items-center justify-center font-body selection:bg-primary selection:text-void">
+<div class="fixed top-0 left-0 right-0 z-50 p-6 flex justify-between items-center bg-gradient-to-b from-void/90 to-transparent">
+<div class="flex items-center gap-2">
+<span class="text-primary font-heading text-xs tracking-[0.2em] uppercase">The Cast Gallery</span>
+</div>
+<button class="flex items-center justify-center size-10 rounded-full bg-surface/50 border border-white/10 backdrop-blur-sm text-text-main">
+<span class="material-symbols-outlined" style="font-size: 20px;">close</span>
+</button>
+</div>
+<main class="relative w-full h-full max-w-md mx-auto flex flex-col items-center justify-center p-4">
+<div class="relative w-full h-[75vh] perspective-1000">
+<div class="relative w-full h-full transform-style-3d transition-transform duration-700 ease-in-out shadow-gold-glow rounded-lg" id="card-inner">
+<div class="absolute inset-0 w-full h-full backface-hidden bg-surface rounded-lg overflow-hidden border border-white/5">
+<div class="absolute inset-0 bg-cover bg-center bg-no-repeat" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDbV5TijEhfdu5lu1dP6DSAS6PvVPCnRe2F_k32RLtSk8xYkX8NodrOPWQJjua_E-yqZIzV2zWVDqQuMJtvK5YnXn9o3lU85Y963540yPYWXd-K7toH3Fz05ujkW7kSbxSg9QxMMbsYwlOehSsAWolRd2V1juQEIygZHbAr3QKmspm5mliFndhQ03-q11nhkhMNIhNtUoM_ZV7KugsvY0ItOcYl1o2azfjpKvL-49wCMwujdDLxs32uEo7blAGsuDO8JQaO45xyTJc');">
+<div class="absolute inset-0 bg-gradient-to-t from-void via-void/40 to-transparent"></div>
+</div>
+<div class="absolute top-4 right-4 z-20 flex flex-col items-center gap-1">
+<div class="size-10 rounded-full bg-surface/80 backdrop-blur border border-primary flex items-center justify-center text-primary shadow-[0_0_15px_rgba(212,175,55,0.4)]">
+<span class="material-symbols-outlined text-[20px] fill-1">emoji_events</span>
+</div>
+</div>
+<div class="absolute bottom-32 left-0 right-0 p-8 pt-24 bg-gradient-to-t from-void via-void/80 to-transparent flex flex-col items-center text-center">
+<div class="mb-2 flex items-center gap-2 opacity-80">
+<div class="h-[1px] w-8 bg-primary/50"></div>
+<span class="font-ui text-primary text-xs tracking-[0.2em] uppercase">The Exiled Heir</span>
+<div class="h-[1px] w-8 bg-primary/50"></div>
+</div>
+<h2 class="font-display text-4xl italic text-white mb-2 drop-shadow-lg">Duke Alistair</h2>
+</div>
+<div class="absolute bottom-0 left-0 right-0 p-8 flex flex-col items-center bg-gradient-to-t from-void to-transparent">
+<button class="size-[64px] rounded-full bg-accent flex items-center justify-center border border-white/20 shadow-[0_4px_20px_rgba(128,0,32,0.4)] active:scale-95 transition-transform duration-200 z-50">
+<span class="material-symbols-outlined text-white text-3xl fill-0">local_florist</span>
+</button>
+<div class="mt-3 flex flex-col items-center">
+<span class="font-heading text-primary text-sm tracking-[0.15em] gold-glow-text">1,248 ENDORSEMENTS</span>
+</div>
+</div>
+</div>
+<div class="absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-surface silk-overlay rounded-lg border border-primary/20 p-8 flex flex-col shadow-inner-gold">
+<div class="flex justify-between items-center border-b border-primary/20 pb-4 mb-6">
+<h3 class="font-heading text-primary text-lg tracking-widest">Confidential</h3>
+<span class="text-white/20 font-mono text-xs">REF: 09-22-A</span>
+</div>
+<div class="grid grid-cols-2 gap-6 mb-8">
+<div>
+<p class="font-ui text-xs text-text-muted uppercase tracking-wider mb-1">Age</p>
+<p class="font-body text-text-main text-lg">29 Years</p>
+</div>
+<div>
+<p class="font-ui text-xs text-text-muted uppercase tracking-wider mb-1">Occupation</p>
+<p class="font-body text-text-main text-lg">Landowner</p>
+</div>
+</div>
+<div class="mb-6">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-primary text-sm">lock</span>
+<p class="font-ui text-xs text-primary uppercase tracking-wider">Known Secrets</p>
+</div>
+<div class="p-4 bg-void/50 border border-white/5 rounded relative overflow-hidden">
+<div class="absolute top-0 left-0 w-1 h-full bg-accent"></div>
+<p class="font-body text-sm leading-relaxed text-text-main/90 italic">
+                                "He refuses to sign documents with his family name, opting instead for a wax seal of a broken sword."
+                            </p>
+</div>
+</div>
+<div class="flex-1 overflow-hidden relative">
+<p class="font-ui text-xs text-text-muted uppercase tracking-wider mb-2">Background</p>
+<p class="font-body text-sm leading-relaxed text-text-muted">
+                            Cast out from the capital after the Great Scandal of '92, Alistair retreated to the shadowed moors of his ancestral estate...
+                        </p>
+<div class="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-surface to-transparent"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 flex items-center gap-2 text-white/30 text-xs font-ui tracking-widest uppercase">
+<span class="material-symbols-outlined text-sm">swipe</span>
+<span>Swipe for details</span>
+</div>
+</main>
+<div class="fixed inset-0 pointer-events-none z-0 opacity-20 silk-overlay mix-blend-overlay"></div>
+
+</body></html>
