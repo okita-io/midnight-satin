@@ -1,8 +1,23 @@
 import { notFound } from "next/navigation";
-import Link from "next/link";
-import { sql } from "@vercel/postgres";
+import { getCurrentSession } from "@/app/actions/auth";
+import { isNovelBookmarked } from "@/app/actions/bookmarks";
+import {
+  getNovel,
+  getChapters,
+  getCharacters,
+  getLatestChapterUpdatedAt,
+  getUnlockedChapterIds,
+  getReadingProgressForNovel,
+  getFirstUnreadChapterId,
+} from "@/lib/content";
+import { formatUpdatedAgo } from "@/lib/format";
 import { NavigationBar } from "../../_components/navigation-bar";
-import { authorStudyPath } from "@/lib/navigation";
+import { NovelDetailHeader } from "../../_components/novel-detail-header";
+import { ParallaxHero } from "../../_components/parallax-hero";
+import { SynopsisSection } from "../../_components/synopsis-section";
+import { PlayersSection } from "../../_components/players-section";
+import { ChapterList } from "../../_components/chapter-list";
+import { FloatingActionButton } from "../../_components/floating-action-button";
 
 export const revalidate = 60;
 
@@ -12,70 +27,79 @@ export default async function NovelDetailPage({
   params: Promise<{ novelId: string }>;
 }) {
   const { novelId } = await params;
-  interface NovelRow {
-    id: string;
-    title: string;
-    author_id: string;
-    author_name: string;
-    cover_image_url: string | null;
-    synopsis: string | null;
-    genre_tags: string[];
-    rating: number;
-    rating_count: number;
-  }
 
-  let novel: NovelRow | null = null;
-
-  try {
-    const { rows } = await sql<NovelRow>`
-      SELECT n.id, n.title, n.author_id, n.cover_image_url, n.synopsis,
-             n.genre_tags, n.rating, n.rating_count, COALESCE(a.name, 'Unknown') AS author_name
-      FROM novels n
-      LEFT JOIN author_profiles a ON a.id = n.author_id
-      WHERE n.id = ${novelId}
-    `;
-    novel = rows[0] ?? null;
-  } catch {
-    // DB may not be configured
-  }
+  const [novel, chapters, characters, latestUpdated, session] = await Promise.all([
+    getNovel(novelId),
+    getChapters(novelId),
+    getCharacters(novelId),
+    getLatestChapterUpdatedAt(novelId),
+    getCurrentSession(),
+  ]);
 
   if (!novel) notFound();
 
+  let unlockedIds = new Set<string>();
+  let progress = new Map<string, number>();
+  let bookmarked = false;
+
+  if (session) {
+    [unlockedIds, progress, bookmarked] = await Promise.all([
+      getUnlockedChapterIds(session.readerId, novelId),
+      getReadingProgressForNovel(session.readerId, novelId),
+      isNovelBookmarked(novelId),
+    ]);
+  }
+
+  const firstUnreadChapterId = getFirstUnreadChapterId(chapters, progress);
+  const firstChapterId = chapters[0]?.id ?? "";
+  const fabChapterId = firstUnreadChapterId || firstChapterId;
+  const updatedAgo = formatUpdatedAgo(latestUpdated);
+
   return (
     <>
-      <main style={{ flex: 1, paddingBottom: "6rem" }}>
-        <div style={{ position: "relative", height: "65vh", overflow: "hidden" }}>
-          <div style={{ position: "absolute", inset: 0, backgroundColor: "var(--void)" }}>
-            {novel.cover_image_url ? (
-              <img alt="" style={{ height: "100%", width: "100%", objectFit: "cover", opacity: 0.7 }} src={novel.cover_image_url} />
-            ) : (
-              <div style={{ height: "100%", width: "100%", background: "var(--surface)" }} />
-            )}
-          </div>
-          <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, var(--void), transparent 50%)" }} />
-          <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "2rem" }}>
-            <h1 className="font-display" style={{ fontStyle: "italic", fontWeight: "bold", fontSize: "2rem", color: "white", marginBottom: "0.5rem" }}>
-              {novel.title}
-            </h1>
-            <Link href={authorStudyPath(novel.author_id)} className="font-ui" style={{ color: "var(--primary)", fontSize: "0.875rem" }}>
-              {novel.author_name}
-            </Link>
-          </div>
+      <NovelDetailHeader
+        novelId={novelId}
+        novelTitle={novel.title}
+        initialBookmarked={bookmarked}
+        isAuthenticated={!!session}
+      />
+
+      <main className="relative min-h-screen flex flex-col pb-24">
+        <ParallaxHero
+          title={novel.title}
+          authorId={novel.authorId}
+          authorName={novel.authorName}
+          coverImageUrl={novel.coverImageUrl}
+          genreTags={novel.genreTags}
+          rating={novel.rating}
+          ratingCount={novel.ratingCount}
+        />
+
+        <div className="relative z-10 px-6 -mt-4 bg-void">
+          <SynopsisSection synopsis={novel.synopsis} />
+          <PlayersSection characters={characters} />
+          <ChapterList
+            novelId={novelId}
+            chapters={chapters}
+            unlockedIds={unlockedIds}
+            updatedAgo={updatedAgo}
+          />
         </div>
-        <div style={{ padding: "1.5rem" }}>
-          {novel.synopsis && (
-            <p className="font-body" style={{ fontSize: "1rem", lineHeight: 1.6, color: "var(--text-main)" }}>
-              {novel.synopsis}
-            </p>
-          )}
-          {novel.rating > 0 && (
-            <p className="font-ui" style={{ marginTop: "1rem", color: "var(--text-muted)" }}>
-              {novel.rating.toFixed(1)} {novel.rating_count > 0 ? `(${novel.rating_count} reviews)` : ""}
-            </p>
-          )}
-        </div>
+
+        {fabChapterId && (
+          <FloatingActionButton novelId={novelId} chapterId={fabChapterId} />
+        )}
       </main>
+
       <NavigationBar activeTab="boudoir" />
+
+      {/* Background texture overlay */}
+      <div
+        className="fixed inset-0 pointer-events-none opacity-[0.03] z-0 mix-blend-overlay"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E")`,
+        }}
+      />
     </>
   );
 }

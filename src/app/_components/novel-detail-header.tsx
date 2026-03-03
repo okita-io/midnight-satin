@@ -1,0 +1,92 @@
+"use client";
+
+import React, { useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { toggleBookmark } from "@/app/actions/bookmarks";
+
+interface NovelDetailHeaderProps {
+  novelId: string;
+  novelTitle: string;
+  initialBookmarked: boolean;
+  isAuthenticated: boolean;
+}
+
+export function NovelDetailHeader({
+  novelId,
+  novelTitle,
+  initialBookmarked,
+  isAuthenticated,
+}: NovelDetailHeaderProps) {
+  const router = useRouter();
+  const [isPending, startTransition] = useTransition();
+  const [bookmarked, setBookmarked] = React.useState(initialBookmarked);
+
+  const handleBack = () => router.back();
+
+  const handleBookmark = () => {
+    if (!isAuthenticated) return;
+    startTransition(async () => {
+      const result = await toggleBookmark(novelId);
+      if (result.success) setBookmarked(result.bookmarked);
+    });
+  };
+
+  const handleShare = async () => {
+    const url = typeof window !== "undefined" ? window.location.href : "";
+    const shareData = { title: novelTitle, url };
+
+    if (typeof navigator !== "undefined" && navigator.share) {
+      try {
+        await navigator.share(shareData);
+      } catch (err) {
+        if ((err as Error).name !== "AbortError") fallbackCopy(url);
+      }
+    } else {
+      fallbackCopy(url);
+    }
+  };
+
+  function fallbackCopy(url: string) {
+    navigator.clipboard?.writeText(url).catch(() => {});
+  }
+
+  return (
+    <div
+      className="fixed top-0 left-0 right-0 z-50 p-4 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent max-w-md mx-auto"
+      style={{ paddingTop: "calc(1rem + env(safe-area-inset-top, 0px))" }}
+    >
+      <button
+        type="button"
+        onClick={handleBack}
+        className="flex items-center justify-center w-10 h-10 rounded-full bg-surface/30 backdrop-blur-md text-white border border-white/10 hover:bg-surface/50 transition-colors"
+        aria-label="Go back"
+      >
+        <span className="material-symbols-outlined text-shadow-sm">arrow_back</span>
+      </button>
+      <div className="flex gap-3">
+        <button
+          type="button"
+          onClick={handleBookmark}
+          disabled={!isAuthenticated || isPending}
+          className="flex items-center justify-center w-10 h-10 rounded-full bg-surface/30 backdrop-blur-md text-white border border-white/10 hover:bg-surface/50 transition-colors disabled:opacity-50"
+          aria-label={bookmarked ? "Remove bookmark" : "Add bookmark"}
+        >
+          <span
+            className="material-symbols-outlined text-shadow-sm"
+            style={{ fontVariationSettings: bookmarked ? "'FILL' 1" : "'FILL' 0" }}
+          >
+            bookmark
+          </span>
+        </button>
+        <button
+          type="button"
+          onClick={handleShare}
+          className="flex items-center justify-center w-10 h-10 rounded-full bg-surface/30 backdrop-blur-md text-white border border-white/10 hover:bg-surface/50 transition-colors"
+          aria-label="Share"
+        >
+          <span className="material-symbols-outlined text-shadow-sm">share</span>
+        </button>
+      </div>
+    </div>
+  );
+}

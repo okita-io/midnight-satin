@@ -51,11 +51,11 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Create src/app/library/page.tsx; LibraryCatalog list/grid, same Navigation_Bar; optional filter when search used; empty state; safe area insets
     - _Requirements: 1a.1-1a.7_
 - [ ] 7. Novel Detail Screen
-  - [ ] 7.1 Implement Novel Detail page
+  - [x] 7.1 Implement Novel Detail page
     - Create src/app/novel/[novelId]/page.tsx as ISR page matching reference/the_novel_detail.html
     - Implement ParallaxHero, MetadataPills, SynopsisSection, PlayersSection (View All opens Cast Gallery with first character), ChapterList (optional "Updated X ago" from latest chapter), RatingDisplay (rating + rating_count), FloatingActionButton; header: back, bookmark (toggleBookmark), share (Web Share API or copy link); same Navigation_Bar as other primary screens
     - _Requirements: 2.1-2.15_
-  - [ ] 7.2 Implement bookmark server actions and UI
+  - [x] 7.2 Implement bookmark server actions and UI
     - toggleBookmark(novelId, chapterId?), getBookmarks(readerId); Reader_Bookmark persistence
     - _Requirements: 2.13, 10.11_
   - [ ]* 7.3 Property tests: chapter access and first unread
