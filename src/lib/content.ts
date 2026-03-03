@@ -115,7 +115,6 @@ export async function getFeaturedNovels(limit: number = 5): Promise<NovelWithAut
   });
 }
 
-
 /**
  * Get trending novels for High Society section.
  * Metric: aggregate reading engagement (reading_progress) over last 7 days.
