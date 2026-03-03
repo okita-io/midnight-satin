@@ -26,6 +26,9 @@ const transactionTypes = [
   "admin_adjustment",
 ] as const;
 
+/** Dates that serialize/deserialize round-trip (exclude Invalid Date) */
+const validDateArb = fc.date().filter((d) => !Number.isNaN(d.getTime()));
+
 export const authorProfileArb: fc.Arbitrary<AuthorProfile> = fc.record({
   id: fc.uuid(),
   name: fc.string({ minLength: 1, maxLength: 200 }),
@@ -33,7 +36,7 @@ export const authorProfileArb: fc.Arbitrary<AuthorProfile> = fc.record({
   biography: fc.option(fc.string(), { nil: undefined }),
   styleTags: fc.array(fc.string({ maxLength: 50 }), { maxLength: 20 }),
   followerCount: fc.nat(100000),
-  createdAt: fc.date(),
+  createdAt: validDateArb,
 });
 
 export const seriesArb: fc.Arbitrary<Series> = fc.record({
@@ -43,7 +46,7 @@ export const seriesArb: fc.Arbitrary<Series> = fc.record({
   description: fc.option(fc.string(), { nil: undefined }),
   genreTags: fc.array(fc.string({ maxLength: 50 }), { maxLength: 15 }),
   isComplete: fc.boolean(),
-  createdAt: fc.date(),
+  createdAt: validDateArb,
 });
 
 export const novelArb: fc.Arbitrary<Novel> = fc.record({
@@ -56,8 +59,8 @@ export const novelArb: fc.Arbitrary<Novel> = fc.record({
   genreTags: fc.array(fc.string({ maxLength: 50 }), { maxLength: 15 }),
   rating: fc.double({ min: 0, max: 5, noNaN: true }),
   ratingCount: fc.nat(1000000),
-  publicationDate: fc.option(fc.date(), { nil: undefined }),
-  createdAt: fc.date(),
+  publicationDate: fc.option(validDateArb, { nil: undefined }),
+  createdAt: validDateArb,
 });
 
 export const chapterArb: fc.Arbitrary<Chapter> = fc.record({
@@ -67,8 +70,8 @@ export const chapterArb: fc.Arbitrary<Chapter> = fc.record({
   title: fc.string({ minLength: 1, maxLength: 200 }),
   content: fc.string({ minLength: 1, maxLength: 50000 }),
   isFree: fc.boolean(),
-  createdAt: fc.date(),
-  updatedAt: fc.date(),
+  createdAt: validDateArb,
+  updatedAt: validDateArb,
 });
 
 export const characterStatsArb: fc.Arbitrary<CharacterStats> = fc.record({
@@ -95,7 +98,7 @@ export const characterArb: fc.Arbitrary<Character> = fc.record({
   secrets: fc.array(fc.string({ maxLength: 500 }), { maxLength: 10 }),
   endorsementCount: fc.nat(10000),
   hasTrophy: fc.boolean(),
-  createdAt: fc.date(),
+  createdAt: validDateArb,
 });
 
 export const readerRowArb: fc.Arbitrary<ReaderRow> = fc.record({
@@ -104,8 +107,8 @@ export const readerRowArb: fc.Arbitrary<ReaderRow> = fc.record({
   displayName: fc.option(fc.string({ minLength: 1, maxLength: 100 }), { nil: undefined }),
   creditBalance: fc.nat(100000),
   role: fc.constantFrom("reader", "admin"),
-  createdAt: fc.date(),
-  lastLoginAt: fc.option(fc.date(), { nil: undefined }),
+  createdAt: validDateArb,
+  lastLoginAt: fc.option(validDateArb, { nil: undefined }),
   passwordHash: fc.string({ minLength: 32, maxLength: 128 }),
 });
 
@@ -113,7 +116,7 @@ export const readingProgressArb: fc.Arbitrary<ReadingProgress> = fc.record({
   readerId: fc.uuid(),
   chapterId: fc.uuid(),
   scrollPercent: fc.double({ min: 0, max: 100, noNaN: true }),
-  lastReadAt: fc.date(),
+  lastReadAt: validDateArb,
 });
 
 export const creditTransactionArb: fc.Arbitrary<CreditTransaction> = fc.record({
@@ -122,17 +125,17 @@ export const creditTransactionArb: fc.Arbitrary<CreditTransaction> = fc.record({
   amount: fc.integer({ min: -1000, max: 10000 }),
   transactionType: fc.constantFrom(...transactionTypes),
   relatedEntityId: fc.option(fc.uuid(), { nil: undefined }),
-  createdAt: fc.date(),
+  createdAt: validDateArb,
 });
 
 export const chapterUnlockArb: fc.Arbitrary<ChapterUnlock> = fc.record({
   readerId: fc.uuid(),
   chapterId: fc.uuid(),
-  unlockedAt: fc.date(),
+  unlockedAt: validDateArb,
 });
 
 export const authorFollowArb: fc.Arbitrary<AuthorFollow> = fc.record({
   readerId: fc.uuid(),
   authorId: fc.uuid(),
-  followedAt: fc.date(),
+  followedAt: validDateArb,
 });
