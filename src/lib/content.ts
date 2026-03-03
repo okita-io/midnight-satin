@@ -1,13 +1,153 @@
 /**
- * Content data layer for Boudoir, Library, Novel Detail, etc.
- * Task 5.1 will implement real fetching (getFeaturedNovels, getTrendingNovels, cache, blob).
- * Until then, returns mock data for UI development.
+ * Midnight Satin Content Data Layer
+ * Featured/trending novels with KV caching (Req 1.10, 11.1-11.5)
+ *
+ * Featured: admin-curated (is_featured, featured_order) or default (most recently updated)
+ * Trending: engagement metric (reading_progress last 7 days) with optional admin override
  */
 
-import type { Novel } from "./db/types";
+import { sql } from "@vercel/postgres";
+import type { Novel } from "@/lib/db/types";
+import {
+  cacheGetOrSet,
+  cacheKeyFeatured,
+  cacheKeyTrending,
+} from "@/lib/cache";
 
-export interface FeaturedNovel extends Novel {
+/** Novel with author name for display (NovelCard, hero, etc.) */
+export interface NovelWithAuthor extends Novel {
   authorName: string;
+}
+
+export type FeaturedNovel = NovelWithAuthor;
+
+/** Novel row from DB with optional author name (snake_case) */
+interface NovelRow {
+  id: string;
+  title: string;
+  series_id: string | null;
+  author_id: string;
+  cover_image_url: string | null;
+  synopsis: string | null;
+  genre_tags: string[];
+  rating: number;
+  rating_count: number;
+  publication_date: string | null;
+  created_at: Date;
+  author_name?: string;
+}
+
+function rowToNovel(row: NovelRow): Novel {
+  return {
+    id: row.id,
+    title: row.title,
+    seriesId: row.series_id,
+    authorId: row.author_id,
+    coverImageUrl: row.cover_image_url,
+    synopsis: row.synopsis,
+    genreTags: Array.isArray(row.genre_tags) ? row.genre_tags : [],
+    rating: Number(row.rating),
+    ratingCount: Number(row.rating_count ?? 0),
+    publicationDate: row.publication_date ? new Date(row.publication_date) : null,
+    createdAt: new Date(row.created_at),
+  };
+}
+
+function rowToNovelWithAuthor(row: NovelRow & { author_name: string }): NovelWithAuthor {
+  return {
+    ...rowToNovel(row),
+    authorName: row.author_name || "Unknown",
+  };
+}
+
+/**
+ * Get featured novels for hero carousel.
+ * Admin-curated: novels with is_featured=true ordered by featured_order.
+ * Default: most recently updated novels (by latest chapter updated_at).
+ * Cached in KV with TTL 300s.
+ */
+export async function getFeaturedNovels(limit: number = 5): Promise<NovelWithAuthor[]> {
+  return cacheGetOrSet(cacheKeyFeatured(), async () => {
+    let curatedRows: (NovelRow & { author_name: string })[] = [];
+    try {
+      const result = await sql<NovelRow & { author_name: string }>`
+        SELECT n.id, n.title, n.series_id, n.author_id, n.cover_image_url, n.synopsis,
+               n.genre_tags, n.rating, n.rating_count, n.publication_date, n.created_at,
+               COALESCE(a.name, 'Unknown') AS author_name
+        FROM novels n
+        LEFT JOIN author_profiles a ON a.id = n.author_id
+        WHERE n.is_featured = true
+        ORDER BY n.featured_order ASC NULLS LAST
+        LIMIT ${limit}
+      `;
+      curatedRows = result.rows;
+    } catch {
+      // Columns may not exist yet (migration not run); fall through to default
+    }
+    if (curatedRows.length > 0) {
+      return curatedRows.map(rowToNovelWithAuthor);
+    }
+    const { rows: defaultRows } = await sql<NovelRow & { author_name: string }>`
+      WITH latest_chapter AS (
+        SELECT novel_id, MAX(updated_at) AS max_updated
+        FROM chapters GROUP BY novel_id
+      )
+      SELECT n.id, n.title, n.series_id, n.author_id, n.cover_image_url,
+             n.synopsis, n.genre_tags, n.rating, n.rating_count, n.publication_date, n.created_at,
+             COALESCE(a.name, 'Unknown') AS author_name
+      FROM novels n
+      LEFT JOIN latest_chapter lc ON n.id = lc.novel_id
+      LEFT JOIN author_profiles a ON a.id = n.author_id
+      ORDER BY COALESCE(lc.max_updated, n.created_at) DESC NULLS LAST
+      LIMIT ${limit}
+    `;
+    return defaultRows.map(rowToNovelWithAuthor);
+  });
+}
+
+/**
+ * Get trending novels for High Society section.
+ * Metric: aggregate reading engagement (reading_progress) over last 7 days.
+ * Cached in KV with TTL 300s.
+ */
+export async function getTrendingNovels(limit: number = 10): Promise<NovelWithAuthor[]> {
+  return cacheGetOrSet(cacheKeyTrending(), async () => {
+    const { rows } = await sql<NovelRow & { author_name: string }>`
+      WITH engagement AS (
+        SELECT c.novel_id, COUNT(*) AS read_count
+        FROM reading_progress rp
+        JOIN chapters c ON c.id = rp.chapter_id
+        WHERE rp.last_read_at >= NOW() - INTERVAL '7 days'
+        GROUP BY c.novel_id
+      )
+      SELECT n.id, n.title, n.series_id, n.author_id, n.cover_image_url,
+             n.synopsis, n.genre_tags, n.rating, n.rating_count, n.publication_date, n.created_at,
+             COALESCE(a.name, 'Unknown') AS author_name
+      FROM novels n
+      LEFT JOIN engagement e ON n.id = e.novel_id
+      LEFT JOIN author_profiles a ON a.id = n.author_id
+      ORDER BY COALESCE(e.read_count, 0) DESC, n.rating DESC NULLS LAST
+      LIMIT ${limit}
+    `;
+    return rows.map(rowToNovelWithAuthor);
+  });
+}
+
+/**
+ * Get all novels for Library catalog.
+ * Not cached (full catalog may be large); use ISR on the page.
+ */
+export async function getAllNovels(limit: number = 100): Promise<NovelWithAuthor[]> {
+  const { rows } = await sql<NovelRow & { author_name: string }>`
+    SELECT n.id, n.title, n.series_id, n.author_id, n.cover_image_url, n.synopsis,
+           n.genre_tags, n.rating, n.rating_count, n.publication_date, n.created_at,
+           COALESCE(a.name, 'Unknown') AS author_name
+    FROM novels n
+    LEFT JOIN author_profiles a ON a.id = n.author_id
+    ORDER BY n.created_at DESC
+    LIMIT ${limit}
+  `;
+  return rows.map(rowToNovelWithAuthor);
 }
 
 export interface CurrentReading {
@@ -18,106 +158,28 @@ export interface CurrentReading {
   chapterId: string;
 }
 
-/** Mock featured novels for hero carousel. Replace with getFeaturedNovels when task 5.1 is done. */
-export async function getFeaturedNovels(): Promise<FeaturedNovel[]> {
-  return MOCK_FEATURED;
-}
-
-/** Mock trending novels for High Society. Replace with getTrendingNovels when task 5.1 is done. */
-export async function getTrendingNovels(): Promise<FeaturedNovel[]> {
-  return MOCK_TRENDING;
-}
-
 /** Mock current reading for registered reader. Replace with real query when task 5.1 + reading progress is done. */
 export async function getCurrentReading(readerId: string): Promise<CurrentReading | null> {
   void readerId; // Used when real content layer is implemented
-  return MOCK_CURRENT_READING;
+  return {
+    novel: {
+      id: "novel-5",
+      title: "Velvet & Steel",
+      seriesId: null,
+      authorId: "author-5",
+      coverImageUrl:
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuAWXl4paH8tw-7BvkMnhTPKLjxmH8nThGmIcJeuhJZPdKWjxlAWYmi7DyGcd_N69mMiQbQWRhAEEfrTzdg0ytX2spYJAfUvK078OxLP-FJc6Z-Va0c2GDJZokObdYp6apJxfZTlK3I1AjePZQ4kBh4PEVaFWCjwuhVIx86uIvZpPwEJ3AlnUzGm6iKE-z4IaiLpULC0-FB6UxQR9b8DNqQUHNoY4B_myjf3pILuGeYPCSzWmmH0vvDG_zsU8gekBdSPvpsal41NIU4",
+      synopsis: null,
+      genreTags: [],
+      rating: 0,
+      ratingCount: 0,
+      publicationDate: null,
+      createdAt: new Date(),
+      authorName: "Lady Margaret Thorne",
+    },
+    chapterNumber: 4,
+    chapterTitle: "Chapter IV",
+    scrollPercent: 65,
+    chapterId: "chapter-4",
+  };
 }
-
-const MOCK_FEATURED: FeaturedNovel[] = [
-  {
-    id: "novel-1",
-    title: "The Duke's Forbidden Vow",
-    seriesId: null,
-    authorId: "author-1",
-    coverImageUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuB0FWAoY-qpFwIzQY_6NmtA-SM2ncwUiYZAEuYUEBom83LsxojIR6fgowWoE7PdG45wh2SSerECtQEUEHwxh6gRhXL-oNcyaZnuPwqItJdMvc-t7COhLSmV-06APiGC5HxJHdnezjXuFWJq0Fb5YZGjzyZ2qWd7Fq4ZLmiYLQK5LhcyaZl5pnP1XTbM51FlwZgCE5UOUSmdUXEkF48IbBGIejauxbuRCBVIt-yzfoiuyZK2WXMMIlJ2pnr6kn0_HXLqvqcwecc6uPg",
-    synopsis: null,
-    genreTags: [],
-    rating: 4.8,
-    ratingCount: 0,
-    publicationDate: null,
-    createdAt: new Date(),
-    authorName: "Eleanor Vane",
-  },
-];
-
-const MOCK_TRENDING: FeaturedNovel[] = [
-  {
-    id: "novel-2",
-    title: "Midnight Masquerade",
-    seriesId: null,
-    authorId: "author-2",
-    coverImageUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuD-jy2ntZScXPc-EgaGAc38KBI_YhRUYl1mRN7RcxuAMIkJKii9F6LQVCyKNHjGMkG-bpoQHKVUgshJTcK7ahZLGBwx4-q33Y93lGSjfvWRqUOAY7lVcD7HlnrVjx2U_fOeB7BCQ50F9uXL6xQutaqSXbeCFakke4N5xVonnwcoNHlOLL25VqfbCQvEIUL0FU-cItwo0L9VDmlz6HoE9jYd8iT4eM7fGYnw-9FuYJW0T_JRCQAYNxCg-zHtXE9_kMGAtQ0Bpw3KjfM",
-    synopsis: null,
-    genreTags: [],
-    rating: 4.9,
-    ratingCount: 0,
-    publicationDate: null,
-    createdAt: new Date(),
-    authorName: "Viscount Blackwood",
-  },
-  {
-    id: "novel-3",
-    title: "The Scarlet Letter",
-    seriesId: null,
-    authorId: "author-3",
-    coverImageUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuA4ZMzPWHir-QvitLQbaWtq4dkFiPYU6TuxAkUlh8e7EMYfQCA7XGHEMxZ5kCmImqqWOoprsDJulEVGttbT5dft2cwYphTirdVBL94HfJ0wmaYZRRLv8VfS_pJ_wnuXW9RVHpyXkQz70b7yfeWSI-F_Bx_l041NwTTtKRAEkqWusrevXWjry40WUbYn_JUMwutYWxNCAmpWktj9wUfZeBxzQyDuY_ZoGn92IsqH_XNeiTWQPNweIcCVrfq2kcs2IBjk9Y_8h_BejII",
-    synopsis: null,
-    genreTags: [],
-    rating: 0,
-    ratingCount: 0,
-    publicationDate: null,
-    createdAt: new Date(),
-    authorName: "Nathaniel H.",
-  },
-  {
-    id: "novel-4",
-    title: "Bound by Silk",
-    seriesId: null,
-    authorId: "author-4",
-    coverImageUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuCY1pJAtpkQP521addbeH3ObF1aIwimoWU1DKFSD9KynOt_BOaB1S2m7uqIVRyb5AL0met6Ksqfu4FZnafL-cxBD6qjY4o14ty_pGBrHDuRO4Lov2i6I9nwy5NbNlT3Sb0Z0XPPrHOmPiu55QEn8xdsSKgGWRSG66m06bAJjx7x4kqvDJdvUC3QTpWrzhqiuG_-25bLbaD6dee6titau2aXK4weEE8FKdOJYuvZ8bKQLuFqEzCEhlM7TNoHI6QFNQPVD7GJVw9UTII",
-    synopsis: null,
-    genreTags: [],
-    rating: 4.7,
-    ratingCount: 0,
-    publicationDate: null,
-    createdAt: new Date(),
-    authorName: "Eliza Montrose",
-  },
-];
-
-const MOCK_CURRENT_READING: CurrentReading = {
-  novel: {
-    id: "novel-5",
-    title: "Velvet & Steel",
-    seriesId: null,
-    authorId: "author-5",
-    coverImageUrl:
-      "https://lh3.googleusercontent.com/aida-public/AB6AXuAWXl4paH8tw-7BvkMnhTPKLjxmH8nThGmIcJeuhJZPdKWjxlAWYmi7DyGcd_N69mMiQbQWRhAEEfrTzdg0ytX2spYJAfUvK078OxLP-FJc6Z-Va0c2GDJZokObdYp6apJxfZTlK3I1AjePZQ4kBh4PEVaFWCjwuhVIx86uIvZpPwEJ3AlnUzGm6iKE-z4IaiLpULC0-FB6UxQR9b8DNqQUHNoY4B_myjf3pILuGeYPCSzWmmH0vvDG_zsU8gekBdSPvpsal41NIU4",
-    synopsis: null,
-    genreTags: [],
-    rating: 0,
-    ratingCount: 0,
-    publicationDate: null,
-    createdAt: new Date(),
-    authorName: "Lady Margaret Thorne",
-  },
-  chapterNumber: 4,
-  chapterTitle: "Chapter IV",
-  scrollPercent: 65,
-  chapterId: "chapter-4",
-};
