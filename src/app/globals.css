@@ -1,29 +1,43 @@
-:root {
-  /* Safe area insets for notched devices */
-  --safe-area-inset-top: env(safe-area-inset-top, 0px);
-  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  /* Midnight Satin Color Palette */
+:root {
+  /* Midnight Satin Design Tokens (PRD) */
+  --color-primary: #D4AF37;
+  --color-background: #050505;
+  --color-surface: #121212;
+  --color-text: #EAEAEA;
+  --color-accent: #800020;
+
+  /* Legacy aliases for compatibility */
   --primary: #D4AF37;
-  /* Metallic Gold */
   --void: #050505;
-  /* True Void Black */
   --surface: #121212;
   --surface-highlight: #1A1A1A;
   --text-main: #EAEAEA;
   --text-muted: #8A8A8A;
   --accent: #800020;
-  /* Burgundy */
 
   --font-display: "Playfair Display", serif;
   --font-header: "Cinzel", serif;
   --font-body: "Literata", serif;
   --font-ui: "Marcellus", serif;
+  --font-script: "Pinyon Script", cursive;
+
+  /* Safe area insets for mobile notches/home indicators */
+  --safe-area-inset-top: env(safe-area-inset-top, 0px);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-inset-left: env(safe-area-inset-left, 0px);
+  --safe-area-inset-right: env(safe-area-inset-right, 0px);
+
+  --radius-sm: 2px;
+  --radius-lg: 4px;
+  --shadow-gold-glow: 0px 4px 20px rgba(212, 175, 55, 0.15);
+  --texture-silk: url("/assets/silk-grain-dark.png");
 
   --silk-gradient: linear-gradient(180deg, rgba(5, 5, 5, 0) 0%, rgba(5, 5, 5, 0.8) 70%, #050505 100%);
   --gold-sheen: linear-gradient(45deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0) 100%);
-
-  --shadow-gold-glow: 0px 4px 20px rgba(212, 175, 55, 0.15);
   --shadow-card-depth: 0 10px 30px -10px rgba(0, 0, 0, 0.8);
 }
 

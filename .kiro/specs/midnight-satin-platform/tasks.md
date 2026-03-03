@@ -4,15 +4,15 @@
 Build the Midnight Satin romance reading platform with Next.js 16, React 19, TypeScript, Tailwind CSS, Vercel. HTML mockups in `reference/` are the UI source of truth.
 
 ## Tasks
-- [ ] 1. Project scaffolding, design system, and database foundation
-  - [ ] 1.1 Initialize Next.js 16 project with design system and dependencies
+- [x] 1. Project scaffolding, design system, and database foundation
+  - [x] 1.1 Initialize Next.js 16 project with design system and dependencies
     - Create root layout with Google Fonts (Literata, Playfair Display, Cinzel, Marcellus, Pinyon Script), globals.css with design tokens and safe area inset variables, tailwind.config.ts, mobile-first max-w-md centered container
     - Install: @vercel/postgres, @vercel/blob, @vercel/kv, fast-check, vitest, bcryptjs, jose
     - _Requirements: 14.1-14.8, 17.1-17.5_
-  - [ ] 1.2 Create database schema and TypeScript types
+  - [x] 1.2 Create database schema and TypeScript types
     - Create src/lib/db/schema.sql (reader_bookmarks, novels.rating_count, chapters.updated_at, comments content CHECK ≤800), types.ts, index.ts per design document
     - _Requirements: 10.1-10.11, 17.2_
-  - [ ]* 1.3 Write property test for entity storage round-trip
+  - [x]* 1.3 Write property test for entity storage round-trip
     - **Property 1: Entity storage round-trip** — **Validates: Requirements 10.1-10.10**
 - [ ] 2. Authentication system and session management
   - [x] 2.1 Implement auth server actions and Edge middleware
