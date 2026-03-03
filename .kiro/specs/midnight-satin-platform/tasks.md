@@ -35,8 +35,8 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - _Requirements: 1.7, 1.8, 14.1-14.8, 15.1-15.8, 20.1-20.3, 21.1-21.5_
   - [x]* 4.2 Property test: navigation links
     - **Property 13: Navigation link construction** — **Validates: Requirements 1.5, 2.8, 2.9, 7.7**
-- [ ] 5. Content data layer and caching
-  - [ ] 5.1 Implement content fetching and caching
+- [x] 5. Content data layer and caching
+  - [x] 5.1 Implement content fetching and caching
     - content.ts (getFeaturedNovels: admin-curated or default; getTrendingNovels: metric e.g. engagement last 7 days), cache.ts (KV TTL 300s), blob.ts; ISR 60s for Boudoir, Library, Novel Detail, Author Study
     - _Requirements: 1.10, 11.1-11.5_
 - [ ] 6. The Boudoir (Home Screen)
