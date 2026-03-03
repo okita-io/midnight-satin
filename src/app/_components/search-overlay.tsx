@@ -22,8 +22,10 @@ interface SearchOverlayProps {
   novels: SearchNovelHit[];
   /** Authors matching query (by name) */
   authors: SearchAuthorHit[];
-  /** Current query for display */
+  /** Current query (controlled) */
   query: string;
+  /** Called when user types in search input */
+  onQueryChange: (query: string) => void;
   /** Whether search is in progress */
   loading?: boolean;
 }
@@ -38,6 +40,7 @@ export function SearchOverlay({
   novels,
   authors,
   query,
+  onQueryChange,
   loading = false,
 }: SearchOverlayProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
@@ -88,10 +91,19 @@ export function SearchOverlay({
         paddingBottom: "env(safe-area-inset-bottom, 0px)",
       }}
     >
-      <div className="flex items-center justify-between p-4 border-b border-white/10">
-        <h2 className="font-header text-sm tracking-[0.15em] text-primary uppercase">
+      <div className="flex items-center justify-between p-4 border-b border-white/10 gap-4">
+        <h2 className="font-header text-sm tracking-[0.15em] text-primary uppercase shrink-0">
           Search
         </h2>
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => onQueryChange(e.target.value)}
+          placeholder="Novels, authors…"
+          className="flex-1 min-w-0 px-3 py-2 rounded-sm bg-surface-highlight border border-white/10 text-text-main font-ui text-sm placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary"
+          aria-label="Search novels by title or authors by name"
+          autoComplete="off"
+        />
         <button
           ref={closeButtonRef}
           type="button"
