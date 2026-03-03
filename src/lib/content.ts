@@ -202,3 +202,220 @@ export async function getAllNovels(limit: number = 100): Promise<NovelWithAuthor
   `;
   return rows.map(rowToNovelWithAuthor);
 }
+
+/** Novel with author name for Novel Detail page. */
+export interface NovelWithAuthorName extends Novel {
+  authorName: string;
+}
+
+/** Chapter row from DB (snake_case). */
+interface ChapterRow {
+  id: string;
+  novel_id: string;
+  chapter_number: number;
+  title: string;
+  content: string;
+  is_free: boolean;
+  created_at: Date;
+  updated_at: Date;
+}
+
+/** Character row from DB (snake_case). */
+interface CharacterRow {
+  id: string;
+  novel_id: string;
+  name: string;
+  role_subtitle: string | null;
+  portrait_url: string | null;
+  description: string | null;
+  backstory: string | null;
+  stats: Record<string, unknown>;
+  secrets: string[];
+  endorsement_count: number;
+  has_trophy: boolean;
+  created_at: Date;
+}
+
+/** Chapter type for Novel Detail page. */
+export interface NovelChapter {
+  id: string;
+  novelId: string;
+  chapterNumber: number;
+  title: string;
+  content: string;
+  isFree: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+/** Character type for Novel Detail. */
+export interface NovelCharacter {
+  id: string;
+  novelId: string;
+  name: string;
+  roleSubtitle: string | null;
+  portraitUrl: string | null;
+  description: string | null;
+  backstory: string | null;
+  stats: Record<string, unknown>;
+  secrets: string[];
+  endorsementCount: number;
+  hasTrophy: boolean;
+  createdAt: Date;
+}
+
+function rowToChapter(row: ChapterRow): NovelChapter {
+  return {
+    id: row.id,
+    novelId: row.novel_id,
+    chapterNumber: row.chapter_number,
+    title: row.title,
+    content: row.content,
+    isFree: row.is_free,
+    createdAt: new Date(row.created_at),
+    updatedAt: new Date(row.updated_at),
+  };
+}
+
+function rowToCharacter(row: CharacterRow): NovelCharacter {
+  return {
+    id: row.id,
+    novelId: row.novel_id,
+    name: row.name,
+    roleSubtitle: row.role_subtitle,
+    portraitUrl: row.portrait_url,
+    description: row.description,
+    backstory: row.backstory,
+    stats: (row.stats as Record<string, unknown>) ?? {},
+    secrets: Array.isArray(row.secrets) ? row.secrets : [],
+    endorsementCount: Number(row.endorsement_count ?? 0),
+    hasTrophy: Boolean(row.has_trophy),
+    createdAt: new Date(row.created_at),
+  };
+}
+
+/**
+ * Get a single novel by ID with author name.
+ */
+export async function getNovel(novelId: string): Promise<NovelWithAuthorName | null> {
+  try {
+    const { rows } = await sql<NovelRow & { author_name: string }>`
+      SELECT n.id, n.title, n.series_id, n.author_id, n.cover_image_url, n.synopsis,
+             n.genre_tags, n.rating, n.rating_count, n.publication_date, n.created_at,
+             COALESCE(a.name, 'Unknown') AS author_name
+      FROM novels n
+      LEFT JOIN author_profiles a ON a.id = n.author_id
+      WHERE n.id = ${novelId}
+    `;
+    if (rows.length === 0) return null;
+    return {
+      ...rowToNovel(rows[0]),
+      authorName: rows[0].author_name ?? "Unknown",
+    };
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Get chapters for a novel, ordered by chapter number.
+ */
+export async function getChapters(novelId: string): Promise<NovelChapter[]> {
+  try {
+    const { rows } = await sql<ChapterRow>`
+      SELECT id, novel_id, chapter_number, title, content, is_free, created_at, updated_at
+      FROM chapters
+      WHERE novel_id = ${novelId}
+      ORDER BY chapter_number ASC
+    `;
+    return rows.map(rowToChapter);
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Get characters for a novel.
+ */
+export async function getCharacters(novelId: string): Promise<NovelCharacter[]> {
+  try {
+    const { rows } = await sql<CharacterRow>`
+      SELECT id, novel_id, name, role_subtitle, portrait_url, description, backstory,
+             stats, secrets, endorsement_count, has_trophy, created_at
+      FROM characters
+      WHERE novel_id = ${novelId}
+      ORDER BY created_at ASC
+    `;
+    return rows.map(rowToCharacter);
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Get the most recent chapter updated_at for a novel (for "Updated X ago").
+ */
+export async function getLatestChapterUpdatedAt(novelId: string): Promise<Date | null> {
+  try {
+    const { rows } = await sql<{ updated_at: Date }>`
+      SELECT MAX(updated_at) AS updated_at FROM chapters WHERE novel_id = ${novelId}
+    `;
+    const val = rows[0]?.updated_at;
+    return val ? new Date(val) : null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Get chapter IDs that the reader has unlocked (for Novel Detail chapter list).
+ */
+export async function getUnlockedChapterIds(readerId: string, novelId: string): Promise<Set<string>> {
+  try {
+    const { rows } = await sql<{ chapter_id: string }>`
+      SELECT cu.chapter_id
+      FROM chapter_unlocks cu
+      JOIN chapters c ON c.id = cu.chapter_id
+      WHERE cu.reader_id = ${readerId} AND c.novel_id = ${novelId}
+    `;
+    return new Set(rows.map((r) => r.chapter_id));
+  } catch {
+    return new Set();
+  }
+}
+
+/**
+ * Get reading progress for a novel (chapter_id -> scroll_percent) for first-unread logic.
+ */
+export async function getReadingProgressForNovel(
+  readerId: string,
+  novelId: string
+): Promise<Map<string, number>> {
+  try {
+    const { rows } = await sql<{ chapter_id: string; scroll_percent: number }>`
+      SELECT rp.chapter_id, rp.scroll_percent
+      FROM reading_progress rp
+      JOIN chapters c ON c.id = rp.chapter_id
+      WHERE rp.reader_id = ${readerId} AND c.novel_id = ${novelId}
+    `;
+    return new Map(rows.map((r) => [r.chapter_id, Number(r.scroll_percent)]));
+  } catch {
+    return new Map();
+  }
+}
+
+/**
+ * Get the first unread chapter ID for the FAB (Property 15).
+ * First chapter where scroll_percent < 100 or no progress. If all completed, first chapter.
+ */
+export function getFirstUnreadChapterId(
+  chapters: NovelChapter[],
+  progress: Map<string, number>
+): string {
+  if (chapters.length === 0) return "";
+  for (const ch of chapters) {
+    const pct = progress.get(ch.id);
+    if (pct === undefined || pct < 100) return ch.id;
+  }
+  return chapters[0].id;
+}
