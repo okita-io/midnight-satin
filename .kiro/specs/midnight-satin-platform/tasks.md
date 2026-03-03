@@ -29,11 +29,11 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Validates: Requirements 9.1, 9.2, 9.5, 9.6, 12.9, 13.1, 17.6**
 - [x] 3. Checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
-- [ ] 4. Shared UI components and navigation
-  - [ ] 4.1 Implement shared UI components
+- [x] 4. Shared UI components and navigation
+  - [x] 4.1 Implement shared UI components
     - navigation-bar.tsx (same four items on Boudoir, Library, Novel Detail, Author Study, Vault, Profile; safe area insets), shimmer-placeholder.tsx, empty-state.tsx (Pinyon Script gold, e.g. "No current affairs", "Nothing in high society yet"), credit-balance.tsx, novel-card.tsx, character-portrait.tsx, search-overlay.tsx (novels by title, authors by name), not-found.tsx (themed 404), error.tsx (themed error boundary); ensure aria-labels for icon-only controls and focus trap in modals
     - _Requirements: 1.7, 1.8, 14.1-14.8, 15.1-15.8, 20.1-20.3, 21.1-21.5_
-  - [ ]* 4.2 Property test: navigation links
+  - [x]* 4.2 Property test: navigation links
     - **Property 13: Navigation link construction** — **Validates: Requirements 1.5, 2.8, 2.9, 7.7**
 - [ ] 5. Content data layer and caching
   - [ ] 5.1 Implement content fetching and caching

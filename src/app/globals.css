@@ -168,6 +168,15 @@ h4,
   overflow: hidden;
 }
 
+/* Shimmer animation for loading placeholders */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.animate-shimmer {
+  animation: shimmer 1.8s ease-in-out infinite;
+}
+
 /* Safe area utilities */
 .pt-safe-top {
   padding-top: var(--safe-area-inset-top);

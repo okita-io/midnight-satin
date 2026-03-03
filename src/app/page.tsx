@@ -1,3 +1,5 @@
+import { NavigationBar } from "./_components/navigation-bar";
+
 export default function Home() {
   return (
     <>
@@ -8,12 +10,12 @@ export default function Home() {
           <span className="font-header" style={{ fontSize: '0.875rem', letterSpacing: '0.2em', color: 'var(--primary)' }}>Midnight Satin</span>
         </div>
         <div style={{ display: 'flex', gap: '1rem' }}>
-          <button style={{ color: 'rgba(255,255,255,0.8)', background: 'none', border: 'none', cursor: 'pointer' }}>
-            <span className="material-symbols-outlined">search</span>
+          <button type="button" aria-label="Search" style={{ color: 'rgba(255,255,255,0.8)', background: 'none', border: 'none', cursor: 'pointer' }}>
+            <span className="material-symbols-outlined" aria-hidden>search</span>
           </button>
-          <button style={{ position: 'relative', color: 'rgba(255,255,255,0.8)', background: 'none', border: 'none', cursor: 'pointer' }}>
-            <span className="material-symbols-outlined">notifications</span>
-            <span style={{ position: 'absolute', top: 0, right: 0, width: '8px', height: '8px', backgroundColor: 'var(--accent)', borderRadius: '50%', border: '1px solid var(--void)' }}></span>
+          <button type="button" aria-label="Notifications" style={{ position: 'relative', color: 'rgba(255,255,255,0.8)', background: 'none', border: 'none', cursor: 'pointer' }}>
+            <span className="material-symbols-outlined" aria-hidden>notifications</span>
+            <span style={{ position: 'absolute', top: 0, right: 0, width: '8px', height: '8px', backgroundColor: 'var(--accent)', borderRadius: '50%', border: '1px solid var(--void)' }} aria-hidden></span>
           </button>
         </div>
       </div>
@@ -126,33 +128,7 @@ export default function Home() {
         </section>
       </main>
 
-      {/* Sticky Bottom Nav */}
-      <nav style={{ position: 'fixed', bottom: 0, left: 'auto', right: 'auto', width: '100%', maxWidth: '28rem', backgroundColor: '#080808', borderTop: '1px solid #1F1F1F', padding: '1rem 1.5rem 1.5rem', zIndex: 50, boxShadow: '0 -10px 40px rgba(0,0,0,0.8)' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-          <button style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.375rem', flex: 1, background: 'none', border: 'none', cursor: 'pointer' }}>
-            <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <span className="material-symbols-outlined" style={{ color: 'var(--primary)', fontSize: '28px', filter: 'drop-shadow(0 0 8px rgba(212,175,55,0.6))' }}>history_edu</span>
-              <span style={{ position: 'absolute', bottom: '-8px', width: '4px', height: '4px', backgroundColor: 'var(--primary)', borderRadius: '50%', boxShadow: '0 0 5px #D4AF37' }}></span>
-            </div>
-            <span className="font-ui" style={{ fontSize: '10px', fontWeight: 500, color: 'var(--primary)', letterSpacing: '0.05em' }}>Boudoir</span>
-          </button>
-
-          <button style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.375rem', flex: 1, background: 'none', border: 'none', cursor: 'pointer' }}>
-            <span className="material-symbols-outlined" style={{ color: 'var(--text-muted)', fontSize: '24px' }}>local_library</span>
-            <span className="font-ui" style={{ fontSize: '10px', fontWeight: 500, color: 'var(--text-muted)', letterSpacing: '0.05em' }}>Library</span>
-          </button>
-
-          <button style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.375rem', flex: 1, background: 'none', border: 'none', cursor: 'pointer' }}>
-            <span className="material-symbols-outlined" style={{ color: 'var(--text-muted)', fontSize: '24px' }}>storefront</span>
-            <span className="font-ui" style={{ fontSize: '10px', fontWeight: 500, color: 'var(--text-muted)', letterSpacing: '0.05em' }}>Vault</span>
-          </button>
-
-          <button style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.375rem', flex: 1, background: 'none', border: 'none', cursor: 'pointer' }}>
-            <span className="material-symbols-outlined" style={{ color: 'var(--text-muted)', fontSize: '24px' }}>person_3</span>
-            <span className="font-ui" style={{ fontSize: '10px', fontWeight: 500, color: 'var(--text-muted)', letterSpacing: '0.05em' }}>Profile</span>
-          </button>
-        </div>
-      </nav>
+      <NavigationBar activeTab="boudoir" />
     </>
   );
 }

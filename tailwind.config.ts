@@ -9,6 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        primary: "#D4AF37",
         gold: "#D4AF37",
         void: "#050505",
         surface: "#121212",
