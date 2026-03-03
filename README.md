@@ -28,6 +28,7 @@ Open [http://localhost:3000](http://localhost:3000). Design reference files live
 - **`.kiro/specs/midnight-satin-platform/`** — Requirements, design doc, tasks, correctness properties
 - **`src/app/`** — Next.js App Router pages and layout
 - **`scripts/`** — Utilities (e.g. `fetchStitchDesigns` for Stitch designs)
+- **`.agents/`** — Subagent directories; place agent-specific skills and scope here (see [Subagents and parallel task division](#subagents-and-parallel-task-division))
 
 ---
 
@@ -40,8 +41,9 @@ This project is built with **AI agents and subagents** in mind. Specs, design fi
 1. **Always respect the design system.** The rule in `.cursor/rules/midnight-satin-design.mdc` is always applied: implement screens using the reference HTML files in `reference/` and the palette/typography from the PRD (void black, gold, Literata/Playfair/Cinzel/Marcellus, mobile-first).
 2. **Implement against the requirements.** Formal requirements and acceptance criteria are in `.kiro/specs/midnight-satin-platform/requirements.md`. The design doc (`.kiro/specs/midnight-satin-platform/design.md`) defines routes, components, server actions, data models, and correctness properties.
 3. **Follow the task list.** Implementation tasks and property-test mapping are in `.kiro/specs/midnight-satin-platform/tasks.md`. When adding features, align with existing task numbering and property tags.
-4. **Run and extend tests.** Use Vitest for unit/component tests and fast-check for property-based tests. New behavior that touches credits, auth, or content should be covered by the relevant correctness properties in the design doc.
-5. **Check terminal and paths.** Run commands from the repo root unless a task specifies a subproject. Wait for command output before proceeding; the environment may be slow.
+4. **Update and inspect the task list after each assignment.** Use the **tasks-md-update** skill (`.cursor/skills/tasks-md-update/`): mark tasks in progress with `[-]` only when work has started; mark complete with `[x]` only after verification; for test tasks, mark `[x]` only when all related tests pass (otherwise keep `[-]` and fix before re-testing).
+5. **Run and extend tests.** Use Vitest for unit/component tests and fast-check for property-based tests. New behavior that touches credits, auth, or content should be covered by the relevant correctness properties in the design doc.
+6. **Check terminal and paths.** Run commands from the repo root unless a task specifies a subproject. Wait for command output before proceeding; the environment may be slow.
 
 ### Required agent skills (install and use)
 
@@ -59,6 +61,7 @@ Agents and subagents should have access to — or be instructed to apply — the
 | **Accessibility (a11y)** | Meet WCAG 2.1 AA baseline: focus order, labels, contrast, semantics, modals. | Implementing or updating UI components, modals, navigation, Reading Room, Cast Gallery. | Requirement 21: focusable controls, visible focus, aria-label (or hidden text) for icon-only controls, semantic HTML (nav, main, header, footer, article). Focus trap in modals; restore focus on close. Contrast: text #EAEAEA on void #050505; gold on dark. |
 | **Stripe / payment webhooks** | Implement credit purchase flow and webhook handling with idempotency. | Vault purchase flow, webhook route, credit grant, restore purchases. | Use Stripe Checkout (or configured provider); webhook for success/failure with idempotency to avoid duplicate credits. On success: add credits to balance, create credit_transaction (type `purchase`), optional coin-rain UI. Requirement 8.x. |
 | **Cursor rules & skills** | Create or update Cursor rules and Agent Skills for this repo or for agents. | Adding project conventions, design reminders, or teaching agents a new workflow. | Use **Create rule** when adding `.cursor/rules/*.mdc` or coding standards. Use **Create skill** when authoring a new Agent Skill (e.g. “implement Midnight Satin screen from reference”) so subagents get consistent guidance. Keep descriptions specific and include trigger terms. |
+| **Task list (tasks.md) update** | Update and verify `.kiro/specs/midnight-satin-platform/tasks.md` with correct states: `[ ]` not started, `[-]` in progress, `[x]` complete after verification; test tasks only `[x]` when all tests pass. | After each assignment, when coordinating work, or when updating task status. | Apply the **tasks-md-update** skill (`.cursor/skills/tasks-md-update/SKILL.md`). Inspect the task list after each assignment; for test tasks, run tests and only mark complete when all pass—otherwise set back to `[-]` and verify fixes. |
 
 ### Where to find or install skills
 
@@ -69,7 +72,41 @@ Agents and subagents should have access to — or be instructed to apply — the
 - **Skill format:** Each skill should have a `SKILL.md` with YAML frontmatter (`name`, `description`) and clear instructions. Descriptions should state *what* the skill does and *when* to use it (trigger scenarios). See Cursor’s skill authoring docs or the “create-skill” skill for structure.
 - **MCP servers:** Configured in `.kiro/settings/mcp.json` (e.g. Stitch). Use MCP tools for design fetch and content-agent operations as specified in the requirements.
 
-### Subagent assignment suggestions
+### Subagents and parallel task division
+
+Subagents are defined so work can be split and run **in parallel** where dependencies allow. Each subagent has a directory under **`.agents/`** where you can place agent-specific skills (or symlinks/references to `.cursor/skills/`). The table below lists each subagent, its skills, task scope, and which others it can run alongside.
+
+| Subagent | Directory | Skills to load | Task scope (from `tasks.md`) | Runs in parallel with |
+|----------|-----------|----------------|------------------------------|------------------------|
+| **frontend** | `.agents/frontend/` | Next.js App Router & RSC, Tailwind CSS & design tokens, Accessibility (a11y) | 1.1 (layout, fonts, design system), 4 (shared UI), 6, 6a, 7.1, 8.1, 10.1, 11.1, 12.1, 14.1, 14.3 (all screens and shared components) | backend-data, backend-auth, backend-payments, backend-features, mcp-admin, testing |
+| **backend-data** | `.agents/backend-data/` | Vercel Postgres / Blob / KV, TypeScript & domain types | 1.2 (schema, types), 5.1 (content fetching, cache, blob) | frontend, backend-auth, testing |
+| **backend-auth** | `.agents/backend-auth/` | Authentication & session, Next.js App Router (middleware, Server Actions) | 2.1 (auth actions, middleware), 2.2 (login/register UI) | frontend, backend-data, backend-payments, backend-features, testing (after backend-data has readers table) |
+| **backend-payments** | `.agents/backend-payments/` | Stripe / payment webhooks, Vercel Postgres, TypeScript | 12.2 (purchaseCredits, payment webhook, idempotency) | frontend, backend-features, mcp-admin, testing (after backend-data + backend-auth) |
+| **backend-features** | `.agents/backend-features/` | Vercel Postgres, TypeScript & domain types | 7.2 (bookmarks), 8.2–8.3 (reading progress, Veil unlock), 10.2 (endorsements), 11.2 (follow), 14.2 (comments data layer) | frontend, backend-payments, mcp-admin, testing (after backend-data + backend-auth) |
+| **mcp-admin** | `.agents/mcp-admin/` | MCP (Model Context Protocol), Next.js API routes, Vercel Postgres | 13.1 (MCP endpoint + tools), 13.2 (admin dashboard CRUD) | frontend, backend-features, backend-payments, testing (after backend-data + backend-auth) |
+| **testing** | `.agents/testing/` | Property-based testing (fast-check), Vitest, React Testing Library | All property tests (1.3, 2.3, 2.4, 4.2, 6.2, 7.3, 8.4, 8.5, 10.3, 11.3, 12.3, 13.3, 14.4); unit/component tests; test generators | Any (run alongside feature work; add tests as features land) |
+
+#### Parallel execution order (dependency-aware)
+
+1. **Start together (no code deps):**  
+   **backend-data** (schema + types + content layer), **frontend** (design system 1.1 + shared components 4), **testing** (generators + Property 1).
+2. **After schema exists:**  
+   **backend-auth** (auth + login/register UI).
+3. **After auth exists:**  
+   **backend-payments**, **backend-features**, **mcp-admin** can all run in parallel.  
+   **frontend** continues with all screens (Boudoir, Library, Novel Detail, Reading Room, Veil, Cast Gallery, Author’s Study, Vault, Profile, CommentsSection).
+4. **Ongoing:**  
+   **testing** adds property and unit tests for each feature; run after each chunk of work.
+
+#### Where to put skills for each subagent
+
+- **Project-level skills** for a subagent: put skill files (e.g. `SKILL.md` plus any `reference.md`) in **`.agents/<subagent-name>/`** (e.g. `.agents/frontend/`, `.agents/backend-data/`). Optionally use **`.cursor/skills/<skill-name>/`** and reference that from the subagent’s README in `.agents/`.
+- **Personal skills** (e.g. `~/.cursor/skills/next-app-router/`): list them in the subagent’s `.agents/<name>/README.md` so operators know which to enable when invoking that subagent.
+- Every subagent should respect the project rule **`.cursor/rules/midnight-satin-design.mdc`** when touching UI; backend-only subagents still need design doc and requirements for types and contracts.
+
+---
+
+### Subagent assignment suggestions (quick reference)
 
 When delegating to subagents, assign by domain so the right skills apply:
 
