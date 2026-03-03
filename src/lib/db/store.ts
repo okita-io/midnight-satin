@@ -4,7 +4,24 @@
  * When Vercel Postgres is configured, replace with real DB implementation
  */
 
-import type { StorableEntity } from "./types";
+import type {
+  StorableEntity,
+  ReadingProgress,
+  Chapter,
+  Novel,
+  AuthorProfile,
+} from "./types";
+
+/** Current reading result for Property 12 (matches content.CurrentReading shape) */
+export interface CurrentReadingFromStore {
+  novelId: string;
+  novelTitle: string;
+  authorName: string;
+  chapterNumber: number;
+  chapterTitle: string;
+  scrollPercent: number;
+  chapterId: string;
+}
 
 type EntityKind =
   | "AuthorProfile"
@@ -146,4 +163,50 @@ export function retrieveById(
   const kind = getEntityKind(entity);
   const id = getEntityId(entity);
   return retrieveEntity(kind, id);
+}
+
+/** List all ReadingProgress records for a reader (Property 12) */
+function listReadingProgressByReader(readerId: string): ReadingProgress[] {
+  const entries: ReadingProgress[] = [];
+  for (const [, value] of store.entries()) {
+    if (value.kind === "ReadingProgress") {
+      const rp = deserialize<ReadingProgress>(value.data, "ReadingProgress");
+      if (rp.readerId === readerId) entries.push(rp);
+    }
+  }
+  return entries;
+}
+
+/**
+ * Get current reading for a reader (Property 12: Current reading identification).
+ * Returns the novel associated with the reading progress record that has the most
+ * recent last_read_at timestamp, along with chapter number and completion percentage.
+ */
+export function getCurrentReadingFromStore(
+  readerId: string
+): CurrentReadingFromStore | null {
+  const progressList = listReadingProgressByReader(readerId);
+  if (progressList.length === 0) return null;
+
+  const mostRecent = progressList.reduce((a, b) =>
+    a.lastReadAt >= b.lastReadAt ? a : b
+  );
+
+  const chapter = retrieveEntity<Chapter>("Chapter", mostRecent.chapterId);
+  if (!chapter) return null;
+
+  const novel = retrieveEntity<Novel>("Novel", chapter.novelId);
+  if (!novel) return null;
+
+  const author = retrieveEntity<AuthorProfile>("AuthorProfile", novel.authorId);
+
+  return {
+    novelId: novel.id,
+    novelTitle: novel.title,
+    authorName: author?.name ?? "Unknown",
+    chapterNumber: chapter.chapterNumber,
+    chapterTitle: chapter.title,
+    scrollPercent: mostRecent.scrollPercent,
+    chapterId: mostRecent.chapterId,
+  };
 }

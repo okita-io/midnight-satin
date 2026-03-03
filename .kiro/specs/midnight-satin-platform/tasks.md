@@ -44,7 +44,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Create src/app/page.tsx as ISR page matching reference/midnight_satin_home.html
     - Implement HeroCarousel, CurrentAffairsSection (View All → /profile for registered, auth prompt for guests), HighSocietySection, VaultTeaserCard, header bar with search and notification buttons
     - _Requirements: 1.1-1.10, 15.5_
-  - [ ]* 6.2 Property test: current reading identification
+  - [x]* 6.2 Property test: current reading identification
     - **Property 12: Current reading identification** — **Validates: Requirements 1.2, 16.3**
 - [ ] 6a. Library (Full Catalog) Screen
   - [ ] 6a.1 Implement Library page
