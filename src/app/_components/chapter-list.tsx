@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { readingRoomPath } from "@/lib/navigation";
 import type { NovelChapter } from "@/lib/content";
@@ -53,25 +55,22 @@ export function ChapterList({
             <Link
               key={ch.id}
               href={isAccessible ? href : "#"}
-              className={`group flex items-center justify-between py-5 px-2 -mx-2 rounded transition-colors ${
-                isAccessible
+              className={`group flex items-center justify-between py-5 px-2 -mx-2 rounded transition-colors ${isAccessible
                   ? "cursor-pointer hover:bg-white/5"
                   : "cursor-default opacity-60"
-              }`}
+                }`}
               onClick={(e) => !isAccessible && e.preventDefault()}
             >
               <div className="flex flex-col gap-1">
                 <span
-                  className={`text-xs uppercase tracking-widest font-bold ${
-                    isAccessible ? "text-primary" : "text-text-muted"
-                  }`}
+                  className={`text-xs uppercase tracking-widest font-bold ${isAccessible ? "text-primary" : "text-text-muted"
+                    }`}
                 >
                   Chapter {toRoman(ch.chapterNumber)}
                 </span>
                 <span
-                  className={`text-lg font-display italic ${
-                    isAccessible ? "text-text-main" : "text-text-muted"
-                  }`}
+                  className={`text-lg font-display italic ${isAccessible ? "text-text-main" : "text-text-muted"
+                    }`}
                 >
                   {ch.title}
                 </span>
