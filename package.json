@@ -10,9 +10,15 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "fetchStitch": "node scripts/fetch-stitch-designs.mjs",
+    "db:check": "node scripts/setup-db.mjs check",
+    "db:schema": "node scripts/setup-db.mjs schema",
+    "db:seed": "node scripts/seed-db.mjs",
+    "db:setup": "node scripts/setup-db.mjs schema && node scripts/seed-db.mjs",
+    "db:blobs": "node scripts/upload-seed-blobs.mjs",
     "seed": "node scripts/seed-db.mjs"
   },
   "dependencies": {
+    "@vercel/analytics": "^1.6.1",
     "@vercel/blob": "^2.3.0",
     "@vercel/kv": "^3.0.0",
     "@vercel/postgres": "^0.10.0",

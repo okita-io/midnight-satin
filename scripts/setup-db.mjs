@@ -4,6 +4,14 @@ import { config } from "dotenv";
 
 config({ path: ".env.local" });
 
+if (!process.env.POSTGRES_URL) {
+  console.error("Missing POSTGRES_URL in .env.local");
+  console.error(
+    "Pull it from the Vercel dashboard: midnight-satin > Storage > Neon"
+  );
+  process.exit(1);
+}
+
 const pool = createPool({ connectionString: process.env.POSTGRES_URL });
 
 async function run() {

@@ -6,6 +6,7 @@ import {
   Marcellus,
   Pinyon_Script,
 } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const playfair = Playfair_Display({
@@ -61,6 +62,7 @@ export default function RootLayout({
         <div className="mobile-container bg-silk-noise">
           {children}
         </div>
+        <Analytics />
       </body>
     </html>
   );
