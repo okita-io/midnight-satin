@@ -130,6 +130,6 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [x] 14.3 Implement CommentsSection UI in Reading Room
     - Add CommentsSection bottom sheet/overlay to the Reading_Room with list rendering, input form, and like/unlike interactions.
     - _Requirements: 3.1-3.7, 15.4, 19.1-19.4, 19.8-19.10_
-  - [ ]* 14.4 Property tests: comments lifecycle and likes
+  - [x]* 14.4 Property tests: comments lifecycle and likes
     - **Property 25: Comment lifecycle and ownership** — **Property 26: Comment like invariant**
     - **Validates: Requirements 19.5-19.9**

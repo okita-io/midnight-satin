@@ -14,6 +14,8 @@ import type {
   CreditTransaction,
   ReaderRow,
   Character,
+  Comment,
+  CommentLike,
 } from "./types";
 
 /** Current reading result for Property 12 (matches content.CurrentReading shape) */
@@ -37,7 +39,9 @@ type EntityKind =
   | "ReadingProgress"
   | "CreditTransaction"
   | "ChapterUnlock"
-  | "AuthorFollow";
+  | "AuthorFollow"
+  | "Comment"
+  | "CommentLike";
 
 function getEntityKind(entity: StorableEntity): EntityKind {
   if ("passwordHash" in entity) return "ReaderRow";
@@ -54,6 +58,10 @@ function getEntityKind(entity: StorableEntity): EntityKind {
   if ("ratingCount" in entity && "synopsis" in entity) return "Novel";
   if ("chapterNumber" in entity && "content" in entity) return "Chapter";
   if ("endorsementCount" in entity && "stats" in entity) return "Character";
+  if ("likeCount" in entity && "content" in entity && "chapterId" in entity)
+    return "Comment";
+  if ("commentId" in entity && "readerId" in entity && !("content" in entity))
+    return "CommentLike";
   throw new Error("Unknown entity type");
 }
 
@@ -77,6 +85,12 @@ function getEntityId(entity: StorableEntity): string {
     case "AuthorFollow": {
       const e = entity as { readerId: string; authorId: string };
       return `${e.readerId}:${e.authorId}`;
+    }
+    case "Comment":
+      return (entity as Comment).id;
+    case "CommentLike": {
+      const e = entity as CommentLike;
+      return `${e.readerId}:${e.commentId}`;
     }
     default:
       throw new Error(`Unknown kind: ${kind}`);
@@ -127,6 +141,12 @@ function deserialize<T extends StorableEntity>(
       break;
     case "AuthorFollow":
       dateKeys.push("followedAt");
+      break;
+    case "Comment":
+      dateKeys.push("createdAt", "updatedAt");
+      break;
+    case "CommentLike":
+      dateKeys.push("createdAt");
       break;
   }
   for (const key of dateKeys) {
@@ -517,4 +537,241 @@ export function endorseCharacterInStore(
     newBalance: balance - ENDORSEMENT_COST,
     newCount,
   };
+}
+
+// --- Comment operations (Property 25, 26) ---
+
+const MAX_COMMENT_LENGTH = 800;
+
+function listCommentLikesByComment(commentId: string): CommentLike[] {
+  const entries: CommentLike[] = [];
+  for (const [, value] of store.entries()) {
+    if (value.kind === "CommentLike") {
+      const cl = deserialize<CommentLike>(value.data, "CommentLike");
+      if (cl.commentId === commentId) entries.push(cl);
+    }
+  }
+  return entries;
+}
+
+/** Get comment from store (Property 25, 26). */
+export function getCommentFromStore(commentId: string): Comment | null {
+  return retrieveEntity<Comment>("Comment", commentId);
+}
+
+/** Check if reader has liked a comment (Property 26). */
+export function hasCommentLikeFromStore(
+  readerId: string,
+  commentId: string
+): boolean {
+  const like = retrieveEntity<CommentLike>(
+    "CommentLike",
+    `${readerId}:${commentId}`
+  );
+  return like !== null;
+}
+
+/** Count comment_likes records for a comment (Property 26). */
+export function countCommentLikesFromStore(commentId: string): number {
+  return listCommentLikesByComment(commentId).length;
+}
+
+export type PostCommentInStoreResult =
+  | { success: true; comment: Comment }
+  | { success: false; error: string };
+
+/**
+ * Post a new comment in the store (Property 25).
+ * Associates comment with reader and chapter, sets is_deleted to false.
+ */
+export function postCommentInStore(
+  chapterId: string,
+  readerId: string,
+  content: string,
+  parentCommentId?: string | null
+): PostCommentInStoreResult {
+  const chapter = retrieveEntity<Chapter>("Chapter", chapterId);
+  if (!chapter) {
+    return { success: false, error: "Chapter not found." };
+  }
+  const reader = retrieveEntity<ReaderRow>("ReaderRow", readerId);
+  if (!reader) {
+    return { success: false, error: "Reader not found." };
+  }
+  const trimmed = content.trim();
+  if (trimmed.length === 0) {
+    return { success: false, error: "Comment content cannot be empty." };
+  }
+  if (trimmed.length > MAX_COMMENT_LENGTH) {
+    return { success: false, error: "Comment exceeds 800 characters." };
+  }
+
+  const comment: Comment = {
+    id: crypto.randomUUID(),
+    chapterId,
+    readerId,
+    parentCommentId: parentCommentId ?? null,
+    content: trimmed,
+    likeCount: 0,
+    isDeleted: false,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  };
+  storeEntity(comment);
+  return { success: true, comment };
+}
+
+export type EditCommentInStoreResult =
+  | { success: true; comment: Comment }
+  | { success: false; error: string };
+
+/**
+ * Edit a comment in the store (Property 25).
+ * Only the comment's author may edit.
+ */
+export function editCommentInStore(
+  commentId: string,
+  content: string,
+  readerId: string
+): EditCommentInStoreResult {
+  const comment = retrieveEntity<Comment>("Comment", commentId);
+  if (!comment) {
+    return { success: false, error: "Comment not found." };
+  }
+  if (comment.readerId !== readerId) {
+    return { success: false, error: "Only the author may edit this comment." };
+  }
+  if (comment.isDeleted) {
+    return { success: false, error: "Cannot edit a deleted comment." };
+  }
+  const trimmed = content.trim();
+  if (trimmed.length === 0) {
+    return { success: false, error: "Comment content cannot be empty." };
+  }
+  if (trimmed.length > MAX_COMMENT_LENGTH) {
+    return { success: false, error: "Comment exceeds 800 characters." };
+  }
+
+  const updated: Comment = {
+    ...comment,
+    content: trimmed,
+    updatedAt: new Date(),
+  };
+  storeEntity(updated);
+  return { success: true, comment: updated };
+}
+
+export type DeleteCommentInStoreResult =
+  | { success: true }
+  | { success: false; error: string };
+
+/**
+ * Soft-delete a comment in the store (Property 25).
+ * Only the comment's author may delete. Sets is_deleted to true.
+ * Leaves like counts and comment_likes records intact.
+ */
+export function deleteCommentInStore(
+  commentId: string,
+  readerId: string
+): DeleteCommentInStoreResult {
+  const comment = retrieveEntity<Comment>("Comment", commentId);
+  if (!comment) {
+    return { success: false, error: "Comment not found." };
+  }
+  if (comment.readerId !== readerId) {
+    return { success: false, error: "Only the author may delete this comment." };
+  }
+
+  const updated: Comment = {
+    ...comment,
+    isDeleted: true,
+    updatedAt: new Date(),
+  };
+  storeEntity(updated);
+  return { success: true };
+}
+
+export type LikeCommentInStoreResult =
+  | { success: true; newLikeCount: number }
+  | { success: false; error: string };
+
+/**
+ * Like a comment in the store (Property 26).
+ * Creates exactly one comment_likes record and increments like_count by 1.
+ * Idempotent when already liked.
+ */
+export function likeCommentInStore(
+  commentId: string,
+  readerId: string
+): LikeCommentInStoreResult {
+  const comment = retrieveEntity<Comment>("Comment", commentId);
+  if (!comment) {
+    return { success: false, error: "Comment not found." };
+  }
+  const reader = retrieveEntity<ReaderRow>("ReaderRow", readerId);
+  if (!reader) {
+    return { success: false, error: "Reader not found." };
+  }
+
+  const existingLike = retrieveEntity<CommentLike>(
+    "CommentLike",
+    `${readerId}:${commentId}`
+  );
+  if (existingLike) {
+    return { success: true, newLikeCount: comment.likeCount };
+  }
+
+  const like: CommentLike = {
+    readerId,
+    commentId,
+    createdAt: new Date(),
+  };
+  storeEntity(like);
+
+  const updated: Comment = {
+    ...comment,
+    likeCount: comment.likeCount + 1,
+    updatedAt: new Date(),
+  };
+  storeEntity(updated);
+
+  return { success: true, newLikeCount: updated.likeCount };
+}
+
+export type UnlikeCommentInStoreResult =
+  | { success: true; newLikeCount: number }
+  | { success: false; error: string };
+
+/**
+ * Unlike a comment in the store (Property 26).
+ * Removes the comment_likes record and decrements like_count by 1 (not below 0).
+ */
+export function unlikeCommentInStore(
+  commentId: string,
+  readerId: string
+): UnlikeCommentInStoreResult {
+  const comment = retrieveEntity<Comment>("Comment", commentId);
+  if (!comment) {
+    return { success: false, error: "Comment not found." };
+  }
+
+  const existingLike = retrieveEntity<CommentLike>(
+    "CommentLike",
+    `${readerId}:${commentId}`
+  );
+  if (!existingLike) {
+    return { success: true, newLikeCount: comment.likeCount };
+  }
+
+  store.delete(`CommentLike:${readerId}:${commentId}`);
+
+  const newCount = Math.max(0, comment.likeCount - 1);
+  const updated: Comment = {
+    ...comment,
+    likeCount: newCount,
+    updatedAt: new Date(),
+  };
+  storeEntity(updated);
+
+  return { success: true, newLikeCount: newCount };
 }

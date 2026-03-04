@@ -179,7 +179,7 @@ export interface CommentThreadPage {
   nextCursor: string | null;
 }
 
-/** Entity types used in Property 1: Entity storage round-trip */
+/** Entity types used in Property 1: Entity storage round-trip and Property 25, 26 */
 export type StorableEntity =
   | AuthorProfile
   | Series
@@ -190,4 +190,6 @@ export type StorableEntity =
   | ReadingProgress
   | CreditTransaction
   | ChapterUnlock
-  | AuthorFollow;
+  | AuthorFollow
+  | Comment
+  | CommentLike;
