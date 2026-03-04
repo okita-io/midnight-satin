@@ -147,3 +147,9 @@ CREATE INDEX idx_readers_email ON readers(email);
 CREATE INDEX idx_comments_chapter ON comments(chapter_id, created_at DESC);
 CREATE INDEX idx_comments_reader ON comments(reader_id);
 CREATE INDEX idx_comment_likes_comment ON comment_likes(comment_id);
+
+-- Idempotency for payment webhooks (Req 8.4)
+CREATE TABLE processed_payment_events (
+  stripe_event_id TEXT PRIMARY KEY,
+  processed_at TIMESTAMPTZ DEFAULT NOW()
+);

@@ -1,8 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { AuthPrompt } from "../_components/auth-prompt";
+import { CoinRainAnimation } from "./coin-rain-animation";
+import { purchaseCredits } from "../actions/purchase-credits";
 
 /** Credit pack definition per Requirement 8.2 */
 const CREDIT_PACKS = [
@@ -42,26 +45,71 @@ const CREDIT_PACKS = [
 
 interface VaultClientProps {
   isAuthenticated: boolean;
+  purchaseSuccess?: boolean;
+  purchaseCanceled?: boolean;
 }
 
-export function VaultClient({ isAuthenticated }: VaultClientProps) {
+export function VaultClient({
+  isAuthenticated,
+  purchaseSuccess = false,
+  purchaseCanceled = false,
+}: VaultClientProps) {
   const [authPromptOpen, setAuthPromptOpen] = useState(false);
   const [purchasingPackId, setPurchasingPackId] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [showCoinRain, setShowCoinRain] = useState(false);
+  const router = useRouter();
 
-  function handlePurchaseClick(packId: string) {
+  useEffect(() => {
+    if (purchaseSuccess) {
+      setShowCoinRain(true);
+      // Clear URL params after showing animation
+      router.replace("/vault", { scroll: false });
+      const t = setTimeout(() => setShowCoinRain(false), 3000);
+      return () => clearTimeout(t);
+    }
+  }, [purchaseSuccess, router]);
+
+  useEffect(() => {
+    if (purchaseCanceled) {
+      router.replace("/vault", { scroll: false });
+    }
+  }, [purchaseCanceled, router]);
+
+  async function handlePurchaseClick(packId: string) {
     if (!isAuthenticated) {
       setAuthPromptOpen(true);
       return;
     }
-    // Task 12.2 will implement purchaseCredits; for now show loading state
+    setError(null);
     setPurchasingPackId(packId);
-    // Simulate async - in real impl this would call purchaseCredits server action
-    setTimeout(() => setPurchasingPackId(null), 1500);
+    try {
+      const result = await purchaseCredits(packId);
+      if (result.success) {
+        window.location.href = result.checkoutUrl;
+        return;
+      }
+      setError(result.error);
+    } finally {
+      setPurchasingPackId(null);
+    }
   }
 
   return (
     <>
       <main className="relative z-10 flex-1 px-4 pb-24 overflow-y-auto">
+        {/* Coin rain overlay on successful purchase (Req 8.5) */}
+        <CoinRainAnimation isActive={showCoinRain} />
+
+        {error && (
+          <div
+            className="mb-4 p-3 bg-accent/20 border border-accent/50 rounded-sm text-sm text-text-main"
+            role="alert"
+          >
+            {error}
+          </div>
+        )}
+
         {/* Decoration line */}
         <div className="flex items-center justify-center gap-4 mb-8 opacity-40">
           <div className="h-[1px] w-12 bg-gradient-to-r from-transparent via-primary to-transparent" />
