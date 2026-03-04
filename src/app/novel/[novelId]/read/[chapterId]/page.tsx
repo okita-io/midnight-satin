@@ -1,17 +1,19 @@
 import { notFound } from "next/navigation";
 import { getCurrentSession } from "@/app/actions/auth";
 import { isNovelBookmarked } from "@/app/actions/bookmarks";
+import { isChapterUnlocked } from "@/app/actions/unlock-chapter";
 import { getReadingProgressForChapter } from "@/app/actions/reading-progress";
 import {
   getChapter,
   getChapters,
   getNovel,
 } from "@/lib/content";
+import { getCurrentReader } from "@/app/actions/auth";
 import { ReadingRoomClient } from "@/app/_components/reading-room/reading-room-client";
 
 /**
  * The Reading Room — distraction-free chapter reading (Req 3.1-3.10, 15.4).
- * No NavigationBar; HUD toggles on tap; font settings persist in localStorage.
+ * The Veil paywall for locked chapters (Req 4.1-4.6).
  */
 export default async function ReadingRoomPage({
   params,
@@ -42,6 +44,13 @@ export default async function ReadingRoomPage({
 
   const bookmarked = session ? await isNovelBookmarked(novelId) : false;
 
+  const isUnlocked =
+    chapter.isFree ||
+    (session ? await isChapterUnlocked(session.readerId, chapterId) : false);
+
+  const reader = session ? await getCurrentReader() : null;
+  const creditBalance = reader?.creditBalance ?? 0;
+
   return (
     <ReadingRoomClient
       novelId={novelId}
@@ -55,6 +64,9 @@ export default async function ReadingRoomPage({
       isAuthenticated={!!session}
       initialBookmarked={bookmarked}
       initialScrollPercent={initialScrollPercent}
+      isFree={chapter.isFree}
+      isUnlocked={isUnlocked}
+      initialCreditBalance={creditBalance}
     />
   );
 }

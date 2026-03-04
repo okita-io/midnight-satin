@@ -1,12 +1,19 @@
 /**
  * Chapter content with drop cap, paragraphs, ornamental dividers (Req 3.1-3.3).
- * Literata 18px default, 1.6 line-height, justified, 24px margins.
- * Font size and line-height are configurable via props (from ReadingHUD settings).
+ * Supports progressive blur for The Veil paywall (Req 4.1): 1px, 3px, 6px blur levels.
  */
 
 import { OrnamentalDivider } from "./ornamental-divider";
 
 const ORNAMENTAL_EVERY_N_PARAGRAPHS = 4;
+/** Free preview paragraphs before the Veil (Req 4.1). */
+const FREE_PREVIEW_PARAGRAPHS = 5;
+/** Blur levels: 1px/60%, 3px/40%, 6px/20% per design reference. */
+const BLUR_LEVELS: { blur: string; opacity: string }[] = [
+  { blur: "blur-[1px]", opacity: "opacity-60" },
+  { blur: "blur-[3px]", opacity: "opacity-40" },
+  { blur: "blur-[6px]", opacity: "opacity-20" },
+];
 
 export interface ChapterContentProps {
   content: string;
@@ -14,6 +21,10 @@ export interface ChapterContentProps {
   novelTitle: string;
   fontSize?: 16 | 18 | 20;
   lineHeight?: 1.4 | 1.5 | 1.6 | 1.8;
+  /** When true, show free preview + progressively blurred content (Req 4.1). */
+  veilMode?: boolean;
+  /** Slot for TheVeil overlay (rendered inside blurred section when veilMode). */
+  veilSlot?: React.ReactNode;
 }
 
 export function ChapterContent({
@@ -22,6 +33,8 @@ export function ChapterContent({
   novelTitle,
   fontSize = 18,
   lineHeight = 1.6,
+  veilMode = false,
+  veilSlot,
 }: ChapterContentProps) {
   const paragraphs = content
     .split(/\n\n+/)
@@ -35,6 +48,12 @@ export function ChapterContent({
       </article>
     );
   }
+
+  const freeEnd = veilMode
+    ? Math.min(FREE_PREVIEW_PARAGRAPHS, paragraphs.length)
+    : paragraphs.length;
+  const blurredStart = freeEnd;
+  const blurredCount = paragraphs.length - blurredStart;
 
   return (
     <article
@@ -59,12 +78,11 @@ export function ChapterContent({
         </p>
       </div>
 
-      {/* Content paragraphs with drop cap and ornamental dividers */}
-      {paragraphs.map((text, i) => {
+      {/* Free preview paragraphs */}
+      {paragraphs.slice(0, freeEnd).map((text, i) => {
         const isFirst = i === 0;
         const showDivider =
           i > 0 && i % ORNAMENTAL_EVERY_N_PARAGRAPHS === 0;
-
         return (
           <div key={i}>
             {showDivider && <OrnamentalDivider />}
@@ -72,6 +90,30 @@ export function ChapterContent({
           </div>
         );
       })}
+
+      {/* Progressively blurred content + Veil overlay (Req 4.1) */}
+      {veilMode && blurredCount > 0 && (
+        <div className="relative">
+          {paragraphs.slice(blurredStart).map((text, i) => {
+            const level =
+              BLUR_LEVELS[Math.min(i, BLUR_LEVELS.length - 1)];
+            const showDivider =
+              (blurredStart + i) > 0 &&
+              (blurredStart + i) % ORNAMENTAL_EVERY_N_PARAGRAPHS === 0;
+            return (
+              <div key={blurredStart + i}>
+                {showDivider && <OrnamentalDivider />}
+                <p
+                  className={`mb-6 select-none ${level.blur} ${level.opacity}`}
+                >
+                  {text}
+                </p>
+              </div>
+            );
+          })}
+          {veilSlot}
+        </div>
+      )}
     </article>
   );
 }

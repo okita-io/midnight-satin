@@ -4,12 +4,15 @@
  * Reading Room client orchestrator.
  * Tap center to toggle HUD, scroll progress, font settings persistence (Req 3.4-3.10).
  * Reading progress: 10s debounce save, scroll restoration (Req 3.7, 16.1, 16.2).
+ * The Veil paywall for locked chapters (Req 4.1-4.6).
  * No NavigationBar (Req 15.4).
  */
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { saveReadingProgress } from "@/app/actions/reading-progress";
+import { unlockChapter } from "@/app/actions/unlock-chapter";
 import { ChapterContent } from "./chapter-content";
+import { TheVeil } from "@/app/_components/the-veil";
 import { ReadingHUD, getStoredReaderSettings, setStoredReaderSettings, type FontSize, type LineHeight } from "./reading-hud";
 
 const GUEST_PROGRESS_KEY = "reading-progress";
@@ -27,6 +30,9 @@ export interface ReadingRoomClientProps {
   isAuthenticated: boolean;
   initialBookmarked: boolean;
   initialScrollPercent?: number;
+  isFree: boolean;
+  isUnlocked: boolean;
+  initialCreditBalance: number;
 }
 
 function getGuestScrollPercent(chapterId: string): number {
@@ -65,13 +71,22 @@ export function ReadingRoomClient({
   isAuthenticated,
   initialBookmarked,
   initialScrollPercent = 0,
+  isFree,
+  isUnlocked,
+  initialCreditBalance,
 }: ReadingRoomClientProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [hudVisible, setHudVisible] = useState(false);
   const [progressPercent, setProgressPercent] = useState(0);
   const [settings, setSettings] = useState(getStoredReaderSettings);
+  const [unlocked, setUnlocked] = useState(isUnlocked);
+  const [creditBalance, setCreditBalance] = useState(initialCreditBalance);
+  const [unlockError, setUnlockError] = useState<string | null>(null);
+  const [isUnlocking, setIsUnlocking] = useState(false);
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isRestoringRef = useRef(false);
+
+  const showVeil = !isFree && !unlocked;
 
   useEffect(() => {
     setSettings(getStoredReaderSettings());
@@ -166,6 +181,20 @@ export function ReadingRoomClient({
     []
   );
 
+  const handleUnlock = useCallback(async () => {
+    if (!isAuthenticated || creditBalance < 5 || isUnlocking) return;
+    setUnlockError(null);
+    setIsUnlocking(true);
+    const result = await unlockChapter(chapterId);
+    setIsUnlocking(false);
+    if (result.success) {
+      setUnlocked(true);
+      setCreditBalance(result.newBalance);
+    } else {
+      setUnlockError(result.error ?? "Failed to unlock.");
+    }
+  }, [chapterId, isAuthenticated, creditBalance, isUnlocking]);
+
   return (
     <div className="h-screen flex flex-col bg-void overflow-hidden">
       {/* Main reading area - tap to toggle HUD */}
@@ -183,6 +212,18 @@ export function ReadingRoomClient({
             novelTitle={novelTitle}
             fontSize={settings.fontSize}
             lineHeight={settings.lineHeight}
+            veilMode={showVeil}
+            veilSlot={
+              showVeil ? (
+                <TheVeil
+                  creditBalance={creditBalance}
+                  isAuthenticated={isAuthenticated}
+                  onUnlock={handleUnlock}
+                  isUnlocking={isUnlocking}
+                  error={unlockError}
+                />
+              ) : null
+            }
           />
         </div>
       </main>
