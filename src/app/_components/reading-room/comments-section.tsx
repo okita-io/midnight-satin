@@ -1,0 +1,355 @@
+"use client";
+
+/**
+ * CommentsSection — bottom sheet overlay for chapter comments (Req 19.1-19.10).
+ * List rendering, input form, like/unlike. Guests can view; auth prompt for post/like.
+ */
+
+import { useCallback, useEffect, useRef, useState } from "react";
+import {
+  getChapterComments,
+  postComment,
+  likeComment,
+  unlikeComment,
+  type GetChapterCommentsResult,
+} from "@/app/actions/comments";
+import type { CommentWithAuthorAndLike } from "@/lib/db/comments";
+import { MAX_COMMENT_LENGTH, validateCommentContent } from "@/lib/comments/validation";
+import { AuthPrompt } from "@/app/_components/auth-prompt";
+
+function formatRelativeTime(date: Date): string {
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffMins = Math.floor(diffMs / 60_000);
+  const diffHours = Math.floor(diffMs / 3_600_000);
+  const diffDays = Math.floor(diffMs / 86_400_000);
+
+  if (diffMins < 1) return "Just now";
+  if (diffMins < 60) return `${diffMins}m ago`;
+  if (diffHours < 24) return `${diffHours}h ago`;
+  if (diffDays === 1) return "Yesterday";
+  if (diffDays < 7) return `${diffDays}d ago`;
+  return date.toLocaleDateString();
+}
+
+export interface CommentsSectionProps {
+  isOpen: boolean;
+  onClose: () => void;
+  chapterId: string;
+  isAuthenticated: boolean;
+  commentCount: number;
+  onCommentCountChange?: (count: number) => void;
+  returnUrl?: string;
+}
+
+export function CommentsSection({
+  isOpen,
+  onClose,
+  chapterId,
+  isAuthenticated,
+  commentCount,
+  onCommentCountChange,
+  returnUrl,
+}: CommentsSectionProps) {
+  const [comments, setComments] = useState<CommentWithAuthorAndLike[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [inputValue, setInputValue] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [inputError, setInputError] = useState<string | null>(null);
+  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
+  const [authPromptMessage, setAuthPromptMessage] = useState<string | undefined>();
+  const listRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+
+  const fetchComments = useCallback(async () => {
+    if (!chapterId) return;
+    setLoading(true);
+    setError(null);
+    const result: GetChapterCommentsResult = await getChapterComments(chapterId);
+    setLoading(false);
+    if (result.success) {
+      setComments(result.data.commentsWithAuthor);
+    } else {
+      setError(result.error ?? "Failed to load comments.");
+    }
+  }, [chapterId]);
+
+  useEffect(() => {
+    if (isOpen && chapterId) {
+      fetchComments();
+    }
+  }, [isOpen, chapterId, fetchComments]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") onClose();
+    }
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
+
+  const handleSubmit = useCallback(async () => {
+    if (!isAuthenticated) {
+      setAuthPromptMessage("Sign in to add a thought.");
+      setShowAuthPrompt(true);
+      return;
+    }
+    const trimmed = inputValue.trim();
+    const validation = validateCommentContent(inputValue);
+    if (!validation.valid) {
+      setInputError(validation.error);
+      return;
+    }
+    setInputError(null);
+    setSubmitting(true);
+    const result = await postComment(chapterId, trimmed);
+    setSubmitting(false);
+    if (result.success) {
+      setInputValue("");
+      fetchComments();
+      onCommentCountChange?.(commentCount + 1);
+    } else {
+      setInputError(result.error ?? "Failed to post.");
+    }
+  }, [
+    isAuthenticated,
+    inputValue,
+    chapterId,
+    commentCount,
+    onCommentCountChange,
+    fetchComments,
+  ]);
+
+  const handleLike = useCallback(
+    async (commentId: string, currentlyLiked: boolean) => {
+      if (!isAuthenticated) {
+        setAuthPromptMessage("Sign in to like comments.");
+        setShowAuthPrompt(true);
+        return;
+      }
+      const result = currentlyLiked
+        ? await unlikeComment(commentId)
+        : await likeComment(commentId);
+      if (result.success) {
+        setComments((prev) =>
+          prev.map((c) =>
+            c.id === commentId
+              ? {
+                  ...c,
+                  likeCount: result.newLikeCount,
+                  likedByCurrentReader: !currentlyLiked,
+                }
+              : c
+          )
+        );
+      }
+    },
+    [isAuthenticated]
+  );
+
+  if (!isOpen) return null;
+
+  return (
+    <>
+      {/* Backdrop */}
+      <div
+        className="fixed inset-0 z-[55] bg-black/50"
+        onClick={onClose}
+        aria-hidden
+      />
+
+      {/* Bottom sheet */}
+      <div
+        className="fixed inset-x-0 bottom-0 z-[56] flex flex-col max-h-[70vh] bg-gradient-to-b from-surface to-void border-t border-primary/40 rounded-t-2xl shadow-[0_-10px_40px_rgba(0,0,0,0.8)]"
+        style={{
+          paddingBottom: "env(safe-area-inset-bottom, 0px)",
+        }}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="comments-section-title"
+      >
+        {/* Handle */}
+        <div className="w-full flex justify-center py-3">
+          <div className="w-12 h-1 bg-white/10 rounded-full" />
+        </div>
+
+        {/* Header */}
+        <div className="px-6 pb-4 border-b border-white/5 flex items-center justify-between">
+          <h2
+            id="comments-section-title"
+            className="font-heading text-sm tracking-[0.2em] text-primary uppercase"
+          >
+            Thoughts from the Boudoir
+          </h2>
+          <span className="font-ui text-[10px] text-text-muted">
+            {commentCount} {commentCount === 1 ? "ENTRY" : "ENTRIES"}
+          </span>
+        </div>
+
+        {/* Comment list */}
+        <div
+          ref={listRef}
+          className="flex-1 overflow-y-auto px-6 py-4 space-y-8 min-h-0"
+        >
+          {loading && (
+            <p className="font-ui text-sm text-text-muted italic">
+              Loading thoughts...
+            </p>
+          )}
+          {error && (
+            <p className="font-ui text-sm text-accent">{error}</p>
+          )}
+          {!loading && !error && comments.length === 0 && (
+            <p className="font-ui text-sm text-text-muted italic">
+              No thoughts yet. Be the first to share.
+            </p>
+          )}
+          {!loading &&
+            !error &&
+            comments.map((c) => (
+              <CommentItem
+                key={c.id}
+                comment={c}
+                onLike={() => handleLike(c.id, c.likedByCurrentReader)}
+                isAuthenticated={isAuthenticated}
+                onAuthRequired={() => {
+                  setAuthPromptMessage("Sign in to like comments.");
+                  setShowAuthPrompt(true);
+                }}
+              />
+            ))}
+        </div>
+
+        {/* Input form */}
+        <div className="px-6 py-6 pb-6 bg-void/50 border-t border-white/5 shrink-0">
+          <div className="relative">
+            <textarea
+              ref={inputRef}
+              value={inputValue}
+              onChange={(e) => {
+                setInputValue(e.target.value);
+                setInputError(null);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSubmit();
+                }
+              }}
+              placeholder={isAuthenticated ? "Add a thought..." : "Sign in to add a thought"}
+              maxLength={MAX_COMMENT_LENGTH}
+              rows={2}
+              className="w-full bg-transparent border-0 border-b border-primary/30 py-2 px-0 text-sm font-body italic focus:ring-0 focus:border-primary placeholder:text-text-muted text-text-main transition-colors resize-none"
+              disabled={!isAuthenticated || submitting}
+              aria-label="Add a comment"
+              aria-invalid={!!inputError}
+              aria-describedby={inputError ? "comment-input-error" : undefined}
+            />
+            <div className="flex items-center justify-between mt-1">
+              <span
+                id="comment-input-error"
+                className={`text-xs font-ui ${inputError ? "text-accent" : "text-text-muted"}`}
+              >
+                {inputError ?? (inputValue.length > 0 ? `${inputValue.length}/${MAX_COMMENT_LENGTH}` : "")}
+              </span>
+              <button
+                type="button"
+                onClick={handleSubmit}
+                disabled={!isAuthenticated || submitting || !inputValue.trim()}
+                className="text-primary hover:text-primary/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                aria-label="Post comment"
+              >
+                <span
+                  className="material-symbols-outlined"
+                  style={{ fontSize: 20 }}
+                >
+                  history_edu
+                </span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <AuthPrompt
+        isOpen={showAuthPrompt}
+        onClose={() => setShowAuthPrompt(false)}
+        returnUrl={returnUrl}
+        message={authPromptMessage}
+      />
+    </>
+  );
+}
+
+interface CommentItemProps {
+  comment: CommentWithAuthorAndLike;
+  onLike: () => void;
+  isAuthenticated: boolean;
+  onAuthRequired: () => void;
+}
+
+function CommentItem({
+  comment,
+  onLike,
+  isAuthenticated,
+  onAuthRequired,
+}: CommentItemProps) {
+  const handleLikeClick = () => {
+    if (isAuthenticated) {
+      onLike();
+    } else {
+      onAuthRequired();
+    }
+  };
+
+  const displayName =
+    comment.readerDisplayName?.trim() || "Anonymous";
+  const displayContent = comment.isDeleted
+    ? "This comment has been removed"
+    : comment.content;
+
+  return (
+    <div className="flex flex-col gap-2">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <span className="font-heading text-xs text-text-main tracking-wider uppercase">
+            {displayName}
+          </span>
+          <span className="text-[10px] font-ui text-text-muted">
+            {formatRelativeTime(new Date(comment.createdAt))}
+          </span>
+        </div>
+        {!comment.isDeleted && (
+          <button
+            type="button"
+            onClick={handleLikeClick}
+            className="flex items-center gap-1.5 text-primary hover:text-primary/80 transition-colors"
+            aria-label={comment.likedByCurrentReader ? "Unlike" : "Like"}
+          >
+            <span className="text-[10px] font-ui">{comment.likeCount}</span>
+            <span
+              className="material-symbols-outlined"
+              style={{
+                fontSize: 14,
+                fontVariationSettings: comment.likedByCurrentReader
+                  ? "'FILL' 1"
+                  : "'FILL' 0",
+              }}
+            >
+              favorite
+            </span>
+          </button>
+        )}
+      </div>
+      <p
+        className={`font-body text-sm leading-relaxed italic whitespace-pre-wrap ${
+          comment.isDeleted ? "text-text-muted" : "text-text-main/80"
+        }`}
+      >
+        {displayContent}
+      </p>
+    </div>
+  );
+}

@@ -163,6 +163,14 @@ function buildResult(
   };
 }
 
+/** Get total comment count for a chapter (for badge display). */
+export async function getChapterCommentCountDb(chapterId: string): Promise<number> {
+  const { rows } = await sql<{ count: string }>`
+    SELECT COUNT(*)::text AS count FROM comments WHERE chapter_id = ${chapterId}
+  `;
+  return parseInt(rows[0]?.count ?? "0", 10);
+}
+
 /** Get chapter comments - exported as main data layer function */
 export async function getChapterCommentsDb(
   chapterId: string,

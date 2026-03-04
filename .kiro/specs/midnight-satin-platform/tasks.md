@@ -127,7 +127,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [x] 14.2 Implement comments data layer and server actions
     - Implement comments database access layer with content length validation (max 800 characters) client and server; getChapterComments, postComment, editComment, deleteComment, likeComment, unlikeComment server actions.
     - _Requirements: 10.1-10.10, 19.1-19.10, 19.12_
-  - [ ] 14.3 Implement CommentsSection UI in Reading Room
+  - [x] 14.3 Implement CommentsSection UI in Reading Room
     - Add CommentsSection bottom sheet/overlay to the Reading_Room with list rendering, input form, and like/unlike interactions.
     - _Requirements: 3.1-3.7, 15.4, 19.1-19.4, 19.8-19.10_
   - [ ]* 14.4 Property tests: comments lifecycle and likes
