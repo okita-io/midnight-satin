@@ -124,7 +124,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [x] 14.1 Implement Reader Profile & Library page
     - Create src/app/profile/page.tsx with ProfileHeader, ReadingStatsRow, LibrarySectionList, LibraryNovelCard, FollowedAuthorsStrip, and AccountActionsList.
     - _Requirements: 15.1-15.3, 16.3, 18.1-18.9_
-  - [ ] 14.2 Implement comments data layer and server actions
+  - [x] 14.2 Implement comments data layer and server actions
     - Implement comments database access layer with content length validation (max 800 characters) client and server; getChapterComments, postComment, editComment, deleteComment, likeComment, unlikeComment server actions.
     - _Requirements: 10.1-10.10, 19.1-19.10, 19.12_
   - [ ] 14.3 Implement CommentsSection UI in Reading Room
