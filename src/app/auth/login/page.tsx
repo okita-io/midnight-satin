@@ -22,7 +22,7 @@ export default async function LoginPage({
           <h1 className="font-display font-bold italic text-3xl text-[var(--primary)]" style={{ fontFamily: "var(--font-display)" }}>
             Welcome back
           </h1>
-          <p className="font-ui text-[var(--text-muted)] mt-2" style={{ fontFamily: "var(--font-ui)", fontSize: "0.875rem" }}>
+          <p className="font-ui text-[var(--text-muted)] mt-2 tracking-widest uppercase" style={{ fontFamily: "var(--font-ui)", fontSize: "0.875rem" }}>
             Sign in to continue
           </p>
         </div>
@@ -31,7 +31,7 @@ export default async function LoginPage({
 
         <p className="font-ui text-center mt-6 text-[var(--text-muted)]" style={{ fontFamily: "var(--font-ui)", fontSize: "0.875rem" }}>
           Don&apos;t have an account?{" "}
-          <Link href={registerLink} className="text-[var(--primary)] underline underline-offset-2">
+          <Link href={registerLink} className="text-[var(--primary)] border-b border-primary/50 pb-0.5 hover:opacity-90">
             Register
           </Link>
         </p>
