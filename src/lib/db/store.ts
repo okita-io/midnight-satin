@@ -13,6 +13,7 @@ import type {
   ChapterUnlock,
   CreditTransaction,
   ReaderRow,
+  Character,
 } from "./types";
 
 /** Current reading result for Property 12 (matches content.CurrentReading shape) */
@@ -431,4 +432,89 @@ export function unlockChapterInStore(
   storeEntity(unlock);
 
   return { success: true, newBalance: balance - UNLOCK_COST };
+}
+
+const ENDORSEMENT_COST = 1;
+const TROPHY_THRESHOLD = 1000;
+
+/**
+ * Get character from store (Property 4, 5).
+ */
+export function getCharacterFromStore(characterId: string): Character | null {
+  return retrieveEntity<Character>("Character", characterId);
+}
+
+/**
+ * Count credit_transaction records of type 'endorsement' for reader+character (Property 4).
+ */
+export function countEndorsementTransactionsFromStore(
+  readerId: string,
+  characterId: string
+): number {
+  const txs = listCreditTransactionsByReader(readerId);
+  return txs.filter(
+    (t) =>
+      t.transactionType === "endorsement" &&
+      t.relatedEntityId === characterId
+  ).length;
+}
+
+export type EndorseCharacterInStoreResult =
+  | { success: true; newBalance: number; newCount: number }
+  | { success: false; error: string };
+
+/**
+ * Endorse a character in the store (Property 4, 5).
+ * Mirrors endorseCharacter server action: deducts 1 credit, increments
+ * endorsement_count, creates credit_transaction, sets has_trophy when count > 1000.
+ */
+export function endorseCharacterInStore(
+  readerId: string,
+  characterId: string
+): EndorseCharacterInStoreResult {
+  const character = retrieveEntity<Character>("Character", characterId);
+  if (!character) {
+    return { success: false, error: "Character not found." };
+  }
+
+  const reader = retrieveEntity<ReaderRow>("ReaderRow", readerId);
+  if (!reader) {
+    return { success: false, error: "Reader not found." };
+  }
+  const balance = reader.creditBalance;
+  if (balance < ENDORSEMENT_COST) {
+    return { success: false, error: "Insufficient credits." };
+  }
+
+  const newCount = character.endorsementCount + 1;
+  const hasTrophy = newCount > TROPHY_THRESHOLD;
+
+  const updatedReader: ReaderRow = {
+    ...reader,
+    creditBalance: balance - ENDORSEMENT_COST,
+  };
+  storeEntity(updatedReader);
+
+  const tx: CreditTransaction = {
+    id: crypto.randomUUID(),
+    readerId,
+    amount: -ENDORSEMENT_COST,
+    transactionType: "endorsement",
+    relatedEntityId: characterId,
+    createdAt: new Date(),
+  };
+  storeEntity(tx);
+
+  const updatedCharacter: Character = {
+    ...character,
+    endorsementCount: newCount,
+    hasTrophy,
+  };
+  storeEntity(updatedCharacter);
+
+  return {
+    success: true,
+    newBalance: balance - ENDORSEMENT_COST,
+    newCount,
+  };
 }
