@@ -192,6 +192,38 @@ h4,
   animation: shimmer 1.8s ease-in-out infinite;
 }
 
+/* Cast Gallery: Trophy badge pulsing gold glow (3s cycle) */
+@keyframes trophy-pulse {
+  0% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5)); }
+  50% { transform: scale(1.1); filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.8)); }
+  100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5)); }
+}
+.animate-trophy-pulse {
+  animation: trophy-pulse 3s ease-in-out infinite;
+}
+
+/* Cast Gallery: 3D flip card utilities */
+.perspective-1000 {
+  perspective: 1000px;
+}
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+.gold-sheen-overlay::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, rgba(212, 175, 55, 0) 40%, rgba(212, 175, 55, 0.1) 50%, rgba(212, 175, 55, 0) 60%);
+  z-index: 10;
+  pointer-events: none;
+}
+
 /* Safe area utilities */
 .pt-safe-top {
   padding-top: var(--safe-area-inset-top);
