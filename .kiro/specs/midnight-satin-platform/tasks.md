@@ -87,7 +87,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [x] 10.2 Implement endorsement server actions
     - Implement endorseCharacter server action and trophy threshold logic backed by CREDIT_TRANSACTIONS and CHARACTERS tables.
     - _Requirements: 6.4-6.6, 10.5, 10.8_
-  - [ ]* 10.3 Property tests: endorsements and trophies
+  - [x]* 10.3 Property tests: endorsements and trophies
     - **Property 4: Character endorsement credit invariant** — **Property 5: Trophy badge threshold**
     - **Validates: Requirements 5.5, 6.4, 6.5, 6.6**
 - [ ] 11. Author's Study and follow system
