@@ -111,7 +111,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Property 6: Payment processing credit invariant**
     - **Validates: Requirements 8.5, 8.6, 10.8**
 - [ ] 13. MCP interface and admin dashboard
-  - [ ] 13.1 Implement MCP HTTP endpoint and tools
+  - [x] 13.1 Implement MCP HTTP endpoint and tools
     - Implement `/api/mcp` route exposing create/list/update tools for Author_Profiles, Series, Novels, Chapters, and Characters with API key auth.
     - _Requirements: 11.5, 12.1-12.9_
   - [ ] 13.2 Implement admin dashboard routes and CRUD screens
