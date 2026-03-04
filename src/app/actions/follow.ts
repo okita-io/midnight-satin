@@ -29,10 +29,26 @@ export async function followAuthor(authorId: string): Promise<FollowAuthorResult
       return { success: true, followed: true, newFollowerCount: newCount };
     }
 
-    await sql`
-      INSERT INTO author_follows (reader_id, author_id)
-      VALUES (${session.readerId}, ${authorId})
-    `;
+    try {
+      await sql`
+        INSERT INTO author_follows (reader_id, author_id)
+        VALUES (${session.readerId}, ${authorId})
+      `;
+    } catch (err: unknown) {
+      // Unique violation = concurrent follow; treat as idempotent success (Property 17)
+      const code = (err as { code?: string })?.code;
+      if (code === "23505") {
+        const { rows: countRows } = await sql<{ follower_count: number }>`
+          SELECT follower_count FROM author_profiles WHERE id = ${authorId}
+        `;
+        return {
+          success: true,
+          followed: true,
+          newFollowerCount: countRows[0]?.follower_count ?? 0,
+        };
+      }
+      throw err;
+    }
     const { rows: countRows } = await sql<{ follower_count: number }>`
       UPDATE author_profiles
       SET follower_count = follower_count + 1
