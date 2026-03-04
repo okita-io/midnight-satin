@@ -25,6 +25,12 @@ export async function middleware(request: NextRequest) {
       loginUrl.searchParams.set("returnUrl", pathname);
       return NextResponse.redirect(loginUrl);
     }
+    // Admin routes require admin role (Req 13.1, Property 9)
+    if (pathname === "/admin" || pathname.startsWith("/admin/")) {
+      if (session.role !== "admin") {
+        return new NextResponse("Forbidden", { status: 403 });
+      }
+    }
     return NextResponse.next();
   }
 

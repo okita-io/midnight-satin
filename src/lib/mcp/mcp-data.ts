@@ -389,7 +389,7 @@ export async function listContent(
         if (params.filter_by?.author_id && params.filter_by?.series_id) {
           query = sql<NovelRow>`
             SELECT id, title, series_id, author_id, cover_image_url, synopsis, genre_tags,
-                   rating, rating_count, publication_date, created_at
+                   rating, rating_count, publication_date, is_featured, featured_order, created_at
             FROM novels
             WHERE author_id = ${params.filter_by.author_id} AND series_id = ${params.filter_by.series_id}
             ORDER BY created_at DESC
@@ -397,7 +397,7 @@ export async function listContent(
         } else if (params.filter_by?.author_id) {
           query = sql<NovelRow>`
             SELECT id, title, series_id, author_id, cover_image_url, synopsis, genre_tags,
-                   rating, rating_count, publication_date, created_at
+                   rating, rating_count, publication_date, is_featured, featured_order, created_at
             FROM novels
             WHERE author_id = ${params.filter_by.author_id}
             ORDER BY created_at DESC
@@ -405,7 +405,7 @@ export async function listContent(
         } else if (params.filter_by?.series_id) {
           query = sql<NovelRow>`
             SELECT id, title, series_id, author_id, cover_image_url, synopsis, genre_tags,
-                   rating, rating_count, publication_date, created_at
+                   rating, rating_count, publication_date, is_featured, featured_order, created_at
             FROM novels
             WHERE series_id = ${params.filter_by.series_id}
             ORDER BY created_at DESC
@@ -413,7 +413,7 @@ export async function listContent(
         } else {
           query = sql<NovelRow>`
             SELECT id, title, series_id, author_id, cover_image_url, synopsis, genre_tags,
-                   rating, rating_count, publication_date, created_at
+                   rating, rating_count, publication_date, is_featured, featured_order, created_at
             FROM novels
             ORDER BY created_at DESC
           `;
@@ -431,6 +431,8 @@ export async function listContent(
           rating: Number(r.rating ?? 0),
           ratingCount: Number(r.rating_count ?? 0),
           publicationDate: r.publication_date ? new Date(r.publication_date) : null,
+          isFeatured: Boolean(r.is_featured),
+          featuredOrder: r.featured_order != null ? Number(r.featured_order) : null,
           createdAt: new Date(r.created_at),
         }));
       }
@@ -531,6 +533,8 @@ interface NovelRow {
   rating: number;
   rating_count: number;
   publication_date: string | null;
+  is_featured: boolean;
+  featured_order: number | null;
   created_at: Date;
 }
 
@@ -581,6 +585,8 @@ const KEY_TO_DB: Record<string, string> = {
   synopsis: "synopsis",
   publication_date: "publication_date",
   publicationDate: "publication_date",
+  is_featured: "is_featured",
+  featured_order: "featured_order",
   content: "content",
   is_free: "is_free",
   isFree: "is_free",
@@ -612,7 +618,7 @@ export async function updateContent(
     },
     novels: {
       table: "novels",
-      allowed: ["title", "series_id", "cover_image_url", "synopsis", "genre_tags", "publication_date"],
+      allowed: ["title", "series_id", "cover_image_url", "synopsis", "genre_tags", "publication_date", "is_featured", "featured_order"],
     },
     chapters: {
       table: "chapters",
