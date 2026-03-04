@@ -31,6 +31,7 @@ const config: Config = {
       },
       boxShadow: {
         "gold-glow": "0px 4px 20px rgba(212, 175, 55, 0.15)",
+        "gold-glow-intense": "0px 0px 30px rgba(212, 175, 55, 0.3)",
         "card-depth": "0 10px 30px -10px rgba(0, 0, 0, 0.8)",
       },
       backgroundImage: {

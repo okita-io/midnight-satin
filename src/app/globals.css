@@ -231,3 +231,38 @@ h4,
 .pb-safe-bottom {
   padding-bottom: var(--safe-area-inset-bottom);
 }
+
+/* Vault: Gold text gradient for credit balance (Req 8.1) */
+.gold-text-gradient {
+  background: linear-gradient(to bottom, #f9e076, #d4af37);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Vault: Shimmer effect for gold buttons (Most Popular pack) */
+@keyframes shimmer-sweep {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.animate-shimmer-sweep {
+  background: linear-gradient(
+    90deg,
+    rgba(212, 175, 55, 0) 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    rgba(212, 175, 55, 0) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer-sweep 3s infinite;
+}
+
+/* Vault: Coin rain animation on successful purchase (Req 8.5) */
+@keyframes coin-fall {
+  0% { transform: translateY(-100px) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+.animate-coin-fall {
+  animation: coin-fall 2.5s ease-in forwards;
+}

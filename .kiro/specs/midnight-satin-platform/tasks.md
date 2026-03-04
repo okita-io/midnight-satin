@@ -101,7 +101,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Property 17: Author follow invariant** — **Property 18: Author bibliography grouping**
     - **Validates: Requirements 7.5-7.7**
 - [ ] 12. Vault, payments, and credit packs
-  - [ ] 12.1 Implement Vault page UI and credit packs
+  - [x] 12.1 Implement Vault page UI and credit packs
     - Create src/app/vault/page.tsx matching `reference/the_vault_store.html`, including CreditBalanceDisplay, CreditPackGrid, PopularRibbon, CoinRainAnimation, RestoreButton (when provider supports restore), and LegalLinks.
     - _Requirements: 8.1-8.3, 8.8, 11.1, 14.1-14.6_
   - [ ] 12.2 Implement purchaseCredits action and payment webhook
