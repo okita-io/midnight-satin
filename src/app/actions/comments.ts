@@ -10,6 +10,7 @@ import { getSession } from "@/lib/auth/session";
 import { validateCommentContent } from "@/lib/comments/validation";
 import {
   getChapterCommentsDb,
+  getChapterCommentCountDb,
   insertCommentDb,
   updateCommentDb,
   deleteCommentDb,
@@ -39,6 +40,17 @@ export type DeleteCommentResult =
 export type LikeCommentResult =
   | { success: true; newLikeCount: number }
   | { success: false; error: string };
+
+/**
+ * Get total comment count for a chapter. Public (guests can view).
+ */
+export async function getChapterCommentCount(chapterId: string): Promise<number> {
+  try {
+    return await getChapterCommentCountDb(chapterId);
+  } catch {
+    return 0;
+  }
+}
 
 /**
  * Get comments for a chapter. Public (guests can view).
