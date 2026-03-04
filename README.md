@@ -21,6 +21,16 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000). Design reference files live in `reference/`; always implement screens to match the corresponding HTML mockups and the design system in `reference/midnight_satin_prd.html`.
 
+### Payment (Stripe)
+
+For credit purchases, set:
+
+- `STRIPE_SECRET_KEY` — Stripe secret key (required for checkout and webhooks)
+- `STRIPE_WEBHOOK_SECRET` — Webhook signing secret from Stripe Dashboard
+- `STRIPE_PRICE_POUCH`, `STRIPE_PRICE_HANDFUL`, `STRIPE_PRICE_CHEST`, `STRIPE_PRICE_ROYAL` — Optional; if unset, Checkout uses ad-hoc prices from pack config
+
+Configure the webhook endpoint `https://your-domain/api/webhooks/payment` in Stripe to receive `checkout.session.completed` events.
+
 ## Project layout (reference)
 
 - **`reference/`** — HTML design mockups and PRD (source of truth for UI)
