@@ -249,6 +249,30 @@ export function getReadingProgressForNovelFromStore(
 }
 
 /**
+ * Get scroll percent for a specific chapter (Property 11: Reading progress round-trip).
+ * Returns null if no progress exists.
+ */
+export function getReadingProgressForChapterFromStore(
+  readerId: string,
+  chapterId: string
+): number | null {
+  const progressList = listReadingProgressByReader(readerId);
+  const found = progressList.find((p) => p.chapterId === chapterId);
+  return found ? Number(found.scrollPercent) : null;
+}
+
+/**
+ * Check if a chapter is unlocked for a reader (Property 16: Veil display logic).
+ */
+export function isChapterUnlockedFromStore(
+  readerId: string,
+  chapterId: string
+): boolean {
+  const unlocks = listChapterUnlocksByReader(readerId);
+  return unlocks.some((u) => u.chapterId === chapterId);
+}
+
+/**
  * Get current reading for a reader (Property 12: Current reading identification).
  * Returns the novel associated with the reading progress record that has the most
  * recent last_read_at timestamp, along with chapter number and completion percentage.
