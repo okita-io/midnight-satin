@@ -84,7 +84,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [x] 10.1 Implement Cast Gallery modal and components
     - Implement cast-gallery-modal.tsx with CharacterCard, DossierCard, TrophyBadge, EndorsementFAB, and NavigationArrows to match `reference/the_cast_gallery_1.html` and `reference/the_cast_gallery_2.html`, including extended dossier fields for zodiac sign, blood type, birthday, and a "Tastes & Temptations" section showing character favorites and dislikes.
     - _Requirements: 5.1-5.7, 6.1-6.3_
-  - [ ] 10.2 Implement endorsement server actions
+  - [x] 10.2 Implement endorsement server actions
     - Implement endorseCharacter server action and trophy threshold logic backed by CREDIT_TRANSACTIONS and CHARACTERS tables.
     - _Requirements: 6.4-6.6, 10.5, 10.8_
   - [ ]* 10.3 Property tests: endorsements and trophies
