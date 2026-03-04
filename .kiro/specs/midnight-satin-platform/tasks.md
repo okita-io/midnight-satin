@@ -62,7 +62,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Property 14: Chapter access status** — **Property 15: First unread chapter**
     - **Validates: Requirements 2.6, 2.7, 16.4**
 - [ ] 8. The Reading Room and The Veil
-  - [ ] 8.1 Implement The Reading Room page
+  - [x] 8.1 Implement The Reading Room page
     - Create src/app/novel/[novelId]/read/[chapterId]/page.tsx matching reference/the_reading_room.html
     - Implement ChapterContent, DropCap, OrnamentalDivider, ReadingHUD (font settings: size 16/18/20px, optional line spacing; persist in localStorage/per-Reader; optional bookmark), ProgressBar; hide nav bar; safe area insets for HUD
     - _Requirements: 3.1-3.10, 15.4_

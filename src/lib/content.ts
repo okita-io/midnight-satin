@@ -405,6 +405,23 @@ export async function getReadingProgressForNovel(
 }
 
 /**
+ * Get a single chapter by ID.
+ */
+export async function getChapter(chapterId: string): Promise<NovelChapter | null> {
+  try {
+    const { rows } = await sql<ChapterRow>`
+      SELECT id, novel_id, chapter_number, title, content, is_free, created_at, updated_at
+      FROM chapters
+      WHERE id = ${chapterId}
+    `;
+    if (rows.length === 0) return null;
+    return rowToChapter(rows[0]);
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Get the first unread chapter ID for the FAB (Property 15).
  * First chapter where scroll_percent < 100 or no progress. If all completed, first chapter.
  */
