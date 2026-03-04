@@ -75,7 +75,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [ ]* 8.4 Property tests: reading progress and veil
     - **Property 11: Reading progress round-trip** — **Property 16: Veil display logic**
     - **Validates: Requirements 3.7, 4.1, 16.1, 16.2**
-  - [ ]* 8.5 Property tests: chapter unlock credits
+  - [x]* 8.5 Property tests: chapter unlock credits
     - **Property 2: Chapter unlock credit invariant** — **Property 3: Unlock idempotence**
     - **Validates: Requirements 4.4, 4.5, 4.6**
 - [ ] 9. Checkpoint - Ensure all tests pass

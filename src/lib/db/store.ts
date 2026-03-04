@@ -11,6 +11,8 @@ import type {
   Novel,
   AuthorProfile,
   ChapterUnlock,
+  CreditTransaction,
+  ReaderRow,
 } from "./types";
 
 /** Current reading result for Property 12 (matches content.CurrentReading shape) */
@@ -280,4 +282,129 @@ export function getCurrentReadingFromStore(
     scrollPercent: mostRecent.scrollPercent,
     chapterId: mostRecent.chapterId,
   };
+}
+
+const UNLOCK_COST = 5;
+
+/** List credit transactions for a reader (Property 2, 3) */
+function listCreditTransactionsByReader(
+  readerId: string
+): CreditTransaction[] {
+  const entries: CreditTransaction[] = [];
+  for (const [, value] of store.entries()) {
+    if (value.kind === "CreditTransaction") {
+      const ct = deserialize<CreditTransaction>(value.data, "CreditTransaction");
+      if (ct.readerId === readerId) entries.push(ct);
+    }
+  }
+  return entries;
+}
+
+/**
+ * Get reader credit balance from store (Property 2, 3).
+ */
+export function getReaderBalanceFromStore(readerId: string): number | null {
+  const reader = retrieveEntity<ReaderRow>("ReaderRow", readerId);
+  return reader?.creditBalance ?? null;
+}
+
+/**
+ * Check if reader has unlocked a chapter (Property 2, 3).
+ */
+export function hasChapterUnlockFromStore(
+  readerId: string,
+  chapterId: string
+): boolean {
+  const unlock = retrieveEntity<ChapterUnlock>(
+    "ChapterUnlock",
+    `${readerId}:${chapterId}`
+  );
+  return unlock !== null;
+}
+
+/**
+ * Count credit_transaction records of type 'chapter_unlock' for reader+chapter (Property 2, 3).
+ */
+export function countChapterUnlockTransactionsFromStore(
+  readerId: string,
+  chapterId: string
+): number {
+  const txs = listCreditTransactionsByReader(readerId);
+  return txs.filter(
+    (t) =>
+      t.transactionType === "chapter_unlock" &&
+      t.relatedEntityId === chapterId
+  ).length;
+}
+
+export type UnlockChapterInStoreResult =
+  | { success: true; newBalance: number }
+  | { success: false; error: string };
+
+/**
+ * Unlock a locked chapter for a reader in the store (Property 2, 3).
+ * Mirrors unlockChapter server action logic: deducts 5 credits, creates
+ * chapter_unlock and credit_transaction. Idempotent when already unlocked.
+ */
+export function unlockChapterInStore(
+  readerId: string,
+  chapterId: string
+): UnlockChapterInStoreResult {
+  // 1. Idempotent: already unlocked -> return success without deducting
+  const existingUnlock = retrieveEntity<ChapterUnlock>(
+    "ChapterUnlock",
+    `${readerId}:${chapterId}`
+  );
+  if (existingUnlock) {
+    const reader = retrieveEntity<ReaderRow>("ReaderRow", readerId);
+    return {
+      success: true,
+      newBalance: reader?.creditBalance ?? 0,
+    };
+  }
+
+  // 2. Chapter must exist and be locked
+  const chapter = retrieveEntity<Chapter>("Chapter", chapterId);
+  if (!chapter) {
+    return { success: false, error: "Chapter not found." };
+  }
+  if (chapter.isFree) {
+    return { success: false, error: "Chapter is free." };
+  }
+
+  // 3. Reader must exist and have sufficient balance
+  const reader = retrieveEntity<ReaderRow>("ReaderRow", readerId);
+  if (!reader) {
+    return { success: false, error: "Reader not found." };
+  }
+  const balance = reader.creditBalance;
+  if (balance < UNLOCK_COST) {
+    return { success: false, error: "Insufficient credits." };
+  }
+
+  // 4. Deduct, create transaction, create unlock
+  const updatedReader: ReaderRow = {
+    ...reader,
+    creditBalance: balance - UNLOCK_COST,
+  };
+  storeEntity(updatedReader);
+
+  const tx: CreditTransaction = {
+    id: crypto.randomUUID(),
+    readerId,
+    amount: -UNLOCK_COST,
+    transactionType: "chapter_unlock",
+    relatedEntityId: chapterId,
+    createdAt: new Date(),
+  };
+  storeEntity(tx);
+
+  const unlock: ChapterUnlock = {
+    readerId,
+    chapterId,
+    unlockedAt: new Date(),
+  };
+  storeEntity(unlock);
+
+  return { success: true, newBalance: balance - UNLOCK_COST };
 }
