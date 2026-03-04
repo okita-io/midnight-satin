@@ -46,8 +46,8 @@ export interface BookmarkItem {
 }
 
 /** Get bookmarks for the current reader. Returns empty array if not authenticated. */
-export async function getBookmarks(readerId?: string): Promise<BookmarkItem[]> {
-  const session = readerId ? { readerId } : await getSession();
+export async function getBookmarks(): Promise<BookmarkItem[]> {
+  const session = await getSession();
   if (!session) return [];
 
   try {

@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useTransition } from "react";
-import { useRouter } from "next/navigation";
+import React, { useTransition, useState } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { toggleBookmark } from "@/app/actions/bookmarks";
+import { AuthPrompt } from "./auth-prompt";
 
 interface NovelDetailHeaderProps {
   novelId: string;
@@ -18,13 +19,18 @@ export function NovelDetailHeader({
   isAuthenticated,
 }: NovelDetailHeaderProps) {
   const router = useRouter();
+  const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
   const [bookmarked, setBookmarked] = React.useState(initialBookmarked);
+  const [authPromptOpen, setAuthPromptOpen] = useState(false);
 
   const handleBack = () => router.back();
 
   const handleBookmark = () => {
-    if (!isAuthenticated) return;
+    if (!isAuthenticated) {
+      setAuthPromptOpen(true);
+      return;
+    }
     startTransition(async () => {
       const result = await toggleBookmark(novelId);
       if (result.success) setBookmarked(result.bookmarked);
@@ -67,7 +73,7 @@ export function NovelDetailHeader({
         <button
           type="button"
           onClick={handleBookmark}
-          disabled={!isAuthenticated || isPending}
+          disabled={isPending}
           className="flex items-center justify-center w-10 h-10 rounded-full bg-surface/30 backdrop-blur-md text-white border border-white/10 hover:bg-surface/50 transition-colors disabled:opacity-50"
           aria-label={bookmarked ? "Remove bookmark" : "Add bookmark"}
         >
@@ -87,6 +93,12 @@ export function NovelDetailHeader({
           <span className="material-symbols-outlined text-shadow-sm">share</span>
         </button>
       </div>
+      <AuthPrompt
+        isOpen={authPromptOpen}
+        onClose={() => setAuthPromptOpen(false)}
+        returnUrl={pathname ?? undefined}
+        message="Log in to bookmark novels"
+      />
     </div>
   );
 }
