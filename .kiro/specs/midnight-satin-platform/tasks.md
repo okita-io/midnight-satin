@@ -46,7 +46,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - _Requirements: 1.1-1.10, 15.5_
   - [x]* 6.2 Property test: current reading identification
     - **Property 12: Current reading identification** — **Validates: Requirements 1.2, 16.3**
-- [ ] 6a. Library (Full Catalog) Screen
+- [x] 6a. Library (Full Catalog) Screen
   - [x] 6a.1 Implement Library page
     - Create src/app/library/page.tsx; LibraryCatalog list/grid, same Navigation_Bar; optional filter when search used; empty state; safe area insets
     - _Requirements: 1a.1-1a.7_
@@ -80,7 +80,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Validates: Requirements 4.4, 4.5, 4.6**
 - [x] 9. Checkpoint - Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
-- [ ] 10. Cast Gallery and character endorsements
+- [x] 10. Cast Gallery and character endorsements
   - [x] 10.1 Implement Cast Gallery modal and components
     - Implement cast-gallery-modal.tsx with CharacterCard, DossierCard, TrophyBadge, EndorsementFAB, and NavigationArrows to match `reference/the_cast_gallery_1.html` and `reference/the_cast_gallery_2.html`, including extended dossier fields for zodiac sign, blood type, birthday, and a "Tastes & Temptations" section showing character favorites and dislikes.
     - _Requirements: 5.1-5.7, 6.1-6.3_
@@ -90,7 +90,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [x]* 10.3 Property tests: endorsements and trophies
     - **Property 4: Character endorsement credit invariant** — **Property 5: Trophy badge threshold**
     - **Validates: Requirements 5.5, 6.4, 6.5, 6.6**
-- [ ] 11. Author's Study and follow system
+- [x] 11. Author's Study and follow system
   - [x] 11.1 Implement Author's Study page
     - Create src/app/author/[authorId]/page.tsx matching `reference/the_authors_study.html` (HexagonAvatar, BiographySection, TrophyCase, BibliographySection, FollowButton).
     - _Requirements: 7.1-7.5_
@@ -100,7 +100,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [x]* 11.3 Property tests: follows and bibliography
     - **Property 17: Author follow invariant** — **Property 18: Author bibliography grouping**
     - **Validates: Requirements 7.5-7.7**
-- [ ] 12. Vault, payments, and credit packs
+- [x] 12. Vault, payments, and credit packs
   - [x] 12.1 Implement Vault page UI and credit packs
     - Create src/app/vault/page.tsx matching `reference/the_vault_store.html`, including CreditBalanceDisplay, CreditPackGrid, PopularRibbon, CoinRainAnimation, RestoreButton (when provider supports restore), and LegalLinks.
     - _Requirements: 8.1-8.3, 8.8, 11.1, 14.1-14.6_
@@ -110,7 +110,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [x]* 12.3 Property tests: payment and credit invariants
     - **Property 6: Payment processing credit invariant**
     - **Validates: Requirements 8.5, 8.6, 10.8**
-- [ ] 13. MCP interface and admin dashboard
+- [x] 13. MCP interface and admin dashboard
   - [x] 13.1 Implement MCP HTTP endpoint and tools
     - Implement `/api/mcp` route exposing create/list/update tools for Author_Profiles, Series, Novels, Chapters, and Characters with API key auth.
     - _Requirements: 11.5, 12.1-12.9_
@@ -120,7 +120,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [x]* 13.3 Property tests: MCP and admin analytics
     - **Property 19: MCP content creation round-trip** — **Property 20: MCP content filtering** — **Property 21: MCP content update** — **Property 22: MCP input validation** — **Property 24: Admin analytics accuracy**
     - **Validates: Requirements 12.1-12.8, 13.2, 13.4, 13.7**
-- [ ] 14. Reader Profile, Library, and Comments
+- [x] 14. Reader Profile, Library, and Comments
   - [x] 14.1 Implement Reader Profile & Library page
     - Create src/app/profile/page.tsx with ProfileHeader, ReadingStatsRow, LibrarySectionList, LibraryNovelCard, FollowedAuthorsStrip, and AccountActionsList.
     - _Requirements: 15.1-15.3, 16.3, 18.1-18.9_
