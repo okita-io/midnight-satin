@@ -41,6 +41,8 @@ import type {
   Comment,
 } from "@/lib/db/types";
 
+const MAX_COMMENT_LENGTH = 800;
+
 function seedStore(readerId: string, authorId: string, novelId: string, chapterId: string) {
   const reader: ReaderRow = {
     id: readerId,
