@@ -39,7 +39,7 @@ export function TheVeil({
           "linear-gradient(to bottom, rgba(5,5,5,0) 0%, rgba(5,5,5,0.8) 40%, rgba(5,5,5,1) 100%)",
       }}
     >
-      <div className="w-full max-w-sm px-6 pb-4 flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-300">
+      <div className="w-full max-w-sm px-4 xs:px-6 pb-4 flex flex-col items-center animate-in fade-in slide-in-from-bottom-4 duration-300">
         <div className="mb-2 text-primary/80">
           <span
             className="material-symbols-outlined animate-pulse"

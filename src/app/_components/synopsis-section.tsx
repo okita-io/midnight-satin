@@ -19,9 +19,9 @@ export function SynopsisSection({ synopsis }: SynopsisSectionProps) {
     : synopsis.slice(0, 200) + (synopsis.length > 200 ? "…" : "");
 
   return (
-    <div className="mb-10 relative">
+    <div className="mb-8 xs:mb-10 relative">
       <p
-        className={`text-text-main/90 text-lg leading-relaxed font-light ${
+        className={`text-text-main/90 text-base xs:text-lg leading-relaxed font-light ${
           !expanded && needsExpand ? "line-clamp-3" : ""
         }`}
       >

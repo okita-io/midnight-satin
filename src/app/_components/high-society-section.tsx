@@ -15,13 +15,13 @@ interface HighSocietySectionProps {
 export function HighSocietySection({ novels, loading }: HighSocietySectionProps) {
   if (loading) {
     return (
-      <section className="mb-10 pl-6">
-        <div className="flex items-center justify-between mb-6 pr-6">
+      <section className="mb-8 xs:mb-10 pl-4 xs:pl-6">
+        <div className="flex items-center justify-between mb-4 xs:mb-6 pr-4 xs:pr-6">
           <h2 className="font-header text-sm tracking-[0.15em] text-white/90">High Society</h2>
         </div>
-        <div className="flex overflow-x-auto gap-5 pb-8 no-scrollbar pr-6 snap-x snap-mandatory">
+        <div className="flex overflow-x-auto gap-3 xs:gap-5 pb-6 xs:pb-8 no-scrollbar pr-4 xs:pr-6 snap-x snap-mandatory">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="flex flex-col w-[130px] shrink-0 snap-start">
+            <div key={i} className="flex flex-col w-[110px] xs:w-[130px] shrink-0 snap-start">
               <div className="w-full aspect-[2/3] rounded-sm overflow-hidden mb-3 bg-surface-highlight animate-pulse" />
               <div className="h-4 bg-surface-highlight rounded animate-pulse mb-2 w-3/4" />
               <div className="h-3 bg-surface-highlight rounded animate-pulse w-1/2" />
@@ -34,8 +34,8 @@ export function HighSocietySection({ novels, loading }: HighSocietySectionProps)
 
   if (novels.length === 0) {
     return (
-      <section className="mb-10 px-6">
-        <div className="flex items-center justify-between mb-6">
+      <section className="mb-8 xs:mb-10 px-4 xs:px-6">
+        <div className="flex items-center justify-between mb-4 xs:mb-6">
           <h2 className="font-header text-sm tracking-[0.15em] text-white/90">High Society</h2>
         </div>
         <EmptyState message="Nothing in high society yet" className="py-8" />
@@ -44,11 +44,11 @@ export function HighSocietySection({ novels, loading }: HighSocietySectionProps)
   }
 
   return (
-    <section className="mb-10 pl-6">
-      <div className="flex items-center justify-between mb-6 pr-6">
+    <section className="mb-8 xs:mb-10 pl-4 xs:pl-6">
+      <div className="flex items-center justify-between mb-4 xs:mb-6 pr-4 xs:pr-6">
         <h2 className="font-header text-sm tracking-[0.15em] text-white/90">High Society</h2>
       </div>
-      <div className="flex overflow-x-auto gap-5 pb-8 no-scrollbar pr-6 snap-x snap-mandatory">
+      <div className="flex overflow-x-auto gap-3 xs:gap-5 pb-6 xs:pb-8 no-scrollbar pr-4 xs:pr-6 snap-x snap-mandatory">
         {novels.map((n) => (
           <NovelCard
             key={n.id}
@@ -62,8 +62,7 @@ export function HighSocietySection({ novels, loading }: HighSocietySectionProps)
             className="snap-start"
           />
         ))}
-        {/* Coming Soon placeholder per reference design */}
-        <div className="flex flex-col w-[130px] shrink-0 snap-start group cursor-default">
+        <div className="flex flex-col w-[110px] xs:w-[130px] shrink-0 snap-start group cursor-default">
           <div className="relative w-full aspect-[2/3] rounded-sm overflow-hidden mb-3 shadow-lg shadow-black/60 border border-white/5 bg-surface-highlight flex items-center justify-center">
             <span className="material-symbols-outlined text-text-muted opacity-50 text-4xl">
               auto_stories

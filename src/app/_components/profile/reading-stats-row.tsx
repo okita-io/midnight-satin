@@ -35,11 +35,11 @@ export function ReadingStatsRow({ stats }: ReadingStatsRowProps) {
   ];
 
   return (
-    <div className="flex overflow-x-auto gap-3 px-6 pb-6 no-scrollbar">
+    <div className="flex overflow-x-auto gap-2 xs:gap-3 px-4 xs:px-6 pb-6 no-scrollbar">
       {pills.map(({ label, value, icon }) => (
         <div
           key={label}
-          className="shrink-0 flex items-center gap-2 px-4 py-2 rounded-sm bg-surface border border-white/5"
+          className="shrink-0 flex items-center gap-1.5 xs:gap-2 px-3 xs:px-4 py-2 rounded-sm bg-surface border border-white/5"
         >
           <span
             className="material-symbols-outlined text-primary text-lg"

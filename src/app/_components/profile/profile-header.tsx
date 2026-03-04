@@ -52,9 +52,9 @@ export function ProfileHeader({
   const obfuscated = obfuscateEmail(email);
 
   return (
-    <header className="flex items-center gap-4 p-6 pb-4">
+    <header className="flex items-center gap-3 xs:gap-4 p-4 xs:p-6 pb-4">
       {/* Avatar */}
-      <div className="w-16 h-16 shrink-0 rounded-full overflow-hidden border-2 border-primary/40 bg-surface-highlight flex items-center justify-center">
+      <div className="w-14 h-14 xs:w-16 xs:h-16 shrink-0 rounded-full overflow-hidden border-2 border-primary/40 bg-surface-highlight flex items-center justify-center">
         {avatarUrl ? (
           <img
             src={avatarUrl}
@@ -74,7 +74,7 @@ export function ProfileHeader({
       {/* Name, email, credit */}
       <div className="flex-1 min-w-0">
         <h1
-          className="font-display font-bold italic text-2xl text-text-main truncate"
+          className="font-display font-bold italic text-xl xs:text-2xl text-text-main truncate"
           style={{ fontFamily: "var(--font-display)" }}
         >
           {displayName || email.split("@")[0]}

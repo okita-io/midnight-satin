@@ -16,10 +16,10 @@ export default async function LoginPage({
   const registerLink = returnUrl ? `/auth/register?returnUrl=${encodeURIComponent(returnUrl)}` : "/auth/register";
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center px-6 pb-safe-bottom pt-safe-top">
+    <main className="min-h-screen flex flex-col items-center justify-center px-4 xs:px-6 pb-safe-bottom pt-safe-top">
       <div className="w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="font-display font-bold italic text-3xl text-[var(--primary)]" style={{ fontFamily: "var(--font-display)" }}>
+        <div className="text-center mb-6 xs:mb-8">
+          <h1 className="font-display font-bold italic text-2xl xs:text-3xl text-[var(--primary)]" style={{ fontFamily: "var(--font-display)" }}>
             Welcome back
           </h1>
           <p className="font-ui text-[var(--text-muted)] mt-2 tracking-widest uppercase" style={{ fontFamily: "var(--font-ui)", fontSize: "0.875rem" }}>

@@ -29,11 +29,11 @@ export function NovelCard({ novel, variant = "default", className = "" }: NovelC
     return (
       <Link
         href={href}
-        className={`card flex gap-4 p-4 group ${className}`}
+        className={`card flex gap-3 xs:gap-4 p-3 xs:p-4 group ${className}`}
         aria-label={`${novel.title} by ${novel.authorName}`}
       >
         <div className="overlay-sheen" aria-hidden />
-        <div className="w-20 h-[120px] shrink-0 rounded-sm overflow-hidden shadow-lg bg-surface-highlight relative">
+        <div className="w-16 xs:w-20 h-[100px] xs:h-[120px] shrink-0 rounded-sm overflow-hidden shadow-lg bg-surface-highlight relative">
           {novel.coverImageUrl ? (
             <img
               src={novel.coverImageUrl}
@@ -47,7 +47,7 @@ export function NovelCard({ novel, variant = "default", className = "" }: NovelC
           )}
         </div>
         <div className="flex flex-col justify-center flex-1 min-w-0">
-          <h3 className="font-display font-bold italic text-xl text-text-main truncate pr-2 mb-1 group-hover:text-primary transition-colors">
+          <h3 className="font-display font-bold italic text-lg xs:text-xl text-text-main truncate pr-2 mb-1 group-hover:text-primary transition-colors">
             {novel.title}
           </h3>
           <p className="font-ui text-xs text-text-muted">{novel.authorName}</p>
@@ -67,7 +67,7 @@ export function NovelCard({ novel, variant = "default", className = "" }: NovelC
   return (
     <Link
       href={href}
-      className={`flex flex-col w-[130px] shrink-0 snap-start group cursor-pointer ${className}`}
+      className={`flex flex-col w-[110px] xs:w-[130px] shrink-0 snap-start group cursor-pointer ${className}`}
       aria-label={`${novel.title} by ${novel.authorName}`}
     >
       <div className="relative w-full aspect-[2/3] rounded-sm overflow-hidden mb-3 shadow-lg border border-white/5 transition-transform duration-300 group-hover:-translate-y-1">

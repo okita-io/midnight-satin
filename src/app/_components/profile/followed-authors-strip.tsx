@@ -16,7 +16,7 @@ export function FollowedAuthorsStrip({ authors }: FollowedAuthorsStripProps) {
   if (authors.length === 0) return null;
 
   return (
-    <section className="px-6 pb-8">
+    <section className="px-4 xs:px-6 pb-8">
       <h2 className="font-header text-sm tracking-[0.15em] text-white/90 mb-4">
         Authors You Follow
       </h2>

@@ -21,7 +21,7 @@ export default async function ProfilePage() {
   if (!reader) {
     return (
       <>
-        <main className="min-h-screen flex flex-col items-center justify-center p-6 pb-safe-bottom pt-safe-top">
+        <main className="min-h-screen flex flex-col items-center justify-center p-4 xs:p-6 pb-safe-bottom pt-safe-top">
           <div className="text-center">
             <h1
               className="font-display font-bold italic text-2xl text-primary mb-4"

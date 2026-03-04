@@ -97,7 +97,7 @@ export function VaultClient({
 
   return (
     <>
-      <main className="relative z-10 flex-1 px-4 pb-24 overflow-y-auto">
+      <main className="relative z-10 flex-1 px-3 xs:px-4 pb-24 overflow-y-auto">
         {/* Coin rain overlay on successful purchase (Req 8.5) */}
         <CoinRainAnimation isActive={showCoinRain} />
 
@@ -123,7 +123,7 @@ export function VaultClient({
         </div>
 
         {/* CreditPackGrid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-lg mx-auto">
+        <div className="grid grid-cols-2 gap-3 xs:gap-4 max-w-lg mx-auto">
           {CREDIT_PACKS.map((pack) => (
             <CreditPackCard
               key={pack.id}
@@ -177,7 +177,7 @@ function CreditPackCard({ pack, onPurchase, isPurchasing }: CreditPackCardProps)
 
   return (
     <div
-      className={`group relative bg-surface/80 border rounded-sm p-4 flex flex-col items-center justify-between transition-all duration-300 ${
+      className={`group relative bg-surface/80 border rounded-sm p-3 xs:p-4 flex flex-col items-center justify-between transition-all duration-300 ${
         isPopular
           ? "border-primary/60 shadow-gold-glow hover:shadow-gold-glow-intense scale-[1.02] z-10"
           : "border-primary/20 hover:border-primary/50 hover:shadow-gold-glow hover:-translate-y-1"
@@ -198,9 +198,9 @@ function CreditPackCard({ pack, onPurchase, isPurchasing }: CreditPackCardProps)
       )}
 
       <div
-        className={`w-16 h-16 rounded-full bg-void border flex items-center justify-center mb-3 transition-transform duration-300 shadow-lg relative overflow-hidden ${
+        className={`w-12 h-12 xs:w-16 xs:h-16 rounded-full bg-void border flex items-center justify-center mb-2 xs:mb-3 transition-transform duration-300 shadow-lg relative overflow-hidden ${
           isPopular
-            ? "border-primary group-hover:scale-105 w-20 h-20"
+            ? "border-primary group-hover:scale-105 xs:w-20 xs:h-20"
             : "border-primary/30 group-hover:scale-110"
         }`}
       >
@@ -219,15 +219,15 @@ function CreditPackCard({ pack, onPurchase, isPurchasing }: CreditPackCardProps)
       </div>
 
       <h3
-        className={`font-display italic mb-1 ${
-          isPopular ? "text-2xl text-primary" : "text-xl text-text-main"
+        className={`font-display italic mb-1 text-center ${
+          isPopular ? "text-lg xs:text-2xl text-primary" : "text-base xs:text-xl text-text-main"
         }`}
       >
         {pack.name}
       </h3>
       <p
-        className={`font-header mb-4 tracking-widest ${
-          isPopular ? "text-white text-base font-bold" : "text-primary text-sm"
+        className={`font-header mb-3 xs:mb-4 tracking-widest ${
+          isPopular ? "text-white text-sm xs:text-base font-bold" : "text-primary text-xs xs:text-sm"
         }`}
       >
         {pack.credits} CREDITS

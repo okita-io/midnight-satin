@@ -32,7 +32,7 @@ export default async function VaultPage({
 
       {/* Header */}
       <header
-        className="relative z-10 pt-12 pb-6 px-6 text-center"
+        className="relative z-10 pt-12 pb-4 xs:pb-6 px-4 xs:px-6 text-center"
         style={{ paddingTop: "calc(3rem + env(safe-area-inset-top, 0px))" }}
       >
         <div className="flex items-center justify-between mb-2">
@@ -62,10 +62,10 @@ export default async function VaultPage({
         </div>
 
         {/* CreditBalanceDisplay — Req 8.1 */}
-        <div className="mt-8 mb-4 flex flex-col items-center justify-center">
+        <div className="mt-6 xs:mt-8 mb-4 flex flex-col items-center justify-center">
           <div className="relative">
             <span
-              className="font-display text-6xl italic font-bold gold-text-gradient drop-shadow-lg"
+              className="font-display text-5xl xs:text-6xl italic font-bold gold-text-gradient drop-shadow-lg"
               style={{ fontFamily: "var(--font-display)" }}
             >
               {creditBalance.toLocaleString()}
@@ -78,7 +78,7 @@ export default async function VaultPage({
               spark
             </span>
           </div>
-          <p className="font-script text-2xl text-text-muted mt-2 opacity-80">
+          <p className="font-script text-xl xs:text-2xl text-text-muted mt-2 opacity-80">
             Available Credits
           </p>
           <p className="text-xs font-ui text-text-muted mt-1 uppercase tracking-widest opacity-60">

@@ -58,7 +58,7 @@ export function NovelDetailHeader({
 
   return (
     <div
-      className="fixed top-0 left-0 right-0 z-50 p-4 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent max-w-md mx-auto"
+      className="fixed top-0 left-0 right-0 z-50 p-3 xs:p-4 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent w-full max-w-md mx-auto"
       style={{ paddingTop: "calc(1rem + env(safe-area-inset-top, 0px))" }}
     >
       <button

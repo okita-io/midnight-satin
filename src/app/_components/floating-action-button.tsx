@@ -11,12 +11,12 @@ export function FloatingActionButton({ novelId, chapterId }: FloatingActionButto
 
   return (
     <div
-      className="fixed bottom-24 right-6 z-40"
+      className="fixed bottom-24 right-4 xs:right-6 z-40"
       style={{ bottom: "calc(6rem + env(safe-area-inset-bottom, 0px))" }}
     >
       <Link
         href={href}
-        className="group flex items-center justify-center w-16 h-16 rounded-full bg-primary shadow-gold-glow hover:scale-105 active:scale-95 transition-all duration-300 relative overflow-hidden"
+        className="group flex items-center justify-center w-14 h-14 xs:w-16 xs:h-16 rounded-full bg-primary shadow-gold-glow hover:scale-105 active:scale-95 transition-all duration-300 relative overflow-hidden"
         aria-label="Start reading"
       >
         <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300" />

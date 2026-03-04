@@ -38,7 +38,7 @@ export function BoudoirHeader({
   return (
     <>
       <div
-        className="absolute top-0 left-0 right-0 z-20 flex justify-between items-center p-6 bg-gradient-to-b from-black/80 to-transparent"
+        className="absolute top-0 left-0 right-0 z-20 flex justify-between items-center p-4 xs:p-6 bg-gradient-to-b from-black/80 to-transparent"
         style={{ paddingTop: "calc(1.5rem + env(safe-area-inset-top, 0px))" }}
       >
         <div className="flex items-center gap-2">

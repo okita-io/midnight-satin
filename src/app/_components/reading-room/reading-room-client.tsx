@@ -210,7 +210,7 @@ export function ReadingRoomClient({
         role="main"
         aria-label="Chapter content"
       >
-        <div className="max-w-xl mx-auto px-6 pt-24 pb-32">
+          <div className="max-w-xl mx-auto px-4 xs:px-6 pt-20 xs:pt-24 pb-28 xs:pb-32">
           <ChapterContent
             content={content}
             chapterTitle={chapterTitle}

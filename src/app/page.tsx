@@ -69,7 +69,7 @@ export default async function BoudoirPage() {
 
         <HighSocietySection novels={trending} />
 
-        <section className="px-6 mb-8">
+        <section className="px-4 xs:px-6 mb-8">
           <VaultTeaserCard />
         </section>
       </main>

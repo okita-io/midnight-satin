@@ -123,13 +123,18 @@ h4,
 /* Layout helpers */
 .mobile-container {
   max-width: 28rem;
-  /* max-w-md */
+  width: 100%;
   margin: 0 auto;
   min-height: 100vh;
   position: relative;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-  border-left: 1px solid var(--surface-highlight);
-  border-right: 1px solid var(--surface-highlight);
+}
+
+@media (min-width: 28rem) {
+  .mobile-container {
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border-left: 1px solid var(--surface-highlight);
+    border-right: 1px solid var(--surface-highlight);
+  }
 }
 
 /* Component classes */

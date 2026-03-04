@@ -23,7 +23,7 @@ export function ParallaxHero({
   ratingCount,
 }: ParallaxHeroProps) {
   return (
-    <div className="relative h-[65vh] w-full overflow-hidden">
+    <div className="relative h-[55vh] xs:h-[60vh] sm:h-[65vh] w-full overflow-hidden min-h-[280px]">
       {/* Background Image */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -35,9 +35,9 @@ export function ParallaxHero({
       {/* Gradient Overlay */}
       <div className="absolute inset-0 bg-gradient-to-t from-void via-void/60 to-transparent" />
       {/* Content Overlay */}
-      <div className="absolute bottom-0 left-0 w-full px-6 pb-8 flex flex-col gap-3">
+      <div className="absolute bottom-0 left-0 w-full px-4 xs:px-6 pb-6 xs:pb-8 flex flex-col gap-2 xs:gap-3">
         <MetadataPills tags={genreTags} />
-        <h1 className="text-4xl md:text-5xl font-display italic font-bold text-text-main leading-tight drop-shadow-lg">
+        <h1 className="text-3xl xs:text-4xl font-display italic font-bold text-text-main leading-tight drop-shadow-lg">
           {title}
         </h1>
         <p className="text-lg text-text-muted font-display tracking-wide">

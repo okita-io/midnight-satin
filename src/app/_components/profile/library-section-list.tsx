@@ -18,7 +18,7 @@ export function LibrarySectionList({
   finished,
 }: LibrarySectionListProps) {
   return (
-    <section className="px-6 pb-8">
+    <section className="px-4 xs:px-6 pb-8">
       {/* Currently Reading */}
       <div className="mb-8">
         <h2 className="font-header text-sm tracking-[0.15em] text-white/90 mb-4">

@@ -18,7 +18,7 @@ export function BibliographySection({ groups }: BibliographySectionProps) {
   if (groups.length === 0) return null;
 
   return (
-    <div className="px-6 space-y-8">
+    <div className="px-4 xs:px-6 space-y-8">
       {groups.map((group) => (
         <section key={group.seriesId ?? "standalone"}>
           <div className="flex items-end justify-between mb-4 border-b border-[#393528] pb-2">
@@ -34,7 +34,7 @@ export function BibliographySection({ groups }: BibliographySectionProps) {
               <Link
                 key={novel.id}
                 href={`/novel/${novel.id}`}
-                className="flex gap-4 group cursor-pointer"
+                className="flex gap-3 xs:gap-4 group cursor-pointer"
               >
                 <div className="relative w-20 h-28 shrink-0 rounded-sm overflow-hidden shadow-lg border border-[#393528] group-hover:border-primary transition-colors">
                   {novel.coverImageUrl ? (

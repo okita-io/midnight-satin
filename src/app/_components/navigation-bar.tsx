@@ -18,9 +18,9 @@ interface NavigationBarProps {
 export function NavigationBar({ activeTab }: NavigationBarProps) {
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-50 max-w-md mx-auto bg-[#080808] border-t border-[#1F1F1F] px-6 pt-4 shadow-[0_-10px_40px_rgba(0,0,0,0.8)]"
+      className="fixed bottom-0 left-0 right-0 z-50 w-full max-w-md mx-auto bg-[#080808] border-t border-[#1F1F1F] px-4 xs:px-6 pt-3 xs:pt-4 shadow-[0_-10px_40px_rgba(0,0,0,0.8)]"
       style={{
-        paddingBottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))",
+        paddingBottom: "calc(1rem + env(safe-area-inset-bottom, 0px))",
       }}
       aria-label="Main navigation"
     >

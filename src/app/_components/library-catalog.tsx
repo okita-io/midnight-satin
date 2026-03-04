@@ -46,8 +46,8 @@ export function LibraryCatalog({
 
   if (loading) {
     return (
-      <div className="px-6 py-8">
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+      <div className="px-4 xs:px-6 py-8">
+        <div className="grid grid-cols-2 gap-3 xs:gap-4">
           {Array.from({ length: 6 }).map((_, i) => (
             <ShimmerPlaceholder key={i} className="aspect-[2/3] rounded-sm" />
           ))}
@@ -71,9 +71,9 @@ export function LibraryCatalog({
   }
 
   return (
-    <section className="px-6 pb-8" aria-label="Library catalog">
+    <section className="px-4 xs:px-6 pb-8" aria-label="Library catalog">
       {/* View toggle */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-4 xs:mb-6">
         <span className="font-ui text-xs text-text-muted">
           {filtered.length} {filtered.length === 1 ? "novel" : "novels"}
         </span>
@@ -112,7 +112,7 @@ export function LibraryCatalog({
       </div>
 
       {viewMode === "grid" ? (
-        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3">
+        <div className="grid grid-cols-2 gap-3 xs:gap-4">
           {filtered.map((novel) => (
             <NovelCard
               key={novel.id}
@@ -123,6 +123,7 @@ export function LibraryCatalog({
                 coverImageUrl: novel.coverImageUrl,
                 rating: novel.rating,
               }}
+              className="!w-full"
             />
           ))}
         </div>

@@ -20,7 +20,7 @@ export function HeroCarousel({ featured, firstChapterId }: HeroCarouselProps) {
     : novelDetailPath(featured.id);
 
   return (
-    <section className="relative h-[480px] w-full overflow-hidden group">
+    <section className="relative h-[380px] xs:h-[420px] sm:h-[480px] w-full overflow-hidden group">
       {/* Background Image */}
       <div className="absolute inset-0 bg-void">
         {featured.coverImageUrl ? (
@@ -39,19 +39,19 @@ export function HeroCarousel({ featured, firstChapterId }: HeroCarouselProps) {
       <div className="absolute inset-0 bg-gold-sheen opacity-30 mix-blend-overlay" />
 
       {/* Content */}
-      <div className="absolute bottom-0 left-0 right-0 p-6 flex flex-col items-center text-center z-10 pb-12">
-        <span className="font-header text-[10px] tracking-[0.3em] text-primary mb-3 uppercase border-b border-primary/30 pb-1">
+      <div className="absolute bottom-0 left-0 right-0 p-4 xs:p-6 flex flex-col items-center text-center z-10 pb-8 xs:pb-12">
+        <span className="font-header text-[10px] tracking-[0.3em] text-primary mb-2 xs:mb-3 uppercase border-b border-primary/30 pb-1">
           Editor&apos;s Choice
         </span>
-        <h1 className="font-display italic font-bold text-4xl leading-tight text-white mb-2 gold-text-shadow">
+        <h1 className="font-display italic font-bold text-3xl xs:text-4xl leading-tight text-white mb-2 gold-text-shadow">
           {featured.title}
         </h1>
-        <p className="font-ui text-text-muted text-sm mb-6 tracking-wide">
+        <p className="font-ui text-text-muted text-sm mb-4 xs:mb-6 tracking-wide">
           By {featured.authorName}
         </p>
         <Link
           href={ctaHref}
-          className="bg-primary text-void font-ui font-bold text-sm px-8 py-3 rounded-sm hover:bg-white transition-colors duration-300 shadow-gold-glow uppercase tracking-wider"
+          className="bg-primary text-void font-ui font-bold text-sm px-6 xs:px-8 py-2.5 xs:py-3 rounded-sm hover:bg-white transition-colors duration-300 shadow-gold-glow uppercase tracking-wider"
         >
           Start Reading
         </Link>

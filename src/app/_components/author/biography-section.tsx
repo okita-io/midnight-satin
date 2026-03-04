@@ -8,10 +8,10 @@ interface BiographySectionProps {
 /** Centered italic quote with decorative quotation marks and writing style hashtag pills (Req 7.3). */
 export function BiographySection({ biography, styleTags }: BiographySectionProps) {
   return (
-    <section className="px-6 mb-10">
+    <section className="px-4 xs:px-6 mb-8 xs:mb-10">
       <div className="relative">
-        <span className="absolute -left-2 -top-2 text-4xl text-[#393528] font-display">&ldquo;</span>
-        <p className="text-text-main/90 text-lg leading-relaxed text-center italic font-light px-2">
+        <span className="absolute -left-1 xs:-left-2 -top-2 text-3xl xs:text-4xl text-[#393528] font-display">&ldquo;</span>
+        <p className="text-text-main/90 text-base xs:text-lg leading-relaxed text-center italic font-light px-2">
           {biography || "No biography available."}
         </p>
         <span

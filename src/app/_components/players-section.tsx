@@ -49,8 +49,8 @@ export function PlayersSection({
 
   return (
     <>
-      <div className="mb-12">
-        <div className="flex justify-between items-end mb-6">
+      <div className="mb-10 xs:mb-12">
+        <div className="flex justify-between items-end mb-4 xs:mb-6">
           <h3 className="text-text-muted text-sm uppercase tracking-[0.2em] font-medium border-b border-primary/20 pb-2">
             The Players
           </h3>
@@ -62,7 +62,7 @@ export function PlayersSection({
             View All
           </button>
         </div>
-        <div className="flex overflow-x-auto gap-6 pb-4 snap-x no-scrollbar">
+        <div className="flex overflow-x-auto gap-4 xs:gap-6 pb-4 snap-x no-scrollbar">
           {characters.map((char, i) => (
             <CharacterPortrait
               key={char.id}

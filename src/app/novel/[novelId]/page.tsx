@@ -75,7 +75,7 @@ export default async function NovelDetailPage({
           ratingCount={novel.ratingCount}
         />
 
-        <div className="relative z-10 px-6 -mt-4 bg-void">
+        <div className="relative z-10 px-4 xs:px-6 -mt-4 bg-void">
           <SynopsisSection synopsis={novel.synopsis} />
           <PlayersSection
             characters={characters}

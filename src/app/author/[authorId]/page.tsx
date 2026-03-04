@@ -69,7 +69,7 @@ export default async function AuthorStudyPage({
       <AuthorStudyHeader authorName={author.name} />
 
       <main className="flex-1 pb-24">
-        <section className="relative px-6 pt-8 pb-10 flex flex-col items-center text-center">
+        <section className="relative px-4 xs:px-6 pt-6 xs:pt-8 pb-8 xs:pb-10 flex flex-col items-center text-center">
           <div
             className="absolute top-20 left-1/2 -translate-x-1/2 w-48 h-48 bg-primary/10 blur-[60px] rounded-full pointer-events-none"
             aria-hidden
@@ -78,7 +78,7 @@ export default async function AuthorStudyPage({
             src={author.avatarUrl}
             alt={`Portrait of ${author.name}`}
           />
-          <h1 className="text-3xl font-display italic text-text-main mb-1">
+          <h1 className="text-2xl xs:text-3xl font-display italic text-text-main mb-1">
             {author.name}
           </h1>
           <p className="text-text-muted text-sm font-header tracking-widest mb-4">
