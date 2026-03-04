@@ -117,7 +117,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [ ] 13.2 Implement admin dashboard routes and CRUD screens
     - Create admin layout and pages for authors, series, novels, chapters, characters, users, and comment moderation (hide/soft-delete abusive comments). Optional: allow marking novels/series as featured or ordering for trending (for hero and High Society).
     - _Requirements: 1.10, 13.1-13.7_
-  - [ ]* 13.3 Property tests: MCP and admin analytics
+  - [x]* 13.3 Property tests: MCP and admin analytics
     - **Property 19: MCP content creation round-trip** — **Property 20: MCP content filtering** — **Property 21: MCP content update** — **Property 22: MCP input validation** — **Property 24: Admin analytics accuracy**
     - **Validates: Requirements 12.1-12.8, 13.2, 13.4, 13.7**
 - [ ] 14. Reader Profile, Library, and Comments
