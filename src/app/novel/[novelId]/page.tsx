@@ -77,7 +77,11 @@ export default async function NovelDetailPage({
 
         <div className="relative z-10 px-6 -mt-4 bg-void">
           <SynopsisSection synopsis={novel.synopsis} />
-          <PlayersSection characters={characters} />
+          <PlayersSection
+            characters={characters}
+            novelId={novelId}
+            isAuthenticated={!!session}
+          />
           <ChapterList
             novelId={novelId}
             chapters={chapters}

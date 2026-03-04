@@ -8,8 +8,10 @@ interface CastGalleryModalProps {
   characters: NovelCharacter[];
   initialIndex?: number;
   onClose: () => void;
-  /** Called when user confirms endorsement. Task 10.2 will wire the server action. */
+  /** Called when user confirms endorsement (authenticated). */
   onEndorse?: (characterId: string) => void;
+  /** Called when guest taps rose (show auth prompt). */
+  onAuthPrompt?: () => void;
 }
 
 /** Safely extract CharacterStats from NovelCharacter.stats (Record<string, unknown>). */
@@ -240,16 +242,26 @@ function EndorsementFAB({
   characterId,
   endorsementCount,
   onEndorse,
+  onAuthPrompt,
 }: {
   characterId: string;
   endorsementCount: number;
   onEndorse?: (characterId: string) => void;
+  onAuthPrompt?: () => void;
 }) {
   const [showConfirm, setShowConfirm] = useState(false);
 
   const handleConfirm = () => {
     onEndorse?.(characterId);
     setShowConfirm(false);
+  };
+
+  const handleRoseClick = () => {
+    if (onAuthPrompt) {
+      onAuthPrompt();
+    } else {
+      setShowConfirm(true);
+    }
   };
 
   return (
@@ -277,7 +289,7 @@ function EndorsementFAB({
       )}
       <button
         type="button"
-        onClick={() => setShowConfirm(true)}
+        onClick={handleRoseClick}
         className="relative group flex items-center justify-center size-16 rounded-full bg-accent text-white shadow-[0_4px_20px_rgba(128,0,32,0.4)] hover:scale-110 hover:shadow-[0_4px_30px_rgba(128,0,32,0.6)] transition-all duration-300 border border-white/10 overflow-hidden"
         aria-label="Send endorsement (1 Credit)"
       >
@@ -341,6 +353,7 @@ export function CastGalleryModal({
   initialIndex = 0,
   onClose,
   onEndorse,
+  onAuthPrompt,
 }: CastGalleryModalProps) {
   const safeIndex = Math.min(initialIndex, Math.max(0, characters.length - 1));
   const [index, setIndex] = useState(safeIndex);
@@ -438,6 +451,7 @@ export function CastGalleryModal({
           characterId={char.id}
           endorsementCount={char.endorsementCount}
           onEndorse={onEndorse}
+          onAuthPrompt={onAuthPrompt}
         />
 
         {/* Mobile nav dots */}
