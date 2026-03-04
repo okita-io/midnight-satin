@@ -10,6 +10,7 @@ import type {
   Chapter,
   Novel,
   AuthorProfile,
+  ChapterUnlock,
 } from "./types";
 
 /** Current reading result for Property 12 (matches content.CurrentReading shape) */
@@ -193,10 +194,7 @@ function listChapterUnlocksByReader(readerId: string): { chapterId: string }[] {
   const entries: { chapterId: string }[] = [];
   for (const [, value] of store.entries()) {
     if (value.kind === "ChapterUnlock") {
-      const cu = deserialize<{ readerId: string; chapterId: string }>(
-        value.data,
-        "ChapterUnlock"
-      );
+      const cu = deserialize<ChapterUnlock>(value.data, "ChapterUnlock");
       if (cu.readerId === readerId) entries.push({ chapterId: cu.chapterId });
     }
   }

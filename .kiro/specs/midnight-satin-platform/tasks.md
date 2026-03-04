@@ -69,7 +69,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [x] 8.2 Implement reading progress tracking
     - saveReadingProgress (10s debounce), getReadingProgress, scroll position restoration
     - _Requirements: 3.7, 16.1, 16.2_
-  - [ ] 8.3 Implement The Veil (chapter paywall)
+  - [x] 8.3 Implement The Veil (chapter paywall)
     - Progressive blur, unlockChapter with DB transaction and row-level locking
     - _Requirements: 4.1-4.6_
   - [ ]* 8.4 Property tests: reading progress and veil
