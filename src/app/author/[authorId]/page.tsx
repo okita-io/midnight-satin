@@ -1,8 +1,21 @@
 import { notFound } from "next/navigation";
-import { sql } from "@vercel/postgres";
+import { getAuthor, getAuthorBibliography } from "@/lib/content";
+import { getCurrentSession } from "@/app/actions/auth";
+import { isAuthorFollowed } from "@/app/actions/follow";
 import { NavigationBar } from "../../_components/navigation-bar";
+import { AuthorStudyHeader } from "../../_components/author/author-study-header";
+import { HexagonAvatar } from "../../_components/author/hexagon-avatar";
+import { BiographySection } from "../../_components/author/biography-section";
+import { TrophyCase, type AuthorTrophy } from "../../_components/author/trophy-case";
+import { BibliographySection } from "../../_components/author/bibliography-section";
+import { FollowButton } from "../../_components/author/follow-button";
 
 export const revalidate = 60;
+
+function formatFollowerCount(n: number): string {
+  if (n >= 1000) return `${(n / 1000).toFixed(1)}k`;
+  return n.toString();
+}
 
 export default async function AuthorStudyPage({
   params,
@@ -10,66 +23,116 @@ export default async function AuthorStudyPage({
   params: Promise<{ authorId: string }>;
 }) {
   const { authorId } = await params;
-  interface AuthorRow {
-    id: string;
-    name: string;
-    avatar_url: string | null;
-    biography: string | null;
-    style_tags: string[];
-    follower_count: number;
-  }
 
-  let author: AuthorRow | null = null;
-
-  try {
-    const { rows } = await sql<AuthorRow>`
-      SELECT id, name, avatar_url, biography, style_tags, follower_count
-      FROM author_profiles
-      WHERE id = ${authorId}
-    `;
-    author = rows[0] ?? null;
-  } catch {
-    // DB may not be configured
-  }
+  const [author, bib, session] = await Promise.all([
+    getAuthor(authorId),
+    getAuthorBibliography(authorId),
+    getCurrentSession(),
+  ]);
 
   if (!author) notFound();
 
+  const isAuthenticated = !!session;
+  const followed = isAuthenticated ? await isAuthorFollowed(authorId) : false;
+
+  const genreTags = author.styleTags.length > 0 ? author.styleTags : ["Romance"];
+  const genreLabel = genreTags.join(" • ");
+
+  const trophies: AuthorTrophy[] = [];
+  if (bib.worksCount >= 10) {
+    trophies.push({
+      id: "quill",
+      icon: "history_edu",
+      name: "Golden Quill",
+      description: "10+ Works",
+    });
+  }
+  if (author.followerCount >= 1000) {
+    trophies.push({
+      id: "roses",
+      icon: "favorite",
+      name: "Million Roses",
+      description: "1k+ Followers",
+    });
+  }
+  if (bib.avgRating >= 4.5 && bib.worksCount >= 3) {
+    trophies.push({
+      id: "rating",
+      icon: "star",
+      name: "Top Rated",
+      description: "4.5+ Avg",
+    });
+  }
+
   return (
     <>
-      <main style={{ flex: 1, paddingBottom: "6rem", padding: "1.5rem" }}>
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "2rem" }}>
+      <AuthorStudyHeader authorName={author.name} />
+
+      <main className="flex-1 pb-24">
+        <section className="relative px-6 pt-8 pb-10 flex flex-col items-center text-center">
           <div
-            style={{
-              width: 120,
-              height: 120,
-              borderRadius: 4,
-              overflow: "hidden",
-              border: "2px solid var(--primary)",
-              clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
-            }}
-          >
-            {author.avatar_url ? (
-              <img alt="" src={author.avatar_url} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-            ) : (
-              <div style={{ width: "100%", height: "100%", background: "var(--surface)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-                <span className="material-symbols-outlined text-primary text-4xl">person</span>
-              </div>
-            )}
-          </div>
-          <h1 className="font-display" style={{ fontStyle: "italic", fontWeight: "bold", fontSize: "1.75rem", color: "white", marginTop: "1rem" }}>
+            className="absolute top-20 left-1/2 -translate-x-1/2 w-48 h-48 bg-primary/10 blur-[60px] rounded-full pointer-events-none"
+            aria-hidden
+          />
+          <HexagonAvatar
+            src={author.avatarUrl}
+            alt={`Portrait of ${author.name}`}
+          />
+          <h1 className="text-3xl font-display italic text-text-main mb-1">
             {author.name}
           </h1>
-          <p className="font-ui" style={{ color: "var(--text-muted)", fontSize: "0.875rem", marginTop: "0.5rem" }}>
-            {author.follower_count} followers
+          <p className="text-text-muted text-sm font-header tracking-widest mb-4">
+            {genreLabel}
           </p>
-        </div>
-        {author.biography && (
-          <p className="font-body italic text-center" style={{ color: "var(--text-main)", lineHeight: 1.6, marginBottom: "2rem" }}>
-            &ldquo;{author.biography}&rdquo;
-          </p>
-        )}
+          <div className="flex items-center gap-6 mb-6 text-sm text-text-main/80">
+            <div className="flex flex-col items-center">
+              <span className="font-display text-lg text-primary">
+                {bib.worksCount}
+              </span>
+              <span className="text-[10px] uppercase tracking-wider text-text-muted">
+                Works
+              </span>
+            </div>
+            <div className="w-px h-8 bg-[#393528]" aria-hidden />
+            <div className="flex flex-col items-center">
+              <span className="font-display text-lg text-primary">
+                {formatFollowerCount(author.followerCount)}
+              </span>
+              <span className="text-[10px] uppercase tracking-wider text-text-muted">
+                Followers
+              </span>
+            </div>
+            <div className="w-px h-8 bg-[#393528]" aria-hidden />
+            <div className="flex flex-col items-center">
+              <span className="font-display text-lg text-primary">
+                {bib.avgRating > 0 ? bib.avgRating.toFixed(1) : "—"}
+              </span>
+              <span className="text-[10px] uppercase tracking-wider text-text-muted">
+                Rating
+              </span>
+            </div>
+          </div>
+          <FollowButton
+            authorId={authorId}
+            initialFollowed={followed}
+            isAuthenticated={isAuthenticated}
+          />
+        </section>
+
+        <BiographySection biography={author.biography} styleTags={author.styleTags} />
+        <TrophyCase trophies={trophies} />
+        <BibliographySection groups={bib.groups} />
       </main>
+
       <NavigationBar activeTab="boudoir" />
+
+      <div
+        className="fixed inset-0 pointer-events-none opacity-[0.03] z-0 mix-blend-overlay"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E")`,
+        }}
+        aria-hidden
+      />
     </>
   );
 }

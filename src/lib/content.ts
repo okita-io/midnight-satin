@@ -7,11 +7,14 @@
  */
 
 import { sql } from "@vercel/postgres";
-import type { Novel } from "@/lib/db/types";
+import type { Novel, AuthorProfile } from "@/lib/db/types";
 import {
   cacheGetOrSet,
+  cacheGet,
+  cacheSet,
   cacheKeyFeatured,
   cacheKeyTrending,
+  cacheKeyAuthor,
 } from "@/lib/cache";
 
 /** Novel with author name for display (NovelCard, hero, etc.) */
@@ -435,4 +438,112 @@ export function getFirstUnreadChapterId(
     if (pct === undefined || pct < 100) return ch.id;
   }
   return chapters[0].id;
+}
+
+/** Author profile row from DB (snake_case). */
+interface AuthorRow {
+  id: string;
+  name: string;
+  avatar_url: string | null;
+  biography: string | null;
+  style_tags: string[];
+  follower_count: number;
+  created_at: Date;
+}
+
+function rowToAuthorProfile(row: AuthorRow): AuthorProfile {
+  return {
+    id: row.id,
+    name: row.name,
+    avatarUrl: row.avatar_url,
+    biography: row.biography,
+    styleTags: Array.isArray(row.style_tags) ? row.style_tags : [],
+    followerCount: Number(row.follower_count ?? 0),
+    createdAt: new Date(row.created_at),
+  };
+}
+
+/**
+ * Get author profile by ID. Cached in KV with TTL 300s (Req 11.1, ISR 60s on page).
+ */
+export async function getAuthor(authorId: string): Promise<AuthorProfile | null> {
+  const cached = await cacheGet<AuthorProfile>(cacheKeyAuthor(authorId));
+  if (cached != null) return cached;
+  const { rows } = await sql<AuthorRow>`
+    SELECT id, name, avatar_url, biography, style_tags, follower_count, created_at
+    FROM author_profiles
+    WHERE id = ${authorId}
+  `;
+  if (rows.length === 0) return null;
+  const author = rowToAuthorProfile(rows[0]);
+  await cacheSet(cacheKeyAuthor(authorId), author);
+  return author;
+}
+
+/** Novel in bibliography with series info. */
+export interface BibliographyNovel extends Novel {
+  seriesTitle: string | null;
+  seriesIsComplete: boolean;
+}
+
+/** Bibliography grouped by series (Req 7.5, Property 18). */
+export interface BibliographyGroup {
+  seriesId: string | null;
+  seriesTitle: string;
+  isComplete: boolean;
+  novels: BibliographyNovel[];
+}
+
+/**
+ * Get author bibliography grouped by series. Standalone novels in separate group.
+ */
+export async function getAuthorBibliography(
+  authorId: string
+): Promise<{ groups: BibliographyGroup[]; worksCount: number; avgRating: number }> {
+  const { rows } = await sql<
+    NovelRow & {
+      series_title: string | null;
+      series_is_complete: boolean;
+    }
+  >`
+    SELECT n.id, n.title, n.series_id, n.author_id, n.cover_image_url, n.synopsis,
+           n.genre_tags, n.rating, n.rating_count, n.publication_date, n.created_at,
+           s.title AS series_title, s.is_complete AS series_is_complete
+    FROM novels n
+    LEFT JOIN series s ON s.id = n.series_id
+    WHERE n.author_id = ${authorId}
+    ORDER BY s.title ASC NULLS LAST, n.publication_date ASC NULLS LAST, n.created_at ASC
+  `;
+
+  const novels: BibliographyNovel[] = rows.map((r) => ({
+    ...rowToNovel(r),
+    seriesTitle: r.series_title,
+    seriesIsComplete: Boolean(r.series_is_complete),
+  }));
+
+  const groupMap = new Map<string | "standalone", BibliographyGroup>();
+
+  for (const n of novels) {
+    const key = n.seriesId ?? "standalone";
+    const seriesTitle = n.seriesTitle ?? "Standalone Novels";
+    const isComplete = n.seriesIsComplete ?? false;
+
+    if (!groupMap.has(key)) {
+      groupMap.set(key, {
+        seriesId: n.seriesId,
+        seriesTitle,
+        isComplete,
+        novels: [],
+      });
+    }
+    groupMap.get(key)!.novels.push(n);
+  }
+
+  const groups = Array.from(groupMap.values());
+
+  const worksCount = novels.length;
+  const totalRating = novels.reduce((sum, n) => sum + n.rating, 0);
+  const avgRating = worksCount > 0 ? totalRating / worksCount : 0;
+
+  return { groups, worksCount, avgRating };
 }

@@ -14,6 +14,7 @@ import { unlockChapter } from "@/app/actions/unlock-chapter";
 import { ChapterContent } from "./chapter-content";
 import { TheVeil } from "@/app/_components/the-veil";
 import { ReadingHUD, getStoredReaderSettings, setStoredReaderSettings, type FontSize, type LineHeight } from "./reading-hud";
+import { CommentsSection } from "./comments-section";
 
 const GUEST_PROGRESS_KEY = "reading-progress";
 const SAVE_DEBOUNCE_MS = 10_000;
@@ -33,6 +34,7 @@ export interface ReadingRoomClientProps {
   isFree: boolean;
   isUnlocked: boolean;
   initialCreditBalance: number;
+  initialCommentCount: number;
 }
 
 function getGuestScrollPercent(chapterId: string): number {
@@ -74,9 +76,12 @@ export function ReadingRoomClient({
   isFree,
   isUnlocked,
   initialCreditBalance,
+  initialCommentCount = 0,
 }: ReadingRoomClientProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [hudVisible, setHudVisible] = useState(false);
+  const [commentsOpen, setCommentsOpen] = useState(false);
+  const [commentCount, setCommentCount] = useState(initialCommentCount);
   const [progressPercent, setProgressPercent] = useState(0);
   const [settings, setSettings] = useState(getStoredReaderSettings);
   const [unlocked, setUnlocked] = useState(isUnlocked);
@@ -231,6 +236,7 @@ export function ReadingRoomClient({
       <ReadingHUD
         visible={hudVisible}
         novelId={novelId}
+        chapterId={chapterId}
         chapterNumber={chapterNumber}
         chapterTitle={chapterTitle}
         progressPercent={progressPercent}
@@ -238,10 +244,23 @@ export function ReadingRoomClient({
         nextChapterId={nextChapterId}
         isAuthenticated={isAuthenticated}
         initialBookmarked={initialBookmarked}
+        commentCount={commentCount}
+        commentsActive={commentsOpen}
+        onCommentsClick={() => setCommentsOpen((o) => !o)}
         fontSize={settings.fontSize}
         lineHeight={settings.lineHeight}
         onFontSizeChange={handleFontSizeChange}
         onLineHeightChange={handleLineHeightChange}
+      />
+
+      <CommentsSection
+        isOpen={commentsOpen}
+        onClose={() => setCommentsOpen(false)}
+        chapterId={chapterId}
+        isAuthenticated={isAuthenticated}
+        commentCount={commentCount}
+        onCommentCountChange={setCommentCount}
+        returnUrl={`/novel/${encodeURIComponent(novelId)}/read/${encodeURIComponent(chapterId)}`}
       />
 
       {/* Texture overlay */}

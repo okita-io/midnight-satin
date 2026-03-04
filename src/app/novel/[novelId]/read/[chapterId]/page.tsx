@@ -3,6 +3,7 @@ import { getCurrentSession } from "@/app/actions/auth";
 import { isNovelBookmarked } from "@/app/actions/bookmarks";
 import { isChapterUnlocked } from "@/app/actions/unlock-chapter";
 import { getReadingProgressForChapter } from "@/app/actions/reading-progress";
+import { getChapterCommentCount } from "@/app/actions/comments";
 import {
   getChapter,
   getChapters,
@@ -22,11 +23,12 @@ export default async function ReadingRoomPage({
 }) {
   const { novelId, chapterId } = await params;
 
-  const [chapter, novel, chapters, session] = await Promise.all([
+  const [chapter, novel, chapters, session, commentCount] = await Promise.all([
     getChapter(chapterId),
     getNovel(novelId),
     getChapters(novelId),
     getCurrentSession(),
+    getChapterCommentCount(chapterId),
   ]);
 
   const initialScrollPercent =
@@ -67,6 +69,7 @@ export default async function ReadingRoomPage({
       isFree={chapter.isFree}
       isUnlocked={isUnlocked}
       initialCreditBalance={creditBalance}
+      initialCommentCount={commentCount}
     />
   );
 }

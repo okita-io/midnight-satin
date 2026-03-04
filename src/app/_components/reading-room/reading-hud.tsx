@@ -76,6 +76,7 @@ export function setStoredReaderSettings(settings: ReaderSettings): void {
 export interface ReadingHUDProps {
   visible: boolean;
   novelId: string;
+  chapterId: string;
   chapterNumber: number;
   chapterTitle: string;
   progressPercent: number;
@@ -83,6 +84,9 @@ export interface ReadingHUDProps {
   nextChapterId: string | null;
   isAuthenticated: boolean;
   initialBookmarked: boolean;
+  commentCount: number;
+  commentsActive?: boolean;
+  onCommentsClick: () => void;
   fontSize: FontSize;
   lineHeight: LineHeight;
   onFontSizeChange: (size: FontSize) => void;
@@ -92,6 +96,7 @@ export interface ReadingHUDProps {
 export function ReadingHUD({
   visible,
   novelId,
+  chapterId,
   chapterNumber,
   chapterTitle,
   progressPercent,
@@ -99,6 +104,9 @@ export function ReadingHUD({
   nextChapterId,
   isAuthenticated,
   initialBookmarked,
+  commentCount,
+  commentsActive = false,
+  onCommentsClick,
   fontSize,
   lineHeight,
   onFontSizeChange,
@@ -278,6 +286,32 @@ export function ReadingHUD({
               )}
             </div>
           </div>
+
+          {/* Comments toggle */}
+          <button
+            type="button"
+            onClick={onCommentsClick}
+            className={`relative flex flex-col items-center gap-1 transition-colors ${
+              commentsActive ? "text-primary" : "text-text-muted hover:text-white"
+            }`}
+            aria-label={`Comments (${commentCount})`}
+            aria-pressed={commentsActive}
+          >
+            <span
+              className="material-symbols-outlined"
+              style={{ fontSize: 24 }}
+            >
+              history_edu
+            </span>
+            <span className="text-[10px] font-ui uppercase tracking-wider">
+              Notes
+            </span>
+            {commentCount > 0 && (
+              <span className="absolute -top-1.5 -right-2 bg-accent text-white text-[8px] font-bold px-1.5 py-0.5 rounded-full border border-void min-w-[18px]">
+                {commentCount > 99 ? "99+" : commentCount}
+              </span>
+            )}
+          </button>
 
           {/* Line spacing toggle */}
           <div className="relative">

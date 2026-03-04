@@ -12,6 +12,7 @@ const DEFAULT_TTL_SECONDS = 300;
 const KEYS = {
   featured: "ms:featured",
   trending: "ms:trending",
+  author: "ms:author:",
 } as const;
 
 /** Check if KV is available (env vars set). Avoids throwing on first access. */
@@ -77,4 +78,9 @@ export function cacheKeyFeatured(): string {
 /** Cache key for trending novels */
 export function cacheKeyTrending(): string {
   return KEYS.trending;
+}
+
+/** Cache key for author profile */
+export function cacheKeyAuthor(authorId: string): string {
+  return KEYS.author + authorId;
 }
