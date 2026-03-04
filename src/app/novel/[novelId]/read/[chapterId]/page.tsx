@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { getCurrentSession } from "@/app/actions/auth";
 import { isNovelBookmarked } from "@/app/actions/bookmarks";
+import { getReadingProgressForChapter } from "@/app/actions/reading-progress";
 import {
   getChapter,
   getChapters,
@@ -26,6 +27,9 @@ export default async function ReadingRoomPage({
     getCurrentSession(),
   ]);
 
+  const initialScrollPercent =
+    session ? (await getReadingProgressForChapter(chapterId)) ?? 0 : 0;
+
   if (!chapter || !novel) notFound();
   if (chapter.novelId !== novelId) notFound();
 
@@ -50,6 +54,7 @@ export default async function ReadingRoomPage({
       nextChapterId={nextChapter?.id ?? null}
       isAuthenticated={!!session}
       initialBookmarked={bookmarked}
+      initialScrollPercent={initialScrollPercent}
     />
   );
 }

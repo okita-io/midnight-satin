@@ -66,7 +66,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Create src/app/novel/[novelId]/read/[chapterId]/page.tsx matching reference/the_reading_room.html
     - Implement ChapterContent, DropCap, OrnamentalDivider, ReadingHUD (font settings: size 16/18/20px, optional line spacing; persist in localStorage/per-Reader; optional bookmark), ProgressBar; hide nav bar; safe area insets for HUD
     - _Requirements: 3.1-3.10, 15.4_
-  - [ ] 8.2 Implement reading progress tracking
+  - [x] 8.2 Implement reading progress tracking
     - saveReadingProgress (10s debounce), getReadingProgress, scroll position restoration
     - _Requirements: 3.7, 16.1, 16.2_
   - [ ] 8.3 Implement The Veil (chapter paywall)
