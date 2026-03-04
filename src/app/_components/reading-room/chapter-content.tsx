@@ -1,0 +1,77 @@
+/**
+ * Chapter content with drop cap, paragraphs, ornamental dividers (Req 3.1-3.3).
+ * Literata 18px default, 1.6 line-height, justified, 24px margins.
+ * Font size and line-height are configurable via props (from ReadingHUD settings).
+ */
+
+import { OrnamentalDivider } from "./ornamental-divider";
+
+const ORNAMENTAL_EVERY_N_PARAGRAPHS = 4;
+
+export interface ChapterContentProps {
+  content: string;
+  chapterTitle: string;
+  novelTitle: string;
+  fontSize?: 16 | 18 | 20;
+  lineHeight?: 1.4 | 1.5 | 1.6 | 1.8;
+}
+
+export function ChapterContent({
+  content,
+  chapterTitle,
+  novelTitle,
+  fontSize = 18,
+  lineHeight = 1.6,
+}: ChapterContentProps) {
+  const paragraphs = content
+    .split(/\n\n+/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+
+  if (paragraphs.length === 0) {
+    return (
+      <article className="max-w-none text-text-main/90 font-body text-justify">
+        <p className="text-text-muted italic">No content yet.</p>
+      </article>
+    );
+  }
+
+  return (
+    <article
+      className="max-w-none text-text-main/90 font-body text-justify"
+      style={{
+        fontSize: `${fontSize}px`,
+        lineHeight,
+      }}
+    >
+      {/* Chapter title block */}
+      <div className="text-center mb-12">
+        <div className="flex items-center justify-center gap-4 mb-4 opacity-50">
+          <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-primary" />
+          <span className="w-2 h-2 rotate-45 border border-primary bg-void" />
+          <div className="h-[1px] w-8 bg-gradient-to-l from-transparent to-primary" />
+        </div>
+        <h1 className="font-display italic text-4xl text-primary mb-2 drop-shadow-md">
+          {chapterTitle}
+        </h1>
+        <p className="font-ui text-xs tracking-widest text-text-muted uppercase">
+          {novelTitle}
+        </p>
+      </div>
+
+      {/* Content paragraphs with drop cap and ornamental dividers */}
+      {paragraphs.map((text, i) => {
+        const isFirst = i === 0;
+        const showDivider =
+          i > 0 && i % ORNAMENTAL_EVERY_N_PARAGRAPHS === 0;
+
+        return (
+          <div key={i}>
+            {showDivider && <OrnamentalDivider />}
+            <p className={isFirst ? "drop-cap mb-6" : "mb-6"}>{text}</p>
+          </div>
+        );
+      })}
+    </article>
+  );
+}

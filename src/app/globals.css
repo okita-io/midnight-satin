@@ -109,6 +109,17 @@ h4,
   white-space: nowrap;
 }
 
+/* Reading Room: Drop cap (Req 3.2) */
+.drop-cap::first-letter {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  line-height: 0.8;
+  float: left;
+  margin-right: 0.5rem;
+  margin-top: 0.2rem;
+  color: var(--primary);
+}
+
 /* Layout helpers */
 .mobile-container {
   max-width: 28rem;
