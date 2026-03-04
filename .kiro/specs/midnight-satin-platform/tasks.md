@@ -114,7 +114,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [x] 13.1 Implement MCP HTTP endpoint and tools
     - Implement `/api/mcp` route exposing create/list/update tools for Author_Profiles, Series, Novels, Chapters, and Characters with API key auth.
     - _Requirements: 11.5, 12.1-12.9_
-  - [ ] 13.2 Implement admin dashboard routes and CRUD screens
+  - [x] 13.2 Implement admin dashboard routes and CRUD screens
     - Create admin layout and pages for authors, series, novels, chapters, characters, users, and comment moderation (hide/soft-delete abusive comments). Optional: allow marking novels/series as featured or ordering for trending (for hero and High Society).
     - _Requirements: 1.10, 13.1-13.7_
   - [ ]* 13.3 Property tests: MCP and admin analytics

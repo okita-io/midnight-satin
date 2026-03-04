@@ -34,6 +34,8 @@ export interface Novel {
   rating: number;
   ratingCount: number;
   publicationDate: Date | null;
+  isFeatured?: boolean;
+  featuredOrder?: number | null;
   createdAt: Date;
 }
 
