@@ -3,12 +3,17 @@
 /**
  * Reading Room client orchestrator.
  * Tap center to toggle HUD, scroll progress, font settings persistence (Req 3.4-3.10).
+ * Reading progress: 10s debounce save, scroll restoration (Req 3.7, 16.1, 16.2).
  * No NavigationBar (Req 15.4).
  */
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import { saveReadingProgress } from "@/app/actions/reading-progress";
 import { ChapterContent } from "./chapter-content";
 import { ReadingHUD, getStoredReaderSettings, setStoredReaderSettings, type FontSize, type LineHeight } from "./reading-hud";
+
+const GUEST_PROGRESS_KEY = "reading-progress";
+const SAVE_DEBOUNCE_MS = 10_000;
 
 export interface ReadingRoomClientProps {
   novelId: string;
@@ -21,6 +26,31 @@ export interface ReadingRoomClientProps {
   nextChapterId: string | null;
   isAuthenticated: boolean;
   initialBookmarked: boolean;
+  initialScrollPercent?: number;
+}
+
+function getGuestScrollPercent(chapterId: string): number {
+  if (typeof window === "undefined") return 0;
+  try {
+    const raw = localStorage.getItem(GUEST_PROGRESS_KEY);
+    if (!raw) return 0;
+    const data = JSON.parse(raw) as Record<string, number>;
+    return data[chapterId] ?? 0;
+  } catch {
+    return 0;
+  }
+}
+
+function setGuestScrollPercent(chapterId: string, percent: number): void {
+  if (typeof window === "undefined") return;
+  try {
+    const raw = localStorage.getItem(GUEST_PROGRESS_KEY);
+    const data: Record<string, number> = raw ? JSON.parse(raw) : {};
+    data[chapterId] = percent;
+    localStorage.setItem(GUEST_PROGRESS_KEY, JSON.stringify(data));
+  } catch {
+    // ignore
+  }
 }
 
 export function ReadingRoomClient({
@@ -34,14 +64,67 @@ export function ReadingRoomClient({
   nextChapterId,
   isAuthenticated,
   initialBookmarked,
+  initialScrollPercent = 0,
 }: ReadingRoomClientProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
   const [hudVisible, setHudVisible] = useState(false);
   const [progressPercent, setProgressPercent] = useState(0);
   const [settings, setSettings] = useState(getStoredReaderSettings);
+  const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isRestoringRef = useRef(false);
 
   useEffect(() => {
     setSettings(getStoredReaderSettings());
+  }, []);
+
+  // Resolve initial scroll: server for auth, localStorage for guests (Req 16.2)
+  const resolvedInitialPercent =
+    isAuthenticated ? initialScrollPercent : getGuestScrollPercent(chapterId);
+
+  // Restore scroll position on mount (Req 16.2)
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el || resolvedInitialPercent <= 0) return;
+
+    isRestoringRef.current = true;
+    const restore = () => {
+      const { scrollHeight, clientHeight } = el;
+      const maxScroll = scrollHeight - clientHeight;
+      if (maxScroll <= 0) return;
+      const scrollTop = (resolvedInitialPercent / 100) * maxScroll;
+      el.scrollTop = scrollTop;
+      setProgressPercent(resolvedInitialPercent);
+      // Allow saves after restore completes
+      requestAnimationFrame(() => {
+        isRestoringRef.current = false;
+      });
+    };
+
+    restore();
+    const raf = requestAnimationFrame(restore);
+    return () => cancelAnimationFrame(raf);
+  }, [chapterId, resolvedInitialPercent]);
+
+  // Debounced save: 10s after last scroll (Req 16.1)
+  const scheduleSave = useCallback(
+    (percent: number) => {
+      if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+      saveTimerRef.current = setTimeout(() => {
+        saveTimerRef.current = null;
+        if (isAuthenticated) {
+          saveReadingProgress(chapterId, percent);
+        } else {
+          setGuestScrollPercent(chapterId, percent);
+        }
+      }, SAVE_DEBOUNCE_MS);
+    },
+    [chapterId, isAuthenticated]
+  );
+
+  useEffect(() => {
+    return () => {
+      if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
+    };
   }, []);
 
   const handleFontSizeChange = useCallback((fontSize: FontSize) => {
@@ -63,7 +146,8 @@ export function ReadingRoomClient({
     const maxScroll = scrollHeight - clientHeight;
     const pct = maxScroll <= 0 ? 100 : (scrollTop / maxScroll) * 100;
     setProgressPercent(pct);
-  }, []);
+    if (!isRestoringRef.current) scheduleSave(pct);
+  }, [scheduleSave]);
 
   useEffect(() => {
     const el = scrollRef.current;
