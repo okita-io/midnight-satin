@@ -121,7 +121,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Property 19: MCP content creation round-trip** — **Property 20: MCP content filtering** — **Property 21: MCP content update** — **Property 22: MCP input validation** — **Property 24: Admin analytics accuracy**
     - **Validates: Requirements 12.1-12.8, 13.2, 13.4, 13.7**
 - [ ] 14. Reader Profile, Library, and Comments
-  - [ ] 14.1 Implement Reader Profile & Library page
+  - [x] 14.1 Implement Reader Profile & Library page
     - Create src/app/profile/page.tsx with ProfileHeader, ReadingStatsRow, LibrarySectionList, LibraryNovelCard, FollowedAuthorsStrip, and AccountActionsList.
     - _Requirements: 15.1-15.3, 16.3, 18.1-18.9_
   - [ ] 14.2 Implement comments data layer and server actions

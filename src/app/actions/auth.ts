@@ -76,9 +76,10 @@ export async function loginReader(email: string, password: string): Promise<Logi
   return { success: true };
 }
 
-/** Clear session and log out. */
+/** Clear session and log out. Redirects to Boudoir (Req 18.8). */
 export async function logoutReader(): Promise<void> {
   await deleteSession();
+  redirect("/");
 }
 
 /** Get current session (for Server Components). Returns null if not logged in. */
