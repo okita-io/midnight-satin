@@ -58,7 +58,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [x] 7.2 Implement bookmark server actions and UI
     - toggleBookmark(novelId, chapterId?), getBookmarks(readerId); Reader_Bookmark persistence
     - _Requirements: 2.13, 10.11_
-  - [ ]* 7.3 Property tests: chapter access and first unread
+  - [x]* 7.3 Property tests: chapter access and first unread
     - **Property 14: Chapter access status** — **Property 15: First unread chapter**
     - **Validates: Requirements 2.6, 2.7, 16.4**
 - [ ] 8. The Reading Room and The Veil

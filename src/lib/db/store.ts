@@ -177,6 +177,79 @@ function listReadingProgressByReader(readerId: string): ReadingProgress[] {
   return entries;
 }
 
+/** List all Chapter entities (for iteration) */
+function listAllChapters(): Chapter[] {
+  const chapters: Chapter[] = [];
+  for (const [, value] of store.entries()) {
+    if (value.kind === "Chapter") {
+      chapters.push(deserialize<Chapter>(value.data, "Chapter"));
+    }
+  }
+  return chapters;
+}
+
+/** List all ChapterUnlock entities for a reader */
+function listChapterUnlocksByReader(readerId: string): { chapterId: string }[] {
+  const entries: { chapterId: string }[] = [];
+  for (const [, value] of store.entries()) {
+    if (value.kind === "ChapterUnlock") {
+      const cu = deserialize<{ readerId: string; chapterId: string }>(
+        value.data,
+        "ChapterUnlock"
+      );
+      if (cu.readerId === readerId) entries.push({ chapterId: cu.chapterId });
+    }
+  }
+  return entries;
+}
+
+/**
+ * List chapters for a novel, ordered by chapter_number (Property 14, 15).
+ */
+export function listChaptersByNovelFromStore(novelId: string): Chapter[] {
+  const chapters = listAllChapters().filter((c) => c.novelId === novelId);
+  chapters.sort((a, b) => a.chapterNumber - b.chapterNumber);
+  return chapters;
+}
+
+/**
+ * Get unlocked chapter IDs for a reader and novel (Property 14).
+ */
+export function getUnlockedChapterIdsFromStore(
+  readerId: string,
+  novelId: string
+): Set<string> {
+  const chapterIds = new Set(
+    listChaptersByNovelFromStore(novelId).map((c) => c.id)
+  );
+  const unlocks = listChapterUnlocksByReader(readerId);
+  const result = new Set<string>();
+  for (const u of unlocks) {
+    if (chapterIds.has(u.chapterId)) result.add(u.chapterId);
+  }
+  return result;
+}
+
+/**
+ * Get reading progress for a novel (chapter_id -> scroll_percent) (Property 15).
+ */
+export function getReadingProgressForNovelFromStore(
+  readerId: string,
+  novelId: string
+): Map<string, number> {
+  const chapterIds = new Set(
+    listChaptersByNovelFromStore(novelId).map((c) => c.id)
+  );
+  const progressList = listReadingProgressByReader(readerId);
+  const result = new Map<string, number>();
+  for (const p of progressList) {
+    if (chapterIds.has(p.chapterId)) {
+      result.set(p.chapterId, Number(p.scrollPercent));
+    }
+  }
+  return result;
+}
+
 /**
  * Get current reading for a reader (Property 12: Current reading identification).
  * Returns the novel associated with the reading progress record that has the most
