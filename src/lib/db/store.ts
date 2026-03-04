@@ -518,3 +518,65 @@ export function endorseCharacterInStore(
     newCount,
   };
 }
+
+/**
+ * Count credit_transaction records of type 'purchase' for a reader (Property 6).
+ */
+export function countPurchaseTransactionsFromStore(readerId: string): number {
+  const txs = listCreditTransactionsByReader(readerId);
+  return txs.filter((t) => t.transactionType === "purchase").length;
+}
+
+/**
+ * Get credit_transaction records of type 'purchase' for a reader (Property 6).
+ */
+export function getPurchaseTransactionsFromStore(
+  readerId: string
+): CreditTransaction[] {
+  const txs = listCreditTransactionsByReader(readerId);
+  return txs.filter((t) => t.transactionType === "purchase");
+}
+
+export type GrantCreditsForPurchaseInStoreResult =
+  | { success: true; newBalance: number }
+  | { success: false; error: string };
+
+/**
+ * Grant credits for a successful payment in the store (Property 6).
+ * Mirrors payment webhook logic: increases reader balance by credits and
+ * creates a credit_transaction record of type 'purchase' with positive amount.
+ * A failed payment is simulated by not calling this function.
+ */
+export function grantCreditsForPurchaseInStore(
+  readerId: string,
+  credits: number
+): GrantCreditsForPurchaseInStoreResult {
+  if (credits <= 0) {
+    return { success: false, error: "Invalid credits amount." };
+  }
+
+  const reader = retrieveEntity<ReaderRow>("ReaderRow", readerId);
+  if (!reader) {
+    return { success: false, error: "Reader not found." };
+  }
+
+  const newBalance = reader.creditBalance + credits;
+
+  const updatedReader: ReaderRow = {
+    ...reader,
+    creditBalance: newBalance,
+  };
+  storeEntity(updatedReader);
+
+  const tx: CreditTransaction = {
+    id: crypto.randomUUID(),
+    readerId,
+    amount: credits,
+    transactionType: "purchase",
+    relatedEntityId: null,
+    createdAt: new Date(),
+  };
+  storeEntity(tx);
+
+  return { success: true, newBalance };
+}

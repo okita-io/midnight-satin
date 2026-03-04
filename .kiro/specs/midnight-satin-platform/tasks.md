@@ -107,7 +107,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [x] 12.2 Implement purchaseCredits action and payment webhook
     - Implement purchaseCredits server action and `/api/webhooks/payment` route; integrate Payment_Provider (e.g., Stripe Checkout) with idempotent webhook handling for credit grant.
     - _Requirements: 8.4-8.6, 10.8, 11.3-11.5, 17.2-17.5_
-  - [ ]* 12.3 Property tests: payment and credit invariants
+  - [x]* 12.3 Property tests: payment and credit invariants
     - **Property 6: Payment processing credit invariant**
     - **Validates: Requirements 8.5, 8.6, 10.8**
 - [ ] 13. MCP interface and admin dashboard
