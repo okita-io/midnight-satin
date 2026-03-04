@@ -97,7 +97,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [x] 11.2 Implement followAuthor action and bibliography query
     - Implement followAuthor server action with idempotent follow behavior and bibliography grouping by Series.
     - _Requirements: 7.6, 7.7, 10.2, 10.3, 10.10_
-  - [ ]* 11.3 Property tests: follows and bibliography
+  - [x]* 11.3 Property tests: follows and bibliography
     - **Property 17: Author follow invariant** — **Property 18: Author bibliography grouping**
     - **Validates: Requirements 7.5-7.7**
 - [ ] 12. Vault, payments, and credit packs

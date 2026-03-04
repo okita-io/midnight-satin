@@ -10,10 +10,12 @@ import type {
   Chapter,
   Novel,
   AuthorProfile,
+  Series,
   ChapterUnlock,
   CreditTransaction,
   ReaderRow,
   Character,
+  AuthorFollow,
 } from "./types";
 
 /** Current reading result for Property 12 (matches content.CurrentReading shape) */
@@ -579,4 +581,178 @@ export function grantCreditsForPurchaseInStore(
   storeEntity(tx);
 
   return { success: true, newBalance };
+}
+
+/** List all AuthorFollow entities for an author (Property 17). */
+function listAuthorFollowsByAuthor(authorId: string): AuthorFollow[] {
+  const entries: AuthorFollow[] = [];
+  for (const [, value] of store.entries()) {
+    if (value.kind === "AuthorFollow") {
+      const af = deserialize<AuthorFollow>(value.data, "AuthorFollow");
+      if (af.authorId === authorId) entries.push(af);
+    }
+  }
+  return entries;
+}
+
+/** List all Novel entities (Property 18). */
+function listAllNovels(): Novel[] {
+  const novels: Novel[] = [];
+  for (const [, value] of store.entries()) {
+    if (value.kind === "Novel") {
+      novels.push(deserialize<Novel>(value.data, "Novel"));
+    }
+  }
+  return novels;
+}
+
+/** List all Series entities (Property 18). */
+function listAllSeries(): Series[] {
+  const series: Series[] = [];
+  for (const [, value] of store.entries()) {
+    if (value.kind === "Series") {
+      series.push(deserialize<Series>(value.data, "Series"));
+    }
+  }
+  return series;
+}
+
+/** Check if reader follows author (Property 17). */
+export function hasAuthorFollowFromStore(
+  readerId: string,
+  authorId: string
+): boolean {
+  const follow = retrieveEntity<AuthorFollow>(
+    "AuthorFollow",
+    `${readerId}:${authorId}`
+  );
+  return follow !== null;
+}
+
+/** Get author follower count from store (Property 17). Returns author's followerCount. */
+export function getAuthorFollowerCountFromStore(authorId: string): number {
+  const author = retrieveEntity<AuthorProfile>("AuthorProfile", authorId);
+  return author?.followerCount ?? 0;
+}
+
+export type FollowAuthorInStoreResult =
+  | { success: true; followed: boolean; newFollowerCount: number }
+  | { success: false; error: string };
+
+/**
+ * Follow an author in the store (Property 17).
+ * Mirrors followAuthor server action: creates author_follow record and increments
+ * author's follower_count. Idempotent when already following.
+ */
+export function followAuthorInStore(
+  readerId: string,
+  authorId: string
+): FollowAuthorInStoreResult {
+  const author = retrieveEntity<AuthorProfile>("AuthorProfile", authorId);
+  if (!author) {
+    return { success: false, error: "Author not found." };
+  }
+
+  const reader = retrieveEntity<ReaderRow>("ReaderRow", readerId);
+  if (!reader) {
+    return { success: false, error: "Reader not found." };
+  }
+
+  const existingFollow = retrieveEntity<AuthorFollow>(
+    "AuthorFollow",
+    `${readerId}:${authorId}`
+  );
+  if (existingFollow) {
+    return {
+      success: true,
+      followed: true,
+      newFollowerCount: author.followerCount,
+    };
+  }
+
+  const follow: AuthorFollow = {
+    readerId,
+    authorId,
+    followedAt: new Date(),
+  };
+  storeEntity(follow);
+
+  const newFollowerCount = author.followerCount + 1;
+  const updatedAuthor: AuthorProfile = {
+    ...author,
+    followerCount: newFollowerCount,
+  };
+  storeEntity(updatedAuthor);
+
+  return { success: true, followed: true, newFollowerCount };
+}
+
+/** Bibliography novel with series info (Property 18). */
+export interface BibliographyNovelFromStore extends Novel {
+  seriesTitle: string | null;
+  seriesIsComplete: boolean;
+}
+
+/** Bibliography group (Property 18). */
+export interface BibliographyGroupFromStore {
+  seriesId: string | null;
+  seriesTitle: string;
+  isComplete: boolean;
+  novels: BibliographyNovelFromStore[];
+}
+
+/**
+ * Get author bibliography grouped by series from store (Property 18).
+ * Mirrors getAuthorBibliography: novels grouped by series, standalone in separate group.
+ */
+export function getAuthorBibliographyFromStore(
+  authorId: string
+): { groups: BibliographyGroupFromStore[]; worksCount: number; avgRating: number } {
+  const novels = listAllNovels().filter((n) => n.authorId === authorId);
+  const seriesList = listAllSeries();
+
+  const novelsWithSeries: BibliographyNovelFromStore[] = novels.map((n) => {
+    const series = n.seriesId
+      ? seriesList.find((s) => s.id === n.seriesId)
+      : null;
+    return {
+      ...n,
+      seriesTitle: series?.title ?? null,
+      seriesIsComplete: series?.isComplete ?? false,
+    };
+  });
+
+  novelsWithSeries.sort((a, b) => {
+    const seriesTitleA = a.seriesTitle ?? "Standalone Novels";
+    const seriesTitleB = b.seriesTitle ?? "Standalone Novels";
+    if (seriesTitleA !== seriesTitleB) return seriesTitleA.localeCompare(seriesTitleB);
+    const dateA = a.publicationDate ?? a.createdAt;
+    const dateB = b.publicationDate ?? b.createdAt;
+    return dateA.getTime() - dateB.getTime();
+  });
+
+  const groupMap = new Map<string | "standalone", BibliographyGroupFromStore>();
+
+  for (const n of novelsWithSeries) {
+    const key = n.seriesId ?? "standalone";
+    const seriesTitle = n.seriesTitle ?? "Standalone Novels";
+    const isComplete = n.seriesIsComplete ?? false;
+
+    if (!groupMap.has(key)) {
+      groupMap.set(key, {
+        seriesId: n.seriesId,
+        seriesTitle,
+        isComplete,
+        novels: [],
+      });
+    }
+    groupMap.get(key)!.novels.push(n);
+  }
+
+  const groups = Array.from(groupMap.values());
+  const worksCount = novels.length;
+  const totalRating = novels.reduce((sum, n) => sum + n.rating, 0);
+  const avgRating = worksCount > 0 ? totalRating / worksCount : 0;
+
+  return { groups, worksCount, avgRating };
 }
