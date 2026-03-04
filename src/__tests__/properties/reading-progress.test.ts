@@ -1,4 +1,11 @@
 /**
+ * Property 11: Reading progress round-trip
+ * Validates: Requirements 3.7, 16.1, 16.2
+ *
+ * For any reader and any chapter with any scroll percentage (0-100), saving the
+ * reading progress and then retrieving it should return the same scroll percentage
+ * value. The last_read_at timestamp should be updated on each save.
+ *
  * Property 12: Current reading identification
  * Validates: Requirements 1.2, 16.3
  *
@@ -14,6 +21,7 @@ import {
   clearStore,
   storeEntity,
   getCurrentReadingFromStore,
+  getReadingProgressForChapterFromStore,
 } from "@/lib/db/store";
 import type {
   ReaderRow,
@@ -109,6 +117,181 @@ const currentReadingScenarioArb = fc
       };
     }
   );
+
+describe("Property 11: Reading progress round-trip", () => {
+  beforeEach(() => clearStore());
+
+  it("save and retrieve returns same scroll percentage for any 0-100 value", () => {
+    fc.assert(
+      fc.property(
+        fc.uuid(),
+        fc.uuid(),
+        fc.uuid(),
+        fc.uuid(),
+        fc.string({ minLength: 1, maxLength: 100 }),
+        fc.string({ minLength: 1, maxLength: 200 }),
+        fc.integer({ min: 1, max: 100 }),
+        fc.double({ min: 0, max: 100, noNaN: true }),
+        (
+          readerId,
+          authorId,
+          novelId,
+          chapterId,
+          authorName,
+          novelTitle,
+          chapterNumber,
+          scrollPercent
+        ) => {
+          const reader: ReaderRow = {
+            id: readerId,
+            email: `reader-${readerId}@test.com`,
+            passwordHash: "a".repeat(60),
+            displayName: "Test Reader",
+            creditBalance: 100,
+            role: "reader",
+            createdAt: new Date(),
+            lastLoginAt: null,
+          };
+          const author: AuthorProfile = {
+            id: authorId,
+            name: authorName,
+            avatarUrl: null,
+            biography: null,
+            styleTags: [],
+            followerCount: 0,
+            createdAt: new Date(),
+          };
+          const novel: Novel = {
+            id: novelId,
+            title: novelTitle,
+            seriesId: null,
+            authorId,
+            coverImageUrl: null,
+            synopsis: null,
+            genreTags: [],
+            rating: 0,
+            ratingCount: 0,
+            publicationDate: null,
+            createdAt: new Date(),
+          };
+          const chapter: Chapter = {
+            id: chapterId,
+            novelId,
+            chapterNumber,
+            title: "Chapter",
+            content: "Content",
+            isFree: true,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          };
+          const progress: ReadingProgress = {
+            readerId,
+            chapterId,
+            scrollPercent,
+            lastReadAt: new Date(),
+          };
+
+          storeEntity(reader);
+          storeEntity(author);
+          storeEntity(novel);
+          storeEntity(chapter);
+          storeEntity(progress);
+
+          const retrieved =
+            getReadingProgressForChapterFromStore(readerId, chapterId);
+          expect(retrieved).not.toBeNull();
+          expect(retrieved).toBeCloseTo(scrollPercent, 10);
+        }
+      ),
+      { numRuns: 100 }
+    );
+  });
+
+  it("last_read_at is updated on each save (overwrite)", () => {
+    fc.assert(
+      fc.property(
+        fc.uuid(),
+        fc.uuid(),
+        fc.uuid(),
+        fc.uuid(),
+        fc.integer({ min: 1, max: 100 }),
+        fc.double({ min: 0, max: 100, noNaN: true }),
+        fc.double({ min: 0, max: 100, noNaN: true }),
+        (readerId, authorId, novelId, chapterId, chapterNum, scroll1, scroll2) => {
+          const reader: ReaderRow = {
+            id: readerId,
+            email: `r-${readerId}@test.com`,
+            passwordHash: "x".repeat(60),
+            displayName: "Test",
+            creditBalance: 100,
+            role: "reader",
+            createdAt: new Date(),
+            lastLoginAt: null,
+          };
+          const author: AuthorProfile = {
+            id: authorId,
+            name: "Author",
+            avatarUrl: null,
+            biography: null,
+            styleTags: [],
+            followerCount: 0,
+            createdAt: new Date(),
+          };
+          const novel: Novel = {
+            id: novelId,
+            title: "Novel",
+            seriesId: null,
+            authorId,
+            coverImageUrl: null,
+            synopsis: null,
+            genreTags: [],
+            rating: 0,
+            ratingCount: 0,
+            publicationDate: null,
+            createdAt: new Date(),
+          };
+          const chapter: Chapter = {
+            id: chapterId,
+            novelId,
+            chapterNumber: chapterNum,
+            title: "Ch",
+            content: "x",
+            isFree: true,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          };
+
+          storeEntity(reader);
+          storeEntity(author);
+          storeEntity(novel);
+          storeEntity(chapter);
+
+          const t1 = new Date(1000);
+          storeEntity({
+            readerId,
+            chapterId,
+            scrollPercent: scroll1,
+            lastReadAt: t1,
+          } as ReadingProgress);
+
+          const t2 = new Date(2000);
+          storeEntity({
+            readerId,
+            chapterId,
+            scrollPercent: scroll2,
+            lastReadAt: t2,
+          } as ReadingProgress);
+
+          const retrieved =
+            getReadingProgressForChapterFromStore(readerId, chapterId);
+          expect(retrieved).not.toBeNull();
+          expect(retrieved).toBeCloseTo(scroll2, 10);
+        }
+      ),
+      { numRuns: 100 }
+    );
+  });
+});
 
 describe("Property 12: Current reading identification", () => {
   beforeEach(() => clearStore());

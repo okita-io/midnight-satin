@@ -13,6 +13,14 @@
  * For any novel and any reader, the "Start Reading" FAB should link to the first
  * chapter (by chapter_number) that the reader has not completed (scroll_percent < 100)
  * or not started. If all chapters are completed, it should link to the first chapter.
+ *
+ * Property 16: Veil display logic
+ * Validates: Requirements 4.1
+ *
+ * For any chapter and any reader, the Veil should be displayed if and only if the
+ * chapter's is_free is false AND the reader does not have a chapter_unlock record
+ * for that chapter. For unauthenticated readers, the Veil should always appear
+ * on non-free chapters.
  */
 
 import { describe, it, expect, beforeEach } from "vitest";
@@ -23,6 +31,7 @@ import {
   listChaptersByNovelFromStore,
   getUnlockedChapterIdsFromStore,
   getReadingProgressForNovelFromStore,
+  isChapterUnlockedFromStore,
 } from "@/lib/db/store";
 import { getFirstUnreadChapterId } from "@/lib/content";
 import type {
@@ -49,6 +58,17 @@ function isChapterAccessible(
   unlockedIds: Set<string>
 ): boolean {
   return chapter.isFree || unlockedIds.has(chapter.id);
+}
+
+/** Property 16: Veil shown iff !isFree AND (unauthenticated OR not unlocked) */
+function shouldShowVeil(
+  chapter: { id: string; isFree: boolean },
+  readerId: string | null,
+  isUnlocked: boolean
+): boolean {
+  if (chapter.isFree) return false;
+  if (readerId === null) return true;
+  return !isUnlocked;
 }
 
 describe("Property 14: Chapter access status rendering", () => {
@@ -215,6 +235,198 @@ describe("Property 14: Chapter access status rendering", () => {
           for (const ch of storedChapters) {
             const expected = ch.isFree || unlocked.has(ch.id);
             expect(isChapterAccessible(ch, unlocked)).toBe(expected);
+          }
+        }
+      ),
+      { numRuns: 50 }
+    );
+  });
+});
+
+describe("Property 16: Veil display logic", () => {
+  beforeEach(() => clearStore());
+
+  it("free chapters never show veil", () => {
+    fc.assert(
+      fc.property(
+        fc.uuid(),
+        fc.uuid(),
+        fc.string({ minLength: 1, maxLength: 100 }),
+        fc.integer({ min: 1, max: 100 }),
+        fc.option(fc.uuid(), { nil: undefined }),
+        fc.boolean(),
+        (id, novelId, title, chapterNumber, readerId, isUnlocked) => {
+          const chapter = { id, novelId, chapterNumber, title, isFree: true };
+          const result = shouldShowVeil(
+            chapter,
+            readerId ?? null,
+            isUnlocked
+          );
+          expect(result).toBe(false);
+        }
+      ),
+      { numRuns: 100 }
+    );
+  });
+
+  it("unauthenticated readers always see veil on non-free chapters", () => {
+    fc.assert(
+      fc.property(
+        fc.uuid(),
+        fc.uuid(),
+        fc.string({ minLength: 1, maxLength: 100 }),
+        fc.integer({ min: 1, max: 100 }),
+        (id, novelId, title, chapterNumber) => {
+          const chapter = { id, novelId, chapterNumber, title, isFree: false };
+          const result = shouldShowVeil(chapter, null, false);
+          expect(result).toBe(true);
+        }
+      ),
+      { numRuns: 100 }
+    );
+  });
+
+  it("authenticated readers see veil when chapter is locked and not unlocked", () => {
+    fc.assert(
+      fc.property(
+        fc.uuid(),
+        fc.uuid(),
+        fc.string({ minLength: 1, maxLength: 100 }),
+        fc.integer({ min: 1, max: 100 }),
+        (id, novelId, title, chapterNumber) => {
+          const chapter = { id, novelId, chapterNumber, title, isFree: false };
+          const result = shouldShowVeil(chapter, "reader-123", false);
+          expect(result).toBe(true);
+        }
+      ),
+      { numRuns: 100 }
+    );
+  });
+
+  it("authenticated readers do not see veil when chapter is unlocked", () => {
+    fc.assert(
+      fc.property(
+        fc.uuid(),
+        fc.uuid(),
+        fc.string({ minLength: 1, maxLength: 100 }),
+        fc.integer({ min: 1, max: 100 }),
+        (id, novelId, title, chapterNumber) => {
+          const chapter = { id, novelId, chapterNumber, title, isFree: false };
+          const result = shouldShowVeil(chapter, "reader-123", true);
+          expect(result).toBe(false);
+        }
+      ),
+      { numRuns: 100 }
+    );
+  });
+
+  it("veil display matches store state (chapter, reader, unlocks)", () => {
+    fc.assert(
+      fc.property(
+        fc.uuid(),
+        fc.uuid(),
+        fc.uuid(),
+        fc.array(
+          fc.record({
+            id: fc.uuid(),
+            chapterNumber: fc.integer({ min: 1, max: 50 }),
+            title: fc.string({ minLength: 1, maxLength: 100 }),
+            isFree: fc.boolean(),
+          }),
+          { minLength: 1, maxLength: 10 }
+        ),
+        fc.option(fc.uuid(), { nil: undefined }),
+        fc.array(fc.uuid(), { minLength: 0, maxLength: 5 }),
+        (authorId, novelId, _unused, chapterDefs, optReaderId, unlockedChapterIds) => {
+          const seen = new Set<number>();
+          const chapters: Chapter[] = [];
+          for (const def of chapterDefs) {
+            if (seen.has(def.chapterNumber)) continue;
+            seen.add(def.chapterNumber);
+            chapters.push({
+              id: def.id,
+              novelId,
+              chapterNumber: def.chapterNumber,
+              title: def.title,
+              content: "x",
+              isFree: def.isFree,
+              createdAt: new Date(),
+              updatedAt: new Date(),
+            });
+          }
+          if (chapters.length === 0) return;
+
+          const effectiveReaderId = optReaderId ?? null;
+
+          if (effectiveReaderId !== null) {
+            const reader: ReaderRow = {
+              id: effectiveReaderId,
+              email: `r-${effectiveReaderId}@test.com`,
+              passwordHash: "x".repeat(60),
+              displayName: "Test",
+              creditBalance: 100,
+              role: "reader",
+              createdAt: new Date(),
+              lastLoginAt: null,
+            };
+            storeEntity(reader);
+          }
+
+          const author: AuthorProfile = {
+            id: authorId,
+            name: "Author",
+            avatarUrl: null,
+            biography: null,
+            styleTags: [],
+            followerCount: 0,
+            createdAt: new Date(),
+          };
+          const novel: Novel = {
+            id: novelId,
+            title: "Novel",
+            seriesId: null,
+            authorId,
+            coverImageUrl: null,
+            synopsis: null,
+            genreTags: [],
+            rating: 0,
+            ratingCount: 0,
+            publicationDate: null,
+            createdAt: new Date(),
+          };
+
+          storeEntity(author);
+          storeEntity(novel);
+          for (const ch of chapters) storeEntity(ch);
+
+          const chapterIds = new Set(chapters.map((c) => c.id));
+          if (effectiveReaderId !== null) {
+            for (const cid of unlockedChapterIds) {
+              if (chapterIds.has(cid)) {
+                storeEntity({
+                  readerId: effectiveReaderId,
+                  chapterId: cid,
+                  unlockedAt: new Date(),
+                } as ChapterUnlock);
+              }
+            }
+          }
+
+          const storedChapters = listChaptersByNovelFromStore(novelId);
+
+          for (const ch of storedChapters) {
+            const isUnlocked =
+              effectiveReaderId !== null
+                ? isChapterUnlockedFromStore(effectiveReaderId, ch.id)
+                : false;
+            const expected = shouldShowVeil(
+              ch,
+              effectiveReaderId,
+              isUnlocked
+            );
+            expect(expected).toBe(
+              !ch.isFree && (effectiveReaderId === null || !isUnlocked)
+            );
           }
         }
       ),

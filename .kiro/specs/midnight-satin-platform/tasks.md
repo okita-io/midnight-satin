@@ -72,7 +72,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [x] 8.3 Implement The Veil (chapter paywall)
     - Progressive blur, unlockChapter with DB transaction and row-level locking
     - _Requirements: 4.1-4.6_
-  - [ ]* 8.4 Property tests: reading progress and veil
+  - [x]* 8.4 Property tests: reading progress and veil
     - **Property 11: Reading progress round-trip** — **Property 16: Veil display logic**
     - **Validates: Requirements 3.7, 4.1, 16.1, 16.2**
   - [x]* 8.5 Property tests: chapter unlock credits
