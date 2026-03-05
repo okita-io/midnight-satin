@@ -150,3 +150,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Side panel: 280px width, vertical flex, fixed left positioning, brand header, 300ms ease-in-out transition
     - MainLayoutContainer for responsive content offset; Reading Room excluded
     - _Requirements: 2.1, 2.2, 2.3, 2.5_
+  - [x] 15.4 Write property tests for navigation (THE-48)
+    - **Property 2: Navigation Layout Transformation** — Test bottom/side layout by viewport
+    - **Property 3: Navigation Styling Consistency** — Test gold accents preserved
+    - _Validates: Requirements 2.1, 2.4_
