@@ -145,3 +145,8 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Property 1: Viewport Layout Mapping** — Test correct layout tier for any viewport width
     - **Property 36: Color Token Consistency** — Test color tokens match across viewports
     - _Validates: Requirements 1.3, 1.4, 1.5, 14.2_
+  - [x] 15.3 Extend NavigationBar with side panel layout (THE-47)
+    - Add layout prop ('bottom' | 'side') to navigation-bar.tsx; default auto-switches at 768px
+    - Side panel: 280px width, vertical flex, fixed left positioning, brand header, 300ms ease-in-out transition
+    - MainLayoutContainer for responsive content offset; Reading Room excluded
+    - _Requirements: 2.1, 2.2, 2.3, 2.5_
