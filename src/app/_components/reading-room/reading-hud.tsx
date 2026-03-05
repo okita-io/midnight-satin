@@ -177,13 +177,13 @@ export function ReadingHUD({
 
       {/* Footer HUD with ProgressBar */}
       <footer
-        className="fixed bottom-0 inset-x-0 z-50 bg-[#0a0a0a] border-t border-white/5 shadow-2xl shadow-black md:max-w-md md:left-1/2 md:right-auto md:-translate-x-1/2"
+        className="fixed bottom-0 inset-x-0 z-50 flex w-full min-w-0 flex-col bg-[#0a0a0a] border-t border-white/5 shadow-2xl shadow-black md:max-w-md md:left-1/2 md:right-auto md:-translate-x-1/2"
         style={{
           paddingBottom: "calc(1rem + env(safe-area-inset-bottom, 0px))",
         }}
       >
         {/* Progress Bar */}
-        <div className="w-full h-1 bg-white/10 relative">
+        <div className="h-1 shrink-0 bg-white/10 relative">
           <div
             className="absolute left-0 top-0 h-full bg-primary transition-all duration-300"
             style={{
@@ -193,7 +193,7 @@ export function ReadingHUD({
           />
         </div>
 
-        <div className="px-6 py-4 flex items-center justify-evenly w-full">
+        <div className="min-w-0 flex-1 px-6 py-4 flex items-center justify-between">
           {/* Font panel toggle */}
           <div className="relative">
             <button
@@ -240,7 +240,7 @@ export function ReadingHUD({
           </div>
 
           {/* Chapter nav */}
-          <div className="flex flex-col items-center shrink-0">
+          <div className="flex flex-col items-center">
             <div className="w-full flex justify-between text-[10px] font-ui text-text-muted uppercase tracking-wider mb-2">
               <span>Prev</span>
               <span>{Math.round(progressPercent)}%</span>
