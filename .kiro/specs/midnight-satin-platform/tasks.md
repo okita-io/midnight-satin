@@ -154,3 +154,6 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Property 2: Navigation Layout Transformation** — Test bottom/side layout by viewport
     - **Property 3: Navigation Styling Consistency** — Test gold accents preserved
     - _Validates: Requirements 2.1, 2.4_
+  - [x] 15.5 Fix Reading Room control bar spacing on mobile (THE-95)
+    - Reading HUD footer icons evenly spaced on mobile; full-width footer on mobile, max-w-md centered on tablet+
+    - _Requirements: 3.5, 3.6_
