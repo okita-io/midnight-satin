@@ -141,3 +141,7 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Create src/lib/responsive/utils.ts with viewport detection utilities
     - Add responsive utility classes to src/app/globals.css
     - _Requirements: 1.1, 1.2, 1.6, 14.6_
+  - [x]* 15.2 Write property tests for responsive foundation (THE-46)
+    - **Property 1: Viewport Layout Mapping** — Test correct layout tier for any viewport width
+    - **Property 36: Color Token Consistency** — Test color tokens match across viewports
+    - _Validates: Requirements 1.3, 1.4, 1.5, 14.2_
