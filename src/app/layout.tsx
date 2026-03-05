@@ -6,8 +6,8 @@ import {
   Marcellus,
   Pinyon_Script,
 } from "next/font/google";
-import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
+import { MainLayoutContainer } from "./_components/main-layout-container";
 
 const playfair = Playfair_Display({
   variable: "--font-display",
@@ -59,10 +59,9 @@ export default function RootLayout({
       <body
         className={`${playfair.variable} ${cinzel.variable} ${literata.variable} ${marcellus.variable} ${pinyon.variable} bg-void text-text-main font-body antialiased`}
       >
-        <div className="mobile-container bg-silk-noise">
+        <MainLayoutContainer className="mobile-container bg-silk-noise">
           {children}
-        </div>
-        <Analytics />
+        </MainLayoutContainer>
       </body>
     </html>
   );
