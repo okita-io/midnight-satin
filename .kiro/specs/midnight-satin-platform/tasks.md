@@ -133,3 +133,11 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [x]* 14.4 Property tests: comments lifecycle and likes
     - **Property 25: Comment lifecycle and ownership** — **Property 26: Comment like invariant**
     - **Validates: Requirements 19.5-19.9**
+- [x] 15. Responsive system foundation (THE-45)
+  - [x] 15.1 Set up responsive system foundation
+    - Install fast-check for property-based testing (already present)
+    - Create src/lib/responsive/constants.ts with breakpoint constants and grid configurations
+    - Create src/lib/responsive/hooks.ts with useViewport() and usePointerDevice() hooks
+    - Create src/lib/responsive/utils.ts with viewport detection utilities
+    - Add responsive utility classes to src/app/globals.css
+    - _Requirements: 1.1, 1.2, 1.6, 14.6_
