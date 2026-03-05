@@ -6,6 +6,19 @@
 
 import { BREAKPOINTS, type ViewportSize } from "./constants";
 
+/** Navigation layout mode: bottom bar (mobile) or side panel (tablet/desktop) */
+export type NavigationLayout = "bottom" | "side";
+
+/**
+ * Resolve navigation layout from viewport width.
+ * Mobile (< 768px): bottom bar. Tablet/Desktop (≥ 768px): side panel.
+ * Matches Tailwind md: breakpoint and NavigationBar CSS (md:hidden, hidden md:flex).
+ * @see Linear THE-48
+ */
+export function getNavigationLayout(width: number): NavigationLayout {
+  return width >= BREAKPOINTS.md ? "side" : "bottom";
+}
+
 /**
  * Resolve viewport size from a given width (e.g., from window.innerWidth).
  * Safe to call in any context; does not access window.
