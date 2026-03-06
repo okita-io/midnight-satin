@@ -214,5 +214,11 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Responsive side margins: 48px tablet (px-12), 64px desktop (px-16)
     - Maintain 18px font size and 1.6 line height
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6_
+  - [x] 15.18 Create CommentsSidebar component for desktop (THE-62)
+    - Create src/app/_components/reading-room/comments-sidebar.tsx
+    - Fixed positioning on right side, 320px width, independent scrolling
+    - Show only on desktop (lg: breakpoint), hide on mobile/tablet
+    - Reuse existing comment styling (dark background, gold accents)
+    - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56)
   - Ensure all tests pass, ask the user if questions arise.
