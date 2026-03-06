@@ -63,7 +63,7 @@ export function AuthPrompt({ isOpen, onClose, returnUrl, message }: AuthPromptPr
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <div
-        className="w-full max-w-md rounded border border-[rgba(212,175,55,0.2)] bg-[var(--surface)] p-6 shadow-[var(--shadow-gold-glow)]"
+        className="w-full max-w-md rounded border border-primary/20 bg-surface p-6 shadow-gold-glow"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-start gap-4 mb-4">

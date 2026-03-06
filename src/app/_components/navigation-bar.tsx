@@ -53,7 +53,8 @@ function NavTabLinkBottom({
         </span>
         {isActive && (
           <span
-            className="absolute -bottom-2 w-1 h-1 bg-primary rounded-full shadow-[0_0_5px_#D4AF37]"
+            className="absolute -bottom-2 w-1 h-1 bg-primary rounded-full"
+            style={{ boxShadow: "0 0 5px var(--color-primary)" }}
             aria-hidden
           />
         )}
@@ -118,11 +119,11 @@ export function NavigationBar({ activeTab, layout }: NavigationBarProps) {
   if (useSideOnly) {
     return (
       <nav
-        className="nav-side-panel fixed left-0 top-0 bottom-0 z-50 w-[280px] flex flex-col bg-[#080808] border-r border-[#1F1F1F] transition-all duration-300 ease-in-out"
+        className="nav-side-panel fixed left-0 top-0 bottom-0 z-50 w-[280px] flex flex-col bg-void border-r border-white/10 transition-all duration-300 ease-in-out"
         aria-label="Main navigation"
       >
         <div
-          className="flex items-center gap-2 px-6 h-16 border-b border-[#1F1F1F] shrink-0"
+          className="flex items-center gap-2 px-6 h-16 border-b border-white/10 shrink-0"
           style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
         >
           <span
@@ -153,7 +154,7 @@ export function NavigationBar({ activeTab, layout }: NavigationBarProps) {
   if (useBottomOnly) {
     return (
       <nav
-        className="nav-bottom-bar fixed bottom-0 left-0 right-0 z-50 max-w-md mx-auto bg-[#080808] border-t border-[#1F1F1F] px-6 pt-4 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] transition-all duration-300 ease-in-out"
+        className="nav-bottom-bar fixed bottom-0 left-0 right-0 z-50 max-w-md mx-auto bg-void border-t border-white/10 px-6 pt-4 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] transition-all duration-300 ease-in-out"
         style={{
           paddingBottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))",
         }}
@@ -177,7 +178,7 @@ export function NavigationBar({ activeTab, layout }: NavigationBarProps) {
   return (
     <>
       <nav
-        className="nav-bottom-bar flex md:hidden fixed bottom-0 left-0 right-0 z-50 max-w-md mx-auto bg-[#080808] border-t border-[#1F1F1F] px-6 pt-4 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] transition-all duration-300 ease-in-out"
+        className="nav-bottom-bar flex md:hidden fixed bottom-0 left-0 right-0 z-50 max-w-md mx-auto bg-void border-t border-white/10 px-6 pt-4 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] transition-all duration-300 ease-in-out"
         style={{
           paddingBottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))",
         }}
@@ -196,11 +197,11 @@ export function NavigationBar({ activeTab, layout }: NavigationBarProps) {
         </div>
       </nav>
       <nav
-        className="nav-side-panel hidden md:flex fixed left-0 top-0 bottom-0 z-50 w-[280px] flex-col bg-[#080808] border-r border-[#1F1F1F] transition-all duration-300 ease-in-out"
+        className="nav-side-panel hidden md:flex fixed left-0 top-0 bottom-0 z-50 w-[280px] flex-col bg-void border-r border-white/10 transition-all duration-300 ease-in-out"
         aria-label="Main navigation"
       >
         <div
-          className="flex items-center gap-2 px-6 h-16 border-b border-[#1F1F1F] shrink-0"
+          className="flex items-center gap-2 px-6 h-16 border-b border-white/10 shrink-0"
           style={{ paddingTop: "env(safe-area-inset-top, 0px)" }}
         >
           <span

@@ -26,8 +26,8 @@ export function OrnamentalDivider() {
           fill="currentColor"
           fillOpacity={0.2}
         />
-        <circle cx={60} cy={10} fill="#D4AF37" r={3} />
-        <path d="M40 10H80" stroke="#D4AF37" strokeWidth={0.5} />
+        <circle cx={60} cy={10} fill="currentColor" r={3} />
+        <path d="M40 10H80" stroke="currentColor" strokeWidth={0.5} />
       </svg>
     </div>
   );
