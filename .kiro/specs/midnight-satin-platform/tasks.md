@@ -187,5 +187,10 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Property 9: Book Cover Aspect Ratio Invariant** — 2:3 ratio maintained
     - **Property 10: Hover State Conditional Rendering** — hover states on pointer devices only
     - _Validates: Requirements 4.1, 4.2, 4.3, 4.4, 4.5, 4.6_
+  - [x] 15.13 Create two-column layout for NovelDetailHeader (THE-57)
+    - Modify novel-detail-header/ParallaxHero area for tablet/desktop
+    - Two-column layout: 40% cover, 60% metadata; gap 48px tablet, 64px desktop
+    - Sticky positioning for cover column; maintain parallax effect on cover
+    - _Requirements: 5.1, 5.2, 5.3, 5.7_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56)
   - Ensure all tests pass, ask the user if questions arise.
