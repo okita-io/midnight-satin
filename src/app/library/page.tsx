@@ -19,6 +19,9 @@ export default async function LibraryPage() {
     coverImageUrl: n.coverImageUrl,
     rating: n.rating > 0 ? n.rating : null,
     ratingCount: n.ratingCount,
+    authorBio: n.authorBio ?? undefined,
+    genreTags: n.genreTags,
+    chapterCount: n.chapterCount,
   }));
 
   return (
