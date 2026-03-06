@@ -24,7 +24,7 @@ export function AccountActionsList({ showAll = true }: AccountActionsListProps) 
 
   return (
     <section className="px-4 xs:px-6 pb-24">
-      <h2 className="font-header text-sm tracking-[0.15em] text-white/90 mb-4">
+      <h2 className="font-header text-sm tracking-[0.15em] text-primary uppercase mb-4">
         Account
       </h2>
       <div className="bg-surface border border-white/5 rounded-sm overflow-hidden">
