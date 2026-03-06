@@ -54,7 +54,7 @@ export function CharacterPortrait({
     </>
   );
 
-  const wrapperClass = `flex flex-col items-center gap-3 ${minWidth} snap-center cursor-pointer group ${className}`;
+  const wrapperClass = `flex flex-col items-center gap-3 ${minWidth} snap-center cursor-pointer group active:scale-95 transition-transform ${className}`;
 
   if (asButton && onClick) {
     return (

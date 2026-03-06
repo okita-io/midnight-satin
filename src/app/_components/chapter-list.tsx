@@ -56,7 +56,7 @@ export function ChapterList({
               key={ch.id}
               href={isAccessible ? href : "#"}
               className={`group flex items-center justify-between py-4 xs:py-5 px-2 -mx-2 rounded transition-colors ${isAccessible
-                  ? "cursor-pointer hover:bg-white/5"
+                  ? "cursor-pointer hover:bg-white/5 active:scale-[0.99]"
                   : "cursor-default opacity-60"
                 }`}
               onClick={(e) => !isAccessible && e.preventDefault()}

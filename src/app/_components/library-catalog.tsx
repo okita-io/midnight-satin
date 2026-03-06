@@ -87,7 +87,7 @@ export function LibraryCatalog({
           <button
             type="button"
             onClick={() => setViewMode("grid")}
-            className={`p-1.5 rounded-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+            className={`p-1.5 rounded-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer active:scale-95 ${
               viewMode === "grid"
                 ? "bg-primary/20 text-primary"
                 : "text-text-muted hover:text-text-main"
@@ -102,7 +102,7 @@ export function LibraryCatalog({
           <button
             type="button"
             onClick={() => setViewMode("list")}
-            className={`p-1.5 rounded-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+            className={`p-1.5 rounded-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer active:scale-95 ${
               viewMode === "list"
                 ? "bg-primary/20 text-primary"
                 : "text-text-muted hover:text-text-main"

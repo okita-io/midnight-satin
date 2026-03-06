@@ -63,6 +63,19 @@ body {
   line-height: 1.6;
 }
 
+/* Touch interactions parity (THE-86): cursor pointer on interactive elements */
+button:not(:disabled),
+a[href],
+[role="button"] {
+  cursor: pointer;
+}
+
+/* Reduce tap delay on touch devices for responsive tap feedback */
+a,
+button {
+  touch-action: manipulation;
+}
+
 h1,
 h2,
 h3,

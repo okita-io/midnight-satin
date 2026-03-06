@@ -94,7 +94,7 @@ function CharacterCard({
         <button
           type="button"
           onClick={onTapReveal}
-          className="flex items-center gap-2 text-white/40 hover:text-primary text-xs font-ui tracking-widest uppercase transition-colors cursor-pointer"
+          className="flex items-center gap-2 text-white/40 hover:text-primary text-xs font-ui tracking-widest uppercase transition-colors cursor-pointer active:scale-95"
         >
           <span className="material-symbols-outlined text-sm">cached</span>
           <span>Tap to reveal dossier</span>
@@ -227,7 +227,7 @@ function DossierCard({
         <button
           type="button"
           onClick={onTapReturn}
-          className="flex items-center gap-2 text-white/30 hover:text-primary text-xs font-ui tracking-widest uppercase transition-colors cursor-pointer"
+          className="flex items-center gap-2 text-white/30 hover:text-primary text-xs font-ui tracking-widest uppercase transition-colors cursor-pointer active:scale-95"
         >
           <span className="material-symbols-outlined text-sm">undo</span>
           <span>Return to portrait</span>
@@ -283,14 +283,14 @@ function EndorsementFAB({
             <button
               type="button"
               onClick={handleConfirm}
-              className="px-3 py-1 bg-primary text-void rounded text-xs font-ui"
+              className="px-3 py-1 bg-primary text-void rounded text-xs font-ui cursor-pointer active:scale-95"
             >
               Confirm
             </button>
             <button
               type="button"
               onClick={() => setShowConfirm(false)}
-              className="px-3 py-1 border border-white/30 rounded text-xs font-ui"
+              className="px-3 py-1 border border-white/30 rounded text-xs font-ui cursor-pointer active:scale-95"
             >
               Cancel
             </button>
@@ -300,7 +300,7 @@ function EndorsementFAB({
       <button
         type="button"
         onClick={handleRoseClick}
-        className={`relative group flex items-center justify-center rounded-full bg-accent text-white shadow-[0_4px_20px_rgba(128,0,32,0.4)] fab-hover-scale-lg hover:shadow-[0_4px_30px_rgba(128,0,32,0.6)] transition-all duration-300 border border-white/10 overflow-hidden ${
+        className={`relative group flex items-center justify-center rounded-full bg-accent text-white shadow-[0_4px_20px_rgba(128,0,32,0.4)] fab-hover-scale-lg hover:shadow-[0_4px_30px_rgba(128,0,32,0.6)] transition-all duration-300 border border-white/10 overflow-hidden cursor-pointer active:scale-95 ${
           compact ? "size-12" : "size-16"
         }`}
         aria-label="Send endorsement (1 Credit)"
@@ -384,7 +384,7 @@ function NavigationArrows({
       <button
         type="button"
         onClick={onPrev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-40 hidden md:flex size-12 items-center justify-center rounded-full text-white/30 hover:text-primary transition-colors"
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-40 hidden md:flex size-12 items-center justify-center rounded-full text-white/30 hover:text-primary transition-colors cursor-pointer active:scale-95"
         aria-label="Previous character"
       >
         <span className="material-symbols-outlined text-4xl">chevron_left</span>
@@ -392,7 +392,7 @@ function NavigationArrows({
       <button
         type="button"
         onClick={onNext}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-40 hidden md:flex size-12 items-center justify-center rounded-full text-white/30 hover:text-primary transition-colors"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-40 hidden md:flex size-12 items-center justify-center rounded-full text-white/30 hover:text-primary transition-colors cursor-pointer active:scale-95"
         aria-label="Next character"
       >
         <span className="material-symbols-outlined text-4xl">chevron_right</span>
@@ -477,7 +477,7 @@ export function CastGalleryModal({
           ref={closeRef}
           type="button"
           onClick={onClose}
-          className="flex items-center justify-center size-10 rounded-full bg-surface/50 border border-white/10 backdrop-blur-sm text-text-main hover:bg-primary hover:text-void hover:border-primary transition-all duration-300"
+          className="flex items-center justify-center size-10 rounded-full bg-surface/50 border border-white/10 backdrop-blur-sm text-text-main hover:bg-primary hover:text-void hover:border-primary transition-all duration-300 cursor-pointer active:scale-95"
           aria-label="Close Cast Gallery"
         >
           <span className="material-symbols-outlined" style={{ fontSize: 20 }}>
@@ -523,7 +523,7 @@ export function CastGalleryModal({
                     setIndex(i);
                     setFlipped(false);
                   }}
-                  className={`size-2 rounded-full transition-colors ${
+                  className={`size-2 rounded-full transition-colors cursor-pointer active:scale-125 ${
                     i === index ? "bg-primary" : "bg-white/30"
                   }`}
                   aria-label={`Go to character ${i + 1}`}

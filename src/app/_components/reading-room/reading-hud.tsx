@@ -137,7 +137,7 @@ export function ReadingHUD({
         <div className="flex items-center justify-between px-4 h-16 pointer-events-auto max-w-md mx-auto">
           <Link
             href={novelDetailPath(novelId)}
-            className="w-10 h-10 flex items-center justify-center text-primary/80 hover:text-primary transition-colors active:scale-95"
+            className="w-10 h-10 flex items-center justify-center text-primary/80 hover:text-primary transition-colors active:scale-95 cursor-pointer"
             aria-label="Back to novel"
           >
             <span
@@ -158,7 +158,7 @@ export function ReadingHUD({
           <button
             type="button"
             onClick={handleBookmark}
-            className="w-10 h-10 flex items-center justify-center text-primary/80 hover:text-primary transition-colors active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-10 h-10 flex items-center justify-center text-primary/80 hover:text-primary transition-colors active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             aria-label={bookmarked ? "Remove bookmark" : "Add bookmark"}
             disabled={!isAuthenticated}
           >
@@ -202,7 +202,7 @@ export function ReadingHUD({
                 setShowFontPanel((v) => !v);
                 setShowLinePanel(false);
               }}
-              className="flex flex-col items-center gap-1 text-text-muted hover:text-white transition-colors"
+              className="flex flex-col items-center gap-1 text-text-muted hover:text-white transition-colors cursor-pointer active:scale-95"
               aria-label="Font settings"
               aria-expanded={showFontPanel}
             >
@@ -226,7 +226,7 @@ export function ReadingHUD({
                       onFontSizeChange(s);
                       setShowFontPanel(false);
                     }}
-                    className={`px-3 py-1 rounded text-sm font-ui ${
+                    className={`px-3 py-1 rounded text-sm font-ui cursor-pointer active:scale-95 ${
                       fontSize === s
                         ? "bg-primary text-void"
                         : "bg-white/5 text-text-main hover:bg-white/10"
@@ -250,7 +250,7 @@ export function ReadingHUD({
               {prevChapterId ? (
                 <Link
                   href={readingRoomPath(prevChapterId)}
-                  className="hover:text-primary transition-colors"
+                  className="hover:text-primary transition-colors cursor-pointer active:scale-95"
                   aria-label="Previous chapter"
                 >
                   <span className="material-symbols-outlined">
@@ -266,7 +266,7 @@ export function ReadingHUD({
               )}
               <Link
                 href={novelDetailPath(novelId)}
-                className="hover:text-primary transition-colors"
+                className="hover:text-primary transition-colors cursor-pointer active:scale-95"
                 aria-label="Chapter list"
               >
                 <span className="material-symbols-outlined">play_circle</span>
@@ -274,7 +274,7 @@ export function ReadingHUD({
               {nextChapterId ? (
                 <Link
                   href={readingRoomPath(nextChapterId)}
-                  className="hover:text-primary transition-colors"
+                  className="hover:text-primary transition-colors cursor-pointer active:scale-95"
                   aria-label="Next chapter"
                 >
                   <span className="material-symbols-outlined">skip_next</span>
@@ -291,7 +291,7 @@ export function ReadingHUD({
           <button
             type="button"
             onClick={onCommentsClick}
-            className={`relative flex flex-col items-center gap-1 transition-colors ${
+            className={`relative flex flex-col items-center gap-1 transition-colors cursor-pointer active:scale-95 ${
               commentsActive ? "text-primary" : "text-text-muted hover:text-white"
             }`}
             aria-label={`Comments (${commentCount})`}
@@ -321,7 +321,7 @@ export function ReadingHUD({
                 setShowLinePanel((v) => !v);
                 setShowFontPanel(false);
               }}
-              className="flex flex-col items-center gap-1 text-text-muted hover:text-white transition-colors"
+              className="flex flex-col items-center gap-1 text-text-muted hover:text-white transition-colors cursor-pointer active:scale-95"
               aria-label="Line spacing"
               aria-expanded={showLinePanel}
             >
@@ -345,7 +345,7 @@ export function ReadingHUD({
                       onLineHeightChange(lh);
                       setShowLinePanel(false);
                     }}
-                    className={`px-3 py-1 rounded text-sm font-ui ${
+                    className={`px-3 py-1 rounded text-sm font-ui cursor-pointer active:scale-95 ${
                       lineHeight === lh
                         ? "bg-primary text-void"
                         : "bg-white/5 text-text-main hover:bg-white/10"
