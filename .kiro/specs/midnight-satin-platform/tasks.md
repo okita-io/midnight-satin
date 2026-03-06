@@ -262,5 +262,11 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Preserve vertical spacing (space-y-6 login, space-y-5 register) and typography hierarchy (Marcellus labels, uppercase tracking)
     - Keep validation messages in same position as mobile (top of form, before first field) across all viewports
     - _Requirements: 11.4, 11.5, 11.6_
+  - [x] 15.27 Extend trophy case grid layout (THE-69)
+    - 3-column grid for tablet (md)
+    - 4-column grid for desktop (lg)
+    - 2-column grid for mobile
+    - Maintain gold border styling on trophies (drop-shadow on icons)
+    - _Requirements: 9.6, 9.7, 9.8_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56)
   - Ensure all tests pass, ask the user if questions arise.
