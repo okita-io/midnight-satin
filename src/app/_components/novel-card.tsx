@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { novelDetailPath } from "@/lib/navigation";
 import { usePointerDevice } from "@/lib/responsive/hooks";
+import { shouldApplyHoverForDevice } from "@/lib/responsive/utils";
 
 export interface NovelCardData {
   id: string;
@@ -35,7 +36,7 @@ interface NovelCardProps {
 export function NovelCard({ novel, variant = "default", fill = false, className = "" }: NovelCardProps) {
   const href = novelDetailPath(novel.id);
   const pointerDevice = usePointerDevice();
-  const supportsHover = pointerDevice === "mouse";
+  const supportsHover = shouldApplyHoverForDevice(pointerDevice);
 
   if (variant === "compact") {
     return (

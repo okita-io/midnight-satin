@@ -27,6 +27,23 @@ export const GRID_COLUMNS = {
   desktop: 3,
 } as const;
 
+/** Library Catalog grid view columns (THE-52): mobile 2, tablet 3, desktop 4 */
+export const LIBRARY_GRID_COLUMNS = {
+  mobile: 2,
+  tablet: 3,
+  desktop: 4,
+} as const;
+
+/** Library Catalog list view columns (THE-53): mobile 1 (stacked), tablet 2, desktop 1 */
+export const LIBRARY_LIST_COLUMNS = {
+  mobile: 1,
+  tablet: 2,
+  desktop: 1,
+} as const;
+
+/** Book cover aspect ratio (2:3) per design system */
+export const BOOK_COVER_ASPECT_RATIO = { width: 2, height: 3 } as const;
+
 /** Reading content max-width for optimal line length (45-75 chars) */
 export const READING_MAX_WIDTH = 720;
 
