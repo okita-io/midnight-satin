@@ -16,6 +16,8 @@ import {
   VAULT_GRID_COLUMNS,
   CHAPTER_CONTENT_MAX_WIDTH,
   AUTH_FORM_MAX_WIDTH,
+  PROFILE_LIBRARY_GRID_COLUMNS,
+  FOLLOWED_AUTHORS_STRIP_VISIBLE,
   type ViewportSize,
 } from "./constants";
 
@@ -132,6 +134,35 @@ export function getTrophyCaseGridColumnsForViewport(width: number): number {
  */
 export function getVaultGridColumnsForViewport(width: number): number {
   return VAULT_GRID_COLUMNS[getViewportSize(width)];
+}
+
+/**
+ * Resolve Profile library grid column count for a viewport width.
+ * Mobile: 1. Tablet: 2. Desktop: 3.
+ * @see Linear THE-81, THE-83
+ */
+export function getProfileLibraryGridColumnsForViewport(width: number): number {
+  return PROFILE_LIBRARY_GRID_COLUMNS[getViewportSize(width)];
+}
+
+/**
+ * Resolve FollowedAuthorsStrip visible avatar count for a viewport width.
+ * Tablet: 6 visible. Desktop: 8 visible. Mobile: horizontal scroll (returns 0).
+ * @see Linear THE-80, THE-83
+ */
+export function getFollowedAuthorsStripVisibleCount(width: number): number {
+  const size = getViewportSize(width);
+  if (size === "mobile") return 0;
+  return FOLLOWED_AUTHORS_STRIP_VISIBLE[size];
+}
+
+/**
+ * Check if Profile stats row uses horizontal layout (tablet/desktop).
+ * Mobile: horizontal scroll. Tablet/Desktop: horizontal row (no wrap).
+ * @see Linear THE-83
+ */
+export function getProfileStatsUsesHorizontalRow(width: number): boolean {
+  return width >= BREAKPOINTS.md;
 }
 
 /**
