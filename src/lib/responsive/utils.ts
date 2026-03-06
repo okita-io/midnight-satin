@@ -11,6 +11,7 @@ import {
   LIBRARY_LIST_COLUMNS,
   CHAPTER_LIST_COLUMNS,
   CAST_PREVIEW_VISIBLE,
+  CHAPTER_CONTENT_MAX_WIDTH,
   type ViewportSize,
 } from "./constants";
 
@@ -105,6 +106,33 @@ export function isTabletOrUp(width: number): boolean {
  */
 export function isDesktopOrUp(width: number): boolean {
   return width >= BREAKPOINTS.lg;
+}
+
+/**
+ * Resolve chapter content max-width for a viewport width.
+ * Mobile: no constraint (null). Tablet (768-1023px): 680px. Desktop (1024px+): 720px.
+ * @see Linear THE-61, THE-63
+ */
+export function getChapterContentMaxWidth(width: number): number | null {
+  return CHAPTER_CONTENT_MAX_WIDTH[getViewportSize(width)];
+}
+
+/**
+ * Check if CommentsSidebar is visible for a viewport width.
+ * Sidebar shows only on desktop (1024px+). Mobile/tablet use CommentsSection bottom sheet.
+ * @see Linear THE-62, THE-63
+ */
+export function isCommentsSidebarVisible(width: number): boolean {
+  return width >= BREAKPOINTS.lg;
+}
+
+/**
+ * Check if CommentsSection (bottom sheet) is the primary comments UI for a viewport.
+ * Mobile/tablet use bottom sheet; desktop uses sidebar.
+ * @see Linear THE-62, THE-63
+ */
+export function isCommentsSectionPrimary(width: number): boolean {
+  return width < BREAKPOINTS.lg;
 }
 
 /**

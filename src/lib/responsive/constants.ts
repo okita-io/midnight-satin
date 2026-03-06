@@ -67,6 +67,16 @@ export const BOOK_COVER_ASPECT_RATIO = { width: 2, height: 3 } as const;
 /** Reading content max-width for optimal line length (45-75 chars) */
 export const READING_MAX_WIDTH = 720;
 
+/** Chapter content max-width by viewport (THE-61): tablet 680px, desktop 720px; mobile no constraint */
+export const CHAPTER_CONTENT_MAX_WIDTH = {
+  mobile: null as number | null,
+  tablet: 680,
+  desktop: 720,
+} as const;
+
+/** Comments sidebar visible only on desktop (lg: 1024px+) — THE-62 */
+export const COMMENTS_SIDEBAR_BREAKPOINT = "lg" as const;
+
 /** Max content width for grid sections on desktop (THE-50) */
 export const DESKTOP_MAX_WIDTH = 1440;
 

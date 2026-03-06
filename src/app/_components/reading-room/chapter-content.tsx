@@ -6,10 +6,10 @@
 import { OrnamentalDivider } from "./ornamental-divider";
 
 const ORNAMENTAL_EVERY_N_PARAGRAPHS = 4;
-/** Free preview paragraphs before the Veil (Req 4.1). */
-const FREE_PREVIEW_PARAGRAPHS = 5;
-/** Blur levels: 1px/60%, 3px/40%, 6px/20% per design reference. */
-const BLUR_LEVELS: { blur: string; opacity: string }[] = [
+/** Free preview paragraphs before the Veil (Req 4.1). Exported for Property 17 tests. */
+export const FREE_PREVIEW_PARAGRAPHS = 5;
+/** Blur levels: 1px/60%, 3px/40%, 6px/20% per design reference (Req 4.1). Exported for Property 17 tests. */
+export const BLUR_LEVELS: { blur: string; opacity: string }[] = [
   { blur: "blur-[1px]", opacity: "opacity-60" },
   { blur: "blur-[3px]", opacity: "opacity-40" },
   { blur: "blur-[6px]", opacity: "opacity-20" },
