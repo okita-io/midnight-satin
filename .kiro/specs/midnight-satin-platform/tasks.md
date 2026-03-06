@@ -299,5 +299,9 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Scale transform on hover for floating action buttons (Novel Detail FAB, EndorsementFAB)
     - CSS @media (hover: hover) for pointer device detection
     - _Requirements: 13.1, 13.2, 13.3, 13.4_
+  - [x]* 15.32 Write property tests for Vault (THE-75)
+    - **Property 26: Vault Grid Responsiveness** — Test 2 cols tablet, 3 cols desktop
+    - **Property 27: Vault Styling Preservation** — Test ribbons, animations, card styling preserved
+    - _Validates: Requirements 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56, THE-71)
   - Ensure all tests pass, ask the user if questions arise.
