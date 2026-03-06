@@ -241,5 +241,10 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Property 21: Cast Gallery Portrait Aspect Ratio** — 3:4 portrait ratio maintained
     - **Property 22: Cast Gallery Interaction Preservation** — flip, endorsement, badges preserved
     - _Validates: Requirements 5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 5.7, 6.1, 6.2, 6.4, 6.6_
+  - [x] 15.23 Create two-column layout for biography and bibliography (THE-67)
+    - Modify Author's Study page: two-column layout for tablet/desktop (35% biography, 65% bibliography)
+    - Responsive gap: 48px tablet (md), 64px desktop (lg)
+    - Maintain single column on mobile; BiographySection + TrophyCase in left column, BibliographySection in right
+    - _Requirements: 9.1, 9.2, 9.3_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56)
   - Ensure all tests pass, ask the user if questions arise.
