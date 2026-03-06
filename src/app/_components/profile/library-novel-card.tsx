@@ -35,6 +35,8 @@ export function LibraryNovelCard({ item }: LibraryNovelCardProps) {
             src={coverImageUrl}
             alt=""
             className="w-full h-full object-cover"
+            loading="lazy"
+            decoding="async"
           />
         ) : (
           <span className="material-symbols-outlined absolute inset-0 flex items-center justify-center text-text-muted opacity-50 text-2xl">

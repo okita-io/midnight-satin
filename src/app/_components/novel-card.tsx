@@ -52,6 +52,8 @@ export function NovelCard({ novel, variant = "default", fill = false, className 
               src={novel.coverImageUrl}
               alt=""
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
           ) : (
             <span className="material-symbols-outlined absolute inset-0 flex items-center justify-center text-text-muted text-3xl">
@@ -107,6 +109,8 @@ export function NovelCard({ novel, variant = "default", fill = false, className 
               src={novel.coverImageUrl}
               alt=""
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
             />
           ) : (
             <span className="material-symbols-outlined absolute inset-0 flex items-center justify-center text-text-muted text-4xl">
@@ -173,6 +177,8 @@ export function NovelCard({ novel, variant = "default", fill = false, className 
             src={novel.coverImageUrl}
             alt=""
             className="w-full h-full object-cover"
+            loading="lazy"
+            decoding="async"
           />
         ) : (
           <div className="absolute inset-0 bg-surface-highlight flex items-center justify-center">

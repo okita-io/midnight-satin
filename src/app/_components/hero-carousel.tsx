@@ -71,13 +71,14 @@ export function HeroCarousel(props: Props) {
       aria-label="Editor's Choice featured novels"
     >
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-[24px] md:h-[480px] lg:grid-cols-3 lg:gap-8 lg:h-[520px]">
-        {items.map((novel) => (
+        {items.map((novel, index) => (
           <HeroCarouselCard
             key={novel.id}
             item={novel}
             firstChapterId={
               firstChapterIds?.[novel.id] ?? (novel.id === items[0].id ? firstChapterId : undefined)
             }
+            loading={index === 0 ? "eager" : "lazy"}
           />
         ))}
       </div>
@@ -104,6 +105,8 @@ function HeroCarouselSingle({
             alt=""
             className="h-full w-full object-cover opacity-60"
             src={item.coverImageUrl}
+            loading="eager"
+            decoding="async"
           />
         ) : (
           <div className="h-full w-full bg-surface-highlight" />
@@ -137,9 +140,11 @@ function HeroCarouselSingle({
 function HeroCarouselCard({
   item,
   firstChapterId,
+  loading = "lazy",
 }: {
   item: FeaturedNovel;
   firstChapterId?: string;
+  loading?: "eager" | "lazy";
 }) {
   const ctaHref = firstChapterId
     ? readingRoomPath(item.id, firstChapterId)
@@ -156,6 +161,8 @@ function HeroCarouselCard({
             alt=""
             className="h-full w-full object-cover opacity-60 group-hover:opacity-70 transition-opacity"
             src={item.coverImageUrl}
+            loading={loading}
+            decoding="async"
           />
         ) : (
           <div className="h-full w-full bg-surface-highlight" />
