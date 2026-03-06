@@ -16,6 +16,13 @@ import {
 } from "@/app/actions/comments";
 import type { CommentWithAuthorAndLike } from "@/lib/db/comments";
 import { MAX_COMMENT_LENGTH, validateCommentContent } from "@/lib/comments/validation";
+import {
+  COMMENTS_HEADER_TITLE,
+  COMMENTS_HEADER_CLASSES,
+  COMMENT_AUTHOR_CLASSES,
+  COMMENT_CONTENT_CLASSES,
+  COMMENT_LIKE_CLASSES,
+} from "@/lib/comments-ui-constants";
 import { AuthPrompt } from "@/app/_components/auth-prompt";
 
 function formatRelativeTime(date: Date): string {
@@ -148,8 +155,8 @@ export function CommentsSidebar({
       >
         {/* Header */}
         <div className="px-6 py-4 border-b border-white/5 flex items-center justify-between shrink-0">
-          <h2 className="font-heading text-sm tracking-[0.2em] text-primary uppercase">
-            Thoughts from the Boudoir
+          <h2 className={COMMENTS_HEADER_CLASSES}>
+            {COMMENTS_HEADER_TITLE}
           </h2>
           <span className="font-ui text-[10px] text-text-muted">
             {commentCount} {commentCount === 1 ? "ENTRY" : "ENTRIES"}
@@ -278,7 +285,7 @@ function CommentItem({
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <span className="font-heading text-xs text-text-main tracking-wider uppercase">
+          <span className={COMMENT_AUTHOR_CLASSES}>
             {displayName}
           </span>
           <span className="text-[10px] font-ui text-text-muted">
@@ -289,7 +296,7 @@ function CommentItem({
           <button
             type="button"
             onClick={handleLikeClick}
-            className="flex items-center gap-1.5 text-primary hover:text-primary/80 transition-colors"
+            className={COMMENT_LIKE_CLASSES}
             aria-label={comment.likedByCurrentReader ? "Unlike" : "Like"}
           >
             <span className="text-[10px] font-ui">{comment.likeCount}</span>
@@ -308,7 +315,7 @@ function CommentItem({
         )}
       </div>
       <p
-        className={`font-body text-sm leading-relaxed italic whitespace-pre-wrap ${
+        className={`${COMMENT_CONTENT_CLASSES} whitespace-pre-wrap ${
           comment.isDeleted ? "text-text-muted" : "text-text-main/80"
         }`}
       >

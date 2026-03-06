@@ -220,5 +220,11 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Show only on desktop (lg: breakpoint), hide on mobile/tablet
     - Reuse existing comment styling (dark background, gold accents)
     - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5_
+  - [x]* 15.19 Write property tests for Reading Room (THE-63)
+    - **Property 16: Reading Room Text Centering** — Test max-width and centering
+    - **Property 17: Reading Room Component Preservation** — Test Veil, blur, unlock preserved
+    - **Property 18: Comments Sidebar Desktop Rendering** — Test sidebar desktop, below mobile/tablet
+    - **Property 19: Comments Styling Consistency** — Test comment styling preserved
+    - _Validates: Requirements 6.1, 6.2, 6.3, 6.7, 6.8, 7.1, 7.5, 7.6, 7.7_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56)
   - Ensure all tests pass, ask the user if questions arise.
