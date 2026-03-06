@@ -183,7 +183,7 @@ export function NavigationBar({ activeTab, layout }: NavigationBarProps) {
         }}
         aria-label="Main navigation"
       >
-        <div className="flex justify-between items-end">
+        <div className="flex justify-between items-end w-full">
           {TABS.map(({ id, href, label, icon }) => (
             <NavTabLinkBottom
               key={id}
