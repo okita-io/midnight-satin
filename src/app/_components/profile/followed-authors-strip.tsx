@@ -2,10 +2,8 @@
 
 import Link from "next/link";
 import { authorStudyPath } from "@/lib/navigation";
+import { PROFILE_HEXAGON_CLIP } from "@/lib/responsive/constants";
 import type { FollowedAuthorItem } from "@/app/actions/profile";
-
-const HEXAGON_CLIP =
-  "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)";
 
 interface FollowedAuthorsStripProps {
   authors: FollowedAuthorItem[];
@@ -35,11 +33,11 @@ export function FollowedAuthorsStrip({ authors }: FollowedAuthorsStripProps) {
               {/* Gold gradient border (hexagonal) */}
               <div
                 className="absolute -inset-[2px] bg-gradient-to-b from-primary to-[#8A7018] opacity-100 shadow-gold-glow"
-                style={{ clipPath: HEXAGON_CLIP }}
+                style={{ clipPath: PROFILE_HEXAGON_CLIP }}
               />
               <div
-                className="relative w-full h-full bg-surface overflow-hidden flex items-center justify-center"
-                style={{ clipPath: HEXAGON_CLIP }}
+                className="relative w-full h-full bg-surface-highlight overflow-hidden flex items-center justify-center"
+                style={{ clipPath: PROFILE_HEXAGON_CLIP }}
               >
                 {author.avatarUrl ? (
                   <img

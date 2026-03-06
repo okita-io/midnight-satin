@@ -322,5 +322,11 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - 2-column grid for tablet (md), 3-column grid for desktop (lg)
     - Responsive gap: 24px tablet, 32px desktop
     - _Requirements: 12.4, 12.5_
+  - [x]* 15.34 Write property tests for Profile page (THE-83)
+    - **Property 30: Profile Stats Layout Responsiveness** — Test horizontal row tablet/desktop
+    - **Property 31: Profile Followed Authors Responsiveness** — Test 6 avatars tablet, 8 desktop
+    - **Property 32: Profile Library Grid Responsiveness** — Test 2 cols tablet, 3 cols desktop
+    - **Property 33: Profile Styling Preservation** — Test hexagonal avatars, gold accents preserved
+    - _Validates: Requirements 12.1, 12.2, 12.3, 12.4, 12.5, 12.6, 12.7_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56, THE-71)
   - Ensure all tests pass, ask the user if questions arise.

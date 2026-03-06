@@ -112,6 +112,10 @@ export const PROFILE_LIBRARY_GRID_GAP = {
   desktop: 32,
 } as const;
 
+/** Profile FollowedAuthorsStrip hexagonal avatar clip-path (THE-80, THE-83) */
+export const PROFILE_HEXAGON_CLIP =
+  "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)";
+
 /** Cast preview portrait sizes in px (THE-58): mobile 80, tablet 112, desktop 96 */
 export const CAST_PREVIEW_PORTRAIT_SIZE = {
   mobile: 80,
