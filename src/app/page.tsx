@@ -46,8 +46,8 @@ export default async function BoudoirPage() {
   );
   const searchAuthors = uniqueAuthors.map((a) => ({ id: a.id, name: a.name }));
 
-  const heroNovel = featured[0];
-  if (!heroNovel) {
+  const heroItems = featured.slice(0, 3); // Up to 3 for desktop multi-item (THE-49)
+  if (heroItems.length === 0) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <p className="font-script text-2xl text-primary">Your shelf is waiting.</p>
@@ -60,7 +60,7 @@ export default async function BoudoirPage() {
       <BoudoirHeader searchNovels={searchNovels} searchAuthors={searchAuthors} />
 
       <main className="flex-1 pb-24">
-        <HeroCarousel featured={heroNovel} />
+        <HeroCarousel items={heroItems} itemsPerView={{ tablet: 2, desktop: 3 }} />
 
         <CurrentAffairsSection
           currentReading={currentReading}
