@@ -310,6 +310,10 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Display 8 avatars visible on desktop (lg breakpoint)
     - Maintain hexagonal avatar styling
     - _Requirements: 12.2, 12.3, 12.6_
+  - [x] 15.33 Preserve profile styling (THE-82)
+    - Maintain hexagonal avatar styling for followed authors
+    - Preserve all gold accent colors and typography on profile page
+    - _Requirements: 12.6, 12.7_
   - [x]* 15.32 Write property tests for Vault (THE-75)
     - **Property 26: Vault Grid Responsiveness** — Test 2 cols tablet, 3 cols desktop
     - **Property 27: Vault Styling Preservation** — Test ribbons, animations, card styling preserved

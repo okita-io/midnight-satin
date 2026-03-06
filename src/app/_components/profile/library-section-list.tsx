@@ -22,7 +22,7 @@ export function LibrarySectionList({
     <section className="px-4 xs:px-6 pb-8">
       {/* Currently Reading */}
       <div className="mb-8">
-        <h2 className="font-header text-sm tracking-[0.15em] text-white/90 mb-4">
+        <h2 className="font-header text-sm tracking-[0.15em] text-primary uppercase mb-4">
           Currently Reading
         </h2>
         {currentlyReading.length === 0 ? (
@@ -38,7 +38,7 @@ export function LibrarySectionList({
 
       {/* Finished */}
       <div>
-        <h2 className="font-header text-sm tracking-[0.15em] text-white/90 mb-4">
+        <h2 className="font-header text-sm tracking-[0.15em] text-primary uppercase mb-4">
           Finished
         </h2>
         {finished.length === 0 ? (
