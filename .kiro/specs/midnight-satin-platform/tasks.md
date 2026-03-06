@@ -168,3 +168,6 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Property 5: Boudoir Grid Responsiveness** — 2 cols tablet, 3 cols desktop
     - **Property 6: Premium Aesthetic Preservation** — void black, gold accents preserved
     - _Validates: Requirements 3.1, 3.2, 3.3, 3.4, 3.7, 1.7_
+  - [x] 15.9 Extend LibraryCatalog grid view (THE-52)
+    - 3-column grid tablet (md), 4-column desktop (lg); responsive gap 24px tablet, 32px desktop
+    - _Requirements: 4.1, 4.2_
