@@ -288,6 +288,11 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Set font size to 56px on desktop (lg: breakpoint)
     - Maintain prominent positioning at top
     - _Requirements: 10.3, 10.4_
+  - [x] 15.31 Maintain Vault styling and animations (THE-74)
+    - Preserve burgundy "Most Popular" ribbon on highlighted packages (PopularRibbon)
+    - Maintain coin rain animation on successful purchase (defer URL clear until after animation)
+    - Preserve consistent card styling with gold borders and shadows
+    - _Requirements: 8.3, 8.5_
   - [x] 15.31 Add hover states to interactive elements (THE-85)
     - Gold glow shadow on book cards (already done in 15.11)
     - Brightness increase on hover for buttons (.btn-gold)

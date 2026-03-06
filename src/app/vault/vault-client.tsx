@@ -63,9 +63,11 @@ export function VaultClient({
   useEffect(() => {
     if (purchaseSuccess) {
       setShowCoinRain(true);
-      // Clear URL params after showing animation
-      router.replace("/vault", { scroll: false });
-      const t = setTimeout(() => setShowCoinRain(false), 3000);
+      // Clear URL params only after coin rain animation completes (Req 8.5)
+      const t = setTimeout(() => {
+        setShowCoinRain(false);
+        router.replace("/vault", { scroll: false });
+      }, 3000);
       return () => clearTimeout(t);
     }
   }, [purchaseSuccess, router]);
@@ -180,7 +182,7 @@ function CreditPackCard({ pack, onPurchase, isPurchasing }: CreditPackCardProps)
       className={`group relative bg-surface/80 border rounded-sm p-3 xs:p-4 flex flex-col items-center justify-between transition-all duration-300 ${
         isPopular
           ? "border-primary/60 shadow-gold-glow hover:shadow-gold-glow-intense scale-[1.02] z-10"
-          : "border-primary/20 hover:border-primary/50 hover:shadow-gold-glow hover:-translate-y-1"
+          : "border-primary/30 shadow-[0px_2px_12px_rgba(212,175,55,0.08)] hover:border-primary/50 hover:shadow-gold-glow hover:-translate-y-1"
       }`}
     >
       {/* PopularRibbon */}
@@ -239,7 +241,7 @@ function CreditPackCard({ pack, onPurchase, isPurchasing }: CreditPackCardProps)
         disabled={isPurchasing}
         className={`w-full py-2 font-ui text-sm uppercase tracking-wide transition-all duration-300 relative overflow-hidden ${
           isPopular
-            ? "py-3 bg-primary text-void font-header font-bold shadow-lg hover:bg-white"
+            ? "py-3 bg-primary text-void font-header font-bold shadow-gold-glow hover:bg-white"
             : "border border-primary/40 text-primary hover:bg-primary hover:text-void"
         }`}
       >
