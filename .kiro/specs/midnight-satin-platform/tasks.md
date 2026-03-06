@@ -273,5 +273,9 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Property 24: Authors Study Trophy Case Grid** — Test 3 cols tablet, 4 cols desktop
     - **Property 25: Authors Study Styling Preservation** — Test gold borders preserved
     - _Validates: Requirements 9.1, 9.2, 9.3, 9.4, 9.5, 9.6, 9.7, 9.8_
+  - [x]* 15.29 Write property tests for authentication pages (THE-78)
+    - **Property 28: Authentication Form Centering** — Test 480px max-width and centering
+    - **Property 29: Authentication Form Consistency** — Test validation, spacing, typography preserved
+    - _Validates: Requirements 11.1, 11.2, 11.3, 11.4, 11.5, 11.6_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56, THE-71)
   - Ensure all tests pass, ask the user if questions arise.
