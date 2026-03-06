@@ -17,7 +17,7 @@ export default async function LoginPage({
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center px-4 xs:px-6 pb-safe-bottom pt-safe-top">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md md:max-w-[480px] mx-auto">
         <div className="text-center mb-6 xs:mb-8">
           <h1 className="font-display font-bold italic text-2xl xs:text-3xl text-[var(--primary)]" style={{ fontFamily: "var(--font-display)" }}>
             Welcome back
