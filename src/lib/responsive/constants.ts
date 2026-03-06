@@ -41,6 +41,13 @@ export const LIBRARY_LIST_COLUMNS = {
   desktop: 1,
 } as const;
 
+/** Chapter list columns (THE-59): mobile/tablet 1, desktop 2 */
+export const CHAPTER_LIST_COLUMNS = {
+  mobile: 1,
+  tablet: 1,
+  desktop: 2,
+} as const;
+
 /** Cast preview (PlayersSection) visible portraits (THE-58): tablet 4, desktop 6 */
 export const CAST_PREVIEW_VISIBLE = {
   tablet: 4,

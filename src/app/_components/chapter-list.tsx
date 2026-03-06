@@ -46,7 +46,7 @@ export function ChapterList({
           <span className="text-xs text-text-muted">{updatedAgo}</span>
         )}
       </div>
-      <div className="flex flex-col divide-y divide-white/5">
+      <div className="grid grid-cols-1 gap-0 divide-y divide-white/5 lg:grid-cols-2 lg:gap-x-6 lg:gap-y-4 lg:divide-y-0">
         {chapters.map((ch) => {
           const isAccessible = ch.isFree || unlockedIds.has(ch.id);
           const href = readingRoomPath(novelId, ch.id);
