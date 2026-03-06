@@ -308,5 +308,9 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Property 26: Vault Grid Responsiveness** — Test 2 cols tablet, 3 cols desktop
     - **Property 27: Vault Styling Preservation** — Test ribbons, animations, card styling preserved
     - _Validates: Requirements 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7_
+  - [x] 15.33 Extend profile library grid (THE-81)
+    - 2-column grid for tablet (md), 3-column grid for desktop (lg)
+    - Responsive gap: 24px tablet, 32px desktop
+    - _Requirements: 12.4, 12.5_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56, THE-71)
   - Ensure all tests pass, ask the user if questions arise.

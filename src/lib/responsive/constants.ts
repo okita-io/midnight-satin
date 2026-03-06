@@ -99,6 +99,19 @@ export const FOLLOWED_AUTHORS_STRIP_VISIBLE = {
   desktop: 8,
 } as const;
 
+/** Profile library grid columns (THE-81): mobile 1, tablet 2, desktop 3 */
+export const PROFILE_LIBRARY_GRID_COLUMNS = {
+  mobile: 1,
+  tablet: 2,
+  desktop: 3,
+} as const;
+
+/** Profile library grid responsive gaps (THE-81): tablet 24px, desktop 32px */
+export const PROFILE_LIBRARY_GRID_GAP = {
+  tablet: 24,
+  desktop: 32,
+} as const;
+
 /** Cast preview portrait sizes in px (THE-58): mobile 80, tablet 112, desktop 96 */
 export const CAST_PREVIEW_PORTRAIT_SIZE = {
   mobile: 80,
