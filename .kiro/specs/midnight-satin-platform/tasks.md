@@ -241,5 +241,11 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Property 21: Cast Gallery Portrait Aspect Ratio** — 3:4 portrait ratio maintained
     - **Property 22: Cast Gallery Interaction Preservation** — flip, endorsement, badges preserved
     - _Validates: Requirements 5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 5.7, 6.1, 6.2, 6.4, 6.6_
+  - [x] 15.23 Center authentication forms on tablet/desktop (THE-76)
+    - Modify auth form components (sign-in, register)
+    - Set max-width 480px for tablet/desktop (md: breakpoint)
+    - Center forms horizontally (mx-auto)
+    - Maintain all input field styling including gold focus states
+    - _Requirements: 11.1, 11.2, 11.3_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56)
   - Ensure all tests pass, ask the user if questions arise.
