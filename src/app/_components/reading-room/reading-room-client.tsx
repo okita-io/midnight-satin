@@ -84,7 +84,7 @@ export function ReadingRoomClient({
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [commentCount, setCommentCount] = useState(initialCommentCount);
   const [progressPercent, setProgressPercent] = useState(0);
-  const [settings, setSettings] = useState(getStoredReaderSettings);
+  const [settings, setSettings] = useState(() => getStoredReaderSettings());
   const [unlocked, setUnlocked] = useState(isUnlocked);
   const [creditBalance, setCreditBalance] = useState(initialCreditBalance);
   const [unlockError, setUnlockError] = useState<string | null>(null);
@@ -94,9 +94,6 @@ export function ReadingRoomClient({
 
   const showVeil = !isFree && !unlocked;
 
-  useEffect(() => {
-    setSettings(getStoredReaderSettings());
-  }, []);
 
   // Resolve initial scroll: server for auth, localStorage for guests (Req 16.2)
   const resolvedInitialPercent =
@@ -173,9 +170,12 @@ export function ReadingRoomClient({
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-    handleScroll();
+    const raf = requestAnimationFrame(() => handleScroll());
     el.addEventListener("scroll", handleScroll, { passive: true });
-    return () => el.removeEventListener("scroll", handleScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      el.removeEventListener("scroll", handleScroll);
+    };
   }, [handleScroll, content]);
 
   const handleTap = useCallback(
