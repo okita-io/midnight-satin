@@ -63,6 +63,19 @@ body {
   line-height: 1.6;
 }
 
+/* Touch interactions parity (THE-86): cursor pointer on interactive elements */
+button:not(:disabled),
+a[href],
+[role="button"] {
+  cursor: pointer;
+}
+
+/* Reduce tap delay on touch devices for responsive tap feedback */
+a,
+button {
+  touch-action: manipulation;
+}
+
 h1,
 h2,
 h3,
@@ -154,8 +167,12 @@ h4,
   box-shadow: var(--shadow-gold-glow);
 }
 
-.btn-gold:hover {
-  background-color: white;
+/* Button hover: brightness + bg change — only on pointer devices (THE-85) */
+@media (hover: hover) {
+  .btn-gold:hover {
+    background-color: white;
+    filter: brightness(1.08);
+  }
 }
 
 .card {
@@ -176,8 +193,11 @@ h4,
   pointer-events: none;
 }
 
-.card:hover .overlay-sheen {
-  opacity: 1;
+/* Card overlay sheen — only on pointer devices (THE-85) */
+@media (hover: hover) {
+  .card:hover .overlay-sheen {
+    opacity: 1;
+  }
 }
 
 .line-clamp-1 {
@@ -205,6 +225,22 @@ h4,
 }
 .animate-trophy-pulse {
   animation: trophy-pulse 3s ease-in-out infinite;
+}
+
+/* Cast Gallery: Rose icon gold pulse on endorsement (Req 6.4) */
+@keyframes rose-pulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.4));
+    transform: scale(1);
+  }
+  50% {
+    filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.9));
+    transform: scale(1.15);
+  }
+}
+.animate-rose-pulse {
+  animation: rose-pulse 0.6s ease-in-out;
 }
 
 /* Cast Gallery: 3D flip card utilities */
@@ -270,4 +306,141 @@ h4,
 }
 .animate-coin-fall {
   animation: coin-fall 2.5s ease-in forwards;
+}
+
+/* ============================================
+   Responsive system utilities (THE-45)
+   Mobile-first; md: 768px, lg: 1024px
+   ============================================ */
+
+/* Responsive container: mobile max-w-md, tablet/desktop wider with reading-optimal content */
+.responsive-container {
+  @apply max-w-md mx-auto;
+}
+@media (min-width: 768px) {
+  .responsive-container {
+    max-width: min(100%, 48rem);
+  }
+}
+@media (min-width: 1024px) {
+  .responsive-container {
+    max-width: min(100%, 64rem);
+  }
+}
+
+/* Reading content: optimal line length (45-75 chars, ~720px) */
+.reading-max-width {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Grid columns: 1 mobile, 2 tablet, 3 desktop */
+.responsive-grid-1-2-3 {
+  @apply grid grid-cols-1 gap-4;
+}
+@media (min-width: 768px) {
+  .responsive-grid-1-2-3 {
+    @apply grid-cols-2;
+  }
+}
+@media (min-width: 1024px) {
+  .responsive-grid-1-2-3 {
+    @apply grid-cols-3;
+  }
+}
+
+/* Grid columns: 1 mobile, 2 tablet, 4 desktop */
+.responsive-grid-1-2-4 {
+  @apply grid grid-cols-1 gap-4;
+}
+@media (min-width: 768px) {
+  .responsive-grid-1-2-4 {
+    @apply grid-cols-2;
+  }
+}
+@media (min-width: 1024px) {
+  .responsive-grid-1-2-4 {
+    @apply grid-cols-4;
+  }
+}
+
+/* Sidebar layout: content shifts for 280px sidebar on tablet+ */
+.responsive-with-sidebar {
+  @apply w-full;
+}
+@media (min-width: 768px) {
+  .responsive-with-sidebar {
+    margin-left: 280px;
+    width: calc(100% - 280px);
+  }
+}
+
+/* Hide on mobile, show on tablet+ */
+.show-tablet-up {
+  @apply hidden;
+}
+@media (min-width: 768px) {
+  .show-tablet-up {
+    @apply block;
+  }
+}
+
+/* Show on mobile, hide on tablet+ */
+.show-mobile-only {
+  @apply block;
+}
+@media (min-width: 768px) {
+  .show-mobile-only {
+    @apply hidden;
+  }
+}
+
+/* Hide on tablet, show on desktop */
+.show-desktop-only {
+  @apply hidden;
+}
+@media (min-width: 1024px) {
+  .show-desktop-only {
+    @apply block;
+  }
+}
+
+/* Catalog item hover states (THE-54)
+   Gold glow, brightness, scale — only when device supports hover.
+   Uses @media (hover: hover) for pointer device detection. */
+.catalog-item-cover {
+  transition: box-shadow 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+}
+@media (hover: hover) {
+  .catalog-item-hover:hover .catalog-item-cover {
+    box-shadow: 0 4px 20px -5px rgba(212, 175, 55, 0.3);
+    filter: brightness(1.05);
+    transform: scale(1.02);
+  }
+}
+
+/* Button hover brightness — primary buttons (THE-85) */
+@media (hover: hover) {
+  .btn-hover-brightness:hover {
+    filter: brightness(1.08);
+  }
+}
+
+/* FAB hover scale — only on pointer devices (THE-85) */
+.fab-hover-scale {
+  transition: transform 0.3s ease;
+}
+@media (hover: hover) {
+  .fab-hover-scale:hover {
+    transform: scale(1.05);
+  }
+}
+.fab-hover-scale-lg {
+  transition: transform 0.3s ease;
+}
+@media (hover: hover) {
+  .fab-hover-scale-lg:hover {
+    transform: scale(1.08);
+  }
 }

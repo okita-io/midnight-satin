@@ -3,51 +3,128 @@ import type { FeaturedNovel } from "@/lib/content";
 import { novelDetailPath } from "@/lib/navigation";
 import { readingRoomPath } from "@/lib/navigation";
 
+/** Responsive items-per-view configuration (THE-49). */
+export interface ItemsPerView {
+  /** Columns on tablet (md: 768px). Default 2. */
+  tablet?: number;
+  /** Columns on desktop (lg: 1024px). Default 3. */
+  desktop?: number;
+}
+
 interface HeroCarouselProps {
-  /** Featured novel for hero. First item is primary. */
-  featured: FeaturedNovel;
-  /** Optional first chapter ID for "Start Reading" CTA. When content layer is ready, use first free/unlocked chapter. */
+  /** Featured novel(s) for hero. First item is primary on mobile. */
+  items: FeaturedNovel[];
+  /** Optional first chapter ID for primary item "Start Reading" CTA. */
   firstChapterId?: string;
+  /** Optional map of novelId -> firstChapterId for multi-item CTAs. */
+  firstChapterIds?: Record<string, string>;
+  /** Responsive columns: tablet (md), desktop (lg). Defaults: tablet 2, desktop 3. */
+  itemsPerView?: ItemsPerView;
+}
+
+/** Backward-compatible: single featured novel. */
+interface HeroCarouselLegacyProps {
+  /** @deprecated Use items instead. Single featured novel. */
+  featured?: FeaturedNovel;
+  firstChapterId?: string;
+  items?: never;
+  firstChapterIds?: never;
+  itemsPerView?: never;
+}
+
+type Props = HeroCarouselProps | HeroCarouselLegacyProps;
+
+function isLegacyProps(
+  p: Props
+): p is HeroCarouselLegacyProps {
+  return "featured" in p && p.featured != null && !("items" in p && Array.isArray(p.items));
 }
 
 /**
  * Hero carousel: 350px+ height, vignette edges, "Editor's Choice" label, CTA.
- * Matches reference/midnight_satin_home.html.
+ * Multi-item display on tablet (2 cols, 480px) and desktop (3 cols, 520px).
+ * Matches reference/midnight_satin_home.html. Requirements 3.1, 3.2 (THE-49).
  */
-export function HeroCarousel({ featured, firstChapterId }: HeroCarouselProps) {
+export function HeroCarousel(props: Props) {
+  const items = isLegacyProps(props)
+    ? [props.featured!]
+    : props.items;
+  const firstChapterId = "firstChapterId" in props ? props.firstChapterId : undefined;
+  const firstChapterIds = "firstChapterIds" in props ? props.firstChapterIds : undefined;
+
+  if (items.length === 0) return null;
+
+  // Single item: original full-width layout
+  if (items.length === 1) {
+    return (
+      <HeroCarouselSingle
+        item={items[0]}
+        firstChapterId={firstChapterId}
+      />
+    );
+  }
+
+  // Multi-item: responsive grid
+  return (
+    <section
+      className="relative w-full overflow-hidden"
+      aria-label="Editor's Choice featured novels"
+    >
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-[24px] md:h-[480px] lg:grid-cols-3 lg:gap-8 lg:h-[520px]">
+        {items.map((novel, index) => (
+          <HeroCarouselCard
+            key={novel.id}
+            item={novel}
+            firstChapterId={
+              firstChapterIds?.[novel.id] ?? (novel.id === items[0].id ? firstChapterId : undefined)
+            }
+            loading={index === 0 ? "eager" : "lazy"}
+          />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function HeroCarouselSingle({
+  item,
+  firstChapterId,
+}: {
+  item: FeaturedNovel;
+  firstChapterId?: string;
+}) {
   const ctaHref = firstChapterId
-    ? readingRoomPath(featured.id, firstChapterId)
-    : novelDetailPath(featured.id);
+    ? readingRoomPath(item.id, firstChapterId)
+    : novelDetailPath(item.id);
 
   return (
-    <section className="relative h-[380px] xs:h-[420px] sm:h-[480px] w-full overflow-hidden group">
-      {/* Background Image */}
+    <section className="relative h-[380px] xs:h-[420px] sm:h-[480px] md:h-[480px] lg:h-[520px] w-full overflow-hidden group">
       <div className="absolute inset-0 bg-void">
-        {featured.coverImageUrl ? (
+        {item.coverImageUrl ? (
           <img
             alt=""
             className="h-full w-full object-cover opacity-60"
-            src={featured.coverImageUrl}
+            src={item.coverImageUrl}
+            loading="eager"
+            decoding="async"
           />
         ) : (
           <div className="h-full w-full bg-surface-highlight" />
         )}
       </div>
-      {/* Vignette & Gradient Overlays */}
       <div className="absolute inset-0 bg-gradient-to-t from-void via-void/40 to-transparent" />
       <div className="absolute inset-0 bg-gradient-to-b from-void/60 via-transparent to-transparent" />
       <div className="absolute inset-0 bg-gold-sheen opacity-30 mix-blend-overlay" />
 
-      {/* Content */}
       <div className="absolute bottom-0 left-0 right-0 p-4 xs:p-6 flex flex-col items-center text-center z-10 pb-8 xs:pb-12">
         <span className="font-header text-[10px] tracking-[0.3em] text-primary mb-2 xs:mb-3 uppercase border-b border-primary/30 pb-1">
           Editor&apos;s Choice
         </span>
         <h1 className="font-display italic font-bold text-3xl xs:text-4xl leading-tight text-white mb-2 gold-text-shadow">
-          {featured.title}
+          {item.title}
         </h1>
         <p className="font-ui text-text-muted text-sm mb-4 xs:mb-6 tracking-wide">
-          By {featured.authorName}
+          By {item.authorName}
         </p>
         <Link
           href={ctaHref}
@@ -57,5 +134,58 @@ export function HeroCarousel({ featured, firstChapterId }: HeroCarouselProps) {
         </Link>
       </div>
     </section>
+  );
+}
+
+function HeroCarouselCard({
+  item,
+  firstChapterId,
+  loading = "lazy",
+}: {
+  item: FeaturedNovel;
+  firstChapterId?: string;
+  loading?: "eager" | "lazy";
+}) {
+  const ctaHref = firstChapterId
+    ? readingRoomPath(item.id, firstChapterId)
+    : novelDetailPath(item.id);
+
+  return (
+    <Link
+      href={ctaHref}
+      className="relative block h-full min-h-[280px] md:min-h-0 overflow-hidden group"
+    >
+      <div className="absolute inset-0 bg-void">
+        {item.coverImageUrl ? (
+          <img
+            alt=""
+            className="h-full w-full object-cover opacity-60 group-hover:opacity-70 transition-opacity"
+            src={item.coverImageUrl}
+            loading={loading}
+            decoding="async"
+          />
+        ) : (
+          <div className="h-full w-full bg-surface-highlight" />
+        )}
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-t from-void via-void/40 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-void/60 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gold-sheen opacity-30 mix-blend-overlay" />
+
+      <div className="absolute bottom-0 left-0 right-0 p-4 flex flex-col items-center text-center z-10 pb-6">
+        <span className="font-header text-[10px] tracking-[0.3em] text-primary mb-2 uppercase border-b border-primary/30 pb-1">
+          Editor&apos;s Choice
+        </span>
+        <h2 className="font-display italic font-bold text-xl md:text-2xl leading-tight text-white mb-1 gold-text-shadow line-clamp-2">
+          {item.title}
+        </h2>
+        <p className="font-ui text-text-muted text-xs mb-3 tracking-wide">
+          By {item.authorName}
+        </p>
+        <span className="bg-primary/90 text-void font-ui font-bold text-xs px-4 py-2 rounded-sm group-hover:bg-primary transition-colors uppercase tracking-wider">
+          Start Reading
+        </span>
+      </div>
+    </Link>
   );
 }

@@ -44,7 +44,7 @@ export function LibraryHeader({ onFilterChange }: LibraryHeaderProps) {
         <button
           type="button"
           onClick={() => setFilterOpen((o) => !o)}
-          className={`p-2 rounded-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+          className={`p-2 rounded-sm transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer active:scale-95 ${
             filterOpen ? "text-primary" : "text-white/80 hover:text-primary"
           }`}
           aria-label={filterOpen ? "Close search" : "Search and filter catalog"}
@@ -73,7 +73,7 @@ export function LibraryHeader({ onFilterChange }: LibraryHeaderProps) {
               <button
                 type="button"
                 onClick={handleClear}
-                className="p-2 text-text-muted hover:text-text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm"
+                className="p-2 text-text-muted hover:text-text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm cursor-pointer active:scale-95"
                 aria-label="Clear filter"
               >
                 <span className="material-symbols-outlined" aria-hidden>

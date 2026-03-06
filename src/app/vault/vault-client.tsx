@@ -63,9 +63,11 @@ export function VaultClient({
   useEffect(() => {
     if (purchaseSuccess) {
       setShowCoinRain(true);
-      // Clear URL params after showing animation
-      router.replace("/vault", { scroll: false });
-      const t = setTimeout(() => setShowCoinRain(false), 3000);
+      // Clear URL params only after coin rain animation completes (Req 8.5)
+      const t = setTimeout(() => {
+        setShowCoinRain(false);
+        router.replace("/vault", { scroll: false });
+      }, 3000);
       return () => clearTimeout(t);
     }
   }, [purchaseSuccess, router]);
@@ -122,8 +124,8 @@ export function VaultClient({
           <div className="h-[1px] w-12 bg-gradient-to-r from-transparent via-primary to-transparent" />
         </div>
 
-        {/* CreditPackGrid */}
-        <div className="grid grid-cols-2 gap-3 xs:gap-4 max-w-lg mx-auto">
+        {/* CreditPackGrid — 2-col tablet (md), 3-col desktop (lg); gap 24px tablet, 32px desktop */}
+        <div className="grid grid-cols-2 gap-3 xs:gap-4 md:gap-6 lg:gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-lg md:max-w-2xl lg:max-w-4xl mx-auto">
           {CREDIT_PACKS.map((pack) => (
             <CreditPackCard
               key={pack.id}
@@ -180,7 +182,7 @@ function CreditPackCard({ pack, onPurchase, isPurchasing }: CreditPackCardProps)
       className={`group relative bg-surface/80 border rounded-sm p-3 xs:p-4 flex flex-col items-center justify-between transition-all duration-300 ${
         isPopular
           ? "border-primary/60 shadow-gold-glow hover:shadow-gold-glow-intense scale-[1.02] z-10"
-          : "border-primary/20 hover:border-primary/50 hover:shadow-gold-glow hover:-translate-y-1"
+          : "border-primary/30 shadow-[0px_2px_12px_rgba(212,175,55,0.08)] hover:border-primary/50 hover:shadow-gold-glow hover:-translate-y-1"
       }`}
     >
       {/* PopularRibbon */}
@@ -237,9 +239,9 @@ function CreditPackCard({ pack, onPurchase, isPurchasing }: CreditPackCardProps)
         type="button"
         onClick={onPurchase}
         disabled={isPurchasing}
-        className={`w-full py-2 font-ui text-sm uppercase tracking-wide transition-all duration-300 relative overflow-hidden ${
+        className={`w-full py-2 font-ui text-sm uppercase tracking-wide transition-all duration-300 relative overflow-hidden cursor-pointer active:scale-[0.98] disabled:active:scale-100 disabled:cursor-not-allowed ${
           isPopular
-            ? "py-3 bg-primary text-void font-header font-bold shadow-lg hover:bg-white"
+            ? "py-3 bg-primary text-void font-header font-bold shadow-gold-glow hover:bg-white"
             : "border border-primary/40 text-primary hover:bg-primary hover:text-void"
         }`}
       >

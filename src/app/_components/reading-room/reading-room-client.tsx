@@ -15,6 +15,7 @@ import { ChapterContent } from "./chapter-content";
 import { TheVeil } from "@/app/_components/the-veil";
 import { ReadingHUD, getStoredReaderSettings, setStoredReaderSettings, type FontSize, type LineHeight } from "./reading-hud";
 import { CommentsSection } from "./comments-section";
+import { CommentsSidebar } from "./comments-sidebar";
 
 const GUEST_PROGRESS_KEY = "reading-progress";
 const SAVE_DEBOUNCE_MS = 10_000;
@@ -83,7 +84,7 @@ export function ReadingRoomClient({
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [commentCount, setCommentCount] = useState(initialCommentCount);
   const [progressPercent, setProgressPercent] = useState(0);
-  const [settings, setSettings] = useState(getStoredReaderSettings);
+  const [settings, setSettings] = useState(() => getStoredReaderSettings());
   const [unlocked, setUnlocked] = useState(isUnlocked);
   const [creditBalance, setCreditBalance] = useState(initialCreditBalance);
   const [unlockError, setUnlockError] = useState<string | null>(null);
@@ -93,9 +94,6 @@ export function ReadingRoomClient({
 
   const showVeil = !isFree && !unlocked;
 
-  useEffect(() => {
-    setSettings(getStoredReaderSettings());
-  }, []);
 
   // Resolve initial scroll: server for auth, localStorage for guests (Req 16.2)
   const resolvedInitialPercent =
@@ -172,9 +170,12 @@ export function ReadingRoomClient({
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-    handleScroll();
+    const raf = requestAnimationFrame(() => handleScroll());
     el.addEventListener("scroll", handleScroll, { passive: true });
-    return () => el.removeEventListener("scroll", handleScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      el.removeEventListener("scroll", handleScroll);
+    };
   }, [handleScroll, content]);
 
   const handleTap = useCallback(
@@ -205,7 +206,7 @@ export function ReadingRoomClient({
       {/* Main reading area - tap to toggle HUD */}
       <main
         ref={scrollRef}
-        className="flex-1 overflow-y-auto relative w-full scroll-smooth bg-silk-noise"
+        className="flex-1 overflow-y-auto relative w-full scroll-smooth bg-silk-noise lg:pr-80"
         onClick={handleTap}
         role="main"
         aria-label="Chapter content"
@@ -253,9 +254,19 @@ export function ReadingRoomClient({
         onLineHeightChange={handleLineHeightChange}
       />
 
+      {/* Mobile/tablet: bottom sheet when comments tapped */}
       <CommentsSection
         isOpen={commentsOpen}
         onClose={() => setCommentsOpen(false)}
+        chapterId={chapterId}
+        isAuthenticated={isAuthenticated}
+        commentCount={commentCount}
+        onCommentCountChange={setCommentCount}
+        returnUrl={`/novel/${encodeURIComponent(novelId)}/read/${encodeURIComponent(chapterId)}`}
+      />
+
+      {/* Desktop (lg:): fixed sidebar always visible */}
+      <CommentsSidebar
         chapterId={chapterId}
         isAuthenticated={isAuthenticated}
         commentCount={commentCount}

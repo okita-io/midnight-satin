@@ -46,7 +46,7 @@ export function ChapterList({
           <span className="text-xs text-text-muted">{updatedAgo}</span>
         )}
       </div>
-      <div className="flex flex-col divide-y divide-white/5">
+      <div className="grid grid-cols-1 gap-0 divide-y divide-white/5 lg:grid-cols-2 lg:gap-x-6 lg:gap-y-4 lg:divide-y-0">
         {chapters.map((ch) => {
           const isAccessible = ch.isFree || unlockedIds.has(ch.id);
           const href = readingRoomPath(novelId, ch.id);
@@ -56,7 +56,7 @@ export function ChapterList({
               key={ch.id}
               href={isAccessible ? href : "#"}
               className={`group flex items-center justify-between py-4 xs:py-5 px-2 -mx-2 rounded transition-colors ${isAccessible
-                  ? "cursor-pointer hover:bg-white/5"
+                  ? "cursor-pointer hover:bg-white/5 active:scale-[0.99]"
                   : "cursor-default opacity-60"
                 }`}
               onClick={(e) => !isAccessible && e.preventDefault()}

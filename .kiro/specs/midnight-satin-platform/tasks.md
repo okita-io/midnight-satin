@@ -133,3 +133,200 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [x]* 14.4 Property tests: comments lifecycle and likes
     - **Property 25: Comment lifecycle and ownership** — **Property 26: Comment like invariant**
     - **Validates: Requirements 19.5-19.9**
+- [x] 15. Responsive system foundation (THE-45)
+  - [x] 15.1 Set up responsive system foundation
+    - Install fast-check for property-based testing (already present)
+    - Create src/lib/responsive/constants.ts with breakpoint constants and grid configurations
+    - Create src/lib/responsive/hooks.ts with useViewport() and usePointerDevice() hooks
+    - Create src/lib/responsive/utils.ts with viewport detection utilities
+    - Add responsive utility classes to src/app/globals.css
+    - _Requirements: 1.1, 1.2, 1.6, 14.6_
+  - [x]* 15.2 Write property tests for responsive foundation (THE-46)
+    - **Property 1: Viewport Layout Mapping** — Test correct layout tier for any viewport width
+    - **Property 36: Color Token Consistency** — Test color tokens match across viewports
+    - _Validates: Requirements 1.3, 1.4, 1.5, 14.2_
+  - [x] 15.3 Extend NavigationBar with side panel layout (THE-47)
+    - Add layout prop ('bottom' | 'side') to navigation-bar.tsx; default auto-switches at 768px
+    - Side panel: 280px width, vertical flex, fixed left positioning, brand header, 300ms ease-in-out transition
+    - MainLayoutContainer for responsive content offset; Reading Room excluded
+    - _Requirements: 2.1, 2.2, 2.3, 2.5_
+  - [x] 15.4 Write property tests for navigation (THE-48)
+    - **Property 2: Navigation Layout Transformation** — Test bottom/side layout by viewport
+    - **Property 3: Navigation Styling Consistency** — Test gold accents preserved
+    - _Validates: Requirements 2.1, 2.4_
+  - [x] 15.5 Fix Reading Room control bar spacing on mobile (THE-95)
+    - Reading HUD footer icons evenly spaced on mobile; full-width footer on mobile, max-w-md centered on tablet+
+    - _Requirements: 3.5, 3.6_
+  - [x] 15.6 Extend HeroCarousel for multi-item display (THE-49)
+    - Add itemsPerView prop; 2-column layout tablet (md), 3-column desktop (lg); heights 480px tablet, 520px desktop; gap 24px tablet, 32px desktop
+    - _Requirements: 3.1, 3.2_
+  - [x] 15.7 Extend grid sections with responsive columns (THE-50)
+    - Modify HighSocietySection, CurrentAffairsSection, PlayersSection; replace horizontal scroll with CSS Grid on tablet/desktop; 2-column tablet, 3-column desktop; max-width 1440px centered; spacious gaps
+    - _Requirements: 3.3, 3.4, 3.5, 3.6, 3.8_
+  - [x]* 15.8 Write property tests for Boudoir layout (THE-51)
+    - **Property 4: Hero Carousel Responsive Items** — 2 items tablet, 3 desktop
+    - **Property 5: Boudoir Grid Responsiveness** — 2 cols tablet, 3 cols desktop
+    - **Property 6: Premium Aesthetic Preservation** — void black, gold accents preserved
+    - _Validates: Requirements 3.1, 3.2, 3.3, 3.4, 3.7, 1.7_
+  - [x] 15.9 Extend LibraryCatalog grid view (THE-52)
+    - 3-column grid tablet (md), 4-column desktop (lg); responsive gap 24px tablet, 32px desktop
+    - _Requirements: 4.1, 4.2_
+  - [x] 15.10 Extend LibraryCatalog list view (THE-53)
+    - 2-column list layout tablet (md), single-column expanded layout desktop (lg)
+    - Expanded metadata for desktop: author bio, tags, rating, chapter count
+    - Card dimensions: 160px cover width, 240px height for desktop list
+    - _Requirements: 4.3, 4.4_
+  - [x] 15.11 Add hover states to catalog items (THE-54)
+    - Gold glow shadow, brightness increase, scale transforms on hover
+    - usePointerDevice() hook for pointer device detection
+    - CSS @media (hover: hover) for hover-capable devices only
+    - _Requirements: 4.6_
+  - [x]* 15.12 Write property tests for Library Catalog (THE-55)
+    - **Property 7: Library Catalog Grid View Responsiveness** — 3 cols tablet, 4 cols desktop
+    - **Property 8: Library Catalog List View Responsiveness** — 2 cols tablet, 1 col desktop
+    - **Property 9: Book Cover Aspect Ratio Invariant** — 2:3 ratio maintained
+    - **Property 10: Hover State Conditional Rendering** — hover states on pointer devices only
+    - _Validates: Requirements 4.1, 4.2, 4.3, 4.4, 4.5, 4.6_
+  - [x] 15.13 Create two-column layout for NovelDetailHeader (THE-57)
+    - Modify novel-detail-header/ParallaxHero area for tablet/desktop
+    - Two-column layout: 40% cover, 60% metadata; gap 48px tablet, 64px desktop
+    - Sticky positioning for cover column; maintain parallax effect on cover
+    - _Requirements: 5.1, 5.2, 5.3, 5.7_
+  - [x] 15.14 Extend cast preview section (THE-58)
+    - Modify cast preview (PlayersSection) to show 4 portraits on tablet
+    - Modify cast preview to show 6 portraits on desktop
+    - Maintain horizontal scroll with larger portrait sizes
+    - _Requirements: 5.4, 5.5_
+  - [x] 15.15 Implement two-column chapter list for desktop (THE-59)
+    - Add CSS Grid for chapter list on desktop (lg: breakpoint)
+    - Implement 2-column layout for faster scanning
+    - Maintain single column on mobile/tablet
+    - _Requirements: 5.6_
+  - [x]* 15.16 Write property tests for Novel Detail (THE-60)
+    - **Property 12: Novel Detail Two-Column Layout** — Test 2-col layout tablet/desktop
+    - **Property 13: Novel Detail Cast Preview Responsiveness** — Test 4 portraits tablet, 6 desktop
+    - **Property 14: Novel Detail Chapter List Grid** — Test 2-col grid desktop
+    - **Property 15: Typography Consistency Across Breakpoints** — Test font families preserved
+    - _Validates: Requirements 5.1, 5.4, 5.5, 5.6, 5.8_
+  - [x] 15.17 Add max-width constraints to chapter content (THE-61)
+    - Modify chapter-content.tsx: max-width 680px tablet (md), 720px desktop (lg)
+    - Center content horizontally (mx-auto)
+    - Responsive side margins: 48px tablet (px-12), 64px desktop (px-16)
+    - Maintain 18px font size and 1.6 line height
+    - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6_
+  - [x] 15.18 Create CommentsSidebar component for desktop (THE-62)
+    - Create src/app/_components/reading-room/comments-sidebar.tsx
+    - Fixed positioning on right side, 320px width, independent scrolling
+    - Show only on desktop (lg: breakpoint), hide on mobile/tablet
+    - Reuse existing comment styling (dark background, gold accents)
+    - _Requirements: 7.1, 7.2, 7.3, 7.4, 7.5_
+  - [x]* 15.19 Write property tests for Reading Room (THE-63)
+    - **Property 16: Reading Room Text Centering** — Test max-width and centering
+    - **Property 17: Reading Room Component Preservation** — Test Veil, blur, unlock preserved
+    - **Property 18: Comments Sidebar Desktop Rendering** — Test sidebar desktop, below mobile/tablet
+    - **Property 19: Comments Styling Consistency** — Test comment styling preserved
+    - _Validates: Requirements 6.1, 6.2, 6.3, 6.7, 6.8, 7.1, 7.5, 7.6, 7.7_
+  - [x] 15.20 Extend Cast Gallery grid layout (THE-64)
+    - Modify cast-gallery-modal.tsx: 2-column grid tablet (md), 3-column desktop (lg)
+    - Responsive gap: 24px tablet, 32px desktop
+    - Maintain portrait aspect ratio (aspect-[3/4]) and card flip for backstory reveal
+    - _Requirements: 5.1, 5.4, 5.6, 5.7_
+  - [x] 15.21 Maintain character card interactions (THE-65)
+    - Preserve rose endorsement button positioning and animation (bottom center, 64px burgundy, gold pulse on endorse)
+    - Display trophy badges when endorsement count exceeds 1000 (animated pulsing gold glow)
+    - Maintain nameplate gradient overlay and typography (Playfair Display italic 4xl, Marcellus role)
+    - _Requirements: 5.5, 5.6, 6.1, 6.2, 6.4, 6.6_
+  - [x]* 15.22 Write property tests for Cast Gallery (THE-66)
+    - **Property 20: Cast Gallery Grid Responsiveness** — 2 cols tablet, 3 cols desktop
+    - **Property 21: Cast Gallery Portrait Aspect Ratio** — 3:4 portrait ratio maintained
+    - **Property 22: Cast Gallery Interaction Preservation** — flip, endorsement, badges preserved
+    - _Validates: Requirements 5.1, 5.2, 5.3, 5.4, 5.5, 5.6, 5.7, 6.1, 6.2, 6.4, 6.6_
+  - [x] 15.23 Center authentication forms on tablet/desktop (THE-76)
+    - Modify auth form components (sign-in, register)
+    - Set max-width 480px for tablet/desktop (md: breakpoint)
+    - Center forms horizontally (mx-auto)
+    - Maintain all input field styling including gold focus states
+    - _Requirements: 11.1, 11.2, 11.3_
+  - [x] 15.24 Create two-column layout for biography and bibliography (THE-67)
+    - Modify Author's Study page: two-column layout for tablet/desktop (35% biography, 65% bibliography)
+    - Responsive gap: 48px tablet (md), 64px desktop (lg)
+    - Maintain single column on mobile; BiographySection + TrophyCase in left column, BibliographySection in right
+    - _Requirements: 9.1, 9.2, 9.3_
+  - [x] 15.25 Extend hexagonal avatar sizing (THE-68)
+    - Set avatar size to 180px on tablet (md breakpoint)
+    - Set avatar size to 220px on desktop (lg breakpoint)
+    - Maintain hexagonal shape and gold border
+    - _Requirements: 9.4, 9.5, 9.8_
+  - [x] 15.26 Preserve authentication form styling (THE-77)
+    - Maintain button styling and hover effects (h-14, shadow-gold-glow, hover:bg-primary/90 or hover:bg-white, active:scale-[0.98])
+    - Preserve vertical spacing (space-y-6 login, space-y-5 register) and typography hierarchy (Marcellus labels, uppercase tracking)
+    - Keep validation messages in same position as mobile (top of form, before first field) across all viewports
+    - _Requirements: 11.4, 11.5, 11.6_
+  - [x] 15.27 Extend trophy case grid layout (THE-69)
+    - 3-column grid for tablet (md)
+    - 4-column grid for desktop (lg)
+    - 2-column grid for mobile
+    - Maintain gold border styling on trophies (drop-shadow on icons)
+    - _Requirements: 9.6, 9.7, 9.8_
+  - [x] 15.28 Write property tests for Author's Study (THE-70)
+    - **Property 23: Authors Study Two-Column Layout** — Test 35/65 split tablet/desktop
+    - **Property 24: Authors Study Trophy Case Grid** — Test 3 cols tablet, 4 cols desktop
+    - **Property 25: Authors Study Styling Preservation** — Test gold borders preserved
+    - _Validates: Requirements 9.1, 9.2, 9.3, 9.4, 9.5, 9.6, 9.7, 9.8_
+  - [x]* 15.29 Write property tests for authentication pages (THE-78)
+    - **Property 28: Authentication Form Centering** — Test 480px max-width and centering
+    - **Property 29: Authentication Form Consistency** — Test validation, spacing, typography preserved
+    - _Validates: Requirements 11.1, 11.2, 11.3, 11.4, 11.5, 11.6_
+  - [x] 15.29 Extend Vault credit packages grid (THE-72)
+    - Modify vault-client.tsx CreditPackGrid
+    - 2-column grid for tablet (md: breakpoint)
+    - 3-column grid for desktop (lg: breakpoint)
+    - Responsive gap: 24px tablet, 32px desktop
+    - _Requirements: 10.1, 10.2_
+  - [x] 15.30 Extend credit balance display (THE-73)
+    - Set font size to 48px on tablet (md: breakpoint)
+    - Set font size to 56px on desktop (lg: breakpoint)
+    - Maintain prominent positioning at top
+    - _Requirements: 10.3, 10.4_
+  - [x] 15.31 Maintain Vault styling and animations (THE-74)
+    - Preserve burgundy "Most Popular" ribbon on highlighted packages (PopularRibbon)
+    - Maintain coin rain animation on successful purchase (defer URL clear until after animation)
+    - Preserve consistent card styling with gold borders and shadows
+    - _Requirements: 8.3, 8.5_
+  - [x] 15.31 Add hover states to interactive elements (THE-85)
+    - Gold glow shadow on book cards (already done in 15.11)
+    - Brightness increase on hover for buttons (.btn-gold)
+    - Scale transform on hover for floating action buttons (Novel Detail FAB, EndorsementFAB)
+    - CSS @media (hover: hover) for pointer device detection
+    - _Requirements: 13.1, 13.2, 13.3, 13.4_
+  - [x] 15.32 Preserve touch interactions (THE-86)
+    - Maintain all touch interactions for touch-enabled tablets
+    - Preserve all click and tap animations (active:scale-95, active:scale-[0.98])
+    - Apply cursor pointer to all interactive elements (buttons, links, role=button)
+    - touch-action: manipulation on buttons/links to reduce tap delay
+    - _Requirements: 13.5, 13.6, 13.7_
+  - [x] 15.32 Extend followed authors strip (THE-80)
+    - Display 6 avatars visible on tablet (md breakpoint)
+    - Display 8 avatars visible on desktop (lg breakpoint)
+    - Maintain hexagonal avatar styling
+    - _Requirements: 12.2, 12.3, 12.6_
+  - [x] 15.33 Preserve profile styling (THE-82)
+    - Maintain hexagonal avatar styling for followed authors
+    - Preserve all gold accent colors and typography on profile page
+    - _Requirements: 12.6, 12.7_
+  - [x]* 15.32 Write property tests for Vault (THE-75)
+    - **Property 26: Vault Grid Responsiveness** — Test 2 cols tablet, 3 cols desktop
+    - **Property 27: Vault Styling Preservation** — Test ribbons, animations, card styling preserved
+    - _Validates: Requirements 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7_
+  - [x] 15.33 Extend profile library grid (THE-81)
+    - 2-column grid for tablet (md), 3-column grid for desktop (lg)
+    - Responsive gap: 24px tablet, 32px desktop
+    - _Requirements: 12.4, 12.5_
+  - [x]* 15.34 Write property tests for Profile page (THE-83)
+    - **Property 30: Profile Stats Layout Responsiveness** — Test horizontal row tablet/desktop
+    - **Property 31: Profile Followed Authors Responsiveness** — Test 6 avatars tablet, 8 desktop
+    - **Property 32: Profile Library Grid Responsiveness** — Test 2 cols tablet, 3 cols desktop
+    - **Property 33: Profile Styling Preservation** — Test hexagonal avatars, gold accents preserved
+    - _Validates: Requirements 12.1, 12.2, 12.3, 12.4, 12.5, 12.6, 12.7_
+- [x] 16. Checkpoint - Ensure all tests pass (THE-56, THE-71)
+  - Ensure all tests pass, ask the user if questions arise.

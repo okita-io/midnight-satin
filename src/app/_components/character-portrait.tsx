@@ -1,8 +1,9 @@
 "use client";
 
 /**
- * Circular character portrait, 80px diameter, gold border.
+ * Circular character portrait, 80px diameter by default, gold border.
  * Used in Novel Detail "The Players" and Cast Gallery.
+ * When responsive=true, uses larger sizes on tablet (112px) and desktop (96px) for cast preview.
  */
 interface CharacterPortraitProps {
   name: string;
@@ -11,6 +12,8 @@ interface CharacterPortraitProps {
   onClick?: () => void;
   /** Optional: render as button for accessibility when onClick provided */
   asButton?: boolean;
+  /** Optional: use responsive sizes for cast preview (80px mobile, 112px tablet, 96px desktop) */
+  responsive?: boolean;
   className?: string;
 }
 
@@ -19,9 +22,15 @@ export function CharacterPortrait({
   portraitUrl,
   onClick,
   asButton = false,
+  responsive = false,
   className = "",
 }: CharacterPortraitProps) {
-  const size = "w-20 h-20";
+  const size = responsive
+    ? "w-20 h-20 md:w-[7rem] md:h-[7rem] lg:w-24 lg:h-24"
+    : "w-20 h-20";
+  const minWidth = responsive
+    ? "min-w-[80px] md:min-w-[7rem] lg:min-w-24"
+    : "min-w-[80px]";
   const content = (
     <>
       <div
@@ -33,6 +42,8 @@ export function CharacterPortrait({
               src={portraitUrl}
               alt=""
               className="w-full h-full object-cover opacity-90 group-hover:scale-110 transition-transform duration-500"
+              loading="lazy"
+              decoding="async"
             />
           ) : (
             <span className="material-symbols-outlined absolute inset-0 flex items-center justify-center text-text-muted text-2xl">
@@ -45,7 +56,7 @@ export function CharacterPortrait({
     </>
   );
 
-  const wrapperClass = `flex flex-col items-center gap-3 min-w-[80px] snap-center cursor-pointer group ${className}`;
+  const wrapperClass = `flex flex-col items-center gap-3 ${minWidth} snap-center cursor-pointer group active:scale-95 transition-transform ${className}`;
 
   if (asButton && onClick) {
     return (

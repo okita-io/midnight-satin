@@ -119,9 +119,15 @@ export default async function AuthorStudyPage({
           />
         </section>
 
-        <BiographySection biography={author.biography} styleTags={author.styleTags} />
-        <TrophyCase trophies={trophies} />
-        <BibliographySection groups={bib.groups} />
+        <div className="px-4 xs:px-6 md:px-6 lg:px-8 flex flex-col md:grid md:grid-cols-[7fr_13fr] md:gap-12 lg:gap-16">
+          <div className="flex flex-col">
+            <BiographySection biography={author.biography} styleTags={author.styleTags} />
+            <TrophyCase trophies={trophies} />
+          </div>
+          <div>
+            <BibliographySection groups={bib.groups} />
+          </div>
+        </div>
       </main>
 
       <NavigationBar activeTab="boudoir" />

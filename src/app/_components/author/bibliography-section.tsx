@@ -42,6 +42,8 @@ export function BibliographySection({ groups }: BibliographySectionProps) {
                       src={novel.coverImageUrl}
                       alt=""
                       className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
                     />
                   ) : (
                     <div className="w-full h-full bg-surface flex items-center justify-center">

@@ -6,9 +6,12 @@ interface HexagonAvatarProps {
   size?: "md" | "lg";
 }
 
-/** Hexagonal clip-path mask with gold gradient border (Req 7.1). */
+/** Hexagonal clip-path mask with gold gradient border (Req 7.1). Responsive: 180px tablet, 220px desktop (THE-68). */
 export function HexagonAvatar({ src, alt, size = "lg" }: HexagonAvatarProps) {
-  const sizeClasses = size === "lg" ? "w-32 h-36" : "w-24 h-28";
+  const sizeClasses =
+    size === "lg"
+      ? "w-32 h-36 md:w-[180px] md:h-[203px] lg:w-[220px] lg:h-[248px]"
+      : "w-24 h-28";
 
   return (
     <div className="relative mb-6 group cursor-pointer">
@@ -29,6 +32,8 @@ export function HexagonAvatar({ src, alt, size = "lg" }: HexagonAvatarProps) {
             src={src}
             alt={alt}
             className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
+            loading="lazy"
+            decoding="async"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-surface">

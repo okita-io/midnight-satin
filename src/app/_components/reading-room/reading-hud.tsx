@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useCallback, useState } from "react";
 import { toggleBookmark } from "@/app/actions/bookmarks";
 import { novelDetailPath } from "@/lib/navigation";
+import { READING_HUD_FOOTER_ICON_ROW_CLASSES } from "@/lib/responsive/constants";
 
 function toRoman(num: number): string {
   const map: [number, string][] = [
@@ -134,10 +135,10 @@ export function ReadingHUD({
         className="fixed top-0 left-0 w-full z-50 transition-transform duration-300 bg-gradient-to-b from-void via-void/90 to-transparent pt-[var(--safe-area-inset-top)] pb-8 pointer-events-none"
         style={{ paddingTop: "calc(var(--safe-area-inset-top) + 0.5rem)" }}
       >
-        <div className="flex items-center justify-between px-3 xs:px-4 h-14 xs:h-16 pointer-events-auto max-w-md mx-auto">
+        <div className="flex items-center justify-between px-4 h-16 pointer-events-auto max-w-md mx-auto">
           <Link
             href={novelDetailPath(novelId)}
-            className="w-10 h-10 flex items-center justify-center text-primary/80 hover:text-primary transition-colors active:scale-95"
+            className="w-10 h-10 flex items-center justify-center text-primary/80 hover:text-primary transition-colors active:scale-95 cursor-pointer"
             aria-label="Back to novel"
           >
             <span
@@ -158,7 +159,7 @@ export function ReadingHUD({
           <button
             type="button"
             onClick={handleBookmark}
-            className="w-10 h-10 flex items-center justify-center text-primary/80 hover:text-primary transition-colors active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="w-10 h-10 flex items-center justify-center text-primary/80 hover:text-primary transition-colors active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             aria-label={bookmarked ? "Remove bookmark" : "Add bookmark"}
             disabled={!isAuthenticated}
           >
@@ -177,13 +178,13 @@ export function ReadingHUD({
 
       {/* Footer HUD with ProgressBar */}
       <footer
-        className="fixed bottom-0 left-0 w-full z-50 bg-[#0a0a0a] border-t border-white/5 shadow-2xl shadow-black max-w-md mx-auto"
+        className="fixed bottom-0 inset-x-0 z-50 flex w-full min-w-0 flex-col bg-void border-t border-white/5 shadow-2xl shadow-black md:max-w-md md:left-1/2 md:right-auto md:-translate-x-1/2"
         style={{
           paddingBottom: "calc(1rem + env(safe-area-inset-bottom, 0px))",
         }}
       >
         {/* Progress Bar */}
-        <div className="w-full h-1 bg-white/10 relative">
+        <div className="w-full h-1 shrink-0 bg-white/10 relative">
           <div
             className="absolute left-0 top-0 h-full bg-primary transition-all duration-300"
             style={{
@@ -193,7 +194,7 @@ export function ReadingHUD({
           />
         </div>
 
-        <div className="px-3 xs:px-6 py-3 xs:py-4 flex items-center justify-between">
+        <div className={READING_HUD_FOOTER_ICON_ROW_CLASSES}>
           {/* Font panel toggle */}
           <div className="relative">
             <button
@@ -202,7 +203,7 @@ export function ReadingHUD({
                 setShowFontPanel((v) => !v);
                 setShowLinePanel(false);
               }}
-              className="flex flex-col items-center gap-1 text-text-muted hover:text-white transition-colors"
+              className="flex flex-col items-center gap-1 text-text-muted hover:text-white transition-colors cursor-pointer active:scale-95"
               aria-label="Font settings"
               aria-expanded={showFontPanel}
             >
@@ -226,7 +227,7 @@ export function ReadingHUD({
                       onFontSizeChange(s);
                       setShowFontPanel(false);
                     }}
-                    className={`px-3 py-1 rounded text-sm font-ui ${
+                    className={`px-3 py-1 rounded text-sm font-ui cursor-pointer active:scale-95 ${
                       fontSize === s
                         ? "bg-primary text-void"
                         : "bg-white/5 text-text-main hover:bg-white/10"
@@ -240,7 +241,7 @@ export function ReadingHUD({
           </div>
 
           {/* Chapter nav */}
-          <div className="flex-1 px-4 xs:px-8 flex flex-col items-center">
+          <div className="flex flex-col items-center">
             <div className="w-full flex justify-between text-[10px] font-ui text-text-muted uppercase tracking-wider mb-2">
               <span>Prev</span>
               <span>{Math.round(progressPercent)}%</span>
@@ -250,7 +251,7 @@ export function ReadingHUD({
               {prevChapterId ? (
                 <Link
                   href={readingRoomPath(prevChapterId)}
-                  className="hover:text-primary transition-colors"
+                  className="hover:text-primary transition-colors cursor-pointer active:scale-95"
                   aria-label="Previous chapter"
                 >
                   <span className="material-symbols-outlined">
@@ -266,7 +267,7 @@ export function ReadingHUD({
               )}
               <Link
                 href={novelDetailPath(novelId)}
-                className="hover:text-primary transition-colors"
+                className="hover:text-primary transition-colors cursor-pointer active:scale-95"
                 aria-label="Chapter list"
               >
                 <span className="material-symbols-outlined">play_circle</span>
@@ -274,7 +275,7 @@ export function ReadingHUD({
               {nextChapterId ? (
                 <Link
                   href={readingRoomPath(nextChapterId)}
-                  className="hover:text-primary transition-colors"
+                  className="hover:text-primary transition-colors cursor-pointer active:scale-95"
                   aria-label="Next chapter"
                 >
                   <span className="material-symbols-outlined">skip_next</span>
@@ -291,7 +292,7 @@ export function ReadingHUD({
           <button
             type="button"
             onClick={onCommentsClick}
-            className={`relative flex flex-col items-center gap-1 transition-colors ${
+            className={`relative flex flex-col items-center gap-1 transition-colors cursor-pointer active:scale-95 ${
               commentsActive ? "text-primary" : "text-text-muted hover:text-white"
             }`}
             aria-label={`Comments (${commentCount})`}
@@ -321,7 +322,7 @@ export function ReadingHUD({
                 setShowLinePanel((v) => !v);
                 setShowFontPanel(false);
               }}
-              className="flex flex-col items-center gap-1 text-text-muted hover:text-white transition-colors"
+              className="flex flex-col items-center gap-1 text-text-muted hover:text-white transition-colors cursor-pointer active:scale-95"
               aria-label="Line spacing"
               aria-expanded={showLinePanel}
             >
@@ -345,7 +346,7 @@ export function ReadingHUD({
                       onLineHeightChange(lh);
                       setShowLinePanel(false);
                     }}
-                    className={`px-3 py-1 rounded text-sm font-ui ${
+                    className={`px-3 py-1 rounded text-sm font-ui cursor-pointer active:scale-95 ${
                       lineHeight === lh
                         ? "bg-primary text-void"
                         : "bg-white/5 text-text-main hover:bg-white/10"

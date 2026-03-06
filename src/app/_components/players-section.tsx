@@ -47,9 +47,12 @@ export function PlayersSection({
 
   if (characters.length === 0) return null;
 
+  const gridClass =
+    "grid grid-flow-col grid-auto-cols-[80px] md:grid-auto-cols-[7rem] lg:grid-auto-cols-[96px] gap-4 xs:gap-6 md:gap-6 lg:gap-6 pb-4 no-scrollbar overflow-x-auto snap-x snap-mandatory";
+
   return (
     <>
-      <div className="mb-10 xs:mb-12">
+      <div className="mb-10 xs:mb-12 md:max-w-[1440px] md:mx-auto">
         <div className="flex justify-between items-end mb-4 xs:mb-6">
           <h3 className="text-text-muted text-sm uppercase tracking-[0.2em] font-medium border-b border-primary/20 pb-2">
             The Players
@@ -57,12 +60,12 @@ export function PlayersSection({
           <button
             type="button"
             onClick={() => openCastGallery(0)}
-            className="text-xs text-primary/70 hover:text-primary"
+            className="text-xs text-primary/70 hover:text-primary cursor-pointer active:scale-95 transition-transform"
           >
             View All
           </button>
         </div>
-        <div className="flex overflow-x-auto gap-4 xs:gap-6 pb-4 snap-x no-scrollbar">
+        <div className={gridClass}>
           {characters.map((char, i) => (
             <CharacterPortrait
               key={char.id}
@@ -70,6 +73,8 @@ export function PlayersSection({
               portraitUrl={char.portraitUrl}
               onClick={() => openCastGallery(i)}
               asButton
+              responsive
+              className="snap-center"
             />
           ))}
         </div>

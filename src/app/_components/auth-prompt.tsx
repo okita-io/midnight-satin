@@ -63,7 +63,7 @@ export function AuthPrompt({ isOpen, onClose, returnUrl, message }: AuthPromptPr
       onClick={(e) => e.target === e.currentTarget && onClose()}
     >
       <div
-        className="w-full max-w-md rounded border border-[rgba(212,175,55,0.2)] bg-[var(--surface)] p-6 shadow-[var(--shadow-gold-glow)]"
+        className="w-full max-w-md rounded border border-primary/20 bg-surface p-6 shadow-gold-glow"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-start gap-4 mb-4">
@@ -78,7 +78,7 @@ export function AuthPrompt({ isOpen, onClose, returnUrl, message }: AuthPromptPr
             ref={firstFocusRef}
             type="button"
             onClick={onClose}
-            className="rounded p-1 text-[var(--text-muted)] hover:text-[var(--text-main)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
+            className="rounded p-1 text-[var(--text-muted)] hover:text-[var(--text-main)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)] cursor-pointer active:scale-95"
             aria-label="Close"
           >
             <span className="material-symbols-outlined" aria-hidden>close</span>
@@ -102,7 +102,7 @@ export function AuthPrompt({ isOpen, onClose, returnUrl, message }: AuthPromptPr
           <Link
             ref={lastFocusRef}
             href={registerHref}
-            className="flex-1 text-center rounded border border-[var(--primary)] py-2.5 font-ui text-sm font-bold text-[var(--primary)] hover:bg-[var(--primary)] hover:text-[var(--void)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
+            className="flex-1 text-center rounded border border-[var(--primary)] py-2.5 font-ui text-sm font-bold text-[var(--primary)] hover:bg-[var(--primary)] hover:text-[var(--void)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)] cursor-pointer active:scale-[0.98] transition-transform"
           >
             Register
           </Link>

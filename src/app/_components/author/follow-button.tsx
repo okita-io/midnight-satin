@@ -44,7 +44,7 @@ export function FollowButton({
           type="button"
           onClick={handleFollow}
           disabled={isPending}
-          className={`flex-1 font-ui font-bold text-xs uppercase tracking-wider py-3 rounded-sm transition-all shadow-gold-glow ${
+          className={`flex-1 font-ui font-bold text-xs uppercase tracking-wider py-3 rounded-sm transition-all shadow-gold-glow cursor-pointer active:scale-[0.98] disabled:active:scale-100 ${
             followed
               ? "border border-primary text-primary bg-transparent hover:bg-primary/10"
               : "bg-primary hover:bg-primary-dark text-void"
@@ -54,7 +54,7 @@ export function FollowButton({
         </button>
         <button
           type="button"
-          className="px-4 border border-[#393528] hover:border-primary text-primary bg-transparent rounded-sm transition-colors flex items-center justify-center"
+          className="px-4 border border-[#393528] hover:border-primary text-primary bg-transparent rounded-sm transition-colors flex items-center justify-center cursor-pointer active:scale-95"
           aria-label="Notifications"
         >
           <span className="material-symbols-outlined text-xl">notifications</span>

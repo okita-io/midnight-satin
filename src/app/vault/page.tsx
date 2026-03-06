@@ -38,7 +38,7 @@ export default async function VaultPage({
         <div className="flex items-center justify-between mb-2">
           <Link
             href="/"
-            className="text-text-muted hover:text-primary transition-colors p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm"
+            className="text-text-muted hover:text-primary transition-colors p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm cursor-pointer active:scale-95"
             aria-label="Back to home"
           >
             <span className="material-symbols-outlined" style={{ fontSize: 24 }}>
@@ -51,7 +51,7 @@ export default async function VaultPage({
           {supportsRestore ? (
             <button
               type="button"
-              className="text-text-muted hover:text-primary transition-colors p-2 text-xs font-ui tracking-wide focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm"
+              className="text-text-muted hover:text-primary transition-colors p-2 text-xs font-ui tracking-wide focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm cursor-pointer active:scale-95"
               aria-label="Restore previous purchases"
             >
               RESTORE
@@ -61,11 +61,11 @@ export default async function VaultPage({
           )}
         </div>
 
-        {/* CreditBalanceDisplay — Req 8.1 */}
+        {/* CreditBalanceDisplay — Req 8.1. THE-73: 48px tablet, 56px desktop */}
         <div className="mt-6 xs:mt-8 mb-4 flex flex-col items-center justify-center">
           <div className="relative">
             <span
-              className="font-display text-5xl xs:text-6xl italic font-bold gold-text-gradient drop-shadow-lg"
+              className="font-display text-5xl xs:text-6xl md:text-[48px] lg:text-[56px] italic font-bold gold-text-gradient drop-shadow-lg"
               style={{ fontFamily: "var(--font-display)" }}
             >
               {creditBalance.toLocaleString()}

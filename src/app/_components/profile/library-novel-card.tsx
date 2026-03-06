@@ -23,7 +23,7 @@ export function LibraryNovelCard({ item }: LibraryNovelCardProps) {
   return (
     <Link
       href={href}
-      className="bg-surface border border-white/5 p-4 rounded-sm flex gap-4 shadow-card-depth relative overflow-hidden group block"
+      className="bg-surface border border-white/5 hover:border-primary/30 p-4 rounded-sm flex gap-4 shadow-card-depth relative overflow-hidden group block transition-colors"
       aria-label={ariaLabel}
     >
       <div className="absolute inset-0 bg-gold-sheen opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
@@ -35,6 +35,8 @@ export function LibraryNovelCard({ item }: LibraryNovelCardProps) {
             src={coverImageUrl}
             alt=""
             className="w-full h-full object-cover"
+            loading="lazy"
+            decoding="async"
           />
         ) : (
           <span className="material-symbols-outlined absolute inset-0 flex items-center justify-center text-text-muted opacity-50 text-2xl">

@@ -189,21 +189,42 @@ export async function getCurrentReading(readerId: string): Promise<CurrentReadin
   }
 }
 
+/** Novel for Library catalog with extended metadata (author bio, chapter count). */
+export interface LibraryNovel extends NovelWithAuthor {
+  authorBio: string | null;
+  chapterCount: number;
+}
+
 /**
- * Get all novels for Library catalog.
- * Not cached (full catalog may be large); use ISR on the page.
+ * Get all novels for Library catalog with extended metadata for desktop list view.
+ * Includes author bio and chapter count. Not cached; use ISR on the page.
  */
-export async function getAllNovels(limit: number = 100): Promise<NovelWithAuthor[]> {
-  const { rows } = await sql<NovelRow & { author_name: string }>`
+export async function getAllNovels(limit: number = 100): Promise<LibraryNovel[]> {
+  const { rows } = await sql<
+    NovelRow & {
+      author_name: string;
+      author_bio: string | null;
+      chapter_count: string;
+    }
+  >`
     SELECT n.id, n.title, n.series_id, n.author_id, n.cover_image_url, n.synopsis,
            n.genre_tags, n.rating, n.rating_count, n.publication_date, n.created_at,
-           COALESCE(a.name, 'Unknown') AS author_name
+           COALESCE(a.name, 'Unknown') AS author_name,
+           a.biography AS author_bio,
+           COALESCE(ch.cnt, 0)::text AS chapter_count
     FROM novels n
     LEFT JOIN author_profiles a ON a.id = n.author_id
+    LEFT JOIN (
+      SELECT novel_id, COUNT(*) AS cnt FROM chapters GROUP BY novel_id
+    ) ch ON ch.novel_id = n.id
     ORDER BY n.created_at DESC
     LIMIT ${limit}
   `;
-  return rows.map(rowToNovelWithAuthor);
+  return rows.map((r) => ({
+    ...rowToNovelWithAuthor(r),
+    authorBio: r.author_bio ?? null,
+    chapterCount: parseInt(r.chapter_count, 10) || 0,
+  }));
 }
 
 /** Novel with author name for Novel Detail page. */

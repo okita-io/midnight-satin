@@ -108,7 +108,7 @@ export function SearchOverlay({
           ref={closeButtonRef}
           type="button"
           onClick={onClose}
-          className="p-2 text-text-muted hover:text-text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm"
+          className="p-2 text-text-muted hover:text-text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm cursor-pointer active:scale-95"
           aria-label="Close search"
         >
           <span className="material-symbols-outlined" aria-hidden>close</span>
@@ -135,7 +135,7 @@ export function SearchOverlay({
                       <Link
                         href={novelDetailPath(n.id)}
                         onClick={onClose}
-                        className="block py-2 px-2 -mx-2 rounded-sm hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        className="block py-2 px-2 -mx-2 rounded-sm hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer active:scale-[0.99]"
                       >
                         <span className="font-display italic font-medium text-text-main">
                           {n.title}
@@ -160,7 +160,7 @@ export function SearchOverlay({
                       <Link
                         href={authorStudyPath(a.id)}
                         onClick={onClose}
-                        className="block py-2 px-2 -mx-2 rounded-sm hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+                        className="block py-2 px-2 -mx-2 rounded-sm hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary cursor-pointer active:scale-[0.99]"
                       >
                         <span className="font-ui text-text-main">{a.name}</span>
                       </Link>

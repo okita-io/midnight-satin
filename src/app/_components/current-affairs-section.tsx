@@ -35,7 +35,7 @@ export function CurrentAffairsSection({
 
   return (
     <>
-      <section className="px-4 xs:px-6 mb-8 xs:mb-10 relative z-10 -mt-4">
+      <section className="px-4 xs:px-6 md:px-6 md:max-w-[1440px] md:mx-auto mb-8 xs:mb-10 relative z-10 -mt-4">
         <div className="flex items-center justify-between mb-4 xs:mb-6">
           <h2 className="font-header text-sm tracking-[0.15em] text-white/90">
             Current Affairs
@@ -51,7 +51,7 @@ export function CurrentAffairsSection({
             <button
               type="button"
               onClick={handleViewAll}
-              className="text-[10px] font-ui text-primary uppercase tracking-widest hover:text-white transition-colors bg-transparent border-none cursor-pointer"
+              className="text-[10px] font-ui text-primary uppercase tracking-widest hover:text-white transition-colors bg-transparent border-none cursor-pointer active:scale-95"
             >
               View All
             </button>
@@ -93,6 +93,8 @@ function CurrentAffairsCard({ currentReading }: { currentReading: CurrentReading
             alt=""
             className="w-full h-full object-cover"
             src={novel.coverImageUrl}
+            loading="lazy"
+            decoding="async"
           />
         ) : (
           <div className="w-full h-full bg-surface-highlight flex items-center justify-center">
