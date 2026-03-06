@@ -18,6 +18,7 @@ import {
   AUTH_FORM_MAX_WIDTH,
   PROFILE_LIBRARY_GRID_COLUMNS,
   FOLLOWED_AUTHORS_STRIP_VISIBLE,
+  SHIMMER_GRID_COLUMNS,
   type ViewportSize,
 } from "./constants";
 
@@ -154,6 +155,14 @@ export function getFollowedAuthorsStripVisibleCount(width: number): number {
   const size = getViewportSize(width);
   if (size === "mobile") return 0;
   return FOLLOWED_AUTHORS_STRIP_VISIBLE[size];
+}
+
+/**
+ * Resolve shimmer placeholder grid column count for a viewport width.
+ * Mobile: 2. Tablet: 2. Desktop: 3 per row (THE-91, THE-93).
+ */
+export function getShimmerGridColumnsForViewport(width: number): number {
+  return SHIMMER_GRID_COLUMNS[getViewportSize(width)];
 }
 
 /**

@@ -156,6 +156,9 @@ export const SHIMMER_GRID_COLUMNS = {
   desktop: 3,
 } as const;
 
+/** Image loading attribute for below-the-fold images (THE-92): lazy to prevent layout shift. */
+export const IMAGE_LOADING_LAZY = "lazy" as const;
+
 /** Max content width for grid sections on desktop (THE-50) */
 export const DESKTOP_MAX_WIDTH = 1440;
 
