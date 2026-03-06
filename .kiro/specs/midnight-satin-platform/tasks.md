@@ -293,5 +293,11 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Maintain coin rain animation on successful purchase (defer URL clear until after animation)
     - Preserve consistent card styling with gold borders and shadows
     - _Requirements: 8.3, 8.5_
+  - [x] 15.31 Add hover states to interactive elements (THE-85)
+    - Gold glow shadow on book cards (already done in 15.11)
+    - Brightness increase on hover for buttons (.btn-gold)
+    - Scale transform on hover for floating action buttons (Novel Detail FAB, EndorsementFAB)
+    - CSS @media (hover: hover) for pointer device detection
+    - _Requirements: 13.1, 13.2, 13.3, 13.4_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56, THE-71)
   - Ensure all tests pass, ask the user if questions arise.
