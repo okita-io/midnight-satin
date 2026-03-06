@@ -171,3 +171,8 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [x] 15.9 Extend LibraryCatalog grid view (THE-52)
     - 3-column grid tablet (md), 4-column desktop (lg); responsive gap 24px tablet, 32px desktop
     - _Requirements: 4.1, 4.2_
+  - [x] 15.10 Extend LibraryCatalog list view (THE-53)
+    - 2-column list layout tablet (md), single-column expanded layout desktop (lg)
+    - Expanded metadata for desktop: author bio, tags, rating, chapter count
+    - Card dimensions: 160px cover width, 240px height for desktop list
+    - _Requirements: 4.3, 4.4_

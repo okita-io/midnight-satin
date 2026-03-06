@@ -11,6 +11,12 @@ export interface LibraryCatalogNovel {
   coverImageUrl: string | null;
   rating?: number | null;
   ratingCount?: number;
+  /** For desktop expanded list: author biography excerpt */
+  authorBio?: string | null;
+  /** For desktop expanded list: genre tags */
+  genreTags?: string[];
+  /** For desktop expanded list: chapter count */
+  chapterCount?: number;
 }
 
 interface LibraryCatalogProps {
@@ -128,7 +134,7 @@ export function LibraryCatalog({
           ))}
         </div>
       ) : (
-        <ul className="space-y-2">
+        <ul className="space-y-2 md:grid md:grid-cols-2 md:gap-4 md:space-y-0 lg:grid-cols-1 lg:gap-6">
           {filtered.map((novel) => (
             <li key={novel.id}>
               <NovelCard
@@ -138,8 +144,12 @@ export function LibraryCatalog({
                   authorName: novel.authorName,
                   coverImageUrl: novel.coverImageUrl,
                   rating: novel.rating,
+                  ratingCount: novel.ratingCount,
+                  authorBio: novel.authorBio,
+                  genreTags: novel.genreTags,
+                  chapterCount: novel.chapterCount,
                 }}
-                variant="compact"
+                variant="list"
               />
             </li>
           ))}
