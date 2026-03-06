@@ -32,6 +32,8 @@ export function HexagonAvatar({ src, alt, size = "lg" }: HexagonAvatarProps) {
             src={src}
             alt={alt}
             className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
+            loading="lazy"
+            decoding="async"
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-surface">

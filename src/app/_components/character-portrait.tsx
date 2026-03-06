@@ -42,6 +42,8 @@ export function CharacterPortrait({
               src={portraitUrl}
               alt=""
               className="w-full h-full object-cover opacity-90 group-hover:scale-110 transition-transform duration-500"
+              loading="lazy"
+              decoding="async"
             />
           ) : (
             <span className="material-symbols-outlined absolute inset-0 flex items-center justify-center text-text-muted text-2xl">

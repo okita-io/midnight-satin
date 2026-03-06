@@ -93,6 +93,8 @@ function CurrentAffairsCard({ currentReading }: { currentReading: CurrentReading
             alt=""
             className="w-full h-full object-cover"
             src={novel.coverImageUrl}
+            loading="lazy"
+            decoding="async"
           />
         ) : (
           <div className="w-full h-full bg-surface-highlight flex items-center justify-center">

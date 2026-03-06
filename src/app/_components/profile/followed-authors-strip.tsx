@@ -44,6 +44,8 @@ export function FollowedAuthorsStrip({ authors }: FollowedAuthorsStripProps) {
                     src={author.avatarUrl}
                     alt=""
                     className="w-full h-full object-cover"
+                    loading="lazy"
+                    decoding="async"
                   />
                 ) : (
                   <span

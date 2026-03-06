@@ -178,7 +178,7 @@ export function ReadingHUD({
 
       {/* Footer HUD with ProgressBar */}
       <footer
-        className="fixed bottom-0 inset-x-0 z-50 flex w-full min-w-0 flex-col bg-[#0a0a0a] border-t border-white/5 shadow-2xl shadow-black md:max-w-md md:left-1/2 md:right-auto md:-translate-x-1/2"
+        className="fixed bottom-0 inset-x-0 z-50 flex w-full min-w-0 flex-col bg-void border-t border-white/5 shadow-2xl shadow-black md:max-w-md md:left-1/2 md:right-auto md:-translate-x-1/2"
         style={{
           paddingBottom: "calc(1rem + env(safe-area-inset-bottom, 0px))",
         }}

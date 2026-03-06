@@ -149,6 +149,16 @@ export const AUTH_FORM_MAX_WIDTH = {
   desktop: 480,
 } as const;
 
+/** Shimmer placeholder grid columns (THE-91): mobile 2, tablet 2, desktop 3 per row */
+export const SHIMMER_GRID_COLUMNS = {
+  mobile: 2,
+  tablet: 2,
+  desktop: 3,
+} as const;
+
+/** Image loading attribute for below-the-fold images (THE-92): lazy to prevent layout shift. */
+export const IMAGE_LOADING_LAZY = "lazy" as const;
+
 /** Max content width for grid sections on desktop (THE-50) */
 export const DESKTOP_MAX_WIDTH = 1440;
 
@@ -161,6 +171,17 @@ export const SIDEBAR_WIDTH = 280;
  */
 export const READING_HUD_FOOTER_ICON_ROW_CLASSES =
   "min-w-0 flex-1 px-6 py-4 flex items-center justify-between w-full";
+
+/**
+ * Interaction constants for touch and pointer (THE-86, THE-87).
+ * Req 13.5, 13.6, 13.7: cursor pointer on interactive elements, touch feedback preserved.
+ */
+/** Cursor for interactive elements (buttons, links, role=button) */
+export const INTERACTIVE_CURSOR = "cursor-pointer" as const;
+/** Common touch/click active scale for icons and small controls */
+export const INTERACTIVE_ACTIVE_SCALE = "active:scale-95" as const;
+/** Touch-action to reduce tap delay on buttons/links */
+export const TOUCH_ACTION_MANIPULATION = "touch-manipulation" as const;
 
 /** Media query strings for use in JS (e.g., matchMedia) */
 export const MEDIA_QUERIES = {
