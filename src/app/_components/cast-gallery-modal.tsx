@@ -243,11 +243,14 @@ function EndorsementFAB({
   endorsementCount,
   onEndorse,
   onAuthPrompt,
+  compact = false,
 }: {
   characterId: string;
   endorsementCount: number;
   onEndorse?: (characterId: string) => void;
   onAuthPrompt?: () => void;
+  /** When true, use smaller size for grid cards (THE-64). */
+  compact?: boolean;
 }) {
   const [showConfirm, setShowConfirm] = useState(false);
 
@@ -265,7 +268,11 @@ function EndorsementFAB({
   };
 
   return (
-    <div className="absolute bottom-12 z-50 flex flex-col items-center gap-3">
+    <div
+      className={`flex flex-col items-center gap-3 ${
+        compact ? "absolute bottom-4 z-50" : "absolute bottom-12 z-50"
+      }`}
+    >
       {showConfirm && (
         <div className="absolute -top-20 left-1/2 -translate-x-1/2 bg-surface border border-primary/30 text-primary px-4 py-2 rounded shadow-lg text-xs font-ui tracking-wide flex flex-col gap-2">
           <span>Send a Rose? (1 Credit)</span>
@@ -290,24 +297,70 @@ function EndorsementFAB({
       <button
         type="button"
         onClick={handleRoseClick}
-        className="relative group flex items-center justify-center size-16 rounded-full bg-accent text-white shadow-[0_4px_20px_rgba(128,0,32,0.4)] hover:scale-110 hover:shadow-[0_4px_30px_rgba(128,0,32,0.6)] transition-all duration-300 border border-white/10 overflow-hidden"
+        className={`relative group flex items-center justify-center rounded-full bg-accent text-white shadow-[0_4px_20px_rgba(128,0,32,0.4)] hover:scale-110 hover:shadow-[0_4px_30px_rgba(128,0,32,0.6)] transition-all duration-300 border border-white/10 overflow-hidden ${
+          compact ? "size-12" : "size-16"
+        }`}
         aria-label="Send endorsement (1 Credit)"
       >
         <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
         <span
-          className="material-symbols-outlined text-3xl"
+          className={`material-symbols-outlined ${compact ? "text-2xl" : "text-3xl"}`}
           style={{ fontVariationSettings: "'FILL' 1" }}
         >
           local_florist
         </span>
       </button>
       <div className="flex flex-col items-center">
-        <span className="font-display font-bold text-primary text-lg drop-shadow-md">
+        <span
+          className={`font-display font-bold text-primary drop-shadow-md ${
+            compact ? "text-sm" : "text-lg"
+          }`}
+        >
           {endorsementCount.toLocaleString()}
         </span>
         <span className="text-[10px] text-text-muted uppercase tracking-widest font-ui">
           Endorsements
         </span>
+      </div>
+    </div>
+  );
+}
+
+/**
+ * Single character card for grid layout - flip interaction, portrait aspect ratio (THE-64).
+ * Used in tablet/desktop grid; each card has its own flip state and endorsement FAB.
+ */
+function CharacterGridCard({
+  char,
+  onEndorse,
+  onAuthPrompt,
+}: {
+  char: NovelCharacter;
+  onEndorse?: (characterId: string) => void;
+  onAuthPrompt?: () => void;
+}) {
+  const [flipped, setFlipped] = useState(false);
+
+  return (
+    <div className="group/card relative w-full aspect-[3/4] min-h-[280px] perspective-1000">
+      <div
+        className={`relative w-full h-full transform-style-3d transition-transform duration-700 ease-in-out shadow-gold-glow rounded-lg ${
+          flipped ? "rotate-y-180" : ""
+        }`}
+      >
+        <CharacterCard char={char} onTapReveal={() => setFlipped(true)} />
+        <DossierCard char={char} onTapReturn={() => setFlipped(false)} />
+      </div>
+      <div className="absolute inset-x-0 bottom-0 flex justify-center pointer-events-none">
+        <div className="pointer-events-auto">
+          <EndorsementFAB
+            characterId={char.id}
+            endorsementCount={char.endorsementCount}
+            onEndorse={onEndorse}
+            onAuthPrompt={onAuthPrompt}
+            compact
+          />
+        </div>
       </div>
     </div>
   );
@@ -428,51 +481,66 @@ export function CastGalleryModal({
         </button>
       </div>
 
-      {/* Main card area - 75vh swipeable card (Req 5.1) */}
-      <main className="relative w-full flex-1 max-w-md mx-auto flex flex-col items-center justify-center p-4 pt-20">
-        <NavigationArrows onPrev={goPrev} onNext={goNext} />
+      {/* Main content: mobile single-card, tablet/desktop grid (THE-64) */}
+      <main className="relative w-full flex-1 overflow-y-auto">
+        {/* Mobile: single card view (Req 5.1) */}
+        <div className="md:hidden relative w-full flex-1 flex flex-col items-center justify-center p-4 pt-20 max-w-md mx-auto">
+          <NavigationArrows onPrev={goPrev} onNext={goNext} />
 
-        {/* Card container with 3D flip (700ms, Req 5.4) */}
-        <div className="group/card w-full h-[75vh] perspective-1000 relative">
-          <div
-            className={`relative w-full h-full transform-style-3d transition-transform duration-700 ease-in-out shadow-gold-glow rounded-lg ${
-              flipped ? "rotate-y-180" : ""
-            }`}
-          >
-            <CharacterCard
-              char={char}
-              onTapReveal={() => setFlipped(true)}
-            />
-            <DossierCard char={char} onTapReturn={() => setFlipped(false)} />
+          <div className="group/card w-full h-[75vh] perspective-1000 relative">
+            <div
+              className={`relative w-full h-full transform-style-3d transition-transform duration-700 ease-in-out shadow-gold-glow rounded-lg ${
+                flipped ? "rotate-y-180" : ""
+              }`}
+            >
+              <CharacterCard
+                char={char}
+                onTapReveal={() => setFlipped(true)}
+              />
+              <DossierCard char={char} onTapReturn={() => setFlipped(false)} />
+            </div>
           </div>
+
+          <EndorsementFAB
+            characterId={char.id}
+            endorsementCount={char.endorsementCount}
+            onEndorse={onEndorse}
+            onAuthPrompt={onAuthPrompt}
+          />
+
+          {characters.length > 1 && (
+            <div className="flex gap-2 mt-4">
+              {characters.map((_, i) => (
+                <button
+                  key={i}
+                  type="button"
+                  onClick={() => {
+                    setIndex(i);
+                    setFlipped(false);
+                  }}
+                  className={`size-2 rounded-full transition-colors ${
+                    i === index ? "bg-primary" : "bg-white/30"
+                  }`}
+                  aria-label={`Go to character ${i + 1}`}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
-        <EndorsementFAB
-          characterId={char.id}
-          endorsementCount={char.endorsementCount}
-          onEndorse={onEndorse}
-          onAuthPrompt={onAuthPrompt}
-        />
-
-        {/* Mobile nav dots */}
-        {characters.length > 1 && (
-          <div className="flex gap-2 mt-4">
-            {characters.map((_, i) => (
-              <button
-                key={i}
-                type="button"
-                onClick={() => {
-                  setIndex(i);
-                  setFlipped(false);
-                }}
-                className={`size-2 rounded-full transition-colors ${
-                  i === index ? "bg-primary" : "bg-white/30"
-                }`}
-                aria-label={`Go to character ${i + 1}`}
+        {/* Tablet/Desktop: 2-col tablet, 3-col desktop grid, gap 24px/32px (THE-64) */}
+        <div className="hidden md:block w-full max-w-7xl mx-auto px-6 pt-20 pb-12">
+          <div className="grid grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8">
+            {characters.map((c) => (
+              <CharacterGridCard
+                key={c.id}
+                char={c}
+                onEndorse={onEndorse}
+                onAuthPrompt={onAuthPrompt}
               />
             ))}
           </div>
-        )}
+        </div>
       </main>
 
       {/* Background texture overlay */}
