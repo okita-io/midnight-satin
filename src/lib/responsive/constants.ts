@@ -62,6 +62,19 @@ export const TROPHY_CASE_GRID_COLUMNS = {
   desktop: 4,
 } as const;
 
+/** Vault CreditPackGrid columns (THE-72): mobile 2, tablet 2, desktop 3 */
+export const VAULT_GRID_COLUMNS = {
+  mobile: 2,
+  tablet: 2,
+  desktop: 3,
+} as const;
+
+/** Vault grid responsive gaps (THE-72): tablet 24px, desktop 32px */
+export const VAULT_GRID_GAP = {
+  tablet: 24,
+  desktop: 32,
+} as const;
+
 /** Author's Study two-column layout split (THE-67): 35% biography, 65% bibliography (7fr/13fr) */
 export const AUTHORS_STUDY_TWO_COLUMN_SPLIT = {
   biography: 35,
@@ -78,6 +91,12 @@ export const CAST_GALLERY_GRID_GAP = {
 export const CAST_PREVIEW_VISIBLE = {
   tablet: 4,
   desktop: 6,
+} as const;
+
+/** Followed authors strip visible avatars (THE-80): tablet 6, desktop 8 */
+export const FOLLOWED_AUTHORS_STRIP_VISIBLE = {
+  tablet: 6,
+  desktop: 8,
 } as const;
 
 /** Cast preview portrait sizes in px (THE-58): mobile 80, tablet 112, desktop 96 */

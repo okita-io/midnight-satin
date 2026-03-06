@@ -13,6 +13,7 @@ import {
   CAST_PREVIEW_VISIBLE,
   CAST_GALLERY_GRID_COLUMNS,
   TROPHY_CASE_GRID_COLUMNS,
+  VAULT_GRID_COLUMNS,
   CHAPTER_CONTENT_MAX_WIDTH,
   AUTH_FORM_MAX_WIDTH,
   type ViewportSize,
@@ -122,6 +123,15 @@ export function getAuthorStudyUsesTwoColumnLayout(width: number): boolean {
  */
 export function getTrophyCaseGridColumnsForViewport(width: number): number {
   return TROPHY_CASE_GRID_COLUMNS[getViewportSize(width)];
+}
+
+/**
+ * Resolve Vault CreditPackGrid column count for a viewport width.
+ * Mobile: 2. Tablet: 2. Desktop: 3.
+ * @see Linear THE-72, THE-75
+ */
+export function getVaultGridColumnsForViewport(width: number): number {
+  return VAULT_GRID_COLUMNS[getViewportSize(width)];
 }
 
 /**

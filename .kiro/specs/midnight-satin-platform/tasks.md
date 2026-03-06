@@ -305,5 +305,14 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Apply cursor pointer to all interactive elements (buttons, links, role=button)
     - touch-action: manipulation on buttons/links to reduce tap delay
     - _Requirements: 13.5, 13.6, 13.7_
+  - [x] 15.32 Extend followed authors strip (THE-80)
+    - Display 6 avatars visible on tablet (md breakpoint)
+    - Display 8 avatars visible on desktop (lg breakpoint)
+    - Maintain hexagonal avatar styling
+    - _Requirements: 12.2, 12.3, 12.6_
+  - [x]* 15.32 Write property tests for Vault (THE-75)
+    - **Property 26: Vault Grid Responsiveness** — Test 2 cols tablet, 3 cols desktop
+    - **Property 27: Vault Styling Preservation** — Test ribbons, animations, card styling preserved
+    - _Validates: Requirements 10.1, 10.2, 10.3, 10.4, 10.5, 10.6, 10.7_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56, THE-71)
   - Ensure all tests pass, ask the user if questions arise.
