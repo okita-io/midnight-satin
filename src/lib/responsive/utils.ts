@@ -14,6 +14,7 @@ import {
   CAST_GALLERY_GRID_COLUMNS,
   TROPHY_CASE_GRID_COLUMNS,
   CHAPTER_CONTENT_MAX_WIDTH,
+  AUTH_FORM_MAX_WIDTH,
   type ViewportSize,
 } from "./constants";
 
@@ -162,6 +163,16 @@ export function isCommentsSidebarVisible(width: number): boolean {
  */
 export function isCommentsSectionPrimary(width: number): boolean {
   return width < BREAKPOINTS.lg;
+}
+
+/**
+ * Resolve auth form max-width for a viewport width.
+ * Mobile: 448px (max-w-md). Tablet/Desktop (≥ 768px): 480px.
+ * Forms are centered with mx-auto.
+ * @see Linear THE-76, THE-78
+ */
+export function getAuthFormMaxWidth(width: number): number {
+  return AUTH_FORM_MAX_WIDTH[getViewportSize(width)];
 }
 
 /**

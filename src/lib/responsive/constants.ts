@@ -106,6 +106,13 @@ export const CHAPTER_CONTENT_MAX_WIDTH = {
 /** Comments sidebar visible only on desktop (lg: 1024px+) — THE-62 */
 export const COMMENTS_SIDEBAR_BREAKPOINT = "lg" as const;
 
+/** Auth form max-width by viewport (THE-76, THE-78): mobile max-w-md (448px), tablet/desktop 480px */
+export const AUTH_FORM_MAX_WIDTH = {
+  mobile: 448,
+  tablet: 480,
+  desktop: 480,
+} as const;
+
 /** Max content width for grid sections on desktop (THE-50) */
 export const DESKTOP_MAX_WIDTH = 1440;
 
