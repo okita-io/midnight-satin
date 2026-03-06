@@ -20,7 +20,7 @@ export function FollowedAuthorsStrip({ authors }: FollowedAuthorsStripProps) {
 
   return (
     <section className="px-4 xs:px-6 pb-8 md:max-w-[1440px] md:mx-auto">
-      <h2 className="font-header text-sm tracking-[0.15em] text-white/90 mb-4">
+      <h2 className="font-header text-sm tracking-[0.15em] text-primary uppercase mb-4">
         Authors You Follow
       </h2>
       <div className="flex overflow-x-auto gap-4 md:gap-6 no-scrollbar pb-2">
@@ -38,7 +38,7 @@ export function FollowedAuthorsStrip({ authors }: FollowedAuthorsStripProps) {
                 style={{ clipPath: HEXAGON_CLIP }}
               />
               <div
-                className="relative w-full h-full bg-surface-highlight overflow-hidden flex items-center justify-center"
+                className="relative w-full h-full bg-surface overflow-hidden flex items-center justify-center"
                 style={{ clipPath: HEXAGON_CLIP }}
               >
                 {author.avatarUrl ? (
