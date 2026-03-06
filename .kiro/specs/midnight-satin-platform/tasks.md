@@ -288,5 +288,11 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Set font size to 56px on desktop (lg: breakpoint)
     - Maintain prominent positioning at top
     - _Requirements: 10.3, 10.4_
+  - [x] 15.31 Add hover states to interactive elements (THE-85)
+    - Gold glow shadow on book cards (already done in 15.11)
+    - Brightness increase on hover for buttons (.btn-gold)
+    - Scale transform on hover for floating action buttons (Novel Detail FAB, EndorsementFAB)
+    - CSS @media (hover: hover) for pointer device detection
+    - _Requirements: 13.1, 13.2, 13.3, 13.4_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56, THE-71)
   - Ensure all tests pass, ask the user if questions arise.

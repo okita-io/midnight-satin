@@ -300,7 +300,7 @@ function EndorsementFAB({
       <button
         type="button"
         onClick={handleRoseClick}
-        className={`relative group flex items-center justify-center rounded-full bg-accent text-white shadow-[0_4px_20px_rgba(128,0,32,0.4)] hover:scale-110 hover:shadow-[0_4px_30px_rgba(128,0,32,0.6)] transition-all duration-300 border border-white/10 overflow-hidden ${
+        className={`relative group flex items-center justify-center rounded-full bg-accent text-white shadow-[0_4px_20px_rgba(128,0,32,0.4)] fab-hover-scale-lg hover:shadow-[0_4px_30px_rgba(128,0,32,0.6)] transition-all duration-300 border border-white/10 overflow-hidden ${
           compact ? "size-12" : "size-16"
         }`}
         aria-label="Send endorsement (1 Credit)"
