@@ -277,5 +277,16 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Property 28: Authentication Form Centering** — Test 480px max-width and centering
     - **Property 29: Authentication Form Consistency** — Test validation, spacing, typography preserved
     - _Validates: Requirements 11.1, 11.2, 11.3, 11.4, 11.5, 11.6_
+  - [x] 15.29 Extend Vault credit packages grid (THE-72)
+    - Modify vault-client.tsx CreditPackGrid
+    - 2-column grid for tablet (md: breakpoint)
+    - 3-column grid for desktop (lg: breakpoint)
+    - Responsive gap: 24px tablet, 32px desktop
+    - _Requirements: 10.1, 10.2_
+  - [x] 15.30 Extend credit balance display (THE-73)
+    - Set font size to 48px on tablet (md: breakpoint)
+    - Set font size to 56px on desktop (lg: breakpoint)
+    - Maintain prominent positioning at top
+    - _Requirements: 10.3, 10.4_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56, THE-71)
   - Ensure all tests pass, ask the user if questions arise.
