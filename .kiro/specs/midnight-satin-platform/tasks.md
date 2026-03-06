@@ -299,6 +299,12 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Scale transform on hover for floating action buttons (Novel Detail FAB, EndorsementFAB)
     - CSS @media (hover: hover) for pointer device detection
     - _Requirements: 13.1, 13.2, 13.3, 13.4_
+  - [x] 15.32 Preserve touch interactions (THE-86)
+    - Maintain all touch interactions for touch-enabled tablets
+    - Preserve all click and tap animations (active:scale-95, active:scale-[0.98])
+    - Apply cursor pointer to all interactive elements (buttons, links, role=button)
+    - touch-action: manipulation on buttons/links to reduce tap delay
+    - _Requirements: 13.5, 13.6, 13.7_
   - [x] 15.32 Extend followed authors strip (THE-80)
     - Display 6 avatars visible on tablet (md breakpoint)
     - Display 8 avatars visible on desktop (lg breakpoint)

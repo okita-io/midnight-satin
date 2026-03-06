@@ -64,7 +64,7 @@ export function NovelDetailHeader({
       <button
         type="button"
         onClick={handleBack}
-        className="flex items-center justify-center w-10 h-10 rounded-full bg-surface/30 backdrop-blur-md text-white border border-white/10 hover:bg-surface/50 transition-colors"
+        className="flex items-center justify-center w-10 h-10 rounded-full bg-surface/30 backdrop-blur-md text-white border border-white/10 hover:bg-surface/50 transition-colors cursor-pointer active:scale-95"
         aria-label="Go back"
       >
         <span className="material-symbols-outlined text-shadow-sm">arrow_back</span>
@@ -74,7 +74,7 @@ export function NovelDetailHeader({
           type="button"
           onClick={handleBookmark}
           disabled={isPending}
-          className="flex items-center justify-center w-10 h-10 rounded-full bg-surface/30 backdrop-blur-md text-white border border-white/10 hover:bg-surface/50 transition-colors disabled:opacity-50"
+          className="flex items-center justify-center w-10 h-10 rounded-full bg-surface/30 backdrop-blur-md text-white border border-white/10 hover:bg-surface/50 transition-colors disabled:opacity-50 cursor-pointer active:scale-95 disabled:active:scale-100"
           aria-label={bookmarked ? "Remove bookmark" : "Add bookmark"}
         >
           <span
@@ -87,7 +87,7 @@ export function NovelDetailHeader({
         <button
           type="button"
           onClick={handleShare}
-          className="flex items-center justify-center w-10 h-10 rounded-full bg-surface/30 backdrop-blur-md text-white border border-white/10 hover:bg-surface/50 transition-colors"
+          className="flex items-center justify-center w-10 h-10 rounded-full bg-surface/30 backdrop-blur-md text-white border border-white/10 hover:bg-surface/50 transition-colors cursor-pointer active:scale-95"
           aria-label="Share"
         >
           <span className="material-symbols-outlined text-shadow-sm">share</span>

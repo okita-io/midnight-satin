@@ -33,7 +33,7 @@ function NavTabLinkBottom({
   return (
     <Link
       href={href}
-      className="flex flex-col items-center gap-1.5 flex-1 text-decoration-none focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-void rounded-sm transition-colors duration-300 ease-in-out"
+      className="flex flex-col items-center gap-1.5 flex-1 text-decoration-none focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-void rounded-sm transition-colors duration-300 ease-in-out cursor-pointer active:scale-95"
       aria-label={label}
       aria-current={isActive ? "page" : undefined}
     >
@@ -83,7 +83,7 @@ function NavTabLinkSide({
   return (
     <Link
       href={href}
-      className="flex items-center gap-3 px-6 py-4 h-14 text-decoration-none focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-void rounded-sm transition-colors duration-300 ease-in-out"
+      className="flex items-center gap-3 px-6 py-4 h-14 text-decoration-none focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-void rounded-sm transition-colors duration-300 ease-in-out cursor-pointer active:scale-95"
       aria-label={label}
       aria-current={isActive ? "page" : undefined}
     >

@@ -51,7 +51,7 @@ export function CurrentAffairsSection({
             <button
               type="button"
               onClick={handleViewAll}
-              className="text-[10px] font-ui text-primary uppercase tracking-widest hover:text-white transition-colors bg-transparent border-none cursor-pointer"
+              className="text-[10px] font-ui text-primary uppercase tracking-widest hover:text-white transition-colors bg-transparent border-none cursor-pointer active:scale-95"
             >
               View All
             </button>

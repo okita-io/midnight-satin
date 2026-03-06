@@ -60,7 +60,7 @@ export function PlayersSection({
           <button
             type="button"
             onClick={() => openCastGallery(0)}
-            className="text-xs text-primary/70 hover:text-primary"
+            className="text-xs text-primary/70 hover:text-primary cursor-pointer active:scale-95 transition-transform"
           >
             View All
           </button>

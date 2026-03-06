@@ -53,14 +53,14 @@ export function BoudoirHeader({
           <button
             type="button"
             onClick={() => setSearchOpen(true)}
-            className="text-white/80 hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm"
+            className="text-white/80 hover:text-primary transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm cursor-pointer active:scale-95"
             aria-label="Search novels and authors"
           >
             <span className="material-symbols-outlined" aria-hidden>search</span>
           </button>
           <button
             type="button"
-            className="text-white/80 hover:text-primary transition-colors relative focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm"
+            className="text-white/80 hover:text-primary transition-colors relative focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm cursor-pointer active:scale-95"
             aria-label="Notifications"
           >
             <span className="material-symbols-outlined" aria-hidden>notifications</span>

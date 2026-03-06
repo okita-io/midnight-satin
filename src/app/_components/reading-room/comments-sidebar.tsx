@@ -229,7 +229,7 @@ export function CommentsSidebar({
                 type="button"
                 onClick={handleSubmit}
                 disabled={!isAuthenticated || submitting || !inputValue.trim()}
-                className="text-primary hover:text-primary/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                className="text-primary hover:text-primary/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer active:scale-95"
                 aria-label="Post comment"
               >
                 <span

@@ -19,6 +19,6 @@ export const COMMENT_AUTHOR_CLASSES =
 export const COMMENT_CONTENT_CLASSES =
   "font-body text-sm leading-relaxed italic" as const;
 
-/** CSS classes for like button - gold accent */
+/** CSS classes for like button - gold accent (THE-86: cursor, tap feedback) */
 export const COMMENT_LIKE_CLASSES =
-  "flex items-center gap-1.5 text-primary hover:text-primary/80 transition-colors" as const;
+  "flex items-center gap-1.5 text-primary hover:text-primary/80 transition-colors cursor-pointer active:scale-95" as const;

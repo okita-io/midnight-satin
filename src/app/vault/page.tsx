@@ -38,7 +38,7 @@ export default async function VaultPage({
         <div className="flex items-center justify-between mb-2">
           <Link
             href="/"
-            className="text-text-muted hover:text-primary transition-colors p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm"
+            className="text-text-muted hover:text-primary transition-colors p-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm cursor-pointer active:scale-95"
             aria-label="Back to home"
           >
             <span className="material-symbols-outlined" style={{ fontSize: 24 }}>
@@ -51,7 +51,7 @@ export default async function VaultPage({
           {supportsRestore ? (
             <button
               type="button"
-              className="text-text-muted hover:text-primary transition-colors p-2 text-xs font-ui tracking-wide focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm"
+              className="text-text-muted hover:text-primary transition-colors p-2 text-xs font-ui tracking-wide focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm cursor-pointer active:scale-95"
               aria-label="Restore previous purchases"
             >
               RESTORE

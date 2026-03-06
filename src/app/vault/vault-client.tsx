@@ -239,7 +239,7 @@ function CreditPackCard({ pack, onPurchase, isPurchasing }: CreditPackCardProps)
         type="button"
         onClick={onPurchase}
         disabled={isPurchasing}
-        className={`w-full py-2 font-ui text-sm uppercase tracking-wide transition-all duration-300 relative overflow-hidden ${
+        className={`w-full py-2 font-ui text-sm uppercase tracking-wide transition-all duration-300 relative overflow-hidden cursor-pointer active:scale-[0.98] disabled:active:scale-100 disabled:cursor-not-allowed ${
           isPopular
             ? "py-3 bg-primary text-void font-header font-bold shadow-gold-glow hover:bg-white"
             : "border border-primary/40 text-primary hover:bg-primary hover:text-void"
