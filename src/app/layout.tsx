@@ -6,6 +6,7 @@ import {
   Marcellus,
   Pinyon_Script,
 } from "next/font/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 import { MainLayoutContainer } from "./_components/main-layout-container";
 
@@ -62,6 +63,7 @@ export default function RootLayout({
         <MainLayoutContainer className="mobile-container bg-silk-noise">
           {children}
         </MainLayoutContainer>
+        <SpeedInsights />
       </body>
     </html>
   );
