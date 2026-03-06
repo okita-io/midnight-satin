@@ -11,7 +11,10 @@ interface TrophyCaseProps {
   trophies: AuthorTrophy[];
 }
 
-/** 3-column grid of trophies with icons, names, descriptions (Req 7.4). */
+/** Responsive grid of trophies with icons, names, descriptions (Req 7.4, THE-69).
+ * Mobile: 2 cols; Tablet (md): 3 cols; Desktop (lg): 4 cols.
+ * Maintains gold drop-shadow on trophy icons.
+ */
 export function TrophyCase({ trophies }: TrophyCaseProps) {
   if (trophies.length === 0) return null;
 
@@ -22,7 +25,7 @@ export function TrophyCase({ trophies }: TrophyCaseProps) {
           Trophy Case
         </h3>
       </div>
-      <div className="grid grid-cols-3 divide-x divide-[#393528]/30 border-t border-[#393528]/30">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 divide-x divide-[#393528]/30 border-t border-[#393528]/30">
         {trophies.map((trophy) => (
           <div
             key={trophy.id}

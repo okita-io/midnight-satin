@@ -55,6 +55,13 @@ export const CAST_GALLERY_GRID_COLUMNS = {
   desktop: 3,
 } as const;
 
+/** Trophy Case grid columns (THE-69): mobile 2, tablet 3, desktop 4 */
+export const TROPHY_CASE_GRID_COLUMNS = {
+  mobile: 2,
+  tablet: 3,
+  desktop: 4,
+} as const;
+
 /** Cast Gallery responsive gaps: 24px tablet, 32px desktop (THE-64) */
 export const CAST_GALLERY_GRID_GAP = {
   tablet: 24,
