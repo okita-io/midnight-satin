@@ -4,7 +4,13 @@
  * @see Linear THE-45
  */
 
-import { BREAKPOINTS, GRID_COLUMNS, type ViewportSize } from "./constants";
+import {
+  BREAKPOINTS,
+  GRID_COLUMNS,
+  LIBRARY_GRID_COLUMNS,
+  LIBRARY_LIST_COLUMNS,
+  type ViewportSize,
+} from "./constants";
 
 /** Navigation layout mode: bottom bar (mobile) or side panel (tablet/desktop) */
 export type NavigationLayout = "bottom" | "side";
@@ -39,6 +45,24 @@ export function getGridColumnsForViewport(width: number): number {
 }
 
 /**
+ * Resolve Library Catalog grid view column count for a viewport width.
+ * Grid: mobile 2, tablet 3, desktop 4.
+ * @see Linear THE-52
+ */
+export function getLibraryGridColumnsForViewport(width: number): number {
+  return LIBRARY_GRID_COLUMNS[getViewportSize(width)];
+}
+
+/**
+ * Resolve Library Catalog list view column count for a viewport width.
+ * List: mobile 1 (stacked), tablet 2, desktop 1.
+ * @see Linear THE-53
+ */
+export function getLibraryListColumnsForViewport(width: number): number {
+  return LIBRARY_LIST_COLUMNS[getViewportSize(width)];
+}
+
+/**
  * Check if width is tablet or larger.
  */
 export function isTabletOrUp(width: number): boolean {
@@ -68,4 +92,17 @@ export function isTouchDevice(): boolean | null {
 export function isFinePointerDevice(): boolean | null {
   if (typeof window === "undefined" || !window.matchMedia) return null;
   return window.matchMedia("(pointer: fine)").matches;
+}
+
+/** Pointer device type for hover state decisions (matches usePointerDevice hook) */
+export type PointerDevice = "touch" | "mouse" | "unknown";
+
+/**
+ * Determine whether to apply hover states for a given pointer device.
+ * Hover effects (gold glow, brightness, scale) apply only on pointer devices (mouse/stylus).
+ * Touch devices should not get hover states to avoid sticky hover on tap.
+ * @see Linear THE-54
+ */
+export function shouldApplyHoverForDevice(device: PointerDevice): boolean {
+  return device === "mouse";
 }

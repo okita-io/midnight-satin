@@ -181,3 +181,9 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - usePointerDevice() hook for pointer device detection
     - CSS @media (hover: hover) for hover-capable devices only
     - _Requirements: 4.6_
+  - [x]* 15.12 Write property tests for Library Catalog (THE-55)
+    - **Property 7: Library Catalog Grid View Responsiveness** — 3 cols tablet, 4 cols desktop
+    - **Property 8: Library Catalog List View Responsiveness** — 2 cols tablet, 1 col desktop
+    - **Property 9: Book Cover Aspect Ratio Invariant** — 2:3 ratio maintained
+    - **Property 10: Hover State Conditional Rendering** — hover states on pointer devices only
+    - _Validates: Requirements 4.1, 4.2, 4.3, 4.4, 4.5, 4.6_
