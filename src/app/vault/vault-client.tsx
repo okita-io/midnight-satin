@@ -122,8 +122,8 @@ export function VaultClient({
           <div className="h-[1px] w-12 bg-gradient-to-r from-transparent via-primary to-transparent" />
         </div>
 
-        {/* CreditPackGrid */}
-        <div className="grid grid-cols-2 gap-3 xs:gap-4 max-w-lg mx-auto">
+        {/* CreditPackGrid — 2-col tablet (md), 3-col desktop (lg); gap 24px tablet, 32px desktop */}
+        <div className="grid grid-cols-2 gap-3 xs:gap-4 md:gap-6 lg:gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-lg md:max-w-2xl lg:max-w-4xl mx-auto">
           {CREDIT_PACKS.map((pack) => (
             <CreditPackCard
               key={pack.id}

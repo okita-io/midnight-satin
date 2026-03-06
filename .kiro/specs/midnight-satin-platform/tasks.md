@@ -273,5 +273,11 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Property 24: Authors Study Trophy Case Grid** — Test 3 cols tablet, 4 cols desktop
     - **Property 25: Authors Study Styling Preservation** — Test gold borders preserved
     - _Validates: Requirements 9.1, 9.2, 9.3, 9.4, 9.5, 9.6, 9.7, 9.8_
+  - [x] 15.29 Extend Vault credit packages grid (THE-72)
+    - Modify vault-client.tsx CreditPackGrid
+    - 2-column grid for tablet (md: breakpoint)
+    - 3-column grid for desktop (lg: breakpoint)
+    - Responsive gap: 24px tablet, 32px desktop
+    - _Requirements: 10.1, 10.2_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56, THE-71)
   - Ensure all tests pass, ask the user if questions arise.
