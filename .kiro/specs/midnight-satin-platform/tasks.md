@@ -252,5 +252,10 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Responsive gap: 48px tablet (md), 64px desktop (lg)
     - Maintain single column on mobile; BiographySection + TrophyCase in left column, BibliographySection in right
     - _Requirements: 9.1, 9.2, 9.3_
+  - [x] 15.25 Preserve authentication form styling (THE-77)
+    - Maintain button styling and hover effects (h-14, shadow-gold-glow, hover:bg-primary/90 or hover:bg-white, active:scale-[0.98])
+    - Preserve vertical spacing (space-y-6 login, space-y-5 register) and typography hierarchy (Marcellus labels, uppercase tracking)
+    - Keep validation messages in same position as mobile (top of form, before first field) across all viewports
+    - _Requirements: 11.4, 11.5, 11.6_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56)
   - Ensure all tests pass, ask the user if questions arise.
