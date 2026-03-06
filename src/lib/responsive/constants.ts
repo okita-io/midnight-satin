@@ -155,6 +155,17 @@ export const DESKTOP_MAX_WIDTH = 1440;
 /** Navigation sidebar width on tablet/desktop */
 export const SIDEBAR_WIDTH = 280;
 
+/**
+ * Interaction constants for touch and pointer (THE-86, THE-87).
+ * Req 13.5, 13.6, 13.7: cursor pointer on interactive elements, touch feedback preserved.
+ */
+/** Cursor for interactive elements (buttons, links, role=button) */
+export const INTERACTIVE_CURSOR = "cursor-pointer" as const;
+/** Common touch/click active scale for icons and small controls */
+export const INTERACTIVE_ACTIVE_SCALE = "active:scale-95" as const;
+/** Touch-action to reduce tap delay on buttons/links */
+export const TOUCH_ACTION_MANIPULATION = "touch-manipulation" as const;
+
 /** Media query strings for use in JS (e.g., matchMedia) */
 export const MEDIA_QUERIES = {
   tablet: `(min-width: ${BREAKPOINTS.md}px)`,
