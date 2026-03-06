@@ -12,6 +12,7 @@ interface LibrarySectionListProps {
 /**
  * LibrarySectionList: "Currently Reading" and "Finished" sections.
  * Req 18.4, 18.5, 18.6.
+ * THE-81: 2-col tablet, 3-col desktop; gap 24px tablet, 32px desktop.
  */
 export function LibrarySectionList({
   currentlyReading,
@@ -27,7 +28,7 @@ export function LibrarySectionList({
         {currentlyReading.length === 0 ? (
           <EmptyState message="No current affairs" className="py-6" />
         ) : (
-          <div className="flex flex-col gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 lg:gap-8">
             {currentlyReading.map((item) => (
               <LibraryNovelCard key={item.novelId} item={item} />
             ))}
@@ -43,7 +44,7 @@ export function LibrarySectionList({
         {finished.length === 0 ? (
           <EmptyState message="Nothing finished yet" className="py-6" />
         ) : (
-          <div className="flex flex-col gap-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 lg:gap-8">
             {finished.map((item) => (
               <LibraryNovelCard key={item.novelId} item={item} />
             ))}
