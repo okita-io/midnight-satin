@@ -48,9 +48,7 @@ export function PlayersSection({
   if (characters.length === 0) return null;
 
   const gridClass =
-    "grid grid-flow-col grid-auto-cols-[80px] gap-4 xs:gap-6 pb-4 no-scrollbar overflow-x-auto snap-x snap-mandatory " +
-    "md:grid-flow-row md:grid-cols-2 md:gap-6 md:overflow-visible md:snap-none md:place-items-center " +
-    "lg:grid-cols-3 lg:gap-8";
+    "grid grid-flow-col grid-auto-cols-[80px] md:grid-auto-cols-[7rem] lg:grid-auto-cols-[96px] gap-4 xs:gap-6 md:gap-6 lg:gap-6 pb-4 no-scrollbar overflow-x-auto snap-x snap-mandatory";
 
   return (
     <>
@@ -75,6 +73,7 @@ export function PlayersSection({
               portraitUrl={char.portraitUrl}
               onClick={() => openCastGallery(i)}
               asButton
+              responsive
               className="snap-center"
             />
           ))}
