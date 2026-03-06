@@ -77,6 +77,9 @@ export const CAST_PREVIEW_PORTRAIT_SIZE = {
 /** Book cover aspect ratio (2:3) per design system */
 export const BOOK_COVER_ASPECT_RATIO = { width: 2, height: 3 } as const;
 
+/** Cast Gallery character portrait aspect ratio (3:4) per THE-64: aspect-[3/4] */
+export const CAST_GALLERY_PORTRAIT_ASPECT_RATIO = { width: 3, height: 4 } as const;
+
 /** Reading content max-width for optimal line length (45-75 chars) */
 export const READING_MAX_WIDTH = 720;
 

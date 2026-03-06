@@ -11,6 +11,7 @@ import {
   LIBRARY_LIST_COLUMNS,
   CHAPTER_LIST_COLUMNS,
   CAST_PREVIEW_VISIBLE,
+  CAST_GALLERY_GRID_COLUMNS,
   CHAPTER_CONTENT_MAX_WIDTH,
   type ViewportSize,
 } from "./constants";
@@ -72,6 +73,15 @@ export function getLibraryListColumnsForViewport(width: number): number {
  */
 export function getChapterListColumnsForViewport(width: number): number {
   return CHAPTER_LIST_COLUMNS[getViewportSize(width)];
+}
+
+/**
+ * Resolve Cast Gallery grid column count for a viewport width.
+ * Mobile: 1 (single card view). Tablet: 2. Desktop: 3.
+ * @see Linear THE-64, THE-66
+ */
+export function getCastGalleryGridColumnsForViewport(width: number): number {
+  return CAST_GALLERY_GRID_COLUMNS[getViewportSize(width)];
 }
 
 /**
