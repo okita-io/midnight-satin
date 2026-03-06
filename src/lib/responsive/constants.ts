@@ -62,6 +62,12 @@ export const TROPHY_CASE_GRID_COLUMNS = {
   desktop: 4,
 } as const;
 
+/** Author's Study two-column layout split (THE-67): 35% biography, 65% bibliography (7fr/13fr) */
+export const AUTHORS_STUDY_TWO_COLUMN_SPLIT = {
+  biography: 35,
+  bibliography: 65,
+} as const;
+
 /** Cast Gallery responsive gaps: 24px tablet, 32px desktop (THE-64) */
 export const CAST_GALLERY_GRID_GAP = {
   tablet: 24,
