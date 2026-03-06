@@ -247,5 +247,10 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Center forms horizontally (mx-auto)
     - Maintain all input field styling including gold focus states
     - _Requirements: 11.1, 11.2, 11.3_
+  - [x] 15.24 Create two-column layout for biography and bibliography (THE-67)
+    - Modify Author's Study page: two-column layout for tablet/desktop (35% biography, 65% bibliography)
+    - Responsive gap: 48px tablet (md), 64px desktop (lg)
+    - Maintain single column on mobile; BiographySection + TrophyCase in left column, BibliographySection in right
+    - _Requirements: 9.1, 9.2, 9.3_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56)
   - Ensure all tests pass, ask the user if questions arise.
