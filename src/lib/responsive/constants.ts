@@ -149,6 +149,13 @@ export const AUTH_FORM_MAX_WIDTH = {
   desktop: 480,
 } as const;
 
+/** Shimmer placeholder grid columns (THE-91): mobile 2, tablet 2, desktop 3 per row */
+export const SHIMMER_GRID_COLUMNS = {
+  mobile: 2,
+  tablet: 2,
+  desktop: 3,
+} as const;
+
 /** Max content width for grid sections on desktop (THE-50) */
 export const DESKTOP_MAX_WIDTH = 1440;
 

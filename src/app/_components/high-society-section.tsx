@@ -1,4 +1,5 @@
 import { NovelCard } from "./novel-card";
+import { ShimmerPlaceholder } from "./shimmer-placeholder";
 import { EmptyState } from "./empty-state";
 import type { FeaturedNovel } from "@/lib/content";
 
@@ -28,12 +29,11 @@ export function HighSocietySection({ novels, loading }: HighSocietySectionProps)
           <h2 className="font-header text-sm tracking-[0.15em] text-white/90">High Society</h2>
         </div>
         <div className={gridClass}>
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="flex flex-col min-w-0 md:w-full snap-start">
-              <div className="w-full aspect-[2/3] rounded-sm overflow-hidden mb-3 bg-surface-highlight animate-pulse" />
-              <div className="h-4 bg-surface-highlight rounded animate-pulse mb-2 w-3/4" />
-              <div className="h-3 bg-surface-highlight rounded animate-pulse w-1/2" />
-            </div>
+          {Array.from({ length: 6 }).map((_, i) => (
+            <ShimmerPlaceholder
+              key={i}
+              className="aspect-[2/3] rounded-sm min-w-0 md:w-full snap-start"
+            />
           ))}
         </div>
       </section>
