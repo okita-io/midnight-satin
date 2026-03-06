@@ -197,5 +197,10 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Modify cast preview to show 6 portraits on desktop
     - Maintain horizontal scroll with larger portrait sizes
     - _Requirements: 5.4, 5.5_
+  - [x] 15.15 Implement two-column chapter list for desktop (THE-59)
+    - Add CSS Grid for chapter list on desktop (lg: breakpoint)
+    - Implement 2-column layout for faster scanning
+    - Maintain single column on mobile/tablet
+    - _Requirements: 5.6_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56)
   - Ensure all tests pass, ask the user if questions arise.
