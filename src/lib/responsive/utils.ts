@@ -12,6 +12,7 @@ import {
   CHAPTER_LIST_COLUMNS,
   CAST_PREVIEW_VISIBLE,
   CAST_GALLERY_GRID_COLUMNS,
+  TROPHY_CASE_GRID_COLUMNS,
   CHAPTER_CONTENT_MAX_WIDTH,
   type ViewportSize,
 } from "./constants";
@@ -102,6 +103,24 @@ export function getCastPreviewVisibleCount(width: number): number {
  */
 export function getNovelDetailUsesTwoColumnLayout(width: number): boolean {
   return width >= BREAKPOINTS.md;
+}
+
+/**
+ * Check if Author's Study uses two-column layout (35% biography, 65% bibliography).
+ * Tablet and desktop (≥ 768px) use two-column layout; mobile uses single column.
+ * @see Linear THE-67, THE-70
+ */
+export function getAuthorStudyUsesTwoColumnLayout(width: number): boolean {
+  return width >= BREAKPOINTS.md;
+}
+
+/**
+ * Resolve Trophy Case grid column count for a viewport width.
+ * Mobile: 2. Tablet: 3. Desktop: 4.
+ * @see Linear THE-69, THE-70
+ */
+export function getTrophyCaseGridColumnsForViewport(width: number): number {
+  return TROPHY_CASE_GRID_COLUMNS[getViewportSize(width)];
 }
 
 /**

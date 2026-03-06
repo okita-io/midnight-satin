@@ -268,5 +268,10 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - 2-column grid for mobile
     - Maintain gold border styling on trophies (drop-shadow on icons)
     - _Requirements: 9.6, 9.7, 9.8_
+  - [x] 15.28 Write property tests for Author's Study (THE-70)
+    - **Property 23: Authors Study Two-Column Layout** — Test 35/65 split tablet/desktop
+    - **Property 24: Authors Study Trophy Case Grid** — Test 3 cols tablet, 4 cols desktop
+    - **Property 25: Authors Study Styling Preservation** — Test gold borders preserved
+    - _Validates: Requirements 9.1, 9.2, 9.3, 9.4, 9.5, 9.6, 9.7, 9.8_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56)
   - Ensure all tests pass, ask the user if questions arise.
