@@ -62,6 +62,19 @@ export const TROPHY_CASE_GRID_COLUMNS = {
   desktop: 4,
 } as const;
 
+/** Vault CreditPackGrid columns (THE-72): mobile 2, tablet 2, desktop 3 */
+export const VAULT_GRID_COLUMNS = {
+  mobile: 2,
+  tablet: 2,
+  desktop: 3,
+} as const;
+
+/** Vault grid responsive gaps (THE-72): tablet 24px, desktop 32px */
+export const VAULT_GRID_GAP = {
+  tablet: 24,
+  desktop: 32,
+} as const;
+
 /** Author's Study two-column layout split (THE-67): 35% biography, 65% bibliography (7fr/13fr) */
 export const AUTHORS_STUDY_TWO_COLUMN_SPLIT = {
   biography: 35,
