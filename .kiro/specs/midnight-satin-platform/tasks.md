@@ -226,5 +226,10 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Property 18: Comments Sidebar Desktop Rendering** — Test sidebar desktop, below mobile/tablet
     - **Property 19: Comments Styling Consistency** — Test comment styling preserved
     - _Validates: Requirements 6.1, 6.2, 6.3, 6.7, 6.8, 7.1, 7.5, 7.6, 7.7_
+  - [x] 15.20 Extend Cast Gallery grid layout (THE-64)
+    - Modify cast-gallery-modal.tsx: 2-column grid tablet (md), 3-column desktop (lg)
+    - Responsive gap: 24px tablet, 32px desktop
+    - Maintain portrait aspect ratio (aspect-[3/4]) and card flip for backstory reveal
+    - _Requirements: 5.1, 5.4, 5.6, 5.7_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56)
   - Ensure all tests pass, ask the user if questions arise.

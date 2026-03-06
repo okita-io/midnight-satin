@@ -48,6 +48,19 @@ export const CHAPTER_LIST_COLUMNS = {
   desktop: 2,
 } as const;
 
+/** Cast Gallery grid columns (THE-64): mobile 1 (single card), tablet 2, desktop 3 */
+export const CAST_GALLERY_GRID_COLUMNS = {
+  mobile: 1,
+  tablet: 2,
+  desktop: 3,
+} as const;
+
+/** Cast Gallery responsive gaps: 24px tablet, 32px desktop (THE-64) */
+export const CAST_GALLERY_GRID_GAP = {
+  tablet: 24,
+  desktop: 32,
+} as const;
+
 /** Cast preview (PlayersSection) visible portraits (THE-58): tablet 4, desktop 6 */
 export const CAST_PREVIEW_VISIBLE = {
   tablet: 4,
