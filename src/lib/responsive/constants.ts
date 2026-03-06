@@ -30,6 +30,9 @@ export const GRID_COLUMNS = {
 /** Reading content max-width for optimal line length (45-75 chars) */
 export const READING_MAX_WIDTH = 720;
 
+/** Max content width for grid sections on desktop (THE-50) */
+export const DESKTOP_MAX_WIDTH = 1440;
+
 /** Navigation sidebar width on tablet/desktop */
 export const SIDEBAR_WIDTH = 280;
 
