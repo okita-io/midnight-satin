@@ -163,3 +163,8 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [x] 15.7 Extend grid sections with responsive columns (THE-50)
     - Modify HighSocietySection, CurrentAffairsSection, PlayersSection; replace horizontal scroll with CSS Grid on tablet/desktop; 2-column tablet, 3-column desktop; max-width 1440px centered; spacious gaps
     - _Requirements: 3.3, 3.4, 3.5, 3.6, 3.8_
+  - [x]* 15.8 Write property tests for Boudoir layout (THE-51)
+    - **Property 4: Hero Carousel Responsive Items** — 2 items tablet, 3 desktop
+    - **Property 5: Boudoir Grid Responsiveness** — 2 cols tablet, 3 cols desktop
+    - **Property 6: Premium Aesthetic Preservation** — void black, gold accents preserved
+    - _Validates: Requirements 3.1, 3.2, 3.3, 3.4, 3.7, 1.7_

@@ -4,7 +4,7 @@
  * @see Linear THE-45
  */
 
-import { BREAKPOINTS, type ViewportSize } from "./constants";
+import { BREAKPOINTS, GRID_COLUMNS, type ViewportSize } from "./constants";
 
 /** Navigation layout mode: bottom bar (mobile) or side panel (tablet/desktop) */
 export type NavigationLayout = "bottom" | "side";
@@ -27,6 +27,15 @@ export function getViewportSize(width: number): ViewportSize {
   if (width >= BREAKPOINTS.lg) return "desktop";
   if (width >= BREAKPOINTS.md) return "tablet";
   return "mobile";
+}
+
+/**
+ * Resolve grid column count for a viewport width.
+ * Hero carousel and Boudoir grid sections use: mobile 1, tablet 2, desktop 3.
+ * @see Linear THE-51
+ */
+export function getGridColumnsForViewport(width: number): number {
+  return GRID_COLUMNS[getViewportSize(width)];
 }
 
 /**
