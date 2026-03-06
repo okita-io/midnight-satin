@@ -231,5 +231,10 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Responsive gap: 24px tablet, 32px desktop
     - Maintain portrait aspect ratio (aspect-[3/4]) and card flip for backstory reveal
     - _Requirements: 5.1, 5.4, 5.6, 5.7_
+  - [x] 15.21 Maintain character card interactions (THE-65)
+    - Preserve rose endorsement button positioning and animation (bottom center, 64px burgundy, gold pulse on endorse)
+    - Display trophy badges when endorsement count exceeds 1000 (animated pulsing gold glow)
+    - Maintain nameplate gradient overlay and typography (Playfair Display italic 4xl, Marcellus role)
+    - _Requirements: 5.5, 5.6, 6.1, 6.2, 6.4, 6.6_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56)
   - Ensure all tests pass, ask the user if questions arise.

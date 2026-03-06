@@ -72,8 +72,8 @@ function CharacterCard({
 
       {char.hasTrophy && <TrophyBadge />}
 
-      {/* Bottom content */}
-      <div className="absolute bottom-0 left-0 right-0 p-8 pt-32 bg-gradient-to-t from-void via-void/90 to-transparent flex flex-col items-center text-center">
+      {/* Bottom content - nameplate gradient overlay, Playfair Display 4xl, Marcellus role (Req 5.2, 5.3) */}
+      <div className="absolute bottom-0 left-0 right-0 p-8 pt-32 bg-gradient-to-t from-void to-transparent flex flex-col items-center text-center">
         {char.description && (
           <p className="font-body text-sm italic text-text-main/60 leading-relaxed mb-6 max-w-[85%]">
             {char.description}
@@ -237,7 +237,7 @@ function DossierCard({
   );
 }
 
-/** Endorsement FAB - 64px burgundy circle, rose icon, endorsement count (Req 6.1, 6.2). */
+/** Endorsement FAB - 64px burgundy circle, rose icon, endorsement count (Req 6.1, 6.2, 6.4). */
 function EndorsementFAB({
   characterId,
   endorsementCount,
@@ -253,10 +253,13 @@ function EndorsementFAB({
   compact?: boolean;
 }) {
   const [showConfirm, setShowConfirm] = useState(false);
+  const [justEndorsed, setJustEndorsed] = useState(false);
 
   const handleConfirm = () => {
     onEndorse?.(characterId);
     setShowConfirm(false);
+    setJustEndorsed(true);
+    setTimeout(() => setJustEndorsed(false), 600);
   };
 
   const handleRoseClick = () => {
@@ -269,8 +272,8 @@ function EndorsementFAB({
 
   return (
     <div
-      className={`flex flex-col items-center gap-3 ${
-        compact ? "absolute bottom-4 z-50" : "absolute bottom-12 z-50"
+      className={`flex flex-col items-center gap-3 left-1/2 -translate-x-1/2 z-50 ${
+        compact ? "absolute bottom-4" : "absolute bottom-12"
       }`}
     >
       {showConfirm && (
@@ -304,7 +307,9 @@ function EndorsementFAB({
       >
         <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
         <span
-          className={`material-symbols-outlined ${compact ? "text-2xl" : "text-3xl"}`}
+          className={`material-symbols-outlined ${compact ? "text-2xl" : "text-3xl"} ${
+            justEndorsed ? "animate-rose-pulse" : ""
+          }`}
           style={{ fontVariationSettings: "'FILL' 1" }}
         >
           local_florist
