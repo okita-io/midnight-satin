@@ -192,5 +192,10 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Two-column layout: 40% cover, 60% metadata; gap 48px tablet, 64px desktop
     - Sticky positioning for cover column; maintain parallax effect on cover
     - _Requirements: 5.1, 5.2, 5.3, 5.7_
+  - [x] 15.14 Extend cast preview section (THE-58)
+    - Modify cast preview (PlayersSection) to show 4 portraits on tablet
+    - Modify cast preview to show 6 portraits on desktop
+    - Maintain horizontal scroll with larger portrait sizes
+    - _Requirements: 5.4, 5.5_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56)
   - Ensure all tests pass, ask the user if questions arise.

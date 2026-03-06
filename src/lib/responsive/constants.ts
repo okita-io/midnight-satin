@@ -41,6 +41,19 @@ export const LIBRARY_LIST_COLUMNS = {
   desktop: 1,
 } as const;
 
+/** Cast preview (PlayersSection) visible portraits (THE-58): tablet 4, desktop 6 */
+export const CAST_PREVIEW_VISIBLE = {
+  tablet: 4,
+  desktop: 6,
+} as const;
+
+/** Cast preview portrait sizes in px (THE-58): mobile 80, tablet 112, desktop 96 */
+export const CAST_PREVIEW_PORTRAIT_SIZE = {
+  mobile: 80,
+  tablet: 112,
+  desktop: 96,
+} as const;
+
 /** Book cover aspect ratio (2:3) per design system */
 export const BOOK_COVER_ASPECT_RATIO = { width: 2, height: 3 } as const;
 
