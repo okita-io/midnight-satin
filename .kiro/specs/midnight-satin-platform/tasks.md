@@ -157,3 +157,6 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [x] 15.5 Fix Reading Room control bar spacing on mobile (THE-95)
     - Reading HUD footer icons evenly spaced on mobile; full-width footer on mobile, max-w-md centered on tablet+
     - _Requirements: 3.5, 3.6_
+  - [x] 15.6 Extend HeroCarousel for multi-item display (THE-49)
+    - Add itemsPerView prop; 2-column layout tablet (md), 3-column desktop (lg); heights 480px tablet, 520px desktop; gap 24px tablet, 32px desktop
+    - _Requirements: 3.1, 3.2_
