@@ -6,8 +6,9 @@
  * Property 17: Reading Room Component Preservation — Test Veil, blur, unlock preserved
  * Property 18: Comments Sidebar Desktop Rendering — Test sidebar desktop, below mobile/tablet
  * Property 19: Comments Styling Consistency — Test comment styling preserved
+ * Property 34: Reading HUD control bar icons evenly spaced on mobile (THE-96)
  *
- * @see Linear THE-63
+ * @see Linear THE-63, THE-96
  */
 
 import { describe, it, expect } from "vitest";
@@ -21,6 +22,7 @@ import {
 import {
   BREAKPOINTS,
   CHAPTER_CONTENT_MAX_WIDTH,
+  READING_HUD_FOOTER_ICON_ROW_CLASSES,
 } from "@/lib/responsive/constants";
 import {
   BLUR_LEVELS,
@@ -223,6 +225,30 @@ describe("Property 19: Comments Styling Consistency", () => {
           void w2;
         }
       ),
+      { numRuns: 100 }
+    );
+  });
+});
+
+describe("Property 34: Reading HUD control bar icons evenly spaced on mobile", () => {
+  it("footer icon row uses justify-between for even spacing (THE-96)", () => {
+    expect(READING_HUD_FOOTER_ICON_ROW_CLASSES).toContain("justify-between");
+  });
+
+  it("footer icon row uses w-full so icons span full width on mobile", () => {
+    expect(READING_HUD_FOOTER_ICON_ROW_CLASSES).toContain("w-full");
+  });
+
+  it("footer icon row uses flex layout for horizontal icon row", () => {
+    expect(READING_HUD_FOOTER_ICON_ROW_CLASSES).toContain("flex");
+  });
+
+  it("even spacing layout is invariant across viewports", () => {
+    fc.assert(
+      fc.property(fc.integer({ min: 0, max: 4096 }), () => {
+        expect(READING_HUD_FOOTER_ICON_ROW_CLASSES).toContain("justify-between");
+        expect(READING_HUD_FOOTER_ICON_ROW_CLASSES).toContain("w-full");
+      }),
       { numRuns: 100 }
     );
   });

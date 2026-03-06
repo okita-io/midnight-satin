@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useCallback, useState } from "react";
 import { toggleBookmark } from "@/app/actions/bookmarks";
 import { novelDetailPath } from "@/lib/navigation";
+import { READING_HUD_FOOTER_ICON_ROW_CLASSES } from "@/lib/responsive/constants";
 
 function toRoman(num: number): string {
   const map: [number, string][] = [
@@ -193,7 +194,7 @@ export function ReadingHUD({
           />
         </div>
 
-        <div className="min-w-0 flex-1 px-6 py-4 flex items-center justify-between w-full">
+        <div className={READING_HUD_FOOTER_ICON_ROW_CLASSES}>
           {/* Font panel toggle */}
           <div className="relative">
             <button

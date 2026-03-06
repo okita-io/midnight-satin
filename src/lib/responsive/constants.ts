@@ -155,6 +155,13 @@ export const DESKTOP_MAX_WIDTH = 1440;
 /** Navigation sidebar width on tablet/desktop */
 export const SIDEBAR_WIDTH = 280;
 
+/**
+ * Reading HUD footer icon row layout (THE-95, THE-96).
+ * Must use justify-between and w-full so icons are evenly spaced on mobile.
+ */
+export const READING_HUD_FOOTER_ICON_ROW_CLASSES =
+  "min-w-0 flex-1 px-6 py-4 flex items-center justify-between w-full";
+
 /** Media query strings for use in JS (e.g., matchMedia) */
 export const MEDIA_QUERIES = {
   tablet: `(min-width: ${BREAKPOINTS.md}px)`,
