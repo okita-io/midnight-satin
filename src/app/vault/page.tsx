@@ -61,11 +61,11 @@ export default async function VaultPage({
           )}
         </div>
 
-        {/* CreditBalanceDisplay — Req 8.1 */}
+        {/* CreditBalanceDisplay — Req 8.1. THE-73: 48px tablet, 56px desktop */}
         <div className="mt-6 xs:mt-8 mb-4 flex flex-col items-center justify-center">
           <div className="relative">
             <span
-              className="font-display text-5xl xs:text-6xl italic font-bold gold-text-gradient drop-shadow-lg"
+              className="font-display text-5xl xs:text-6xl md:text-[48px] lg:text-[56px] italic font-bold gold-text-gradient drop-shadow-lg"
               style={{ fontFamily: "var(--font-display)" }}
             >
               {creditBalance.toLocaleString()}
