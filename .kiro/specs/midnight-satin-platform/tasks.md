@@ -257,5 +257,10 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Set avatar size to 220px on desktop (lg breakpoint)
     - Maintain hexagonal shape and gold border
     - _Requirements: 9.4, 9.5, 9.8_
+  - [x] 15.26 Preserve authentication form styling (THE-77)
+    - Maintain button styling and hover effects (h-14, shadow-gold-glow, hover:bg-primary/90 or hover:bg-white, active:scale-[0.98])
+    - Preserve vertical spacing (space-y-6 login, space-y-5 register) and typography hierarchy (Marcellus labels, uppercase tracking)
+    - Keep validation messages in same position as mobile (top of form, before first field) across all viewports
+    - _Requirements: 11.4, 11.5, 11.6_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56)
   - Ensure all tests pass, ask the user if questions arise.

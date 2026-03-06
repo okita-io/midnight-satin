@@ -1,25 +1,25 @@
 "use client";
 
 import { useActionState } from "react";
-import Link from "next/link";
 import { loginFormAction } from "@/app/actions/auth";
 
 export function LoginForm({ redirectTo }: { redirectTo: string }) {
   const [state, formAction, isPending] = useActionState(loginFormAction, null);
 
   return (
-    <form action={formAction} className="space-y-4">
+    <form action={formAction} className="w-full space-y-6">
       <input type="hidden" name="redirectTo" value={redirectTo} />
+      {/* Validation message: same position on mobile, tablet, desktop */}
       {state?.error && (
         <div
-          className="rounded border border-[var(--accent)] bg-[var(--surface)] px-3 py-2 font-ui text-sm text-[var(--text-main)]"
+          className="rounded border-2 border-accent bg-surface px-3 py-2 font-ui text-sm text-text-main"
           role="alert"
         >
           {state.error}
         </div>
       )}
-      <div>
-        <label htmlFor="login-email" className="mb-1 block font-ui text-sm text-[var(--text-muted)]">
+      <div className="flex flex-col gap-2">
+        <label htmlFor="login-email" className="font-ui text-xs uppercase tracking-widest text-text-muted ml-1">
           Email
         </label>
         <input
@@ -29,12 +29,12 @@ export function LoginForm({ redirectTo }: { redirectTo: string }) {
           autoComplete="email"
           required
           disabled={isPending}
-          className="w-full rounded border border-[rgba(255,255,255,0.1)] bg-[var(--surface)] px-3 py-2.5 text-[var(--text-main)] placeholder:text-[var(--text-muted)] focus:border-[var(--primary)] focus:outline-none focus:ring-1 focus:ring-[var(--primary)]"
+          className="block w-full h-14 rounded border-2 border-surface-highlight bg-surface-highlight px-4 font-ui text-text-main placeholder:text-text-muted focus:border-primary focus:outline-none focus:ring-0 transition-colors duration-300"
           placeholder="you@example.com"
         />
       </div>
-      <div>
-        <label htmlFor="login-password" className="mb-1 block font-ui text-sm text-[var(--text-muted)]">
+      <div className="flex flex-col gap-2">
+        <label htmlFor="login-password" className="font-ui text-xs uppercase tracking-widest text-text-muted ml-1">
           Password
         </label>
         <input
@@ -44,10 +44,14 @@ export function LoginForm({ redirectTo }: { redirectTo: string }) {
           autoComplete="current-password"
           required
           disabled={isPending}
-          className="w-full rounded border border-[rgba(255,255,255,0.1)] bg-[var(--surface)] px-3 py-2.5 text-[var(--text-main)] placeholder:text-[var(--text-muted)] focus:border-[var(--primary)] focus:outline-none focus:ring-1 focus:ring-[var(--primary)]"
+          className="block w-full h-14 rounded border-2 border-surface-highlight bg-surface-highlight px-4 font-ui text-text-main placeholder:text-text-muted focus:border-primary focus:outline-none focus:ring-0 transition-colors duration-300"
         />
       </div>
-      <button type="submit" disabled={isPending} className="btn-gold w-full">
+      <button
+        type="submit"
+        disabled={isPending}
+        className="w-full h-14 bg-primary text-void font-ui font-bold uppercase tracking-[0.2em] rounded-lg shadow-gold-glow hover:bg-primary/90 transition-all active:scale-[0.98] mt-4 disabled:opacity-70 disabled:cursor-not-allowed disabled:active:scale-100"
+      >
         {isPending ? "Signing in…" : "Sign in"}
       </button>
     </form>
