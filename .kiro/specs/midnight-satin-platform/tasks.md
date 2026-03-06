@@ -299,5 +299,10 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Scale transform on hover for floating action buttons (Novel Detail FAB, EndorsementFAB)
     - CSS @media (hover: hover) for pointer device detection
     - _Requirements: 13.1, 13.2, 13.3, 13.4_
+  - [x] 15.32 Extend followed authors strip (THE-80)
+    - Display 6 avatars visible on tablet (md breakpoint)
+    - Display 8 avatars visible on desktop (lg breakpoint)
+    - Maintain hexagonal avatar styling
+    - _Requirements: 12.2, 12.3, 12.6_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56, THE-71)
   - Ensure all tests pass, ask the user if questions arise.

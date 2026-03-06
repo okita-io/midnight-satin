@@ -80,6 +80,12 @@ export const CAST_PREVIEW_VISIBLE = {
   desktop: 6,
 } as const;
 
+/** Followed authors strip visible avatars (THE-80): tablet 6, desktop 8 */
+export const FOLLOWED_AUTHORS_STRIP_VISIBLE = {
+  tablet: 6,
+  desktop: 8,
+} as const;
+
 /** Cast preview portrait sizes in px (THE-58): mobile 80, tablet 112, desktop 96 */
 export const CAST_PREVIEW_PORTRAIT_SIZE = {
   mobile: 80,
