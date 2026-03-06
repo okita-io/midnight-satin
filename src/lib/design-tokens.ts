@@ -21,3 +21,18 @@ export function getColorTokensForViewport(width: number): typeof COLOR_TOKENS {
   void width; // Viewport-invariant: same tokens for all widths
   return COLOR_TOKENS;
 }
+
+/** Typography font families (Requirements 14.2). Viewport-invariant. */
+export const TYPOGRAPHY_FONTS = {
+  display: "Playfair Display",
+  header: "Cinzel",
+  body: "Literata",
+  ui: "Marcellus",
+  script: "Pinyon Script",
+} as const;
+
+/** Get typography tokens for any viewport. Font families are preserved across all breakpoints. */
+export function getTypographyForViewport(width: number): typeof TYPOGRAPHY_FONTS {
+  void width; // Viewport-invariant: same fonts for all widths
+  return TYPOGRAPHY_FONTS;
+}

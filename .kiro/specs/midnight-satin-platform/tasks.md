@@ -202,5 +202,11 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Implement 2-column layout for faster scanning
     - Maintain single column on mobile/tablet
     - _Requirements: 5.6_
+  - [x]* 15.16 Write property tests for Novel Detail (THE-60)
+    - **Property 12: Novel Detail Two-Column Layout** — Test 2-col layout tablet/desktop
+    - **Property 13: Novel Detail Cast Preview Responsiveness** — Test 4 portraits tablet, 6 desktop
+    - **Property 14: Novel Detail Chapter List Grid** — Test 2-col grid desktop
+    - **Property 15: Typography Consistency Across Breakpoints** — Test font families preserved
+    - _Validates: Requirements 5.1, 5.4, 5.5, 5.6, 5.8_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56)
   - Ensure all tests pass, ask the user if questions arise.

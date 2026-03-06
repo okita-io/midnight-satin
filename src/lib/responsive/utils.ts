@@ -9,6 +9,8 @@ import {
   GRID_COLUMNS,
   LIBRARY_GRID_COLUMNS,
   LIBRARY_LIST_COLUMNS,
+  CHAPTER_LIST_COLUMNS,
+  CAST_PREVIEW_VISIBLE,
   type ViewportSize,
 } from "./constants";
 
@@ -60,6 +62,35 @@ export function getLibraryGridColumnsForViewport(width: number): number {
  */
 export function getLibraryListColumnsForViewport(width: number): number {
   return LIBRARY_LIST_COLUMNS[getViewportSize(width)];
+}
+
+/**
+ * Resolve Novel Detail chapter list column count for a viewport width.
+ * Mobile/tablet: 1 column. Desktop: 2 columns.
+ * @see Linear THE-59, THE-60
+ */
+export function getChapterListColumnsForViewport(width: number): number {
+  return CHAPTER_LIST_COLUMNS[getViewportSize(width)];
+}
+
+/**
+ * Resolve cast preview (PlayersSection) visible portrait count for a viewport width.
+ * Tablet: 4 visible. Desktop: 6 visible. Mobile: horizontal scroll (no fixed visible count; returns 0).
+ * @see Linear THE-58, THE-60
+ */
+export function getCastPreviewVisibleCount(width: number): number {
+  const size = getViewportSize(width);
+  if (size === "mobile") return 0;
+  return CAST_PREVIEW_VISIBLE[size];
+}
+
+/**
+ * Check if Novel Detail uses two-column layout (cover + metadata).
+ * Tablet and desktop (≥ 768px) use two-column layout; mobile uses stacked overlay.
+ * @see Linear THE-57, THE-60
+ */
+export function getNovelDetailUsesTwoColumnLayout(width: number): boolean {
+  return width >= BREAKPOINTS.md;
 }
 
 /**
