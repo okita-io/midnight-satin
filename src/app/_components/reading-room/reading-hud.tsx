@@ -183,7 +183,7 @@ export function ReadingHUD({
         }}
       >
         {/* Progress Bar */}
-        <div className="h-1 shrink-0 bg-white/10 relative">
+        <div className="w-full h-1 shrink-0 bg-white/10 relative">
           <div
             className="absolute left-0 top-0 h-full bg-primary transition-all duration-300"
             style={{
@@ -193,7 +193,7 @@ export function ReadingHUD({
           />
         </div>
 
-        <div className="min-w-0 flex-1 px-6 py-4 flex items-center justify-between">
+        <div className="min-w-0 flex-1 px-6 py-4 flex items-center justify-between w-full">
           {/* Font panel toggle */}
           <div className="relative">
             <button
