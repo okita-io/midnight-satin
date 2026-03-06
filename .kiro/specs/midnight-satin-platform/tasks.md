@@ -208,5 +208,11 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - **Property 14: Novel Detail Chapter List Grid** — Test 2-col grid desktop
     - **Property 15: Typography Consistency Across Breakpoints** — Test font families preserved
     - _Validates: Requirements 5.1, 5.4, 5.5, 5.6, 5.8_
+  - [x] 15.17 Add max-width constraints to chapter content (THE-61)
+    - Modify chapter-content.tsx: max-width 680px tablet (md), 720px desktop (lg)
+    - Center content horizontally (mx-auto)
+    - Responsive side margins: 48px tablet (px-12), 64px desktop (px-16)
+    - Maintain 18px font size and 1.6 line height
+    - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56)
   - Ensure all tests pass, ask the user if questions arise.
