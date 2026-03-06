@@ -84,7 +84,7 @@ export function CommentsSection({
 
   useEffect(() => {
     if (isOpen && chapterId) {
-      fetchComments();
+      queueMicrotask(() => fetchComments());
     }
   }, [isOpen, chapterId, fetchComments]);
 

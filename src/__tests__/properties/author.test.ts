@@ -210,7 +210,7 @@ describe("Property 18: Author bibliography grouping", () => {
           const novels: Novel[] = [];
 
           for (const spec of novelSpecs) {
-            let seriesId = spec.seriesId ?? null;
+            const seriesId = spec.seriesId ?? null;
             if (seriesId) {
               if (!seriesMap.has(seriesId)) {
                 const s: Series = {

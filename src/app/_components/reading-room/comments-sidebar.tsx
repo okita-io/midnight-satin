@@ -79,7 +79,7 @@ export function CommentsSidebar({
 
   useEffect(() => {
     if (chapterId) {
-      fetchComments();
+      queueMicrotask(() => fetchComments());
     }
   }, [chapterId, fetchComments]);
 
