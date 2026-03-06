@@ -252,5 +252,10 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Responsive gap: 48px tablet (md), 64px desktop (lg)
     - Maintain single column on mobile; BiographySection + TrophyCase in left column, BibliographySection in right
     - _Requirements: 9.1, 9.2, 9.3_
+  - [x] 15.25 Extend hexagonal avatar sizing (THE-68)
+    - Set avatar size to 180px on tablet (md breakpoint)
+    - Set avatar size to 220px on desktop (lg breakpoint)
+    - Maintain hexagonal shape and gold border
+    - _Requirements: 9.4, 9.5, 9.8_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56)
   - Ensure all tests pass, ask the user if questions arise.
