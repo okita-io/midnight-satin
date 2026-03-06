@@ -176,3 +176,8 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Expanded metadata for desktop: author bio, tags, rating, chapter count
     - Card dimensions: 160px cover width, 240px height for desktop list
     - _Requirements: 4.3, 4.4_
+  - [x] 15.11 Add hover states to catalog items (THE-54)
+    - Gold glow shadow, brightness increase, scale transforms on hover
+    - usePointerDevice() hook for pointer device detection
+    - CSS @media (hover: hover) for hover-capable devices only
+    - _Requirements: 4.6_

@@ -369,3 +369,17 @@ h4,
     @apply block;
   }
 }
+
+/* Catalog item hover states (THE-54)
+   Gold glow, brightness, scale — only when device supports hover.
+   Uses @media (hover: hover) for pointer device detection. */
+.catalog-item-cover {
+  transition: box-shadow 0.3s ease, filter 0.3s ease, transform 0.3s ease;
+}
+@media (hover: hover) {
+  .catalog-item-hover:hover .catalog-item-cover {
+    box-shadow: 0 4px 20px -5px rgba(212, 175, 55, 0.3);
+    filter: brightness(1.05);
+    transform: scale(1.02);
+  }
+}

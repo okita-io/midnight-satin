@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { novelDetailPath } from "@/lib/navigation";
+import { usePointerDevice } from "@/lib/responsive/hooks";
 
 export interface NovelCardData {
   id: string;
@@ -33,16 +34,18 @@ interface NovelCardProps {
  */
 export function NovelCard({ novel, variant = "default", fill = false, className = "" }: NovelCardProps) {
   const href = novelDetailPath(novel.id);
+  const pointerDevice = usePointerDevice();
+  const supportsHover = pointerDevice === "mouse";
 
   if (variant === "compact") {
     return (
       <Link
         href={href}
-        className={`card flex gap-3 xs:gap-4 p-3 xs:p-4 group ${className}`}
+        className={`card flex gap-3 xs:gap-4 p-3 xs:p-4 group ${supportsHover ? "catalog-item-hover" : ""} ${className}`}
         aria-label={`${novel.title} by ${novel.authorName}`}
       >
         <div className="overlay-sheen" aria-hidden />
-        <div className="w-16 xs:w-20 h-[100px] xs:h-[120px] shrink-0 rounded-sm overflow-hidden shadow-lg bg-surface-highlight relative">
+        <div className={`catalog-item-cover w-16 xs:w-20 h-[100px] xs:h-[120px] shrink-0 rounded-sm overflow-hidden shadow-lg bg-surface-highlight relative`}>
           {novel.coverImageUrl ? (
             <img
               src={novel.coverImageUrl}
@@ -93,11 +96,11 @@ export function NovelCard({ novel, variant = "default", fill = false, className 
     return (
       <Link
         href={href}
-        className={`card flex gap-6 p-4 group h-[240px] ${className}`}
+        className={`card flex gap-6 p-4 group h-[240px] ${supportsHover ? "catalog-item-hover" : ""} ${className}`}
         aria-label={`${novel.title} by ${novel.authorName}`}
       >
         <div className="overlay-sheen" aria-hidden />
-        <div className="w-[160px] h-[240px] shrink-0 rounded-sm overflow-hidden shadow-lg bg-surface-highlight relative">
+        <div className="catalog-item-cover w-[160px] h-[240px] shrink-0 rounded-sm overflow-hidden shadow-lg bg-surface-highlight relative">
           {novel.coverImageUrl ? (
             <img
               src={novel.coverImageUrl}
@@ -160,10 +163,10 @@ export function NovelCard({ novel, variant = "default", fill = false, className 
   return (
     <Link
       href={href}
-      className={`flex flex-col ${fill ? "w-full min-w-0" : "w-[110px] xs:w-[130px] shrink-0 snap-start"} group cursor-pointer ${className}`}
+      className={`flex flex-col ${fill ? "w-full min-w-0" : "w-[110px] xs:w-[130px] shrink-0 snap-start"} group cursor-pointer ${supportsHover ? "catalog-item-hover" : ""} ${className}`}
       aria-label={`${novel.title} by ${novel.authorName}`}
     >
-      <div className="relative w-full aspect-[2/3] rounded-sm overflow-hidden mb-3 shadow-lg border border-white/5 transition-transform duration-300 group-hover:-translate-y-1">
+      <div className="catalog-item-cover relative w-full aspect-[2/3] rounded-sm overflow-hidden mb-3 shadow-lg border border-white/5">
         {novel.coverImageUrl ? (
           <img
             src={novel.coverImageUrl}
