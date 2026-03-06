@@ -15,6 +15,8 @@ interface NovelCardProps {
   novel: NovelCardData;
   /** Optional: use compact horizontal layout (e.g. Current Affairs) */
   variant?: "default" | "compact";
+  /** When true, card fills grid cell (for responsive grid layout on tablet/desktop) */
+  fill?: boolean;
   className?: string;
 }
 
@@ -22,7 +24,7 @@ interface NovelCardProps {
  * Reusable novel card. Tapping navigates to Novel Detail.
  * Design: cover 2:3, title Playfair Display, author Marcellus, optional star badge.
  */
-export function NovelCard({ novel, variant = "default", className = "" }: NovelCardProps) {
+export function NovelCard({ novel, variant = "default", fill = false, className = "" }: NovelCardProps) {
   const href = novelDetailPath(novel.id);
 
   if (variant === "compact") {
@@ -67,7 +69,7 @@ export function NovelCard({ novel, variant = "default", className = "" }: NovelC
   return (
     <Link
       href={href}
-      className={`flex flex-col w-[110px] xs:w-[130px] shrink-0 snap-start group cursor-pointer ${className}`}
+      className={`flex flex-col ${fill ? "w-full min-w-0" : "w-[110px] xs:w-[130px] shrink-0 snap-start"} group cursor-pointer ${className}`}
       aria-label={`${novel.title} by ${novel.authorName}`}
     >
       <div className="relative w-full aspect-[2/3] rounded-sm overflow-hidden mb-3 shadow-lg border border-white/5 transition-transform duration-300 group-hover:-translate-y-1">
