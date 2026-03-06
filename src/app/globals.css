@@ -154,8 +154,12 @@ h4,
   box-shadow: var(--shadow-gold-glow);
 }
 
-.btn-gold:hover {
-  background-color: white;
+/* Button hover: brightness + bg change — only on pointer devices (THE-85) */
+@media (hover: hover) {
+  .btn-gold:hover {
+    background-color: white;
+    filter: brightness(1.08);
+  }
 }
 
 .card {
@@ -176,8 +180,11 @@ h4,
   pointer-events: none;
 }
 
-.card:hover .overlay-sheen {
-  opacity: 1;
+/* Card overlay sheen — only on pointer devices (THE-85) */
+@media (hover: hover) {
+  .card:hover .overlay-sheen {
+    opacity: 1;
+  }
 }
 
 .line-clamp-1 {
@@ -397,5 +404,30 @@ h4,
     box-shadow: 0 4px 20px -5px rgba(212, 175, 55, 0.3);
     filter: brightness(1.05);
     transform: scale(1.02);
+  }
+}
+
+/* Button hover brightness — primary buttons (THE-85) */
+@media (hover: hover) {
+  .btn-hover-brightness:hover {
+    filter: brightness(1.08);
+  }
+}
+
+/* FAB hover scale — only on pointer devices (THE-85) */
+.fab-hover-scale {
+  transition: transform 0.3s ease;
+}
+@media (hover: hover) {
+  .fab-hover-scale:hover {
+    transform: scale(1.05);
+  }
+}
+.fab-hover-scale-lg {
+  transition: transform 0.3s ease;
+}
+@media (hover: hover) {
+  .fab-hover-scale-lg:hover {
+    transform: scale(1.08);
   }
 }
