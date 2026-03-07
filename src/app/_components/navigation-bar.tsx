@@ -160,7 +160,7 @@ export function NavigationBar({ activeTab, layout }: NavigationBarProps) {
         }}
         aria-label="Main navigation"
       >
-        <div className="max-w-md mx-auto px-6">
+        <div className="w-full px-4">
           <div className="flex justify-between items-end w-full">
           {TABS.map(({ id, href, label, icon }) => (
             <NavTabLinkBottom
@@ -186,7 +186,7 @@ export function NavigationBar({ activeTab, layout }: NavigationBarProps) {
         }}
         aria-label="Main navigation"
       >
-        <div className="max-w-md mx-auto px-6">
+        <div className="w-full px-4">
           <div className="flex justify-between items-end w-full">
           {TABS.map(({ id, href, label, icon }) => (
             <NavTabLinkBottom

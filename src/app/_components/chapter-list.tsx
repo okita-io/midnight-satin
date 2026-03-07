@@ -34,17 +34,25 @@ export function ChapterList({
   novelId,
   chapters,
   unlockedIds,
-  updatedAgo,
+  updatedAgo: _updatedAgo,
 }: ChapterListProps) {
+  const freeCount = chapters.filter((ch) => ch.isFree || unlockedIds.has(ch.id)).length;
+  const lockedCount = chapters.length - freeCount;
+
   return (
     <div className="mb-24">
       <div className="flex justify-between items-end mb-4 xs:mb-6">
         <h3 className="text-text-muted text-sm uppercase tracking-[0.2em] font-medium border-b border-primary/20 pb-2">
           Contents
         </h3>
-        {updatedAgo && (
-          <span className="text-xs text-text-muted">{updatedAgo}</span>
-        )}
+        <div className="flex items-center gap-4">
+          <span className="text-[10px] text-primary/60 uppercase tracking-widest font-ui">
+            {freeCount} Free {freeCount === 1 ? "Chapter" : "Chapters"}
+          </span>
+          <span className="text-[10px] text-primary/60 uppercase tracking-widest font-ui">
+            {lockedCount} Locked
+          </span>
+        </div>
       </div>
       <div className="grid grid-cols-1 gap-0 divide-y divide-white/5 lg:grid-cols-2 lg:gap-x-6 lg:gap-y-4 lg:divide-y-0">
         {chapters.map((ch) => {
