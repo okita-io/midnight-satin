@@ -19,7 +19,7 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000). Design reference files live in `reference/`; always implement screens to match the corresponding HTML mockups and the design system in `reference/midnight_satin_prd.html`.
+Open [http://localhost:3000](http://localhost:3000). Design reference files live in `reference/`; always implement screens to match the corresponding HTML mockups and the design system in `reference/midnight_satin_prd.html`. To preview reference mockups in the browser, run `npm run preview:reference` and open [http://localhost:3333](http://localhost:3333) (e.g. `/tablet_the_boudoir.html`).
 
 ### Payment (Stripe)
 
