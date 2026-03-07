@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Midnight Satin - Reading Room Tablet Edition</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&amp;family=Literata:opsz,wght@7..72,200..900&amp;family=Marcellus&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#D4AF37", // Metallic Gold
+                        "void": "#050505", // True Void Black
+                        "surface": "#121212",
+                        "surface-highlight": "#1A1A1A",
+                        "text-main": "#EAEAEA",
+                        "text-muted": "#8A8A8A",
+                        "accent": "#800020", // Burgundy
+                        "parchment-dark": "#151515",
+                    },
+                    fontFamily: {
+                        "display": ["Playfair Display", "serif"],
+                        "header": ["Cinzel", "serif"],
+                        "body": ["Literata", "serif"],
+                        "ui": ["Marcellus", "serif"],
+                    },
+                    backgroundImage: {
+                        'silk-gradient': 'linear-gradient(180deg, rgba(5,5,5,0) 0%, rgba(5,5,5,0.8) 70%, #050505 100%)',
+                        'gold-sheen': 'linear-gradient(45deg, rgba(212, 175, 55, 0.1) 0%, rgba(212, 175, 55, 0) 100%)',
+                    },
+                    boxShadow: {
+                        'gold-glow': '0px 4px 24px rgba(212, 175, 55, 0.2)',
+                        'card-depth': '0 10px 40px -10px rgba(0, 0, 0, 0.9)',
+                    }
+                },
+            },
+        }
+    </script>
+<style type="text/tailwindcss">
+        .bg-silk-noise {
+            background-color: #050505;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.04'/%3E%3C/svg%3E");
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .gold-text-shadow {
+            text-shadow: 0px 0px 15px rgba(212, 175, 55, 0.4);
+        }
+        .book-spread-shadow {
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.8), 0 20px 50px rgba(0,0,0,0.9);
+        }
+        .page-gradient-left {
+            background: linear-gradient(90deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0) 5%, rgba(0,0,0,0) 95%, rgba(0,0,0,0.4) 100%);
+        }
+        .page-gradient-right {
+            background: linear-gradient(90deg, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0) 5%, rgba(0,0,0,0) 95%, rgba(0,0,0,0.3) 100%);
+        }
+        .book-spine {
+            background: linear-gradient(90deg, 
+                rgba(212, 175, 55, 0) 0%, 
+                rgba(212, 175, 55, 0.3) 45%, 
+                rgba(212, 175, 55, 0.8) 50%, 
+                rgba(212, 175, 55, 0.3) 55%, 
+                rgba(212, 175, 55, 0) 100%);
+        }
+        p {
+            text-indent: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        p:first-of-type {
+            text-indent: 0;
+        }
+        .first-letter-drop::first-letter {
+            float: left;
+            font-family: 'Playfair Display', serif;
+            font-size: 4.5rem;
+            line-height: 0.8;
+            padding-top: 0.2rem;
+            padding-right: 0.5rem;
+            padding-bottom: 0.2rem;
+            color: #D4AF37;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+    </style>
+<style>
+        body {
+            min-height: max(884px, 100dvh);
+            overflow: hidden;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-void text-text-main font-body antialiased selection:bg-primary selection:text-void">
+<div class="relative h-screen w-full flex flex-col bg-silk-noise">
+<header class="absolute top-0 left-0 right-0 z-50 flex justify-between items-center px-8 py-6 opacity-0 hover:opacity-100 transition-opacity duration-300 bg-gradient-to-b from-black/90 to-transparent">
+<button class="text-white/80 hover:text-primary transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-2xl">arrow_back_ios_new</span>
+<span class="font-ui tracking-widest text-sm uppercase">Library</span>
+</button>
+<div class="text-center">
+<span class="font-header text-sm tracking-[0.3em] text-primary block">The Duke's Forbidden Vow</span>
+<span class="font-ui text-[10px] tracking-[0.2em] text-text-muted uppercase">Chapter IV: Velvet &amp; Steel</span>
+</div>
+<button class="text-white/80 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-2xl">bookmark_add</span>
+</button>
+</header>
+<main class="flex-1 flex items-center justify-center p-8 h-full">
+<div class="relative w-full max-w-7xl h-[85vh] flex rounded-sm book-spread-shadow bg-parchment-dark overflow-hidden border border-white/5">
+<div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.8%22 numOctaves=%224%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22 opacity=%220.03%22/%3E%3C/svg%3E')] mix-blend-overlay pointer-events-none z-10"></div>
+<article class="flex-1 relative page-gradient-left px-16 py-14 overflow-hidden flex flex-col justify-between">
+<div>
+<h2 class="font-display italic font-bold text-3xl text-primary mb-8 text-center gold-text-shadow">Chapter IV</h2>
+<h3 class="font-header tracking-[0.2em] text-lg text-white/90 mb-10 text-center uppercase">Velvet &amp; Steel</h3>
+<div class="prose prose-invert prose-lg text-text-main/90 font-body leading-relaxed text-justify relative z-20">
+<p class="first-letter-drop">
+                                The ballroom was a swirling masquerade of silk, satin, and deceit. Lord Blackwood stood at the edge of the polished marble floor, his dark gaze cutting through the throngs of laughing nobles. He had not come for the champagne, nor for the idle gossip that flowed as freely as the wine. He was here for her.
+                            </p>
+<p>
+                                Lady Seraphina appeared at the top of the grand staircase, a vision draped in midnight blue that seemed to absorb the light of a thousand crystal chandeliers. A collective breath was drawn by the assembly, a hushed reverence that spoke volumes of her sudden, scandalous return to London society.
+                            </p>
+<p>
+                                As she descended, her eyes caught his. For a fleeting second, the cacophony of the orchestra faded into silence. The vow he had sworn—never to seek her out, never to succumb to the dangerous pull she had over him—frayed at the edges. The gold mask she wore concealed her expression, but the slight tilt of her chin was a challenge he knew all too well.
+                            </p>
+<p>
+                                He stepped away from the shadowed pillar, his movements predatory and deliberate. The heat of the crowded room seemed to intensify, wrapping around them both in an invisible, suffocating embrace. He navigated the dancing couples, his focus unwavering. Every step was a breach of his honor, a step closer to ruin.
+                            </p>
+</div>
+</div>
+<div class="text-center font-ui text-[10px] text-text-muted/50 tracking-[0.2em] mt-8">
+                        42
+                    </div>
+</article>
+<div class="w-[2px] h-full book-spine z-30 shadow-gold-glow relative">
+<div class="absolute inset-y-0 -left-6 w-6 bg-gradient-to-r from-transparent to-black/60 pointer-events-none"></div>
+<div class="absolute inset-y-0 -right-6 w-6 bg-gradient-to-l from-transparent to-black/60 pointer-events-none"></div>
+</div>
+<article class="flex-1 relative page-gradient-right px-16 py-14 overflow-hidden flex flex-col justify-between">
+<div class="prose prose-invert prose-lg text-text-main/90 font-body leading-relaxed text-justify relative z-20 mt-6">
+<p>
+                            "I see you have not lost your penchant for theatrical entrances, my lady," Blackwood murmured, his voice a low rumble that barely carried over the swelling waltz. He had reached her just as she stepped onto the dance floor.
+                        </p>
+<p>
+                            Seraphina did not flinch. She offered him a gloved hand, the touch of velvet against his bare skin sending an unwanted thrill down his spine. "And you, your Grace, have not lost your habit of lurking in the shadows like a forgotten ghost."
+                        </p>
+<p>
+                            He pulled her into the dance, a beat late, drawing her closer than propriety allowed. "A ghost you conjured back to life, it seems. Why are you here, Seraphina? You know the danger."
+                        </p>
+<p>
+                            "Danger is a subjective term, Blackwood," she countered smoothly, matching his steps with an infuriating grace. "Some might say the real danger lies in hiding away, bound by ridiculous vows and dusty traditions."
+                        </p>
+<p>
+                            Her scent—jasmine and something dark, intoxicating—filled his senses. He gripped her waist a fraction tighter, feeling the steel boning of her corset beneath the silk. "You play a perilous game. The Duke of Westmoreland is watching."
+                        </p>
+<p>
+                            "Let him watch," she whispered, leaning in so close her breath brushed his jaw. "Let them all watch as the stoic Lord Blackwood finally breaks."
+                        </p>
+<p>
+                            The music swelled to a crescendo, but Blackwood heard only the erratic thudding of his own heart. The vow was broken. He knew it in that moment, as surely as he knew the sun would rise. And God help him, he didn't care.
+                        </p>
+</div>
+<div class="text-center font-ui text-[10px] text-text-muted/50 tracking-[0.2em] mt-8">
+                        43
+                    </div>
+</article>
+</div>
+</main>
+<!-- Bottom HUD (match mobile view) -->
+<footer class="fixed bottom-0 left-0 w-full z-50 bg-[#0a0a0a] border-t border-white/5 shadow-2xl shadow-black pb-safe-bottom">
+<!-- Progress Bar -->
+<div class="w-full h-1 bg-white/10 relative">
+<div class="absolute left-0 top-0 h-full bg-primary w-[35%] shadow-[0_0_10px_rgba(212,175,55,0.5)]"></div>
+</div>
+<div class="px-6 py-4 flex items-center justify-between max-w-md mx-auto">
+<!-- Font Settings Toggle -->
+<button class="flex flex-col items-center gap-1 text-text-muted hover:text-white transition-colors">
+<span class="material-symbols-outlined" style="font-size: 24px;">text_fields</span>
+<span class="text-[10px] font-ui uppercase tracking-wider">Type</span>
+</button>
+<!-- Chapter Scrubber Control -->
+<div class="flex-1 px-8 flex flex-col items-center">
+<div class="w-full flex justify-between text-[10px] font-ui text-text-muted uppercase tracking-wider mb-2">
+<span>Prev</span>
+<span>35%</span>
+<span>Next</span>
+</div>
+<div class="flex items-center gap-6 text-text-main">
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">skip_previous</span></button>
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">play_circle</span></button>
+<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">skip_next</span></button>
+</div>
+</div>
+<!-- More Options -->
+<button class="flex flex-col items-center gap-1 text-text-muted hover:text-white transition-colors">
+<span class="material-symbols-outlined" style="font-size: 24px;">settings</span>
+<span class="text-[10px] font-ui uppercase tracking-wider">Set</span>
+</button>
+</div>
+</footer>
+</div>
+
+</body></html>

@@ -330,3 +330,6 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - _Validates: Requirements 12.1, 12.2, 12.3, 12.4, 12.5, 12.6, 12.7_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56, THE-71)
   - Ensure all tests pass, ask the user if questions arise.
+- [ ] 17. Revise live app (src/) — next milestone
+  - Align Novel Detail tablet layout and components with refined reference (the_novel_detail_tablet.html): two-column 50/50 grid, cover + overlay left / synopsis + contents right, nav and chapter list styling, free–locked counts, list-style chapters with dividers
+  - Review and apply any remaining reference refinements across Boudoir, Library, Vault, Profile, and shared components as needed
