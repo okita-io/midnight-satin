@@ -54,7 +54,7 @@ export function ChapterList({
           </span>
         </div>
       </div>
-      <div className="grid grid-cols-1 gap-0 divide-y divide-white/5 lg:grid-cols-2 lg:gap-x-6 lg:gap-y-4 lg:divide-y-0">
+      <div className="flex flex-col divide-y divide-white/5">
         {chapters.map((ch) => {
           const isAccessible = ch.isFree || unlockedIds.has(ch.id);
           const href = readingRoomPath(novelId, ch.id);
@@ -63,7 +63,7 @@ export function ChapterList({
             <Link
               key={ch.id}
               href={isAccessible ? href : "#"}
-              className={`group flex items-center justify-between py-4 xs:py-5 px-2 -mx-2 rounded transition-colors ${isAccessible
+              className={`group flex items-end justify-between py-4 xs:py-5 px-2 -mx-2 rounded transition-colors ${isAccessible
                   ? "cursor-pointer hover:bg-white/5 active:scale-[0.99]"
                   : "cursor-default opacity-60"
                 }`}
