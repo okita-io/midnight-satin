@@ -154,13 +154,14 @@ export function NavigationBar({ activeTab, layout }: NavigationBarProps) {
   if (useBottomOnly) {
     return (
       <nav
-        className="nav-bottom-bar fixed bottom-0 left-0 right-0 z-50 max-w-md mx-auto bg-void border-t border-white/10 px-6 pt-4 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] transition-all duration-300 ease-in-out"
+        className="nav-bottom-bar fixed bottom-0 left-0 right-0 z-50 w-full bg-void border-t border-white/10 pt-4 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] transition-all duration-300 ease-in-out"
         style={{
           paddingBottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))",
         }}
         aria-label="Main navigation"
       >
-        <div className="flex justify-between items-end w-full">
+        <div className="max-w-md mx-auto px-6">
+          <div className="flex justify-between items-end w-full">
           {TABS.map(({ id, href, label, icon }) => (
             <NavTabLinkBottom
               key={id}
@@ -170,6 +171,7 @@ export function NavigationBar({ activeTab, layout }: NavigationBarProps) {
               isActive={activeTab === id}
             />
           ))}
+          </div>
         </div>
       </nav>
     );
@@ -178,13 +180,14 @@ export function NavigationBar({ activeTab, layout }: NavigationBarProps) {
   return (
     <>
       <nav
-        className="nav-bottom-bar flex md:hidden fixed bottom-0 left-0 right-0 z-50 max-w-md mx-auto bg-void border-t border-white/10 px-6 pt-4 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] transition-all duration-300 ease-in-out"
+        className="nav-bottom-bar flex md:hidden fixed bottom-0 left-0 right-0 z-50 w-full bg-void border-t border-white/10 pt-4 shadow-[0_-10px_40px_rgba(0,0,0,0.8)] transition-all duration-300 ease-in-out"
         style={{
           paddingBottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))",
         }}
         aria-label="Main navigation"
       >
-        <div className="flex justify-between items-end w-full">
+        <div className="max-w-md mx-auto px-6">
+          <div className="flex justify-between items-end w-full">
           {TABS.map(({ id, href, label, icon }) => (
             <NavTabLinkBottom
               key={id}
@@ -194,6 +197,7 @@ export function NavigationBar({ activeTab, layout }: NavigationBarProps) {
               isActive={activeTab === id}
             />
           ))}
+          </div>
         </div>
       </nav>
       <nav

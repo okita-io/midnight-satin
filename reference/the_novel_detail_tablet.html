@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#D4AF37",
+                        "void": "#050505",
+                        "surface": "#121212",
+                        "text-main": "#EAEAEA",
+                        "text-muted": "#8A8A8A",
+                        "accent": "#800020",
+                    },
+                    fontFamily: {
+                        "display": ["Playfair Display", "serif"],
+                        "body": ["Literata", "serif"],
+                        "heading": ["Cinzel", "serif"],
+                        "ui": ["Marcellus", "serif"]
+                    },
+                    backgroundImage: {
+                        'silk-noise': "url('https://www.transparenttextures.com/patterns/stardust.png')",
+                    },
+                    boxShadow: {
+                        'glow': '0px 4px 20px rgba(212, 175, 55, 0.15)',
+                    }
+                },
+            },
+        }</script>
+    <title>Midnight Satin - Tablet View</title>
+</head>
+
+<body class="bg-void text-text-main font-body antialiased overflow-x-hidden">
+    <div class="fixed inset-0 pointer-events-none opacity-[0.03] bg-silk-noise z-0"></div>
+    <div class="max-w-[1024px] mx-auto min-h-screen flex flex-col border-x border-primary/10">
+        <main class="flex-1 p-8 space-y-12">
+            <section class="flex flex-col md:flex-row gap-10">
+                <div class="w-full md:w-1/3 shrink-0 relative">
+                    <div
+                        class="aspect-[2/3] w-full rounded-lg overflow-hidden border border-primary/20 shadow-2xl relative">
+                        <img alt="Midnight Satin Cover" class="w-full h-full object-cover"
+                            src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3OsDyhnFqXzSJHKxU3VZLgnIZx6jvMhqJ2FHlA43Mgn74OXo5m5VKtoHeCvGEkRzvuhfunKedZMPeUb6AAwq0H-pCxJX1Z0uS14BwJD9oB-WfI5MIRb7nQUcrogEYUvoiuXBfC4hwKnM5OrbxSnYNmzlIZY51QtT0oGQMDntm7E1PLGh2POZV4wSwUwKmdCaBBAPnqjWQrFAU0W7KijPd0W5mDAj14bwUkG-E8HVPn6gpy0K1FdFBwzv8nUXLJVdQhRwB_ZfcIa0" />
+                        <div
+                            class="absolute bottom-0 left-0 w-full p-4 flex flex-wrap gap-2 bg-gradient-to-t from-void to-transparent">
+                            <span
+                                class="px-3 py-1 text-[10px] tracking-[0.15em] uppercase border border-primary/40 text-primary rounded-sm bg-void/60 backdrop-blur-sm font-ui">Romance</span>
+                            <span
+                                class="px-3 py-1 text-[10px] tracking-[0.15em] uppercase border border-primary/40 text-primary rounded-sm bg-void/60 backdrop-blur-sm font-ui">Historical</span>
+                            <span
+                                class="px-3 py-1 text-[10px] tracking-[0.15em] uppercase border border-primary/40 text-primary rounded-sm bg-void/60 backdrop-blur-sm font-ui">Spicy</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-1 space-y-6">
+                    <div class="space-y-2">
+                        <h1 class="text-5xl font-display italic font-bold text-text-main leading-tight">Midnight Satin
+                        </h1>
+                        <p class="text-sm text-text-muted font-ui tracking-widest uppercase">By <span
+                                class="text-primary">Evelyn Thorne</span></p>
+                    </div>
+                    <div class="space-y-4">
+                        <h3 class="text-text-muted text-[11px] uppercase tracking-[0.25em] font-heading font-medium">
+                            Synopsis</h3>
+                        <div class="h-[1px] w-full bg-primary/10"></div>
+                        <p class="text-text-main/90 text-[17px] leading-relaxed font-body">
+                            A tale of forbidden desire and regal secrets. In the heart of the midnight palace, a young
+                            seamstress discovers that the satin she weaves holds the power to change the empire's fate
+                            forever. When the Crown Prince commissions a garment made of the legendary Midnight Silk,
+                            their worlds collide in a dangerous dance of passion and political intrigue.
+                        </p>
+                        <p class="text-text-main/90 text-[17px] leading-relaxed font-body">
+                            Behind every thread lies a whisper of rebellion, and beneath every touch smolders a fire
+                            that could burn the entire dynasty to the ground.
+                        </p>
+                    </div>
+                    <div class="pt-4 flex gap-4">
+                        <button
+                            class="bg-primary text-void font-bold px-8 py-3 rounded-full shadow-glow hover:scale-105 transition-transform flex items-center gap-2 font-ui uppercase text-xs tracking-widest">
+                            <span class="material-symbols-outlined text-lg"
+                                style="font-variation-settings: 'FILL' 1;">play_arrow</span> Read First Chapter
+                        </button>
+                        <button
+                            class="bg-void/40 backdrop-blur-md border border-primary/40 text-primary font-bold px-8 py-3 rounded-full hover:bg-primary/10 transition-colors font-ui uppercase text-xs tracking-widest">
+                            Add to Library
+                        </button>
+                    </div>
+                </div>
+            </section>
+            <section class="space-y-6">
+                <div class="flex items-center justify-between">
+                    <h2
+                        class="text-2xl font-playfair font-bold text-primary text-[11px] uppercase tracking-[0.25em] font-heading font-medium text-text-muted">
+                        The Players</h2>
+                    <button
+                        class="text-primary text-[11px] uppercase tracking-[0.2em] font-ui flex items-center gap-1 group">View
+                        All <span
+                            class="material-symbols-outlined text-[14px] group-hover:translate-x-0.5 transition-transform">arrow_forward_ios</span></button>
+                </div>
+                <div class="flex gap-8 overflow-x-auto pb-6 scrollbar-hide no-scrollbar">
+                    <div class="flex flex-col items-center gap-3 min-w-[80px]">
+                        <div
+                            class="w-[80px] h-[80px] rounded-full p-[1.5px] border border-primary/20 bg-void overflow-hidden">
+                            <img alt="Prince Alaric" class="w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuDH92oVwPrHrhfRUKdsNL6gqjKK93hlctZSppydSVxJR8zfd2H9Jo-23H10OwpmsHnCBBpfyPWa1OYSZT_s-j2SeAQeSGRwv0tMiBJ8kolLdPmTp83OCT38rESO-w7bdNikMQWlHH5CPlOENJDT4i3W4hChu5tvZ5atsGbhAfPL_-daixmW3Kx17-biOc2mmwHVFNRpFguHQIjlhJTQ4O-ggaO47RGbMVY4guWPKz3Tj4mvfrQ-Ax7DkQMGgJrNSaYlz2rGbC4Fp4M" />
+                        </div>
+                        <span
+                            class="text-[10px] text-text-muted font-ui uppercase tracking-widest text-center">Alaric</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-3 min-w-[80px]">
+                        <div
+                            class="w-[80px] h-[80px] rounded-full p-[1.5px] border border-primary/20 bg-void overflow-hidden">
+                            <img alt="Elara Vance" class="w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuCFZai2ZuUm8OPLFR5VHqxpNx27KgEG1FgAY3L-7K6b9iX2msRe15zSLXZqjG0exb8wfB199dDri3p1rT-byLoI6e1HDGJGUQb4jTkpjUqRJcDJqQJ8hKjgSMWIQGENpf4U7R5AvnQDYzRuLombg8lw1bhtDQqjJ_n8lLgFIuOGbL9JExy9ZsGlKrhWuLnW6WW63DNLf13PN9am1yram98zmVXEap8MH39z8UvvksORzOFuoC0hs0-h83vaXwt0W9qg1VPXJZHT298" />
+                        </div>
+                        <span
+                            class="text-[10px] text-text-muted font-ui uppercase tracking-widest text-center">Elara</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-3 min-w-[80px]">
+                        <div
+                            class="w-[80px] h-[80px] rounded-full p-[1.5px] border border-primary/20 bg-void overflow-hidden">
+                            <img alt="Duke Malakor" class="w-full h-full object-cover"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBxeLdCweypSG5UE5KpsVn3zw9mgtlLIoyQ7TOH9Tr1rRVr4_E_GDQZXeXCY_rlQWw70LTJ5IQ1hc9K3TMu-93meBhQJphIhUlLDbWKds2U5HEzisYJL3VBUWeE5T0kW6NOXfBrSaYuGiZ8OqZG1625WPg4tKfp3YmJBPvf6fYRaKpBSB3gd0NsqaXsB1UjTLAs7Kd7Toy6HRFe_I6hh6KwuZMKBBUU8bI_DdSOegjPwPLb7aadxugfPCA03pux7TM-Ih6Yj6_LHOc" />
+                        </div>
+                        <span
+                            class="text-[10px] text-text-muted font-ui uppercase tracking-widest text-center">Malakor</span>
+                    </div>
+                </div>
+            </section>
+            <section class="space-y-6">
+                <div class="flex items-center justify-between border-b border-primary/20 pb-4">
+                    <h2 class="text-text-muted text-[11px] uppercase tracking-[0.25em] font-heading font-medium">
+                        Contents</h2>
+                    <div class="flex items-center gap-4 text-sm"><span
+                            class="text-[10px] text-primary/60 uppercase tracking-widest font-ui">5 Free Chapters</span>
+                        <span class="text-[10px] text-primary/60 uppercase tracking-widest font-ui ml-4">20
+                            Locked</span>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-primary uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="space-y-1">
+                            <p class="text-lg text-text-main font-display italic line-clamp-1">Chapter Title</p>
+                            <span class="text-[10px] text-text-muted uppercase tracking-widest font-ui">Free</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-primary uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="space-y-1">
+                            <p class="text-lg text-text-main font-display italic line-clamp-1">Chapter Title</p>
+                            <span class="text-[10px] text-text-muted uppercase tracking-widest font-ui">Free</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-primary uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="space-y-1">
+                            <p class="text-lg text-text-main font-display italic line-clamp-1">Chapter Title</p>
+                            <span class="text-[10px] text-text-muted uppercase tracking-widest font-ui">Free</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-primary uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="space-y-1">
+                            <p class="text-lg text-text-main font-display italic line-clamp-1">Chapter Title</p>
+                            <span class="text-[10px] text-text-muted uppercase tracking-widest font-ui">Free</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-primary uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="space-y-1">
+                            <p class="text-lg text-text-main font-display italic line-clamp-1">Chapter Title</p>
+                            <span class="text-[10px] text-text-muted uppercase tracking-widest font-ui">Free</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-lg text-text-muted font-display italic line-clamp-1">Locked Chapter</p>
+                            <span class="material-symbols-outlined text-primary text-[18px]"
+                                style="font-variation-settings: 'FILL' 1;">lock</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-lg text-text-muted font-display italic line-clamp-1">Locked Chapter</p>
+                            <span class="material-symbols-outlined text-primary text-[18px]"
+                                style="font-variation-settings: 'FILL' 1;">lock</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-lg text-text-muted font-display italic line-clamp-1">Locked Chapter</p>
+                            <span class="material-symbols-outlined text-primary text-[18px]"
+                                style="font-variation-settings: 'FILL' 1;">lock</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-lg text-text-muted font-display italic line-clamp-1">Locked Chapter</p>
+                            <span class="material-symbols-outlined text-primary text-[18px]"
+                                style="font-variation-settings: 'FILL' 1;">lock</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-lg text-text-muted font-display italic line-clamp-1">Locked Chapter</p>
+                            <span class="material-symbols-outlined text-primary text-[18px]"
+                                style="font-variation-settings: 'FILL' 1;">lock</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-lg text-text-muted font-display italic line-clamp-1">Locked Chapter</p>
+                            <span class="material-symbols-outlined text-primary text-[18px]"
+                                style="font-variation-settings: 'FILL' 1;">lock</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-lg text-text-muted font-display italic line-clamp-1">Locked Chapter</p>
+                            <span class="material-symbols-outlined text-primary text-[18px]"
+                                style="font-variation-settings: 'FILL' 1;">lock</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-lg text-text-muted font-display italic line-clamp-1">Locked Chapter</p>
+                            <span class="material-symbols-outlined text-primary text-[18px]"
+                                style="font-variation-settings: 'FILL' 1;">lock</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-lg text-text-muted font-display italic line-clamp-1">Locked Chapter</p>
+                            <span class="material-symbols-outlined text-primary text-[18px]"
+                                style="font-variation-settings: 'FILL' 1;">lock</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-lg text-text-muted font-display italic line-clamp-1">Locked Chapter</p>
+                            <span class="material-symbols-outlined text-primary text-[18px]"
+                                style="font-variation-settings: 'FILL' 1;">lock</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-lg text-text-muted font-display italic line-clamp-1">Locked Chapter</p>
+                            <span class="material-symbols-outlined text-primary text-[18px]"
+                                style="font-variation-settings: 'FILL' 1;">lock</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-lg text-text-muted font-display italic line-clamp-1">Locked Chapter</p>
+                            <span class="material-symbols-outlined text-primary text-[18px]"
+                                style="font-variation-settings: 'FILL' 1;">lock</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-lg text-text-muted font-display italic line-clamp-1">Locked Chapter</p>
+                            <span class="material-symbols-outlined text-primary text-[18px]"
+                                style="font-variation-settings: 'FILL' 1;">lock</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-lg text-text-muted font-display italic line-clamp-1">Locked Chapter</p>
+                            <span class="material-symbols-outlined text-primary text-[18px]"
+                                style="font-variation-settings: 'FILL' 1;">lock</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-lg text-text-muted font-display italic line-clamp-1">Locked Chapter</p>
+                            <span class="material-symbols-outlined text-primary text-[18px]"
+                                style="font-variation-settings: 'FILL' 1;">lock</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-lg text-text-muted font-display italic line-clamp-1">Locked Chapter</p>
+                            <span class="material-symbols-outlined text-primary text-[18px]"
+                                style="font-variation-settings: 'FILL' 1;">lock</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-lg text-text-muted font-display italic line-clamp-1">Locked Chapter</p>
+                            <span class="material-symbols-outlined text-primary text-[18px]"
+                                style="font-variation-settings: 'FILL' 1;">lock</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-lg text-text-muted font-display italic line-clamp-1">Locked Chapter</p>
+                            <span class="material-symbols-outlined text-primary text-[18px]"
+                                style="font-variation-settings: 'FILL' 1;">lock</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-lg text-text-muted font-display italic line-clamp-1">Locked Chapter</p>
+                            <span class="material-symbols-outlined text-primary text-[18px]"
+                                style="font-variation-settings: 'FILL' 1;">lock</span>
+                        </div>
+                    </div>
+                    <div
+                        class="p-5 bg-surface/50 border border-primary/5 rounded-xl hover:bg-surface transition-all cursor-pointer flex flex-col justify-between aspect-video">
+                        <p class="text-[10px] text-text-muted uppercase tracking-[0.2em] font-ui">Chapter</p>
+                        <div class="flex items-center justify-between">
+                            <p class="text-lg text-text-muted font-display italic line-clamp-1">Locked Chapter</p>
+                            <span class="material-symbols-outlined text-primary text-[18px]"
+                                style="font-variation-settings: 'FILL' 1;">lock</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <div
+            class="fixed bottom-0 left-0 right-0 max-w-[1024px] mx-auto z-50 bg-void/90 backdrop-blur-xl border-t border-primary/10 pb-safe">
+            <div class="flex justify-around items-center h-20 px-4">
+                <a class="flex flex-col items-center justify-center text-text-muted/60 hover:text-primary transition-colors"
+                    href="#">
+                    <span class="material-symbols-outlined text-[28px]">history_edu</span>
+                    <span class="text-[9px] uppercase tracking-widest mt-1">Boudoir</span>
+                </a>
+                <a class="flex flex-col items-center justify-center text-primary" href="#">
+                    <div class="relative flex flex-col items-center">
+                        <span class="material-symbols-outlined text-[28px]"
+                            style="font-variation-settings: 'FILL' 1;">auto_stories</span>
+                        <span class="text-[9px] uppercase tracking-widest mt-1">Library</span>
+                        <div class="absolute -bottom-2 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-primary rounded-full">
+                        </div>
+                    </div>
+                </a>
+                <a class="flex flex-col items-center justify-center text-text-muted/60 hover:text-primary transition-colors"
+                    href="#">
+                    <span class="material-symbols-outlined text-[28px]">theater_comedy</span>
+                    <span class="text-[9px] uppercase tracking-widest mt-1">Vault</span>
+                </a>
+                <a class="flex flex-col items-center justify-center text-text-muted/60 hover:text-primary transition-colors"
+                    href="#">
+                    <span class="material-symbols-outlined text-[28px]">monetization_on</span>
+                    <span class="text-[9px] uppercase tracking-widest mt-1">Profile</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

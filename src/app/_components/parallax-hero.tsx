@@ -11,6 +11,8 @@ interface ParallaxHeroProps {
   genreTags: string[];
   rating: number;
   ratingCount: number;
+  /** When set, mobile hero shows centered layout with Start Reading button (home-style). */
+  startReadingHref?: string;
 }
 
 /**
@@ -26,6 +28,7 @@ export function ParallaxHero({
   genreTags,
   rating,
   ratingCount,
+  startReadingHref,
 }: ParallaxHeroProps) {
   const cover = (
     <>
@@ -37,6 +40,7 @@ export function ParallaxHero({
         }}
       />
       <div className="absolute inset-0 bg-gradient-to-t from-void via-void/60 to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-b from-void/60 via-transparent to-transparent md:hidden" />
     </>
   );
 
@@ -59,14 +63,52 @@ export function ParallaxHero({
     </>
   );
 
+  const mobileHeroContent = startReadingHref ? (
+    <div className="absolute inset-0 w-full px-4 xs:px-6 flex flex-col z-10">
+      {/* Main content moved up: super text, title, author, rating, button */}
+      <div className="flex-1 flex flex-col items-center justify-center text-center pt-8 pb-2">
+        <span className="text-[10px] tracking-[0.3em] text-white mb-2 uppercase border-b border-white/40 pb-1 hero-text-shadow">
+          Editor&apos;s Pick
+        </span>
+        <h1 className="text-3xl xs:text-4xl font-display italic font-bold text-white leading-tight gold-text-shadow mt-1">
+          {title}
+        </h1>
+        <p className="text-lg text-white font-display tracking-wide hero-text-shadow mt-2">
+          By{" "}
+          <Link
+            href={authorStudyPath(authorId)}
+            className="border-b border-white/40 pb-0.5 hover:text-white/90"
+          >
+            {authorName}
+          </Link>
+        </p>
+        <div className="flex items-center justify-center gap-1 mt-2 [&_.text-text-muted]:text-white/80 [&_.text-text-muted]:hero-text-shadow">
+          <RatingDisplay rating={rating} ratingCount={ratingCount} />
+        </div>
+        <Link
+          href={startReadingHref}
+          className="mt-4 bg-primary text-void font-bold text-sm px-8 py-3 rounded-sm hover:bg-white transition-colors duration-300 shadow-gold-glow uppercase tracking-wider"
+        >
+          Start Reading
+        </Link>
+      </div>
+      {/* Genre tags at bottom of cover */}
+      <div className="flex justify-center pt-2 pb-4 shrink-0">
+        <MetadataPills tags={genreTags} />
+      </div>
+    </div>
+  ) : (
+    <div className="absolute bottom-0 left-0 w-full px-4 xs:px-6 pb-6 xs:pb-8 flex flex-col gap-2 xs:gap-3">
+      {metadata}
+    </div>
+  );
+
   return (
     <div className="relative w-full min-h-[280px]">
-      {/* Mobile: stacked overlay layout */}
+      {/* Mobile: stacked overlay; when startReadingHref set, use home-style centered layout */}
       <div className="relative h-[55vh] xs:h-[60vh] sm:h-[65vh] w-full overflow-hidden md:hidden">
         {cover}
-        <div className="absolute bottom-0 left-0 w-full px-4 xs:px-6 pb-6 xs:pb-8 flex flex-col gap-2 xs:gap-3">
-          {metadata}
-        </div>
+        {mobileHeroContent}
       </div>
 
       {/* Tablet/Desktop: two-column layout 40% cover (sticky), 60% metadata (THE-57) */}

@@ -11,6 +11,7 @@ import {
   getFirstUnreadChapterId,
 } from "@/lib/content";
 import { formatUpdatedAgo } from "@/lib/format";
+import { readingRoomPath } from "@/lib/navigation";
 import { NavigationBar } from "../../_components/navigation-bar";
 import { NovelDetailHeader } from "../../_components/novel-detail-header";
 import { ParallaxHero } from "../../_components/parallax-hero";
@@ -73,6 +74,11 @@ export default async function NovelDetailPage({
           genreTags={novel.genreTags}
           rating={novel.rating}
           ratingCount={novel.ratingCount}
+          startReadingHref={
+            firstChapterId
+              ? readingRoomPath(novelId, firstChapterId)
+              : undefined
+          }
         />
 
         <div className="relative z-10 px-4 xs:px-6 -mt-4 bg-void">
