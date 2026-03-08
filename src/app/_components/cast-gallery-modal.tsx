@@ -75,13 +75,8 @@ function CharacterCard({
 
       {char.hasTrophy && <TrophyBadge />}
 
-      {/* Bottom content - nameplate gradient overlay, above the rose FAB to avoid overlap on short screens */}
-      <div className="absolute bottom-40 left-0 right-0 p-8 pt-24 pb-0 h-[336px] bg-gradient-to-t from-void to-transparent flex flex-col items-center text-center">
-        {char.description && (
-          <p className="font-body text-sm italic text-text-main/60 leading-relaxed mb-6 max-w-[85%]">
-            {char.description}
-          </p>
-        )}
+      {/* Bottom content - nameplate gradient overlay with endorsement inline */}
+      <div className="absolute bottom-0 left-0 right-0 w-full p-8 pt-2 pb-8 h-fit bg-gradient-to-t from-void to-transparent flex flex-col justify-end items-center text-center">
         {char.roleSubtitle && (
           <div className="mb-2 flex items-center gap-2 opacity-80">
             <div className="h-[1px] w-8 bg-primary/50" />
@@ -91,9 +86,12 @@ function CharacterCard({
             <div className="h-[1px] w-8 bg-primary/50" />
           </div>
         )}
-        <h2 className="font-display text-4xl italic text-white mb-6 drop-shadow-lg">
+        <h2 className="font-display text-4xl italic text-white mb-4 drop-shadow-lg">
           {char.name}
         </h2>
+        {endorsementSlot && (
+          <div className="shrink-0 mb-4">{endorsementSlot}</div>
+        )}
         <button
           type="button"
           onClick={onTapReveal}
@@ -103,13 +101,6 @@ function CharacterCard({
           <span>Tap to reveal dossier</span>
         </button>
       </div>
-
-      {/* Rose FAB in its own container at the bottom so gradient block stays above it */}
-      {endorsementSlot && (
-        <div className="absolute bottom-0 left-0 right-0 flex flex-col items-center pb-2">
-          {endorsementSlot}
-        </div>
-      )}
     </div>
   );
 }
@@ -281,7 +272,7 @@ function EndorsementFAB({
   };
 
   return (
-    <div className="flex flex-col items-center gap-3">
+    <div className="flex flex-col items-center gap-3 shrink-0">
       {showConfirm && (
         <div className="absolute -top-20 left-1/2 -translate-x-1/2 bg-surface border border-primary/30 text-primary px-4 py-2 rounded shadow-lg text-xs font-ui tracking-wide flex flex-col gap-2">
           <span>Send a Rose? (1 Credit)</span>
@@ -306,7 +297,7 @@ function EndorsementFAB({
       <button
         type="button"
         onClick={handleRoseClick}
-        className={`relative group flex items-center justify-center rounded-full bg-accent text-white shadow-[0_4px_20px_rgba(128,0,32,0.4)] fab-hover-scale-lg hover:shadow-[0_4px_30px_rgba(128,0,32,0.6)] transition-all duration-300 border border-white/10 overflow-hidden cursor-pointer active:scale-95 ${
+        className={`relative group flex items-center justify-center shrink-0 rounded-full bg-accent text-white shadow-[0_4px_20px_rgba(128,0,32,0.4)] fab-hover-scale-lg hover:shadow-[0_4px_30px_rgba(128,0,32,0.6)] transition-all duration-300 border border-white/10 overflow-hidden cursor-pointer active:scale-95 ${
           compact ? "size-12" : "size-16"
         }`}
         aria-label="Send endorsement (1 Credit)"

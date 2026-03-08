@@ -139,14 +139,25 @@
 </div>
 <span class="text-[10px] font-heading text-primary tracking-widest uppercase bg-void/80 px-2 py-0.5 rounded-full border border-primary/30">Top Pick</span>
 </div>
-<!-- Character Nameplate -->
+<!-- Character Nameplate with endorsement inline -->
 <div class="absolute bottom-0 left-0 right-0 p-8 pt-24 h-[336px] bg-gradient-to-t from-void to-transparent flex flex-col items-center text-center">
+<!-- Rose Endorsement FAB (inline) -->
+<div class="shrink-0 mb-4 flex flex-col items-center gap-3">
+<button class="relative group flex items-center justify-center shrink-0 size-16 rounded-full bg-accent text-white shadow-[0_4px_20px_rgba(128,0,32,0.4)] hover:scale-110 hover:shadow-[0_4px_30px_rgba(128,0,32,0.6)] transition-all duration-300 border border-white/10 overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
+<span class="material-symbols-outlined text-3xl fill-1 group-hover:animate-pulse">local_florist</span>
+</button>
+<div class="flex flex-col items-center">
+<span class="font-display font-bold text-primary text-lg drop-shadow-md">1,248</span>
+<span class="text-[10px] text-text-muted uppercase tracking-widest font-ui">Endorsements</span>
+</div>
+</div>
 <div class="mb-2 flex items-center gap-2 opacity-80">
 <div class="h-[1px] w-8 bg-primary/50"></div>
 <span class="font-ui text-primary text-xs tracking-[0.2em] uppercase">The Exiled Heir</span>
 <div class="h-[1px] w-8 bg-primary/50"></div>
 </div>
-<h2 class="font-display text-4xl italic text-white mb-6 drop-shadow-lg">Duke Alistair</h2>
+<h2 class="font-display text-4xl italic text-white mb-4 drop-shadow-lg">Duke Alistair</h2>
 <!-- Tap to Flip Hint -->
 <div class="flex items-center gap-2 text-white/40 text-xs font-ui tracking-widest uppercase cursor-pointer group-hover/card:text-primary transition-colors animate-pulse">
 <span class="material-symbols-outlined text-sm">cached</span>
@@ -210,26 +221,6 @@
 </div>
 </div>
 </div>
-</div>
-</div>
-<!-- Rose Endorsement FAB (Floating Action Button) -->
-<div class="absolute bottom-12 z-50 flex flex-col items-center gap-3">
-<!-- Toast Notification (Hidden by default, shown for demo logic) -->
-<!-- 
-            <div class="absolute -top-16 bg-surface border border-primary/30 text-primary px-4 py-2 rounded shadow-lg text-xs font-ui tracking-wide animate-bounce">
-                -1 Credit
-            </div> 
-            -->
-<button class="relative group flex items-center justify-center size-16 rounded-full bg-accent text-white shadow-[0_4px_20px_rgba(128,0,32,0.4)] hover:scale-110 hover:shadow-[0_4px_30px_rgba(128,0,32,0.6)] transition-all duration-300 border border-white/10 overflow-hidden">
-<!-- Inner Glow -->
-<div class="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-<span class="material-symbols-outlined text-3xl fill-1 group-hover:animate-pulse">local_florist</span>
-<!-- Ripple effect placeholder -->
-<div class="absolute inset-0 rounded-full border border-white/20 scale-0 group-active:scale-150 transition-transform duration-500"></div>
-</button>
-<div class="flex flex-col items-center">
-<span class="font-display font-bold text-primary text-lg drop-shadow-md">1,248</span>
-<span class="text-[10px] text-text-muted uppercase tracking-widest font-ui">Endorsements</span>
 </div>
 </div>
 </main>
