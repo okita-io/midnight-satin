@@ -54,9 +54,12 @@ function TrophyBadge() {
 function CharacterCard({
   char,
   onTapReveal,
+  endorsementSlot,
 }: {
   char: NovelCharacter;
   onTapReveal: () => void;
+  /** Optional: render FAB inside card footer (mobile single-card). */
+  endorsementSlot?: React.ReactNode;
 }) {
   return (
     <div className="absolute inset-0 w-full h-full backface-hidden bg-surface rounded-lg overflow-hidden border border-white/5">
@@ -72,8 +75,8 @@ function CharacterCard({
 
       {char.hasTrophy && <TrophyBadge />}
 
-      {/* Bottom content - nameplate gradient overlay, Playfair Display 4xl, Marcellus role (Req 5.2, 5.3) */}
-      <div className="absolute bottom-0 left-0 right-0 p-8 pt-32 bg-gradient-to-t from-void to-transparent flex flex-col items-center text-center">
+      {/* Bottom content - nameplate gradient overlay, above the rose FAB to avoid overlap on short screens */}
+      <div className="absolute bottom-40 left-0 right-0 p-8 pt-24 pb-0 h-[336px] bg-gradient-to-t from-void to-transparent flex flex-col items-center text-center">
         {char.description && (
           <p className="font-body text-sm italic text-text-main/60 leading-relaxed mb-6 max-w-[85%]">
             {char.description}
@@ -100,6 +103,13 @@ function CharacterCard({
           <span>Tap to reveal dossier</span>
         </button>
       </div>
+
+      {/* Rose FAB in its own container at the bottom so gradient block stays above it */}
+      {endorsementSlot && (
+        <div className="absolute bottom-0 left-0 right-0 flex flex-col items-center pb-2">
+          {endorsementSlot}
+        </div>
+      )}
     </div>
   );
 }
@@ -271,11 +281,7 @@ function EndorsementFAB({
   };
 
   return (
-    <div
-      className={`flex flex-col items-center gap-3 left-1/2 -translate-x-1/2 z-50 ${
-        compact ? "absolute bottom-4" : "absolute bottom-12"
-      }`}
-    >
+    <div className="flex flex-col items-center gap-3">
       {showConfirm && (
         <div className="absolute -top-20 left-1/2 -translate-x-1/2 bg-surface border border-primary/30 text-primary px-4 py-2 rounded shadow-lg text-xs font-ui tracking-wide flex flex-col gap-2">
           <span>Send a Rose? (1 Credit)</span>
@@ -501,17 +507,18 @@ export function CastGalleryModal({
               <CharacterCard
                 char={char}
                 onTapReveal={() => setFlipped(true)}
+                endorsementSlot={
+                  <EndorsementFAB
+                    characterId={char.id}
+                    endorsementCount={char.endorsementCount}
+                    onEndorse={onEndorse}
+                    onAuthPrompt={onAuthPrompt}
+                  />
+                }
               />
               <DossierCard char={char} onTapReturn={() => setFlipped(false)} />
             </div>
           </div>
-
-          <EndorsementFAB
-            characterId={char.id}
-            endorsementCount={char.endorsementCount}
-            onEndorse={onEndorse}
-            onAuthPrompt={onAuthPrompt}
-          />
 
           {characters.length > 1 && (
             <div className="flex gap-2 mt-4">
