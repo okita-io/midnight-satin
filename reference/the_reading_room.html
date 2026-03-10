@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>The Reading Room - Midnight Satin</title>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&amp;family=Marcellus&amp;family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>The Reading Room - Midnight Satin</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&amp;family=Marcellus&amp;family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
             theme: {
@@ -41,20 +49,23 @@
             },
         }
     </script>
-<style>
+    <style>
         /* Custom scrollbar for webkit */
         ::-webkit-scrollbar {
             width: 4px;
         }
+
         ::-webkit-scrollbar-track {
-            background: #050505; 
+            background: #050505;
         }
+
         ::-webkit-scrollbar-thumb {
-            background: #333; 
+            background: #333;
             border-radius: 2px;
         }
+
         ::-webkit-scrollbar-thumb:hover {
-            background: #D4AF37; 
+            background: #D4AF37;
         }
 
         .drop-cap::first-letter {
@@ -71,149 +82,204 @@
             border-image: linear-gradient(to right, transparent, #D4AF37, transparent) 1;
         }
     </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-void text-text-main font-body antialiased overflow-hidden h-screen flex flex-col bg-silk-noise selection:bg-primary/30 selection:text-white">
-<!-- Top Navigation HUD (Ideally hidden/toggled by tap, shown here for the mockup) -->
-<header class="fixed top-0 left-0 w-full z-50 transition-transform duration-300 bg-gradient-to-b from-void via-void/90 to-transparent pt-safe-top pb-8 pointer-events-none">
-<div class="flex items-center justify-between px-4 h-16 pointer-events-auto">
-<button class="w-10 h-10 flex items-center justify-center text-primary/80 hover:text-primary transition-colors active:scale-95">
-<span class="material-symbols-outlined" style="font-size: 28px;">arrow_back</span>
-</button>
-<div class="flex flex-col items-center">
-<span class="text-xs font-heading tracking-[0.15em] text-text-muted uppercase">Chapter IV</span>
-<span class="text-sm font-display text-text-main italic">The Gilded Cage</span>
-</div>
-<button class="w-10 h-10 flex items-center justify-center text-primary/80 hover:text-primary transition-colors active:scale-95">
-<span class="material-symbols-outlined" style="font-size: 24px;">bookmark_add</span>
-</button>
-</div>
-</header>
-<!-- Main Reading Area -->
-<main class="flex-1 overflow-y-auto relative h-full w-full scroll-smooth">
-<div class="max-w-xl mx-auto px-6 pt-24 pb-32">
-<!-- Chapter Title Block -->
-<div class="text-center mb-12">
-<div class="flex items-center justify-center gap-4 mb-4 opacity-50">
-<div class="h-[1px] w-8 bg-gradient-to-r from-transparent to-primary"></div>
-<span class="w-2 h-2 rotate-45 border border-primary bg-void"></span>
-<div class="h-[1px] w-8 bg-gradient-to-l from-transparent to-primary"></div>
-</div>
-<h1 class="font-display italic text-4xl text-primary mb-2 drop-shadow-md">The Gilded Cage</h1>
-<p class="font-ui text-xs tracking-widest text-text-muted uppercase">Midnight Satin • Vol. 1</p>
-</div>
-<!-- Content -->
-<article class="prose prose-invert prose-lg max-w-none text-text-main/90 leading-relaxed font-body text-lg text-justify">
-<p class="drop-cap mb-6">
-                    The ballroom was a sea of velvet and diamonds, a suffocating display of wealth that made Eleanor’s corset feel tighter than the laces allowed. She stood near the periphery, a shadow in emerald silk, watching the duke from across the room. He was laughing at something the French ambassador said, his head thrown back, exposing the sharp line of his throat.
+    <style>
+        body {
+            min-height: max(884px, 100dvh);
+        }
+    </style>
+</head>
+
+<body
+    class="bg-void text-text-main font-body antialiased overflow-hidden h-screen flex flex-col bg-silk-noise selection:bg-primary/30 selection:text-white">
+    <!-- Top Navigation HUD (Ideally hidden/toggled by tap, shown here for the mockup) -->
+    <header
+        class="fixed top-0 left-0 w-full z-50 transition-transform duration-300 bg-gradient-to-b from-void via-void/90 to-transparent pt-safe-top pb-8 pointer-events-none">
+        <div class="flex items-center justify-between px-4 h-16 pointer-events-auto">
+            <button
+                class="w-10 h-10 flex items-center justify-center text-primary/80 hover:text-primary transition-colors active:scale-95">
+                <span class="material-symbols-outlined" style="font-size: 28px;">arrow_back</span>
+            </button>
+            <div class="flex flex-col items-center">
+                <span class="text-xs font-heading tracking-[0.15em] text-text-muted uppercase">Chapter IV</span>
+                <span class="text-sm font-display text-text-main italic">The Gilded Cage</span>
+            </div>
+            <button
+                class="w-10 h-10 flex items-center justify-center text-primary/80 hover:text-primary transition-colors active:scale-95">
+                <span class="material-symbols-outlined" style="font-size: 24px;">bookmark_add</span>
+            </button>
+        </div>
+    </header>
+    <!-- Main Reading Area -->
+    <main class="flex-1 overflow-y-auto relative h-full w-full scroll-smooth">
+        <div class="max-w-xl mx-auto px-6 pt-24 pb-32">
+            <!-- Chapter Title Block -->
+            <div class="text-center mb-12">
+                <div class="flex items-center justify-center gap-4 mb-4 opacity-50">
+                    <div class="h-[1px] w-8 bg-gradient-to-r from-transparent to-primary"></div>
+                    <span class="w-2 h-2 rotate-45 border border-primary bg-void"></span>
+                    <div class="h-[1px] w-8 bg-gradient-to-l from-transparent to-primary"></div>
+                </div>
+                <h1 class="font-display italic text-4xl text-primary mb-2 drop-shadow-md">The Gilded Cage</h1>
+                <p class="font-ui text-xs tracking-widest text-text-muted uppercase">Midnight Satin • Vol. 1</p>
+            </div>
+            <!-- Content -->
+            <article
+                class="prose prose-invert prose-lg max-w-none text-text-main/90 leading-relaxed font-body text-lg text-justify">
+                <p class="drop-cap mb-6">
+                    The ballroom was a sea of velvet and diamonds, a suffocating display of wealth that made Eleanor’s
+                    corset feel tighter than the laces allowed. She stood near the periphery, a shadow in emerald silk,
+                    watching the duke from across the room. He was laughing at something the French ambassador said, his
+                    head thrown back, exposing the sharp line of his throat.
                 </p>
-<p class="mb-6">
-                    "He looks dangerous tonight," a voice murmured beside her. Eleanor didn't need to turn to know it was Julian. He smelled of cloves and old books, a comforting scent in this shark tank.
+                <p class="mb-6">
+                    "He looks dangerous tonight," a voice murmured beside her. Eleanor didn't need to turn to know it
+                    was Julian. He smelled of cloves and old books, a comforting scent in this shark tank.
                 </p>
-<p class="mb-6">
-                    "He is always dangerous, Julian. That is the point of him," she replied, her gaze never wavering. The duke turned then, as if feeling the weight of her stare. His eyes, dark as the onyx ring on his finger, locked onto hers. The laughter died on his lips, replaced by a slow, knowing smirk that sent a shiver down her spine that had nothing to do with the drafty hall.
+                <p class="mb-6">
+                    "He is always dangerous, Julian. That is the point of him," she replied, her gaze never wavering.
+                    The duke turned then, as if feeling the weight of her stare. His eyes, dark as the onyx ring on his
+                    finger, locked onto hers. The laughter died on his lips, replaced by a slow, knowing smirk that sent
+                    a shiver down her spine that had nothing to do with the drafty hall.
                 </p>
-<!-- Ornamental Break -->
-<div aria-hidden="true" class="py-8 flex items-center justify-center opacity-80">
-<svg class="text-primary" fill="none" height="20" viewbox="0 0 120 20" width="120" xmlns="http://www.w3.org/2000/svg">
-<path d="M60 10C60 10 50 0 30 0C10 0 0 10 0 10C0 10 10 20 30 20C50 20 60 10 60 10Z" fill="currentColor" fill-opacity="0.2"></path>
-<path d="M60 10C60 10 70 0 90 0C110 0 120 10 120 10C120 10 110 20 90 20C70 20 60 10 60 10Z" fill="currentColor" fill-opacity="0.2"></path>
-<circle cx="60" cy="10" fill="#D4AF37" r="3"></circle>
-<path d="M40 10H80" stroke="#D4AF37" stroke-width="0.5"></path>
-</svg>
-</div>
-<p class="mb-6">
-                    He began to move through the crowd, parting the sea of aristocrats like a ship cutting through dark waters. Eleanor’s breath hitched. Every step he took was a promise, or perhaps a threat. Julian stiffened beside her. "Eleanor, don't."
+                <!-- Ornamental Break -->
+                <div aria-hidden="true" class="py-8 flex items-center justify-center opacity-80">
+                    <svg class="text-primary" fill="none" height="20" viewbox="0 0 120 20" width="120"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path d="M60 10C60 10 50 0 30 0C10 0 0 10 0 10C0 10 10 20 30 20C50 20 60 10 60 10Z"
+                            fill="currentColor" fill-opacity="0.2"></path>
+                        <path d="M60 10C60 10 70 0 90 0C110 0 120 10 120 10C120 10 110 20 90 20C70 20 60 10 60 10Z"
+                            fill="currentColor" fill-opacity="0.2"></path>
+                        <circle cx="60" cy="10" fill="#D4AF37" r="3"></circle>
+                        <path d="M40 10H80" stroke="#D4AF37" stroke-width="0.5"></path>
+                    </svg>
+                </div>
+                <p class="mb-6">
+                    He began to move through the crowd, parting the sea of aristocrats like a ship cutting through dark
+                    waters. Eleanor’s breath hitched. Every step he took was a promise, or perhaps a threat. Julian
+                    stiffened beside her. "Eleanor, don't."
                 </p>
-<p class="mb-6">
-                    "I have to," she whispered, her heart hammering a frantic rhythm against her ribs. She took a step forward, meeting the duke in the center of the room, under the grand chandelier. The crystals caught the light, scattering rainbows over his dark coat.
+                <p class="mb-6">
+                    "I have to," she whispered, her heart hammering a frantic rhythm against her ribs. She took a step
+                    forward, meeting the duke in the center of the room, under the grand chandelier. The crystals caught
+                    the light, scattering rainbows over his dark coat.
                 </p>
-<p class="mb-6">
-                    "My Lady," he said, his voice a low rumble that vibrated through the floorboards. He extended a gloved hand. "I believe this dance is mine."
+                <p class="mb-6">
+                    "My Lady," he said, his voice a low rumble that vibrated through the floorboards. He extended a
+                    gloved hand. "I believe this dance is mine."
                 </p>
-<p class="mb-6">
-                     She hesitated, the weight of a hundred staring eyes pressing down on her. To take his hand was to accept the scandal. To refuse him was to declare war.
+                <p class="mb-6">
+                    She hesitated, the weight of a hundred staring eyes pressing down on her. To take his hand was to
+                    accept the scandal. To refuse him was to declare war.
                 </p>
-<!-- The Veil: Text starts to fade -->
-<div class="relative">
-<p class="mb-6 blur-[1px] opacity-60 select-none">
-                        His fingers brushed hers, electric even through the kidskin. "Are you afraid?" he murmured, leaning close enough that she could feel the heat radiating from him. "You should be." The music swelled, a haunting waltz that seemed to originate from the shadows themselves.
+                <!-- The Veil: Text starts to fade -->
+                <div class="relative">
+                    <p class="mb-6 blur-[1px] opacity-60 select-none">
+                        His fingers brushed hers, electric even through the kidskin. "Are you afraid?" he murmured,
+                        leaning close enough that she could feel the heat radiating from him. "You should be." The music
+                        swelled, a haunting waltz that seemed to originate from the shadows themselves.
                     </p>
-<p class="mb-6 blur-[3px] opacity-40 select-none">
-                        Eleanor lifted her chin. "I fear nothing in this room, Your Grace. Especially not you." It was a lie, a beautiful, fragile lie, and they both knew it. He smiled, and for a moment, the predator softened.
+                    <p class="mb-6 blur-[3px] opacity-40 select-none">
+                        Eleanor lifted her chin. "I fear nothing in this room, Your Grace. Especially not you." It was a
+                        lie, a beautiful, fragile lie, and they both knew it. He smiled, and for a moment, the predator
+                        softened.
                     </p>
-<p class="blur-[6px] opacity-20 select-none">
-                         They began to turn, the world dissolving into a blur of color and light. With every rotation, he pulled her closer, until there was no air left between them.
+                    <p class="blur-[6px] opacity-20 select-none">
+                        They began to turn, the world dissolving into a blur of color and light. With every rotation, he
+                        pulled her closer, until there was no air left between them.
                     </p>
-<!-- The Veil Overlay & Unlock UI -->
-<div class="absolute inset-0 -top-12 bottom-0 z-10 flex flex-col items-center justify-end pb-0 bg-gradient-veil">
-<div class="w-full max-w-sm px-6 pb-4 flex flex-col items-center animate-fade-in-up">
-<div class="mb-2 text-primary/80">
-<span class="material-symbols-outlined animate-pulse" style="font-size: 32px;">lock</span>
-</div>
-<h3 class="font-heading text-lg tracking-[0.1em] text-white mb-1 uppercase">The Veil is Drawn</h3>
-<p class="font-ui text-text-muted text-sm mb-6 text-center">To witness the Duke's true intentions, you must offer a tribute.</p>
-<!-- Unlock Button -->
-<button class="group relative w-full overflow-hidden rounded-sm bg-[#1a170e] border border-primary/30 p-[1px] transition-all hover:border-primary hover:shadow-gold-glow active:scale-[0.98]">
-<div class="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
-<div class="relative bg-[#1a170e] px-4 py-3 flex items-center justify-between">
-<div class="flex items-center gap-3">
-<div class="w-8 h-8 rounded-full border border-primary/20 bg-primary/5 flex items-center justify-center text-primary group-hover:text-white group-hover:bg-primary transition-colors">
-<span class="material-symbols-outlined" style="font-size: 18px;">visibility</span>
-</div>
-<div class="flex flex-col items-start">
-<span class="font-display font-bold italic text-lg text-primary leading-none group-hover:text-white transition-colors">Lift Veil</span>
-</div>
-</div>
-<div class="flex items-center gap-1.5 bg-void/50 px-2 py-1 rounded border border-white/5">
-<span class="font-heading font-bold text-sm text-white">5</span>
-<span class="material-symbols-outlined text-primary" style="font-size: 14px;">monetization_on</span>
-</div>
-</div>
-</button>
-<p class="mt-4 font-ui text-xs text-text-muted opacity-60">Balance: 42 Credits</p>
-</div>
-</div>
-</div>
-</article>
-</div>
-</main>
-<!-- Bottom HUD (Hidden/Toggled) -->
-<footer class="fixed bottom-0 left-0 w-full z-50 bg-[#0a0a0a] border-t border-white/5 shadow-2xl shadow-black pb-safe-bottom">
-<!-- Progress Bar -->
-<div class="w-full h-1 bg-white/10 relative">
-<div class="absolute left-0 top-0 h-full bg-primary w-[35%] shadow-[0_0_10px_rgba(212,175,55,0.5)]"></div>
-</div>
-<div class="px-6 py-4 flex items-center justify-between">
-<!-- Font Settings Toggle -->
-<button class="flex flex-col items-center gap-1 text-text-muted hover:text-white transition-colors">
-<span class="material-symbols-outlined" style="font-size: 24px;">text_fields</span>
-<span class="text-[10px] font-ui uppercase tracking-wider">Type</span>
-</button>
-<!-- Chapter Scrubber Control (Simplified visual) -->
-<div class="flex-1 px-8 flex flex-col items-center">
-<div class="w-full flex justify-between text-[10px] font-ui text-text-muted uppercase tracking-wider mb-2">
-<span>Prev</span>
-<span>35%</span>
-<span>Next</span>
-</div>
-<div class="flex items-center gap-6 text-text-main">
-<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">skip_previous</span></button>
-<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">play_circle</span></button>
-<button class="hover:text-primary transition-colors"><span class="material-symbols-outlined">skip_next</span></button>
-</div>
-</div>
-<!-- More Options -->
-<button class="flex flex-col items-center gap-1 text-text-muted hover:text-white transition-colors">
-<span class="material-symbols-outlined" style="font-size: 24px;">settings</span>
-<span class="text-[10px] font-ui uppercase tracking-wider">Set</span>
-</button>
-</div>
-</footer>
-<!-- Texture Overlay for "Paper" Feel -->
-<div class="fixed inset-0 pointer-events-none opacity-[0.03] z-[60]" style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJnoj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC42IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI2cpIiBvcGFjaXR5PSIwLjUiLz48L3N2Zz4='); mix-blend-mode: overlay;"></div>
-</body></html>
+                    <!-- The Veil Overlay & Unlock UI -->
+                    <div
+                        class="absolute inset-0 -top-12 bottom-0 z-10 flex flex-col items-center justify-end pb-0 bg-gradient-veil">
+                        <div class="w-full max-w-sm px-6 pb-4 flex flex-col items-center animate-fade-in-up">
+                            <div class="mb-2 text-primary/80">
+                                <span class="material-symbols-outlined animate-pulse"
+                                    style="font-size: 32px;">lock</span>
+                            </div>
+                            <h3 class="font-heading text-lg tracking-[0.1em] text-white mb-1 uppercase">The Veil is
+                                Drawn</h3>
+                            <p class="font-ui text-text-muted text-sm mb-6 text-center">To witness the Duke's true
+                                intentions, you must offer a tribute.</p>
+                            <!-- Unlock Button -->
+                            <button
+                                class="group relative w-full overflow-hidden rounded-sm bg-[#1a170e] border border-primary/30 p-[1px] transition-all hover:border-primary hover:shadow-gold-glow active:scale-[0.98]">
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000">
+                                </div>
+                                <div class="relative bg-[#1a170e] px-4 py-3 flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-8 h-8 rounded-full border border-primary/20 bg-primary/5 flex items-center justify-center text-primary group-hover:text-white group-hover:bg-primary transition-colors">
+                                            <span class="material-symbols-outlined"
+                                                style="font-size: 18px;">visibility</span>
+                                        </div>
+                                        <div class="flex flex-col items-start">
+                                            <span
+                                                class="font-display font-bold italic text-lg text-primary leading-none group-hover:text-white transition-colors">Lift
+                                                Veil</span>
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="flex items-center gap-1.5 bg-void/50 px-2 py-1 rounded border border-white/5">
+                                        <span class="font-heading font-bold text-sm text-white">5</span>
+                                        <span class="material-symbols-outlined text-primary"
+                                            style="font-size: 14px;">monetization_on</span>
+                                    </div>
+                                </div>
+                            </button>
+                            <p class="mt-4 font-ui text-xs text-text-muted opacity-60">Balance: 42 Credits</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </main>
+    <!-- Bottom HUD (Hidden/Toggled) -->
+    <footer
+        class="fixed bottom-0 left-0 w-full z-50 bg-[#0a0a0a] border-t border-white/5 shadow-2xl shadow-black pb-safe-bottom">
+        <!-- Progress Bar -->
+        <div class="w-full h-1 bg-white/10 relative">
+            <div class="absolute left-0 top-0 h-full bg-primary w-[35%] shadow-[0_0_10px_rgba(212,175,55,0.5)]"></div>
+        </div>
+        <div class="px-6 py-4 flex items-center justify-between">
+            <!-- Font Settings Toggle -->
+            <button class="flex flex-col items-center gap-1 text-text-muted hover:text-white transition-colors">
+                <span class="material-symbols-outlined" style="font-size: 24px;">text_fields</span>
+                <span class="text-[10px] font-ui uppercase tracking-wider">Type</span>
+            </button>
+            <!-- Chapter Scrubber Control (Simplified visual) -->
+            <div class="flex px-8 flex flex-col justify-between w-1/2">
+                <div
+                    class="w-full flex justify-between text-[10px] font-ui text-text-muted uppercase tracking-wider mb-2">
+                    <span>Prev</span>
+                    <span>35%</span>
+                    <span>Next</span>
+                </div>
+                <div class="flex justify-between text-text-main">
+                    <button class="hover:text-primary transition-colors"><span
+                            class="material-symbols-outlined">skip_previous</span></button>
+                    <button class="hover:text-primary transition-colors"><span
+                            class="material-symbols-outlined">play_circle</span></button>
+                    <button class="hover:text-primary transition-colors"><span
+                            class="material-symbols-outlined">skip_next</span></button>
+                </div>
+            </div>
+            <!-- Comments / Notes Toggle -->
+            <button
+                class="relative flex flex-col items-center gap-1 text-text-muted hover:text-white transition-colors">
+                <span class="material-symbols-outlined" style="font-size: 24px;">history_edu</span>
+                <span class="text-[10px] font-ui uppercase tracking-wider">Notes</span>
+            </button>
+            <!-- More Options -->
+            <button class="flex flex-col items-center gap-1 text-text-muted hover:text-white transition-colors">
+                <span class="material-symbols-outlined" style="font-size: 24px;">settings</span>
+                <span class="text-[10px] font-ui uppercase tracking-wider">Set</span>
+            </button>
+        </div>
+    </footer>
+    <!-- Texture Overlay for "Paper" Feel -->
+    <div class="fixed inset-0 pointer-events-none opacity-[0.03] z-[60]"
+        style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJnoj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC42IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI2cpIiBvcGFjaXR5PSIwLjUiLz48L3N2Zz4='); mix-blend-mode: overlay;">
+    </div>
+</body>
+
+</html>

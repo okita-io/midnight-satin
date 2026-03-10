@@ -241,13 +241,13 @@ export function ReadingHUD({
           </div>
 
           {/* Chapter nav */}
-          <div className="flex flex-col items-center">
-            <div className="w-full flex justify-between text-[10px] font-ui text-text-muted uppercase tracking-wider mb-2">
+          <div className="flex flex-col items-center justify-center w-full">
+            <div className="w-[200px] flex justify-between text-[10px] font-ui text-text-muted uppercase tracking-wider mb-2">
               <span>Prev</span>
               <span>{Math.round(progressPercent)}%</span>
               <span>Next</span>
             </div>
-            <div className="flex items-center gap-6 text-text-main">
+            <div className="flex items-center gap-6 text-text-main w-[200px] justify-between">
               {prevChapterId ? (
                 <Link
                   href={readingRoomPath(prevChapterId)}
