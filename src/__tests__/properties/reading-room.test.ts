@@ -37,37 +37,37 @@ import {
 import { COLOR_TOKENS, TYPOGRAPHY_FONTS } from "@/lib/design-tokens";
 
 describe("Property 16: Reading Room Text Centering", () => {
-  it("mobile viewport has no max-width constraint", () => {
+  it("mobile viewport uses 576px max-width (max-w-xl)", () => {
     fc.assert(
       fc.property(
         fc.integer({ min: 0, max: BREAKPOINTS.md - 1 }),
         (width) => {
           const maxWidth = getChapterContentMaxWidth(width);
-          expect(maxWidth).toBeNull();
+          expect(maxWidth).toBe(576);
         }
       ),
       { numRuns: 100 }
     );
   });
 
-  it("tablet viewport (768-1023px) uses 680px max-width", () => {
+  it("tablet viewport (768-1023px) uses 672px max-width (max-w-2xl)", () => {
     fc.assert(
       fc.property(
         fc.integer({ min: BREAKPOINTS.md, max: BREAKPOINTS.lg - 1 }),
         (width) => {
           const maxWidth = getChapterContentMaxWidth(width);
-          expect(maxWidth).toBe(680);
+          expect(maxWidth).toBe(672);
         }
       ),
       { numRuns: 100 }
     );
   });
 
-  it("desktop viewport (1024px+) uses 720px max-width", () => {
+  it("desktop viewport (1024px+) uses 768px max-width (max-w-3xl)", () => {
     fc.assert(
       fc.property(fc.integer({ min: BREAKPOINTS.lg, max: 4096 }), (width) => {
         const maxWidth = getChapterContentMaxWidth(width);
-        expect(maxWidth).toBe(720);
+        expect(maxWidth).toBe(768);
       }),
       { numRuns: 100 }
     );
@@ -86,9 +86,9 @@ describe("Property 16: Reading Room Text Centering", () => {
   });
 
   it("CHAPTER_CONTENT_MAX_WIDTH constants are correct", () => {
-    expect(CHAPTER_CONTENT_MAX_WIDTH.mobile).toBeNull();
-    expect(CHAPTER_CONTENT_MAX_WIDTH.tablet).toBe(680);
-    expect(CHAPTER_CONTENT_MAX_WIDTH.desktop).toBe(720);
+    expect(CHAPTER_CONTENT_MAX_WIDTH.mobile).toBe(576);
+    expect(CHAPTER_CONTENT_MAX_WIDTH.tablet).toBe(672);
+    expect(CHAPTER_CONTENT_MAX_WIDTH.desktop).toBe(768);
   });
 });
 

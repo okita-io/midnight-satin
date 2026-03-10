@@ -132,11 +132,11 @@ export const CAST_GALLERY_PORTRAIT_ASPECT_RATIO = { width: 3, height: 4 } as con
 /** Reading content max-width for optimal line length (45-75 chars) */
 export const READING_MAX_WIDTH = 720;
 
-/** Chapter content max-width by viewport (THE-61): tablet 680px, desktop 720px; mobile no constraint */
+/** Chapter content max-width by viewport (THE-61): mobile 576px (max-w-xl), tablet 672px (max-w-2xl), desktop 768px (max-w-3xl) */
 export const CHAPTER_CONTENT_MAX_WIDTH = {
-  mobile: null as number | null,
-  tablet: 680,
-  desktop: 720,
+  mobile: 576,
+  tablet: 672,
+  desktop: 768,
 } as const;
 
 /** Comments sidebar visible only on desktop (lg: 1024px+) — THE-62 */

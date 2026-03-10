@@ -190,10 +190,10 @@ export function isDesktopOrUp(width: number): boolean {
 
 /**
  * Resolve chapter content max-width for a viewport width.
- * Mobile: no constraint (null). Tablet (768-1023px): 680px. Desktop (1024px+): 720px.
+ * Mobile: 576px (max-w-xl). Tablet (768-1023px): 672px (max-w-2xl). Desktop (1024px+): 768px (max-w-3xl).
  * @see Linear THE-61, THE-63
  */
-export function getChapterContentMaxWidth(width: number): number | null {
+export function getChapterContentMaxWidth(width: number): number {
   return CHAPTER_CONTENT_MAX_WIDTH[getViewportSize(width)];
 }
 

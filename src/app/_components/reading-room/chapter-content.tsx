@@ -43,7 +43,7 @@ export function ChapterContent({
 
   if (paragraphs.length === 0) {
     return (
-      <article className="w-full max-w-none md:max-w-[680px] lg:max-w-[720px] mx-auto px-6 md:px-12 lg:px-16 text-text-main/90 font-body text-justify">
+      <article className="w-full mx-auto text-text-main/90 font-body text-justify">
         <p className="text-text-muted italic">No content yet.</p>
       </article>
     );
@@ -57,7 +57,7 @@ export function ChapterContent({
 
   return (
     <article
-      className="w-full max-w-none md:max-w-[680px] lg:max-w-[720px] mx-auto px-6 md:px-12 lg:px-16 text-text-main/90 font-body text-justify"
+      className="w-full mx-auto text-text-main/90 font-body text-justify"
       style={{
         fontSize: `${fontSize}px`,
         lineHeight,
