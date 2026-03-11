@@ -83,11 +83,11 @@ describe("Property 8: Library Catalog List View Responsiveness", () => {
     );
   });
 
-  it("returns 1 column for desktop viewport (1024px+)", () => {
+  it("returns 3 columns for desktop viewport (1024px+)", () => {
     fc.assert(
       fc.property(fc.integer({ min: BREAKPOINTS.lg, max: 4096 }), (width) => {
         const cols = getLibraryListColumnsForViewport(width);
-        expect(cols).toBe(1);
+        expect(cols).toBe(3);
       }),
       { numRuns: 100 }
     );
@@ -108,7 +108,7 @@ describe("Property 8: Library Catalog List View Responsiveness", () => {
   it("LIBRARY_LIST_COLUMNS constants are correct", () => {
     expect(LIBRARY_LIST_COLUMNS.mobile).toBe(1);
     expect(LIBRARY_LIST_COLUMNS.tablet).toBe(2);
-    expect(LIBRARY_LIST_COLUMNS.desktop).toBe(1);
+    expect(LIBRARY_LIST_COLUMNS.desktop).toBe(3);
   });
 });
 

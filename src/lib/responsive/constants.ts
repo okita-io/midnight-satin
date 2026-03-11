@@ -34,11 +34,11 @@ export const LIBRARY_GRID_COLUMNS = {
   desktop: 4,
 } as const;
 
-/** Library Catalog list view columns (THE-53): mobile 1 (stacked), tablet 2, desktop 1 */
+/** Library Catalog list view columns (THE-53): mobile 1 (stacked), tablet 2, desktop 3 */
 export const LIBRARY_LIST_COLUMNS = {
   mobile: 1,
   tablet: 2,
-  desktop: 1,
+  desktop: 3,
 } as const;
 
 /** Chapter list columns (THE-59): mobile/tablet 1, desktop 2 */

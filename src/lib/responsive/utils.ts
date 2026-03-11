@@ -64,7 +64,7 @@ export function getLibraryGridColumnsForViewport(width: number): number {
 
 /**
  * Resolve Library Catalog list view column count for a viewport width.
- * List: mobile 1 (stacked), tablet 2, desktop 1.
+ * List: mobile 1 (stacked), tablet 2, desktop 3.
  * @see Linear THE-53
  */
 export function getLibraryListColumnsForViewport(width: number): number {
