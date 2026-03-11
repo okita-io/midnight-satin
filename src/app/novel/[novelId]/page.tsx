@@ -66,35 +66,70 @@ export default async function NovelDetailPage({
       />
 
       <main className="relative min-h-screen flex flex-col pb-24">
-        <div className="relative z-10 px-4 xs:px-6 sm:px-8 -mt-4 bg-void">
-          {/* Tablet: two-column grid — left = cover + players, right = metadata + synopsis + contents */}
-          <div className="grid grid-cols-1 gap-y-6 md:grid-cols-2 md:gap-x-10 lg:gap-x-12 md:gap-y-8 md:items-start">
-            <ParallaxHero
-              title={novel.title}
-              authorId={novel.authorId}
-              authorName={novel.authorName}
-              coverImageUrl={novel.coverImageUrl}
-              genreTags={novel.genreTags}
-              rating={novel.rating}
-              ratingCount={novel.ratingCount}
-              startReadingHref={
-                firstChapterId
-                  ? readingRoomPath(novelId, firstChapterId)
-                  : undefined
-              }
-              tabletGridCells
-            />
-            <div className="md:col-start-2 md:row-start-2 flex flex-col gap-8 md:gap-10">
-              <SynopsisSection synopsis={novel.synopsis} />
-            </div>
-            <div className="md:col-start-1 md:row-start-2">
+        {/* Mobile: full-bleed parallax hero */}
+        <div className="md:hidden">
+          <ParallaxHero
+            title={novel.title}
+            authorId={novel.authorId}
+            authorName={novel.authorName}
+            coverImageUrl={novel.coverImageUrl}
+            genreTags={novel.genreTags}
+            rating={novel.rating}
+            ratingCount={novel.ratingCount}
+            startReadingHref={
+              firstChapterId
+                ? readingRoomPath(novelId, firstChapterId)
+                : undefined
+            }
+          />
+        </div>
+
+        {/* Mobile: stacked content below hero */}
+        <div className="md:hidden relative z-10 px-6 -mt-4 bg-void">
+          <SynopsisSection synopsis={novel.synopsis} />
+          <PlayersSection
+            characters={characters}
+            novelId={novelId}
+            isAuthenticated={!!session}
+          />
+          <ChapterList
+            novelId={novelId}
+            chapters={chapters}
+            unlockedIds={unlockedIds}
+            updatedAgo={updatedAgo}
+          />
+        </div>
+
+        {/* Tablet/Desktop: two-column layout */}
+        <div className="hidden md:flex md:flex-col flex-1 min-h-0 px-6 sm:px-8 pt-6 pb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 md:gap-10 lg:gap-12 flex-1 min-h-0">
+            {/* Left column: cover card + players */}
+            <div className="flex flex-col gap-8 md:gap-10">
+              <ParallaxHero
+                title={novel.title}
+                authorId={novel.authorId}
+                authorName={novel.authorName}
+                coverImageUrl={novel.coverImageUrl}
+                genreTags={novel.genreTags}
+                rating={novel.rating}
+                ratingCount={novel.ratingCount}
+                startReadingHref={
+                  firstChapterId
+                    ? readingRoomPath(novelId, firstChapterId)
+                    : undefined
+                }
+                tabletGridCells
+              />
               <PlayersSection
                 characters={characters}
                 novelId={novelId}
                 isAuthenticated={!!session}
               />
             </div>
-            <div className="md:col-start-2 md:row-start-3">
+
+            {/* Right column: synopsis + scrollable contents */}
+            <div className="flex flex-col gap-8 md:gap-10 md:min-h-0">
+              <SynopsisSection synopsis={novel.synopsis} showHeading />
               <ChapterList
                 novelId={novelId}
                 chapters={chapters}

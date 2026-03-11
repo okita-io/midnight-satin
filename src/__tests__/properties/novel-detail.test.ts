@@ -29,13 +29,13 @@ import {
 } from "@/lib/design-tokens";
 
 describe("Property 12: Novel Detail Two-Column Layout", () => {
-  it("uses two-column layout for tablet viewport (768-1023px)", () => {
+  it("uses stacked layout for tablet viewport (768-1023px)", () => {
     fc.assert(
       fc.property(
         fc.integer({ min: BREAKPOINTS.md, max: BREAKPOINTS.lg - 1 }),
         (width) => {
           const usesTwoCol = getNovelDetailUsesTwoColumnLayout(width);
-          expect(usesTwoCol).toBe(true);
+          expect(usesTwoCol).toBe(false);
         }
       ),
       { numRuns: 100 }
@@ -62,11 +62,11 @@ describe("Property 12: Novel Detail Two-Column Layout", () => {
     );
   });
 
-  it("two-column layout matches tablet-or-up breakpoint for any viewport", () => {
+  it("two-column layout matches desktop-or-up breakpoint for any viewport", () => {
     fc.assert(
       fc.property(fc.integer({ min: 0, max: 4096 }), (width) => {
         const usesTwoCol = getNovelDetailUsesTwoColumnLayout(width);
-        expect(usesTwoCol).toBe(width >= BREAKPOINTS.md);
+        expect(usesTwoCol).toBe(width >= BREAKPOINTS.lg);
       }),
       { numRuns: 100 }
     );

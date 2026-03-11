@@ -52,7 +52,7 @@ export function PlayersSection({
 
   return (
     <>
-      <div className="mb-10 xs:mb-12 md:max-w-[1440px] md:mx-auto">
+      <section className="mb-10 xs:mb-12 md:mb-0">
         <div className="flex justify-between items-end mb-4 xs:mb-6">
           <h3 className="text-text-muted text-sm uppercase tracking-[0.2em] font-medium border-b border-primary/20 pb-2">
             The Players
@@ -78,7 +78,7 @@ export function PlayersSection({
             />
           ))}
         </div>
-      </div>
+      </section>
 
       {castGalleryOpen && (
         <CastGalleryModal

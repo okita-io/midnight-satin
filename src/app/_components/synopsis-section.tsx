@@ -4,11 +4,13 @@ import React, { useState } from "react";
 
 interface SynopsisSectionProps {
   synopsis: string | null;
+  /** When true, renders the "Synopsis" section heading (used in tablet two-column layout). */
+  showHeading?: boolean;
 }
 
 const VISIBLE_LINES = 3;
 
-export function SynopsisSection({ synopsis }: SynopsisSectionProps) {
+export function SynopsisSection({ synopsis, showHeading = false }: SynopsisSectionProps) {
   const [expanded, setExpanded] = useState(false);
 
   if (!synopsis || !synopsis.trim()) return null;
@@ -19,15 +21,20 @@ export function SynopsisSection({ synopsis }: SynopsisSectionProps) {
     : synopsis.slice(0, 200) + (synopsis.length > 200 ? "…" : "");
 
   return (
-    <div className="mb-8 xs:mb-10 relative">
+    <section className="relative">
+      {showHeading && (
+        <h3 className="text-text-muted text-sm uppercase tracking-[0.2em] font-medium border-b border-primary/20 pb-2 mb-4">
+          Synopsis
+        </h3>
+      )}
       <p
-        className={`text-text-main/90 text-base xs:text-lg leading-relaxed font-light ${
-          !expanded && needsExpand ? "line-clamp-3" : ""
+        className={`text-text-main/90 text-base leading-relaxed font-light ${
+          !expanded && needsExpand && !showHeading ? "line-clamp-3" : ""
         }`}
       >
-        {displayText}
+        {showHeading ? synopsis : displayText}
       </p>
-      {needsExpand && (
+      {!showHeading && needsExpand && (
         <button
           type="button"
           onClick={() => setExpanded(!expanded)}
@@ -42,6 +49,6 @@ export function SynopsisSection({ synopsis }: SynopsisSectionProps) {
           </span>
         </button>
       )}
-    </div>
+    </section>
   );
 }

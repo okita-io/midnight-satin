@@ -146,11 +146,20 @@ h4,
   position: relative;
 }
 
-@media (min-width: 28rem) {
+@media (min-width: 28rem) and (max-width: 767px) {
   .mobile-container {
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
     border-left: 1px solid var(--surface-highlight);
     border-right: 1px solid var(--surface-highlight);
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-container {
+    max-width: 1024px;
+    box-shadow: none;
+    border-left: none;
+    border-right: none;
   }
 }
 

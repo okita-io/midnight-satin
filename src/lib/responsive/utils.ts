@@ -102,11 +102,11 @@ export function getCastPreviewVisibleCount(width: number): number {
 
 /**
  * Check if Novel Detail uses two-column layout (cover + metadata).
- * Tablet and desktop (≥ 768px) use two-column layout; mobile uses stacked overlay.
+ * Desktop (≥ 1024px) uses two-column layout; mobile and tablet use stacked single-column.
  * @see Linear THE-57, THE-60
  */
 export function getNovelDetailUsesTwoColumnLayout(width: number): boolean {
-  return width >= BREAKPOINTS.md;
+  return width >= BREAKPOINTS.lg;
 }
 
 /**
