@@ -21,16 +21,16 @@ export function SynopsisSection({ synopsis, showHeading = false }: SynopsisSecti
     : synopsis.slice(0, 200) + (synopsis.length > 200 ? "…" : "");
 
   return (
-    <section className="relative">
+    <section className={`relative ${showHeading ? "" : "mb-8 xs:mb-10"}`}>
       {showHeading && (
         <h3 className="text-text-muted text-sm uppercase tracking-[0.2em] font-medium border-b border-primary/20 pb-2 mb-4">
           Synopsis
         </h3>
       )}
       <p
-        className={`text-text-main/90 text-base leading-relaxed font-light ${
-          !expanded && needsExpand && !showHeading ? "line-clamp-3" : ""
-        }`}
+        className={`text-text-main/90 leading-relaxed ${
+          showHeading ? "text-base font-body" : "text-lg font-light"
+        } ${!expanded && needsExpand && !showHeading ? "line-clamp-3" : ""}`}
       >
         {showHeading ? synopsis : displayText}
       </p>
