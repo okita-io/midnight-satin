@@ -46,14 +46,16 @@
         .gold-text-shadow { text-shadow: 0px 0px 10px rgba(212, 175, 55, 0.3); }
         .hero-text-shadow { text-shadow: 0 1px 3px rgba(0,0,0,0.9), 0 2px 6px rgba(0,0,0,0.7); }
         .text-shadow-sm { text-shadow: 0 1px 2px rgba(0,0,0,0.8); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
     <title>Midnight Satin - Tablet View</title>
 </head>
 
 <body class="bg-void text-text-main font-body antialiased overflow-x-hidden">
     <div class="fixed inset-0 pointer-events-none opacity-[0.03] bg-silk-noise z-0"></div>
-    <div class="max-w-[1024px] mx-auto min-h-screen flex flex-col border-x border-primary/10">
-        <main class="flex-1 min-h-0 flex flex-col px-6 sm:px-8 pt-6 pb-8">
+    <div class="max-w-[1024px] mx-auto h-screen flex flex-col border-x border-primary/10 overflow-hidden">
+        <main class="flex-1 min-h-0 flex flex-col px-6 sm:px-8 pt-6 pb-28">
             <!-- Top bar: back, bookmark, share -->
             <div class="fixed top-0 right-0 w-full p-4 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent z-10 pointer-events-none">
                 <button class="pointer-events-auto flex items-center justify-center w-10 h-10 rounded-full bg-surface/30 backdrop-blur-md text-white border border-white/10 hover:bg-surface/50 transition-colors">
@@ -70,7 +72,7 @@
             </div>
 
             <!-- Tablet: two-column layout — left: cover + players, right: metadata + synopsis + contents -->
-            <div class="grid grid-cols-1 md:grid-cols-2 md:gap-10 lg:gap-12 md:items-start pt-2">
+            <div class="grid grid-cols-1 md:grid-cols-2 md:gap-10 lg:gap-12 pt-2 flex-1 min-h-0">
                 <!-- Left column: cover then players -->
                 <div class="flex flex-col gap-8 md:gap-10">
                     <!-- Cover with bottom-center metadata overlay -->
@@ -141,10 +143,10 @@
                     </section>
                 </div>
 
-                <!-- Right column: synopsis, contents -->
-                <div class="flex flex-col gap-8 md:gap-10 md:pt-0 pt-4">
+                <!-- Right column: synopsis (sticky) + scrollable contents -->
+                <div class="flex flex-col gap-8 md:gap-10 md:pt-0 pt-4 md:h-full md:min-h-0">
                     <!-- Synopsis -->
-                    <section class="flex flex-col gap-3">
+                    <section class="flex flex-col gap-3 shrink-0">
                         <h3 class="text-text-muted text-sm uppercase tracking-[0.2em] font-medium border-b border-primary/20 pb-2">Synopsis</h3>
                         <p class="text-text-main/90 text-base leading-relaxed font-body">
                             A tale of forbidden desire and regal secrets. In the heart of the midnight palace, a young
@@ -157,16 +159,16 @@
                             that could burn the entire dynasty to the ground.
                         </p>
                     </section>
-                    <!-- Contents -->
+                    <!-- Contents (scrollable) -->
                     <section class="flex flex-col gap-4 flex-1 min-h-0">
-                        <div class="flex justify-between items-end">
+                        <div class="flex justify-between items-end shrink-0">
                             <h3 class="text-text-muted text-sm uppercase tracking-[0.2em] font-medium border-b border-primary/20 pb-2">Contents</h3>
                             <div class="flex items-center gap-4">
                                 <span class="text-[10px] text-primary/60 uppercase tracking-widest font-ui">5 Free Chapters</span>
                                 <span class="text-[10px] text-primary/60 uppercase tracking-widest font-ui">20 Locked</span>
                             </div>
                         </div>
-                        <div class="flex flex-col divide-y divide-white/5">
+                        <div class="flex flex-col divide-y divide-white/5 overflow-y-auto flex-1 min-h-0 pr-1 no-scrollbar">
                     <div class="group flex items-end justify-between py-5 cursor-pointer hover:bg-white/5 px-2 -mx-2 rounded transition-colors">
                         <div class="flex flex-col gap-1">
                             <span class="text-xs text-primary uppercase tracking-widest font-bold">Chapter I</span>
