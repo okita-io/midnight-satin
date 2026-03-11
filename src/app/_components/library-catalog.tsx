@@ -53,8 +53,8 @@ export function LibraryCatalog({
   if (loading) {
     return (
       <div className="px-4 xs:px-6 py-8">
-        <div className="grid grid-cols-2 gap-3 xs:gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8">
-          {Array.from({ length: 6 }).map((_, i) => (
+        <div className="grid grid-cols-2 gap-3 xs:gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8">
+          {Array.from({ length: 8 }).map((_, i) => (
             <ShimmerPlaceholder key={i} className="aspect-[2/3] rounded-sm" />
           ))}
         </div>
