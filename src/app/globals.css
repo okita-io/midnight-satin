@@ -369,17 +369,6 @@ h4,
   }
 }
 
-/* Sidebar layout: content shifts for 280px sidebar on tablet+ */
-.responsive-with-sidebar {
-  @apply w-full;
-}
-@media (min-width: 768px) {
-  .responsive-with-sidebar {
-    margin-left: 280px;
-    width: calc(100% - 280px);
-  }
-}
-
 /* Hide on mobile, show on tablet+ */
 .show-tablet-up {
   @apply hidden;

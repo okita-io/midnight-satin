@@ -6,15 +6,15 @@
  * For any author ID, the author link should resolve to /author/{authorId}.
  * For any chapter ID within a novel, the reading link should resolve to /novel/{novelId}/read/{chapterId}.
  *
- * Property 2: Navigation Layout Transformation
+ * Property 2: Navigation Layout — always bottom bar
  * Validates: Requirements 2.1, 2.4
  *
- * For any viewport width, the navigation layout should be bottom bar (< 768px) or side panel (≥ 768px).
+ * For any viewport width, the navigation layout is always a bottom bar.
  *
  * Property 3: Navigation Styling Consistency
  * Validates: Requirements 2.1, 2.4
  *
- * Gold accents (primary #D4AF37) must be preserved across both bottom and side layouts.
+ * Gold accents (primary #D4AF37) must be preserved across all viewports.
  *
  * @see Linear THE-48
  */
@@ -27,7 +27,7 @@ import {
   readingRoomPath,
 } from "@/lib/navigation";
 import { getNavigationLayout } from "@/lib/responsive/utils";
-import { BREAKPOINTS, SIDEBAR_WIDTH } from "@/lib/responsive/constants";
+import { BREAKPOINTS } from "@/lib/responsive/constants";
 import { COLOR_TOKENS } from "@/lib/design-tokens";
 
 describe("Property 13: Navigation link construction", () => {
@@ -68,10 +68,10 @@ describe("Property 13: Navigation link construction", () => {
   });
 });
 
-describe("Property 2: Navigation Layout Transformation", () => {
-  it("returns bottom layout for viewport width < 768px", () => {
+describe("Property 2: Navigation Layout — always bottom bar", () => {
+  it("returns bottom layout for any viewport width", () => {
     fc.assert(
-      fc.property(fc.integer({ min: 0, max: 767 }), (width) => {
+      fc.property(fc.integer({ min: 0, max: 4096 }), (width) => {
         const layout = getNavigationLayout(width);
         expect(layout).toBe("bottom");
       }),
@@ -79,29 +79,22 @@ describe("Property 2: Navigation Layout Transformation", () => {
     );
   });
 
-  it("returns side layout for viewport width >= 768px", () => {
+  it("returns bottom layout below md breakpoint", () => {
     fc.assert(
-      fc.property(fc.integer({ min: 768, max: 4096 }), (width) => {
-        const layout = getNavigationLayout(width);
-        expect(layout).toBe("side");
+      fc.property(fc.integer({ min: 0, max: BREAKPOINTS.md - 1 }), (width) => {
+        expect(getNavigationLayout(width)).toBe("bottom");
       }),
       { numRuns: 100 }
     );
   });
 
-  it("correct layout for any viewport width (bottom/side by breakpoint)", () => {
+  it("returns bottom layout at and above md breakpoint", () => {
     fc.assert(
-      fc.property(fc.integer({ min: 0, max: 4096 }), (width) => {
-        const layout = getNavigationLayout(width);
-        const expected = width >= BREAKPOINTS.md ? "side" : "bottom";
-        expect(layout).toBe(expected);
+      fc.property(fc.integer({ min: BREAKPOINTS.md, max: 4096 }), (width) => {
+        expect(getNavigationLayout(width)).toBe("bottom");
       }),
       { numRuns: 100 }
     );
-  });
-
-  it("side panel uses 280px width constant", () => {
-    expect(SIDEBAR_WIDTH).toBe(280);
   });
 });
 
@@ -118,11 +111,8 @@ describe("Property 3: Navigation Styling Consistency", () => {
         fc.integer({ min: 0, max: 767 }),
         fc.integer({ min: 768, max: 4096 }),
         (mobileWidth, tabletWidth) => {
-          const mobileLayout = getNavigationLayout(mobileWidth);
-          const tabletLayout = getNavigationLayout(tabletWidth);
-          expect(mobileLayout).toBe("bottom");
-          expect(tabletLayout).toBe("side");
-          // Both layouts use the same primary gold for active state
+          expect(getNavigationLayout(mobileWidth)).toBe("bottom");
+          expect(getNavigationLayout(tabletWidth)).toBe("bottom");
           expect(COLOR_TOKENS.primary).toBe(DESIGN_SPEC_PRIMARY);
         }
       ),

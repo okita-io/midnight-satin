@@ -8,7 +8,6 @@ export {
   GRID_COLUMNS,
   MEDIA_QUERIES,
   READING_MAX_WIDTH,
-  SIDEBAR_WIDTH,
   type ViewportSize,
 } from "./constants";
 export { useViewport, usePointerDevice, type ViewportState, type PointerDevice } from "./hooks";

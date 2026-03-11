@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Midnight Satin - The Author's Study (Tablet)</title>
+    <link href="https://fonts.googleapis.com" rel="preconnect" />
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&amp;family=Literata:opsz,wght@7..72,200..900&amp;family=Marcellus&amp;family=Playfair+Display:ital,wght@0,400..900;1,400..900&amp;family=Pinyon+Script&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#D4AF37",
+                        "primary-dark": "#b08d1a",
+                        "void": "#050505",
+                        "surface": "#121212",
+                        "surface-highlight": "#1A1A1A",
+                        "text-main": "#EAEAEA",
+                        "text-muted": "#8A8A8A",
+                        "accent": "#800020",
+                    },
+                    fontFamily: {
+                        "display": ["Playfair Display", "serif"],
+                        "header": ["Cinzel", "serif"],
+                        "body": ["Literata", "serif"],
+                        "ui": ["Marcellus", "serif"],
+                        "script": ["Pinyon Script", "cursive"],
+                    },
+                    boxShadow: {
+                        'gold-glow': '0px 4px 20px rgba(212, 175, 55, 0.15)',
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        .hexagon-clip {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        .bg-silk-noise {
+            background-color: #050505;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #050505; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 2px; }
+        ::-webkit-scrollbar-thumb:hover { background: #D4AF37; }
+    </style>
+    <style>
+        body { min-height: 100dvh; }
+    </style>
+</head>
+
+<body class="bg-void text-text-main font-body antialiased overflow-hidden h-screen selection:bg-primary/30 selection:text-white">
+    <div class="flex flex-col h-screen w-full bg-silk-noise">
+
+        <!-- ═══════════════════════════════════════════════ -->
+        <!-- Main Content Area                               -->
+        <!-- ═══════════════════════════════════════════════ -->
+        <div class="flex-1 flex h-screen overflow-hidden pb-24">
+
+            <!-- ─── Left Column: Author Info ─── -->
+            <div class="w-[380px] shrink-0 overflow-y-auto border-r border-white/5">
+
+                <!-- Page Header -->
+                <header
+                    class="sticky top-0 z-40 flex items-center justify-between bg-void/80 backdrop-blur-md border-b border-white/10 px-6 py-3">
+                    <button
+                        class="text-primary flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/5 transition-colors">
+                        <span class="material-symbols-outlined text-2xl">arrow_back</span>
+                    </button>
+                    <h2 class="text-text-main font-header tracking-widest text-sm font-medium uppercase text-center flex-1">
+                        The Author's Study</h2>
+                    <button
+                        class="text-primary flex size-10 shrink-0 items-center justify-center rounded-full hover:bg-white/5 transition-colors">
+                        <span class="material-symbols-outlined text-2xl">share</span>
+                    </button>
+                </header>
+
+                <!-- Author Profile Hero -->
+                <section class="relative px-6 pt-8 pb-8 flex flex-col items-center text-center">
+                    <div
+                        class="absolute top-20 left-1/2 -translate-x-1/2 w-48 h-48 bg-primary/10 blur-[60px] rounded-full pointer-events-none">
+                    </div>
+                    <!-- Hexagon Avatar -->
+                    <div class="relative mb-6 group cursor-pointer">
+                        <div
+                            class="absolute -inset-[2px] bg-gradient-to-b from-primary to-[#8A7018] hexagon-clip opacity-100 shadow-gold-glow">
+                        </div>
+                        <div class="w-32 h-36 hexagon-clip bg-surface relative overflow-hidden">
+                            <img alt="Portrait of author Genevieve D'Orsay"
+                                class="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
+                                src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBixv27MT2puSBT-Uw-qqmEVbSU5xLGHOfoei7mq9GPeVMax46yGnQMGxMXlB-8IvNvEIqUHh9M2amvfMpkMw2yaS0GRd4TOXO-BUrnSDBCpWQE39CH58A1sLLUpgTOW5v_Lyv-QuAvJBriKWe9doJgfnboGi9h7LTgdI5nHz64EvgbF2up_HxpMx1VZZvrjOH3ABH8DU-Eq1e6qtV-uRUN3CXivh1xtV1Ivt29EAC9ot2NidjFP3wVwIYV41ljyEsXtSonC799EE" />
+                        </div>
+                        <div
+                            class="absolute bottom-2 right-0 bg-void border border-primary rounded-full px-2 py-0.5 flex items-center gap-1 shadow-lg z-10">
+                            <span class="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                            <span class="text-[10px] uppercase tracking-wider text-primary font-ui">Online</span>
+                        </div>
+                    </div>
+                    <!-- Name & Title -->
+                    <h1 class="text-3xl font-display italic text-text-main mb-1">Genevieve D'Orsay</h1>
+                    <p class="text-text-muted text-sm font-ui tracking-widest mb-4">Historical Romance &bull; Gothic</p>
+                    <!-- Stats Row -->
+                    <div class="flex items-center gap-6 mb-6 text-sm text-text-main/80">
+                        <div class="flex flex-col items-center">
+                            <span class="font-display text-lg text-primary">12</span>
+                            <span class="text-[10px] uppercase tracking-wider text-text-muted">Works</span>
+                        </div>
+                        <div class="w-px h-8 bg-white/10"></div>
+                        <div class="flex flex-col items-center">
+                            <span class="font-display text-lg text-primary">4.5k</span>
+                            <span class="text-[10px] uppercase tracking-wider text-text-muted">Followers</span>
+                        </div>
+                        <div class="w-px h-8 bg-white/10"></div>
+                        <div class="flex flex-col items-center">
+                            <span class="font-display text-lg text-primary">4.9</span>
+                            <span class="text-[10px] uppercase tracking-wider text-text-muted">Rating</span>
+                        </div>
+                    </div>
+                    <!-- Actions -->
+                    <div class="flex gap-3 w-full max-w-xs">
+                        <button
+                            class="flex-1 bg-primary hover:bg-primary-dark text-void font-ui font-bold text-xs uppercase tracking-wider py-3 rounded-sm transition-all shadow-gold-glow cursor-pointer active:scale-95">
+                            Follow
+                        </button>
+                        <button
+                            class="px-4 border border-white/10 hover:border-primary text-primary bg-transparent rounded-sm transition-colors flex items-center justify-center cursor-pointer active:scale-95">
+                            <span class="material-symbols-outlined text-xl">notifications</span>
+                        </button>
+                    </div>
+                </section>
+
+                <!-- Bio Section -->
+                <section class="px-6 mb-8">
+                    <div class="relative">
+                        <span class="absolute -left-2 -top-2 text-4xl text-white/10 font-display">&ldquo;</span>
+                        <p class="text-text-main/90 text-lg leading-relaxed text-center italic font-light px-2">
+                            Weaving tales of forbidden desire in Victorian London. Lover of tea, rainstorms, and morally
+                            grey anti-heroes who would burn the world for her.
+                        </p>
+                        <span
+                            class="absolute -right-2 bottom-0 text-4xl text-white/10 font-display transform rotate-180">&ldquo;</span>
+                    </div>
+                    <div class="flex flex-wrap justify-center gap-2 mt-6">
+                        <span
+                            class="px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-primary/80 font-ui tracking-wide">#EnemiesToLovers</span>
+                        <span
+                            class="px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-primary/80 font-ui tracking-wide">#SlowBurn</span>
+                        <span
+                            class="px-3 py-1 rounded-full border border-white/10 bg-white/5 text-xs text-primary/80 font-ui tracking-wide">#HighHeat</span>
+                    </div>
+                </section>
+
+                <!-- Trophy Case -->
+                <section class="border-y border-white/5 bg-surface/50 backdrop-blur-sm">
+                    <div class="px-6 py-4 flex items-center justify-between">
+                        <h3 class="font-header text-primary text-xs tracking-[0.15em] uppercase">Trophy Case</h3>
+                        <button
+                            class="text-[10px] text-text-muted uppercase hover:text-primary transition-colors cursor-pointer">View
+                            All</button>
+                    </div>
+                    <div class="grid grid-cols-3 divide-x divide-white/5 border-t border-white/5">
+                        <div
+                            class="flex flex-col items-center justify-center py-6 px-2 gap-2 hover:bg-white/5 transition-colors cursor-pointer group">
+                            <div
+                                class="text-primary opacity-80 group-hover:opacity-100 transition-opacity drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]">
+                                <span class="material-symbols-outlined text-3xl">history_edu</span>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-text-main text-xs font-display font-bold">Golden Quill</p>
+                                <p class="text-[10px] text-text-muted uppercase mt-0.5">Top Rated 2023</p>
+                            </div>
+                        </div>
+                        <div
+                            class="flex flex-col items-center justify-center py-6 px-2 gap-2 hover:bg-white/5 transition-colors cursor-pointer group">
+                            <div
+                                class="text-primary opacity-80 group-hover:opacity-100 transition-opacity drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]">
+                                <span class="material-symbols-outlined text-3xl">favorite</span>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-text-main text-xs font-display font-bold">Million Roses</p>
+                                <p class="text-[10px] text-text-muted uppercase mt-0.5">1M+ Endorsements</p>
+                            </div>
+                        </div>
+                        <div
+                            class="flex flex-col items-center justify-center py-6 px-2 gap-2 hover:bg-white/5 transition-colors cursor-pointer group">
+                            <div
+                                class="text-primary opacity-80 group-hover:opacity-100 transition-opacity drop-shadow-[0_0_8px_rgba(212,175,55,0.4)]">
+                                <span class="material-symbols-outlined text-3xl">dark_mode</span>
+                            </div>
+                            <div class="text-center">
+                                <p class="text-text-main text-xs font-display font-bold">Night Owl</p>
+                                <p class="text-[10px] text-text-muted uppercase mt-0.5">Most Read @ 3AM</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Fin -->
+                <div class="flex justify-center py-8">
+                    <p class="font-script text-2xl text-text-muted opacity-50">fin</p>
+                </div>
+            </div>
+
+            <!-- ─── Right Column: Bibliography (scrollable) ─── -->
+            <div class="flex-1 overflow-y-auto">
+                <!-- Column Header -->
+                <header
+                    class="sticky top-0 z-40 bg-void/80 backdrop-blur-md border-b border-white/10 px-8 py-4">
+                    <h3 class="font-header text-primary text-sm tracking-[0.15em] uppercase">Bibliography</h3>
+                </header>
+
+                <div class="px-8 py-6 space-y-8">
+                    <!-- Series 1 -->
+                    <section>
+                        <div class="flex items-end justify-between mb-4 border-b border-white/10 pb-2">
+                            <h3 class="font-header text-primary text-sm tracking-[0.15em] uppercase">The Gilded Cage
+                                Trilogy</h3>
+                            <span class="text-[10px] text-text-muted italic font-display">Completed</span>
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <!-- Book Card 1 -->
+                            <div class="flex gap-4 group cursor-pointer">
+                                <div
+                                    class="relative w-20 h-28 shrink-0 rounded-sm overflow-hidden shadow-lg border border-white/10 group-hover:border-primary transition-colors">
+                                    <img class="w-full h-full object-cover"
+                                        alt="Dark moody book cover with a golden birdcage illustration"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxZZxJobqEwhhhuamxNd3I74SmDKF7TNorWOGWWjgxJ6cP71LblWBQd0ErmULTtoZP3g8NjWHACjEvxuxVv_7bw5zVPF7mclcuTysmgysb2bgp-CVWklnPhQuTaRhOP4eJVnEh4w_07uBAu9Qz-mx7y7rQOoflNYg5DAv3XkZdiq-SiE8DsucLvVp-zMjm7Go4i59AxYKXJ8his1Jz9Xgqk36PvAJ6eLrYtquLl4K8R2pLNWwHwlkcZxikgf3slrUQrUKHzab8ZlE" />
+                                    <div
+                                        class="absolute top-0 right-0 bg-primary text-void text-[9px] font-bold px-1.5 py-0.5 rounded-bl-sm">
+                                        OWNED</div>
+                                </div>
+                                <div class="flex flex-col justify-center flex-1 border-b border-white/5 pb-4">
+                                    <h4
+                                        class="text-text-main font-display text-lg leading-tight mb-1 group-hover:text-primary transition-colors">
+                                        The Duke's Prisoner</h4>
+                                    <p class="text-text-muted text-sm line-clamp-2 mb-3">
+                                        She was a pawn in a game of crowns, until she captured the King's heart.
+                                    </p>
+                                    <div class="flex items-center gap-3">
+                                        <div class="flex items-center gap-1 text-primary text-xs">
+                                            <span class="material-symbols-outlined text-[14px]">star</span>
+                                            <span>4.8</span>
+                                        </div>
+                                        <span class="text-text-muted text-[10px] uppercase tracking-wider">Book 1 &bull;
+                                            2021</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Book Card 2 -->
+                            <div class="flex gap-4 group cursor-pointer">
+                                <div
+                                    class="relative w-20 h-28 shrink-0 rounded-sm overflow-hidden shadow-lg border border-white/10 group-hover:border-primary transition-colors">
+                                    <img class="w-full h-full object-cover"
+                                        alt="Abstract dark book cover with a wilted rose illustration"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiFlajTLQkfwPLuXLk1ZOj5BjcxyXE4pYGtWMYxV9DzH3Xrle4TvE_YZ0nIDZb1fSNdQBSw_a9GbXAuEm9IdgElZvJnjjvuxSsr3QKNs_QhLevHe4cZrdYFg-wqcxl0BlcF3POSVvVrb7UutBLfHS71yHSGm4g3BDWchblIURvgq_HOB0dA68ECRI_3mDZgH5NAL_o0uboSwY_Y558-V3g-znGsBZ5pOv0o3qXinKhxrRL93_Q0pmqPGEYep_DS2rmF0igC7H4KUM" />
+                                    <div class="absolute bottom-0 left-0 w-full h-1 bg-void/50">
+                                        <div class="h-full bg-primary w-[65%]"></div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col justify-center flex-1 border-b border-white/5 pb-4">
+                                    <h4
+                                        class="text-text-main font-display text-lg leading-tight mb-1 group-hover:text-primary transition-colors">
+                                        The Countess's Secret</h4>
+                                    <p class="text-text-muted text-sm line-clamp-2 mb-3">
+                                        Masks fall away at midnight balls, revealing truths that could destroy an empire.
+                                    </p>
+                                    <div class="flex items-center gap-3">
+                                        <div class="flex items-center gap-1 text-primary text-xs">
+                                            <span class="material-symbols-outlined text-[14px]">star</span>
+                                            <span>4.9</span>
+                                        </div>
+                                        <span class="text-text-muted text-[10px] uppercase tracking-wider">Book 2 &bull;
+                                            2022</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Book Card 3 -->
+                            <div class="flex gap-4 group cursor-pointer">
+                                <div
+                                    class="relative w-20 h-28 shrink-0 rounded-sm overflow-hidden shadow-lg border border-white/10 group-hover:border-primary transition-colors">
+                                    <img class="w-full h-full object-cover"
+                                        alt="Dark Gothic book cover with cathedral silhouette"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtHF0ffElzPhctc8CeEusj3ZetOmTa0Fj9SoSNPJLGrFtxpSic5lGI8Tf3LAw-V7zYXgdKcvQfA70si3B5tfW5gM-rTAQMO4qZTmyYfIPBXewlB8AV0CTmzmyefwJiUUZcOLlIGUXgNs2YvSdoYtPr2ssydKpGlZz2TCduJN-LDQ42B_iFFTNQ6Nl3F6znPfGb-NFykYvjukVtWkgUNgGGj99x2NVkMPVJeq4bO5HzHtG1QsNgXTYkW_p5G0Hm0IRCGm_TFHsdbfQ" />
+                                    <div
+                                        class="absolute top-0 right-0 bg-primary text-void text-[9px] font-bold px-1.5 py-0.5 rounded-bl-sm">
+                                        OWNED</div>
+                                </div>
+                                <div class="flex flex-col justify-center flex-1 border-b border-white/5 pb-4">
+                                    <h4
+                                        class="text-text-main font-display text-lg leading-tight mb-1 group-hover:text-primary transition-colors">
+                                        The Heir's Reckoning</h4>
+                                    <p class="text-text-muted text-sm line-clamp-2 mb-3">
+                                        The final gambit — where love and loyalty collide before the throne.
+                                    </p>
+                                    <div class="flex items-center gap-3">
+                                        <div class="flex items-center gap-1 text-primary text-xs">
+                                            <span class="material-symbols-outlined text-[14px]">star</span>
+                                            <span>4.7</span>
+                                        </div>
+                                        <span class="text-text-muted text-[10px] uppercase tracking-wider">Book 3 &bull;
+                                            2023</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Series 2 -->
+                    <section>
+                        <div class="flex items-end justify-between mb-4 border-b border-white/10 pb-2">
+                            <h3 class="font-header text-primary text-sm tracking-[0.15em] uppercase">Standalone Novels
+                            </h3>
+                            <span class="text-[10px] text-text-muted italic font-display">2 Titles</span>
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <!-- Book Card 4 (New Release) -->
+                            <div class="flex gap-4 group cursor-pointer">
+                                <div
+                                    class="relative w-20 h-28 shrink-0 rounded-sm overflow-hidden shadow-lg border border-white/10 group-hover:border-primary transition-colors">
+                                    <img class="w-full h-full object-cover"
+                                        alt="Dark moody texture representing a stormy night book cover"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxZZxJobqEwhhhuamxNd3I74SmDKF7TNorWOGWWjgxJ6cP71LblWBQd0ErmULTtoZP3g8NjWHACjEvxuxVv_7bw5zVPF7mclcuTysmgysb2bgp-CVWklnPhQuTaRhOP4eJVnEh4w_07uBAu9Qz-mx7y7rQOoflNYg5DAv3XkZdiq-SiE8DsucLvVp-zMjm7Go4i59AxYKXJ8his1Jz9Xgqk36PvAJ6eLrYtquLl4K8R2pLNWwHwlkcZxikgf3slrUQrUKHzab8ZlE" />
+                                    <div
+                                        class="absolute top-0 left-0 bg-accent text-white text-[9px] font-bold px-1.5 py-0.5 rounded-br-sm shadow-md">
+                                        NEW</div>
+                                </div>
+                                <div class="flex flex-col justify-center flex-1 border-b border-white/5 pb-4">
+                                    <div class="flex justify-between items-start w-full">
+                                        <h4
+                                            class="text-text-main font-display text-lg leading-tight mb-1 group-hover:text-primary transition-colors">
+                                            Velvet &amp; Steel</h4>
+                                        <button
+                                            class="flex items-center gap-1 bg-white/5 hover:bg-primary hover:text-void border border-primary/30 rounded-sm px-2 py-1 transition-all cursor-pointer active:scale-95">
+                                            <span class="text-[10px] font-bold uppercase tracking-wide">Get</span>
+                                        </button>
+                                    </div>
+                                    <p class="text-text-muted text-sm line-clamp-2 mb-3">
+                                        An industrialist and a seamstress find common ground in a city divided by coal
+                                        and silk.
+                                    </p>
+                                    <div class="flex items-center gap-3">
+                                        <div class="flex items-center gap-1 text-text-muted text-xs">
+                                            <span class="material-symbols-outlined text-[14px]">trending_up</span>
+                                            <span>Trending</span>
+                                        </div>
+                                        <span class="text-text-muted text-[10px] uppercase tracking-wider">2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Book Card 5 -->
+                            <div class="flex gap-4 group cursor-pointer">
+                                <div
+                                    class="relative w-20 h-28 shrink-0 rounded-sm overflow-hidden shadow-lg border border-white/10 group-hover:border-primary transition-colors">
+                                    <img class="w-full h-full object-cover"
+                                        alt="Moody book cover with a candlelit study"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiFlajTLQkfwPLuXLk1ZOj5BjcxyXE4pYGtWMYxV9DzH3Xrle4TvE_YZ0nIDZb1fSNdQBSw_a9GbXAuEm9IdgElZvJnjjvuxSsr3QKNs_QhLevHe4cZrdYFg-wqcxl0BlcF3POSVvVrb7UutBLfHS71yHSGm4g3BDWchblIURvgq_HOB0dA68ECRI_3mDZgH5NAL_o0uboSwY_Y558-V3g-znGsBZ5pOv0o3qXinKhxrRL93_Q0pmqPGEYep_DS2rmF0igC7H4KUM" />
+                                    <div
+                                        class="absolute top-0 right-0 bg-primary text-void text-[9px] font-bold px-1.5 py-0.5 rounded-bl-sm">
+                                        OWNED</div>
+                                </div>
+                                <div class="flex flex-col justify-center flex-1 border-b border-white/5 pb-4">
+                                    <h4
+                                        class="text-text-main font-display text-lg leading-tight mb-1 group-hover:text-primary transition-colors">
+                                        Whispers in Amber</h4>
+                                    <p class="text-text-muted text-sm line-clamp-2 mb-3">
+                                        A perfumer's daughter discovers that the rarest scent leads to the most dangerous
+                                        liaison.
+                                    </p>
+                                    <div class="flex items-center gap-3">
+                                        <div class="flex items-center gap-1 text-primary text-xs">
+                                            <span class="material-symbols-outlined text-[14px]">star</span>
+                                            <span>4.6</span>
+                                        </div>
+                                        <span class="text-text-muted text-[10px] uppercase tracking-wider">2023</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Series 3 -->
+                    <section>
+                        <div class="flex items-end justify-between mb-4 border-b border-white/10 pb-2">
+                            <h3 class="font-header text-primary text-sm tracking-[0.15em] uppercase">The Midnight
+                                Correspondence</h3>
+                            <span class="text-[10px] text-text-muted italic font-display">In Progress &mdash; 2
+                                of 4</span>
+                        </div>
+                        <div class="flex flex-col gap-4">
+                            <!-- Book Card 6 -->
+                            <div class="flex gap-4 group cursor-pointer">
+                                <div
+                                    class="relative w-20 h-28 shrink-0 rounded-sm overflow-hidden shadow-lg border border-white/10 group-hover:border-primary transition-colors">
+                                    <img class="w-full h-full object-cover"
+                                        alt="Book cover with a sealed letter and wax stamp"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBtHF0ffElzPhctc8CeEusj3ZetOmTa0Fj9SoSNPJLGrFtxpSic5lGI8Tf3LAw-V7zYXgdKcvQfA70si3B5tfW5gM-rTAQMO4qZTmyYfIPBXewlB8AV0CTmzmyefwJiUUZcOLlIGUXgNs2YvSdoYtPr2ssydKpGlZz2TCduJN-LDQ42B_iFFTNQ6Nl3F6znPfGb-NFykYvjukVtWkgUNgGGj99x2NVkMPVJeq4bO5HzHtG1QsNgXTYkW_p5G0Hm0IRCGm_TFHsdbfQ" />
+                                    <div
+                                        class="absolute top-0 right-0 bg-primary text-void text-[9px] font-bold px-1.5 py-0.5 rounded-bl-sm">
+                                        OWNED</div>
+                                </div>
+                                <div class="flex flex-col justify-center flex-1 border-b border-white/5 pb-4">
+                                    <h4
+                                        class="text-text-main font-display text-lg leading-tight mb-1 group-hover:text-primary transition-colors">
+                                        Letters Unsent</h4>
+                                    <p class="text-text-muted text-sm line-clamp-2 mb-3">
+                                        Two strangers begin an anonymous correspondence that sets 1890s London ablaze.
+                                    </p>
+                                    <div class="flex items-center gap-3">
+                                        <div class="flex items-center gap-1 text-primary text-xs">
+                                            <span class="material-symbols-outlined text-[14px]">star</span>
+                                            <span>4.8</span>
+                                        </div>
+                                        <span class="text-text-muted text-[10px] uppercase tracking-wider">Book 1 &bull;
+                                            2024</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Book Card 7 -->
+                            <div class="flex gap-4 group cursor-pointer">
+                                <div
+                                    class="relative w-20 h-28 shrink-0 rounded-sm overflow-hidden shadow-lg border border-white/10 group-hover:border-primary transition-colors">
+                                    <img class="w-full h-full object-cover"
+                                        alt="Book cover with ink and quill on dark velvet"
+                                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuAiFlajTLQkfwPLuXLk1ZOj5BjcxyXE4pYGtWMYxV9DzH3Xrle4TvE_YZ0nIDZb1fSNdQBSw_a9GbXAuEm9IdgElZvJnjjvuxSsr3QKNs_QhLevHe4cZrdYFg-wqcxl0BlcF3POSVvVrb7UutBLfHS71yHSGm4g3BDWchblIURvgq_HOB0dA68ECRI_3mDZgH5NAL_o0uboSwY_Y558-V3g-znGsBZ5pOv0o3qXinKhxrRL93_Q0pmqPGEYep_DS2rmF0igC7H4KUM" />
+                                    <div class="absolute bottom-0 left-0 w-full h-1 bg-void/50">
+                                        <div class="h-full bg-primary w-[40%]"></div>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col justify-center flex-1 border-b border-white/5 pb-4">
+                                    <h4
+                                        class="text-text-main font-display text-lg leading-tight mb-1 group-hover:text-primary transition-colors">
+                                        Ink &amp; Confession</h4>
+                                    <p class="text-text-muted text-sm line-clamp-2 mb-3">
+                                        When the letters are traced, the truth threatens to unravel both their worlds.
+                                    </p>
+                                    <div class="flex items-center gap-3">
+                                        <div class="flex items-center gap-1 text-primary text-xs">
+                                            <span class="material-symbols-outlined text-[14px]">star</span>
+                                            <span>4.9</span>
+                                        </div>
+                                        <span class="text-text-muted text-[10px] uppercase tracking-wider">Book 2 &bull;
+                                            2025</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div class="flex justify-center pt-4 pb-8">
+                        <p class="font-script text-2xl text-text-muted opacity-50">fin</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══════════════════════════════════════════════ -->
+        <!-- Bottom Navigation Bar (matches home tablet)     -->
+        <!-- ═══════════════════════════════════════════════ -->
+        <nav class="fixed bottom-0 left-0 right-0 bg-[#080808] border-t border-[#1F1F1F] px-24 pb-6 pt-4 z-50 shadow-[0_-10px_40px_rgba(0,0,0,0.8)]">
+            <div class="max-w-96 mx-auto flex justify-between items-end">
+                <button class="flex flex-col items-center gap-1.5 group flex-1">
+                    <span class="material-symbols-outlined text-text-muted group-hover:text-text-main transition-colors text-[24px]">history_edu</span>
+                    <span class="text-xs font-header font-medium text-text-muted group-hover:text-text-main tracking-[0.2em]">Boudoir</span>
+                </button>
+                <button class="flex flex-col items-center gap-1.5 group flex-1">
+                    <span class="material-symbols-outlined text-text-muted group-hover:text-text-main transition-colors text-[24px]">local_library</span>
+                    <span class="text-xs font-header font-medium text-text-muted group-hover:text-text-main tracking-[0.2em]">Library</span>
+                </button>
+                <button class="flex flex-col items-center gap-1.5 group flex-1">
+                    <span class="material-symbols-outlined text-text-muted group-hover:text-text-main transition-colors text-[24px]">storefront</span>
+                    <span class="text-xs font-header font-medium text-text-muted group-hover:text-text-main tracking-[0.2em]">Vault</span>
+                </button>
+                <button class="flex flex-col items-center gap-1.5 group flex-1">
+                    <div class="relative flex items-center justify-center">
+                        <span class="material-symbols-outlined text-primary text-[28px] drop-shadow-[0_0_8px_rgba(212,175,55,0.6)]">person_3</span>
+                        <span class="absolute -bottom-2 w-1 h-1 bg-primary rounded-full shadow-[0_0_5px_#D4AF37]"></span>
+                    </div>
+                    <span class="text-xs font-header font-medium text-primary tracking-[0.2em]">Profile</span>
+                </button>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Texture Overlay -->
+    <div class="fixed inset-0 pointer-events-none opacity-[0.03] z-[60]"
+        style="background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMjAwIj48ZmlsdGVyIGlkPSJnoj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iMC42IiBzdGl0Y2hUaWxlcz0ic3RpdGNoIi8+PC9maWx0ZXI+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsdGVyPSJ1cmwoI2cpIiBvcGFjaXR5PSIwLjUiLz48L3N2Zz4='); mix-blend-mode: overlay;">
+    </div>
+</body>
+
+</html>

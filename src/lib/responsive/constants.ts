@@ -162,7 +162,7 @@ export const IMAGE_LOADING_LAZY = "lazy" as const;
 /** Max content width for grid sections on desktop (THE-50) */
 export const DESKTOP_MAX_WIDTH = 1440;
 
-/** Navigation sidebar width on tablet/desktop */
+/** @deprecated No longer used — side navigation removed in favour of bottom bar at all breakpoints */
 export const SIDEBAR_WIDTH = 280;
 
 /**

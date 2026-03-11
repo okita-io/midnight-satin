@@ -22,17 +22,16 @@ import {
   type ViewportSize,
 } from "./constants";
 
-/** Navigation layout mode: bottom bar (mobile) or side panel (tablet/desktop) */
-export type NavigationLayout = "bottom" | "side";
+/** Navigation layout mode: always bottom bar across all viewports */
+export type NavigationLayout = "bottom";
 
 /**
  * Resolve navigation layout from viewport width.
- * Mobile (< 768px): bottom bar. Tablet/Desktop (≥ 768px): side panel.
- * Matches Tailwind md: breakpoint and NavigationBar CSS (md:hidden, hidden md:flex).
+ * Always returns "bottom" — the app uses a fixed bottom bar at every breakpoint.
  * @see Linear THE-48
  */
-export function getNavigationLayout(width: number): NavigationLayout {
-  return width >= BREAKPOINTS.md ? "side" : "bottom";
+export function getNavigationLayout(_width: number): NavigationLayout {
+  return "bottom";
 }
 
 /**
