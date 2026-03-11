@@ -12,8 +12,7 @@ This project is a premium romance reading app called **Midnight Satin**. All imp
 - `reference/the_novel_detail.html` — The Novel Detail screen
 - `reference/the_reading_room.html` — The Reading Room (Reader) screen
 - `reference/the_reading_room_with_comments.html` — The Reading Room with Comments variant
-- `reference/the_cast_gallery_1.html` — The Cast Gallery screen (variant 1)
-- `reference/the_cast_gallery_2.html` — The Cast Gallery screen (variant 2)
+- `reference/the_cast_gallery.html` — The Cast Gallery screen
 - `reference/the_cast_gallery_with_endorsements.html` — The Cast Gallery with Endorsements variant
 - `reference/the_authors_study.html` — The Author's Study screen (mobile)
 - `reference/the_authors_study_tablet.html` — The Author's Study screen (tablet/desktop, two-column)
