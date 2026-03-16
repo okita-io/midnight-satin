@@ -9,8 +9,8 @@ interface HighSocietySectionProps {
 }
 
 /**
- * High Society: horizontally scrollable on mobile, CSS Grid on tablet/desktop.
- * Tablet: 2 columns, Desktop: 3 columns, max-width 1440px centered.
+ * High Society: 2-col wrapping grid on mobile, 2-col on tablet, 3-col on desktop.
+ * Shows the most recent novels + a "Coming Soon" placeholder.
  * Empty state: "Nothing in high society yet"
  * Matches reference/midnight_satin_home.html. THE-50.
  */
@@ -18,9 +18,8 @@ export function HighSocietySection({ novels, loading }: HighSocietySectionProps)
   const sectionClass = "mb-8 xs:mb-10 px-4 xs:px-6 md:max-w-[1440px] md:mx-auto";
   const headerClass = "flex items-center justify-between mb-4 xs:mb-6";
   const gridClass =
-    "grid grid-flow-col grid-auto-cols-[110px] xs:grid-auto-cols-[130px] gap-3 xs:gap-5 pb-6 xs:pb-8 no-scrollbar overflow-x-auto snap-x snap-mandatory " +
-    "md:grid-flow-row md:grid-cols-2 md:gap-6 md:overflow-visible md:snap-none " +
-    "lg:grid-cols-3 lg:gap-8";
+    "grid grid-cols-2 gap-3 xs:gap-5 " +
+    "md:gap-6 lg:grid-cols-3 lg:gap-8";
 
   if (loading) {
     return (
@@ -29,10 +28,10 @@ export function HighSocietySection({ novels, loading }: HighSocietySectionProps)
           <h2 className="font-header text-sm tracking-[0.15em] text-white/90">High Society</h2>
         </div>
         <div className={gridClass}>
-          {Array.from({ length: 6 }).map((_, i) => (
+          {Array.from({ length: 4 }).map((_, i) => (
             <ShimmerPlaceholder
               key={i}
-              className="aspect-[2/3] rounded-sm min-w-0 md:w-full snap-start"
+              className="aspect-[2/3] rounded-sm"
             />
           ))}
         </div>
@@ -68,10 +67,9 @@ export function HighSocietySection({ novels, loading }: HighSocietySectionProps)
               rating: n.rating > 0 ? n.rating : undefined,
             }}
             fill
-            className="snap-start"
           />
         ))}
-        <div className="flex flex-col min-w-[110px] xs:min-w-[130px] md:min-w-0 w-full snap-start group cursor-default">
+        <div className="flex flex-col w-full group cursor-default">
           <div className="relative w-full aspect-[2/3] rounded-sm overflow-hidden mb-3 shadow-lg shadow-black/60 border border-white/5 bg-surface-highlight flex items-center justify-center">
             <span className="material-symbols-outlined text-text-muted opacity-50 text-4xl">
               auto_stories

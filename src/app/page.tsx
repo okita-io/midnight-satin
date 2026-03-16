@@ -67,7 +67,7 @@ export default async function BoudoirPage() {
           isAuthenticated={!!session}
         />
 
-        <HighSocietySection novels={trending} />
+        <HighSocietySection novels={trending.slice(0, 3)} />
 
         <section className="px-4 xs:px-6 mb-8">
           <VaultTeaserCard />
