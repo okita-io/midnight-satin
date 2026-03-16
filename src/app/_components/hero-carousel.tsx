@@ -117,21 +117,55 @@ function HeroCarouselSingle({
       <div className="absolute inset-0 bg-gold-sheen opacity-30 mix-blend-overlay" />
 
       <div className="absolute bottom-0 left-0 right-0 p-4 xs:p-6 flex flex-col items-center text-center z-10 pb-8 xs:pb-12">
-        <span className="font-header text-[10px] tracking-[0.3em] text-primary mb-2 xs:mb-3 uppercase border-b border-primary/30 pb-1">
+        <span className="font-header text-[10px] tracking-[0.3em] text-white mb-2 xs:mb-3 uppercase border-b border-white/40 pb-1 hero-text-shadow">
           Editor&apos;s Choice
         </span>
         <h1 className="font-display italic font-bold text-3xl xs:text-4xl leading-tight text-white mb-2 gold-text-shadow">
           {item.title}
         </h1>
-        <p className="font-ui text-text-muted text-sm mb-4 xs:mb-6 tracking-wide">
+        <p className="font-ui text-white text-sm mb-2 tracking-wide hero-text-shadow">
           By {item.authorName}
         </p>
+        {item.rating != null && item.ratingCount != null && (
+          <div className="flex items-center justify-center gap-1 mb-4">
+            {Array.from({ length: 5 }, (_, i) => {
+              const full = Math.floor(item.rating!);
+              const hasHalf = item.rating! - full >= 0.3;
+              return (
+                <span
+                  key={i}
+                  className={`material-symbols-outlined text-[18px] ${
+                    i < full ? "text-primary" : i === full && hasHalf ? "text-primary/40" : "text-white/20"
+                  }`}
+                  style={{ fontVariationSettings: "'FILL' 1" }}
+                >
+                  {i < full ? "star" : i === full && hasHalf ? "star_half" : "star"}
+                </span>
+              );
+            })}
+            <span className="text-xs text-white/80 ml-2 hero-text-shadow">
+              ({item.ratingCount >= 1000 ? `${(item.ratingCount / 1000).toFixed(1)}k` : item.ratingCount} reviews)
+            </span>
+          </div>
+        )}
         <Link
           href={ctaHref}
           className="bg-primary text-void font-ui font-bold text-sm px-6 xs:px-8 py-2.5 xs:py-3 rounded-sm hover:bg-white transition-colors duration-300 shadow-gold-glow uppercase tracking-wider"
         >
           Start Reading
         </Link>
+        {item.genreTags && item.genreTags.length > 0 && (
+          <div className="flex flex-wrap gap-2 justify-center mt-4">
+            {item.genreTags.map((tag) => (
+              <span
+                key={tag}
+                className="px-3 py-1 text-xs tracking-wider uppercase border border-primary/60 text-primary rounded-sm bg-void/50 backdrop-blur-sm"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

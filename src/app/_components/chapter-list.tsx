@@ -41,7 +41,7 @@ export function ChapterList({
 
   return (
     <div className="mb-24">
-      <div className="flex justify-between items-end mb-4 xs:mb-6">
+      <div className="flex justify-between items-end mb-6">
         <h3 className="text-text-muted text-sm uppercase tracking-[0.2em] font-medium border-b border-primary/20 pb-2">
           Contents
         </h3>
@@ -63,7 +63,7 @@ export function ChapterList({
             <Link
               key={ch.id}
               href={isAccessible ? href : "#"}
-              className={`group flex items-end justify-between py-4 xs:py-5 px-2 -mx-2 rounded transition-colors ${isAccessible
+              className={`group flex items-center md:items-end justify-between py-5 px-2 -mx-2 rounded transition-colors ${isAccessible
                   ? "cursor-pointer hover:bg-white/5 active:scale-[0.99]"
                   : "cursor-default opacity-60"
                 }`}
@@ -77,7 +77,7 @@ export function ChapterList({
                   Chapter {toRoman(ch.chapterNumber)}
                 </span>
                 <span
-                  className={`text-base xs:text-lg font-display italic ${isAccessible ? "text-text-main" : "text-text-muted"
+                  className={`text-lg font-display italic ${isAccessible ? "text-text-main" : "text-text-muted"
                     }`}
                 >
                   {ch.title}

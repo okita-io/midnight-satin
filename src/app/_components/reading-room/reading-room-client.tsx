@@ -202,7 +202,7 @@ export function ReadingRoomClient({
   }, [chapterId, isAuthenticated, creditBalance, isUnlocking]);
 
   return (
-    <div className="h-screen flex flex-col bg-void bg-silk-noise overflow-hidden">
+    <div className="h-screen flex flex-col bg-void bg-silk-noise overflow-hidden text-text-main font-body antialiased selection:bg-primary/30 selection:text-white">
       {/* Main reading area - tap to toggle HUD */}
       <main
         ref={scrollRef}
@@ -211,7 +211,7 @@ export function ReadingRoomClient({
         role="main"
         aria-label="Chapter content"
       >
-          <div className="max-w-xl md:max-w-2xl lg:max-w-3xl mx-auto px-4 xs:px-6 md:px-10 pt-20 xs:pt-24 pb-28 xs:pb-32">
+          <div className="max-w-xl md:max-w-2xl mx-auto px-4 xs:px-6 md:px-10 pt-24 pb-32">
           <ChapterContent
             content={content}
             chapterTitle={chapterTitle}

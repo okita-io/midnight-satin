@@ -11,7 +11,7 @@ export function BiographySection({ biography, styleTags }: BiographySectionProps
     <section className="px-4 xs:px-6 mb-8 xs:mb-10">
       <div className="relative">
         <span className="absolute -left-1 xs:-left-2 -top-2 text-3xl xs:text-4xl text-[#393528] font-display">&ldquo;</span>
-        <p className="text-text-main/90 text-base xs:text-lg leading-relaxed text-center italic font-light px-2">
+        <p className="text-text-main/90 text-lg leading-relaxed text-center italic font-light px-2">
           {biography || "No biography available."}
         </p>
         <span
@@ -26,9 +26,9 @@ export function BiographySection({ biography, styleTags }: BiographySectionProps
           {styleTags.map((tag) => (
             <span
               key={tag}
-              className="px-3 py-1 rounded-full border border-[#393528] bg-white/5 text-xs text-primary/80 font-ui tracking-wide"
+              className="px-3 py-1 rounded-sm border border-primary/60 bg-void/50 backdrop-blur-sm text-xs text-primary font-ui tracking-wider uppercase"
             >
-              #{tag}
+              {tag}
             </span>
           ))}
         </div>

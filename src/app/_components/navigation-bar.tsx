@@ -56,7 +56,7 @@ function NavTabLink({
         )}
       </div>
       <span
-        className={`text-xs font-header font-medium tracking-[0.2em] transition-colors duration-300 ease-in-out ${
+        className={`text-[10px] md:text-xs font-ui md:font-header font-medium tracking-wider md:tracking-[0.2em] transition-colors duration-300 ease-in-out ${
           isActive ? "text-primary" : "text-text-muted"
         }`}
       >
@@ -75,7 +75,7 @@ export function NavigationBar({ activeTab }: NavigationBarProps) {
       }}
       aria-label="Main navigation"
     >
-      <div className="max-w-96 mx-auto flex justify-between items-end">
+      <div className="max-w-md md:max-w-96 mx-auto flex justify-between items-end">
         {TABS.map(({ id, href, label, icon }) => (
           <NavTabLink
             key={id}

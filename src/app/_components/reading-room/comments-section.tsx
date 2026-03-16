@@ -230,7 +230,7 @@ export function CommentsSection({
         </div>
 
         {/* Input form */}
-        <div className="px-6 py-6 pb-6 bg-void/50 border-t border-white/5 shrink-0">
+        <div className="px-6 py-6 pb-10 bg-void/50 border-t border-white/5 shrink-0">
           <div className="relative">
             <textarea
               ref={inputRef}

@@ -16,26 +16,42 @@ export default async function LoginPage({
   const registerLink = returnUrl ? `/auth/register?returnUrl=${encodeURIComponent(returnUrl)}` : "/auth/register";
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center px-4 xs:px-6 pb-safe-bottom pt-safe-top">
-      <div className="w-full max-w-md md:max-w-[480px] mx-auto">
-        <div className="text-center mb-6 xs:mb-8">
-          <h1 className="font-display font-bold italic text-2xl xs:text-3xl text-[var(--primary)]" style={{ fontFamily: "var(--font-display)" }}>
+    <main className="relative flex min-h-screen w-full flex-col overflow-hidden bg-silk-noise">
+      {/* Decorative blurs */}
+      <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+
+      <div className="flex-1 flex flex-col items-center justify-center px-8 max-w-md mx-auto w-full">
+        {/* Branding icon */}
+        <div className="mb-8">
+          <span
+            className="material-symbols-outlined text-primary text-5xl"
+            style={{ fontVariationSettings: "'FILL' 1" }}
+          >
+            menu_book
+          </span>
+        </div>
+
+        <div className="text-center mb-10">
+          <h1 className="font-display font-bold italic text-4xl text-primary">
             Welcome back
           </h1>
-          <p className="font-ui text-[var(--text-muted)] mt-2 tracking-widest uppercase" style={{ fontFamily: "var(--font-ui)", fontSize: "0.875rem" }}>
+          <p className="font-ui text-text-muted mt-2 text-sm tracking-widest uppercase">
             Sign in to continue
           </p>
         </div>
 
         <LoginForm redirectTo={redirectTo} />
+      </div>
 
-        <p className="font-ui text-center mt-6 text-[var(--text-muted)]" style={{ fontFamily: "var(--font-ui)", fontSize: "0.875rem" }}>
+      <footer className="p-8 text-center mt-auto">
+        <p className="font-ui text-sm text-text-muted">
           Don&apos;t have an account?{" "}
-          <Link href={registerLink} className="text-[var(--primary)] border-b border-primary/50 pb-0.5 hover:opacity-90">
+          <Link href={registerLink} className="text-primary border-b border-primary/50 pb-0.5 hover:opacity-90">
             Register
           </Link>
         </p>
-      </div>
+      </footer>
     </main>
   );
 }

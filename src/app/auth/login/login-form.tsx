@@ -29,7 +29,7 @@ export function LoginForm({ redirectTo }: { redirectTo: string }) {
           autoComplete="email"
           required
           disabled={isPending}
-          className="block w-full h-14 rounded border-2 border-surface-highlight bg-surface-highlight px-4 font-ui text-text-main placeholder:text-text-muted focus:border-primary focus:outline-none focus:ring-0 transition-colors duration-300"
+          className="block w-full h-14 rounded-none border border-surface-highlight bg-surface-highlight px-4 font-ui text-text-main placeholder:text-text-muted/60 focus:border-primary focus:outline-none focus:ring-0 transition-colors duration-300"
           placeholder="you@example.com"
         />
       </div>
@@ -44,13 +44,13 @@ export function LoginForm({ redirectTo }: { redirectTo: string }) {
           autoComplete="current-password"
           required
           disabled={isPending}
-          className="block w-full h-14 rounded border-2 border-surface-highlight bg-surface-highlight px-4 font-ui text-text-main placeholder:text-text-muted focus:border-primary focus:outline-none focus:ring-0 transition-colors duration-300"
+          className="block w-full h-14 rounded-none border border-surface-highlight bg-surface-highlight px-4 font-ui text-text-main placeholder:text-text-muted/60 focus:border-primary focus:outline-none focus:ring-0 transition-colors duration-300"
         />
       </div>
       <button
         type="submit"
         disabled={isPending}
-        className="w-full h-14 bg-primary text-void font-ui font-bold uppercase tracking-[0.2em] rounded-lg shadow-gold-glow hover:bg-primary/90 transition-all active:scale-[0.98] mt-4 disabled:opacity-70 disabled:cursor-not-allowed disabled:active:scale-100"
+        className="w-full h-14 bg-primary text-void font-ui font-bold uppercase tracking-[0.25em] rounded-none shadow-gold-glow hover:bg-white transition-all duration-300 active:scale-[0.98] mt-4 disabled:opacity-70 disabled:cursor-not-allowed disabled:active:scale-100"
       >
         {isPending ? "Signing in…" : "Sign in"}
       </button>

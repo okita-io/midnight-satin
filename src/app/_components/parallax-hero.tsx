@@ -97,7 +97,7 @@ export function ParallaxHero({
         <span className="text-[10px] tracking-[0.3em] text-white mb-3 uppercase border-b border-white/40 pb-1 hero-text-shadow">
           Editor&apos;s Pick
         </span>
-        <h1 className="text-4xl font-display italic font-bold text-white leading-tight gold-text-shadow">
+        <h1 className="text-4xl md:text-5xl font-display italic font-bold text-white leading-tight gold-text-shadow">
           {title}
         </h1>
         <p className="text-lg text-white font-display tracking-wide hero-text-shadow mt-2">

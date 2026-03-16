@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import { registerFormAction } from "@/app/actions/auth";
 
 const inputBase =
-  "w-full h-14 bg-surface-highlight border-2 border-surface-highlight focus:border-primary text-text-main font-ui px-4 outline-none transition-colors duration-300 rounded-sm placeholder:text-text-muted";
+  "w-full h-14 bg-surface-highlight border border-surface-highlight focus:border-primary text-text-main font-ui px-4 outline-none transition-colors duration-300 rounded-none placeholder:text-text-muted/60";
 const labelBase = "block font-ui text-[10px] uppercase tracking-[0.15em] text-text-muted ml-1";
 
 export function RegisterForm({ redirectTo }: { redirectTo: string }) {
@@ -88,7 +88,7 @@ export function RegisterForm({ redirectTo }: { redirectTo: string }) {
         <button
           type="submit"
           disabled={isPending}
-          className="w-full h-14 bg-primary text-void font-header font-bold text-sm tracking-[0.2em] shadow-gold-glow hover:bg-white transition-all duration-300 rounded-sm disabled:opacity-70 disabled:cursor-not-allowed active:scale-[0.98] disabled:active:scale-100"
+          className="w-full h-14 bg-primary text-void font-header font-bold text-sm tracking-[0.25em] shadow-gold-glow hover:bg-white transition-all duration-300 rounded-none disabled:opacity-70 disabled:cursor-not-allowed active:scale-[0.98] disabled:active:scale-100"
         >
           {isPending ? "Creating account…" : "Create account"}
         </button>

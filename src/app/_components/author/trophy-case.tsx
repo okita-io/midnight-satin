@@ -24,8 +24,14 @@ export function TrophyCase({ trophies }: TrophyCaseProps) {
         <h3 className="font-header text-primary text-xs tracking-[0.15em] uppercase">
           Trophy Case
         </h3>
+        <button
+          type="button"
+          className="text-[10px] font-ui text-primary uppercase tracking-widest hover:text-white transition-colors cursor-pointer"
+        >
+          View All
+        </button>
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 divide-x divide-[#393528]/30 border-t border-[#393528]/30">
+      <div className="grid grid-cols-3 divide-x divide-[#393528]/30 border-t border-[#393528]/30">
         {trophies.map((trophy) => (
           <div
             key={trophy.id}

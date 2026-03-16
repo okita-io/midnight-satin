@@ -29,10 +29,10 @@ export function LibraryHeader({ onFilterChange }: LibraryHeaderProps) {
 
   return (
     <div
-      className="sticky top-0 left-0 right-0 z-20 flex flex-col bg-gradient-to-b from-black/90 to-black/60 backdrop-blur-sm"
+      className="sticky top-0 left-0 right-0 z-20 flex flex-col bg-void/95 backdrop-blur-md border-b border-primary/10"
       style={{ paddingTop: "calc(1rem + env(safe-area-inset-top, 0px))" }}
     >
-      <div className="flex items-center justify-between p-4 gap-4">
+      <div className="flex items-center justify-between px-6 py-4 gap-4">
         <div className="flex items-center gap-2">
           <span className="material-symbols-outlined text-primary text-xl" aria-hidden>
             local_library

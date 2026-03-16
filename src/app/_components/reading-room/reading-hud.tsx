@@ -135,7 +135,7 @@ export function ReadingHUD({
         className="fixed top-0 left-0 w-full z-50 transition-transform duration-300 bg-gradient-to-b from-void via-void/90 to-transparent pt-[var(--safe-area-inset-top)] pb-8 pointer-events-none"
         style={{ paddingTop: "calc(var(--safe-area-inset-top) + 0.5rem)" }}
       >
-        <div className="flex items-center justify-between px-4 h-16 pointer-events-auto max-w-md mx-auto">
+        <div className="flex items-center justify-between px-4 md:px-8 h-16 pointer-events-auto max-w-md md:max-w-2xl mx-auto">
           <Link
             href={novelDetailPath(novelId)}
             className="w-10 h-10 flex items-center justify-center text-primary/80 hover:text-primary transition-colors active:scale-95 cursor-pointer"
@@ -178,7 +178,7 @@ export function ReadingHUD({
 
       {/* Footer HUD with ProgressBar */}
       <footer
-        className="fixed bottom-0 inset-x-0 z-50 flex w-full min-w-0 flex-col bg-void border-t border-white/5 shadow-2xl shadow-black md:max-w-md md:left-1/2 md:right-auto md:-translate-x-1/2"
+        className="fixed bottom-0 inset-x-0 z-50 flex w-full min-w-0 flex-col bg-[#0a0a0a] border-t border-white/5 shadow-2xl shadow-black md:max-w-md md:left-1/2 md:right-auto md:-translate-x-1/2"
         style={{
           paddingBottom: "calc(1rem + env(safe-area-inset-bottom, 0px))",
         }}

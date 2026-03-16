@@ -21,7 +21,7 @@ export function VaultTeaserCard() {
       />
       <div className="relative z-10 flex-1 min-w-0">
         <h4 className="font-display italic text-base xs:text-lg text-primary mb-1">Refill your purse</h4>
-        <p className="font-ui text-xs text-text-muted">
+        <p className="font-ui text-xs text-text-muted max-w-[180px]">
           Unlock exclusive chapters and endorse your favorite suitors.
         </p>
       </div>

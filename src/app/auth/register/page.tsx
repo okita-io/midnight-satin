@@ -16,26 +16,54 @@ export default async function RegisterPage({
   const loginLink = returnUrl ? `/auth/login?returnUrl=${encodeURIComponent(returnUrl)}` : "/auth/login";
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center px-4 xs:px-6 pb-safe-bottom pt-safe-top">
-      <div className="w-full max-w-md md:max-w-[480px] mx-auto">
-        <div className="text-center mb-6 xs:mb-8">
-          <h1 className="font-display font-bold italic text-2xl xs:text-3xl text-[var(--primary)]" style={{ fontFamily: "var(--font-display)" }}>
+    <main className="relative flex min-h-screen w-full flex-col bg-silk-noise overflow-x-hidden">
+      {/* Branding */}
+      <div className="flex justify-center pt-12 pb-4">
+        <span
+          className="material-symbols-outlined text-primary text-5xl"
+          style={{ fontVariationSettings: "'FILL' 1" }}
+        >
+          menu_book
+        </span>
+      </div>
+
+      <div className="flex-1 flex flex-col items-center px-8 pb-12 max-w-md mx-auto w-full">
+        <div className="text-center mb-8">
+          <h1 className="font-display font-bold italic text-[32px] text-primary gold-text-shadow">
             Join Midnight Satin
           </h1>
-          <p className="font-ui text-[var(--text-muted)] mt-2 tracking-wide" style={{ fontFamily: "var(--font-ui)", fontSize: "0.875rem" }}>
+          <p className="font-ui text-text-muted/60 mt-2 text-sm tracking-wide">
             Create an account and receive 200 credits to start
           </p>
         </div>
 
-        <RegisterForm redirectTo={redirectTo} />
+        {/* Welcome gift card */}
+        <div className="relative w-full flex justify-center items-center mb-10">
+          <div className="relative bg-surface/80 backdrop-blur-sm border border-primary/20 rounded-sm px-8 py-5 text-center overflow-hidden">
+            <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <span className="text-[140px] font-display font-bold text-primary opacity-10">200</span>
+            </div>
+            <div className="relative z-10">
+              <span className="material-symbols-outlined text-primary text-2xl mb-1" style={{ fontVariationSettings: "'FILL' 1" }}>
+                diamond
+              </span>
+              <p className="font-header text-primary text-sm tracking-[0.2em] uppercase">Welcome Gift</p>
+              <p className="font-display text-2xl text-white font-bold mt-1">200 Credits</p>
+            </div>
+          </div>
+        </div>
 
-        <p className="font-ui text-center mt-6 text-[var(--text-muted)]" style={{ fontFamily: "var(--font-ui)", fontSize: "0.875rem" }}>
+        <RegisterForm redirectTo={redirectTo} />
+      </div>
+
+      <footer className="mt-auto pt-10 text-center pb-8">
+        <p className="font-ui text-sm text-text-muted">
           Already have an account?{" "}
-          <Link href={loginLink} className="text-[var(--primary)] border-b border-primary/50 pb-0.5 hover:opacity-90">
+          <Link href={loginLink} className="text-primary underline decoration-primary/40 underline-offset-4 hover:opacity-90">
             Sign in
           </Link>
         </p>
-      </div>
+      </footer>
     </main>
   );
 }

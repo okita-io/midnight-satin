@@ -77,10 +77,10 @@ export function LibraryCatalog({
   }
 
   return (
-    <section className="px-4 xs:px-6 pb-8" aria-label="Library catalog">
+    <section className="px-6 pb-24" aria-label="Library catalog">
       {/* View toggle */}
-      <div className="flex items-center justify-between mb-4 xs:mb-6">
-        <span className="font-ui text-xs text-text-muted">
+      <div className="flex items-center justify-between mb-6">
+        <span className="font-ui text-sm text-text-muted/60 tracking-wide uppercase">
           {filtered.length} {filtered.length === 1 ? "novel" : "novels"}
         </span>
         <div className="flex gap-1 rounded-sm border border-white/10 p-0.5">
@@ -118,7 +118,7 @@ export function LibraryCatalog({
       </div>
 
       {viewMode === "grid" ? (
-        <div className="grid grid-cols-2 gap-3 xs:gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8">
+        <div className="grid grid-cols-2 gap-x-5 gap-y-8 md:grid-cols-3 md:gap-x-6 lg:grid-cols-4 lg:gap-x-8">
           {filtered.map((novel) => (
             <NovelCard
               key={novel.id}
@@ -134,7 +134,7 @@ export function LibraryCatalog({
           ))}
         </div>
       ) : (
-        <ul className="space-y-2 md:grid md:grid-cols-2 md:gap-x-4 md:gap-y-3 md:space-y-0 md:items-start lg:grid-cols-3 lg:gap-x-5 lg:gap-y-3">
+        <ul className="space-y-3 md:grid md:grid-cols-2 md:gap-x-4 md:gap-y-3 md:space-y-0 md:items-start lg:grid-cols-3 lg:gap-x-5 lg:gap-y-3">
           {filtered.map((novel) => (
             <li key={novel.id}>
               <NovelCard
