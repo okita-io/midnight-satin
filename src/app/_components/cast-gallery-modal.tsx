@@ -50,19 +50,16 @@ function TrophyBadge() {
   );
 }
 
-/** Character card front - portrait, gradient overlay, name, role, description. */
+/** Character card front - portrait, gradient overlay, description, name, role. */
 function CharacterCard({
   char,
   onTapReveal,
-  endorsementSlot,
 }: {
   char: NovelCharacter;
   onTapReveal: () => void;
-  /** Optional: render FAB inside card footer (mobile single-card). */
-  endorsementSlot?: React.ReactNode;
 }) {
   return (
-    <div className="absolute inset-0 w-full h-full backface-hidden bg-surface rounded-lg overflow-hidden border border-white/5">
+    <div className="absolute inset-0 w-full h-full backface-hidden bg-surface rounded-lg overflow-hidden border border-white/5 cursor-pointer">
       {/* Portrait background with gold sheen */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat gold-sheen-overlay"
@@ -70,13 +67,19 @@ function CharacterCard({
           backgroundImage: char.portraitUrl ? `url(${char.portraitUrl})` : undefined,
           backgroundColor: char.portraitUrl ? "transparent" : "var(--surface)",
         }}
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-void via-void/60 to-transparent" />
+      >
+        <div className="absolute inset-0 bg-gradient-to-t from-void via-void/60 to-transparent" />
+      </div>
 
       {char.hasTrophy && <TrophyBadge />}
 
-      {/* Bottom content - nameplate gradient overlay with endorsement inline */}
-      <div className="absolute bottom-0 left-0 right-0 w-full p-8 pt-2 pb-8 h-fit bg-gradient-to-t from-void to-transparent flex flex-col justify-end items-center text-center">
+      {/* Bottom content - description, role subtitle, name, tap hint */}
+      <div className="absolute bottom-0 left-0 right-0 p-8 pt-32 bg-gradient-to-t from-void via-void/90 to-transparent flex flex-col items-center text-center">
+        {char.description && (
+          <p className="font-body text-sm italic text-text-main/60 leading-relaxed mb-6 max-w-[85%]">
+            {char.description}
+          </p>
+        )}
         {char.roleSubtitle && (
           <div className="mb-2 flex items-center gap-2 opacity-80">
             <div className="h-[1px] w-8 bg-primary/50" />
@@ -86,16 +89,13 @@ function CharacterCard({
             <div className="h-[1px] w-8 bg-primary/50" />
           </div>
         )}
-        <h2 className="font-display text-4xl italic text-white mb-4 drop-shadow-lg">
+        <h2 className="font-display text-4xl italic text-white mb-6 drop-shadow-lg">
           {char.name}
         </h2>
-        {endorsementSlot && (
-          <div className="shrink-0 mb-4">{endorsementSlot}</div>
-        )}
         <button
           type="button"
           onClick={onTapReveal}
-          className="flex items-center gap-2 text-white/40 hover:text-primary text-xs font-ui tracking-widest uppercase transition-colors cursor-pointer active:scale-95"
+          className="flex items-center gap-2 text-white/40 hover:text-primary text-xs font-ui tracking-widest uppercase transition-colors cursor-pointer active:scale-95 mb-10"
         >
           <span className="material-symbols-outlined text-sm">cached</span>
           <span>Tap to reveal dossier</span>
@@ -140,7 +140,7 @@ function DossierCard({
       </div>
 
       {/* Stats grid - Age, Status, Height, Occupation, Zodiac, Blood Type, Birthday */}
-      <div className="grid grid-cols-2 gap-6 mb-6">
+      <div className="grid grid-cols-2 gap-6 mb-8">
         {statItems.map(({ label, value }) => (
           <div key={label}>
             <p className="font-ui text-xs text-text-muted uppercase tracking-wider mb-1">
@@ -228,7 +228,7 @@ function DossierCard({
         <button
           type="button"
           onClick={onTapReturn}
-          className="flex items-center gap-2 text-white/30 hover:text-primary text-xs font-ui tracking-widest uppercase transition-colors cursor-pointer active:scale-95"
+          className="flex items-center gap-2 text-white/30 hover:text-primary text-xs font-ui tracking-widest uppercase transition-colors cursor-pointer active:scale-95 mb-10"
         >
           <span className="material-symbols-outlined text-sm">undo</span>
           <span>Return to portrait</span>
@@ -444,9 +444,10 @@ export function CastGalleryModal({
   }, [handleKeyDown]);
 
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "auto";
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = prev;
     };
   }, []);
 
@@ -460,21 +461,24 @@ export function CastGalleryModal({
 
   return (
     <div
-      className="fixed inset-0 z-[100] flex flex-col items-center bg-void"
+      className="fixed inset-0 z-[100] bg-void text-text-main w-full flex flex-col items-center justify-center font-body selection:bg-primary selection:text-void overflow-y-auto"
+      style={{ minHeight: "max(884px, 100dvh)" }}
       role="dialog"
       aria-modal="true"
       aria-label="Cast Gallery"
     >
-      {/* Header */}
-      <div className="fixed top-0 left-0 right-0 z-50 flex justify-between items-center p-6 pt-[calc(1.5rem+env(safe-area-inset-top,0px))] bg-gradient-to-b from-void/90 to-transparent">
-        <span className="font-header text-primary text-xs tracking-[0.2em] uppercase">
-          Cast Gallery
-        </span>
+      {/* Fixed header with gradient fade */}
+      <div className="fixed top-0 left-0 right-0 z-50 p-6 flex justify-between items-center bg-gradient-to-b from-void/90 to-transparent">
+        <div className="flex items-center gap-2">
+          <span className="font-header text-primary text-xs tracking-[0.2em] uppercase">
+            Cast Gallery
+          </span>
+        </div>
         <button
           ref={closeRef}
           type="button"
           onClick={onClose}
-          className="flex items-center justify-center size-10 rounded-full bg-surface/50 border border-white/10 backdrop-blur-sm text-text-main hover:bg-primary hover:text-void hover:border-primary transition-all duration-300 cursor-pointer active:scale-95"
+          className="group flex items-center justify-center size-10 rounded-full bg-surface/50 border border-white/10 backdrop-blur-sm text-text-main hover:bg-primary hover:text-void hover:border-primary transition-all duration-300 cursor-pointer active:scale-95"
           aria-label="Close Cast Gallery"
         >
           <span className="material-symbols-outlined" style={{ fontSize: 20 }}>
@@ -483,13 +487,13 @@ export function CastGalleryModal({
         </button>
       </div>
 
-      {/* Main content: mobile single-card, tablet/desktop grid (THE-64) */}
-      <main className="relative w-full flex-1 overflow-y-auto">
-        {/* Mobile: single card view (Req 5.1) */}
-        <div className="md:hidden relative w-full flex-1 flex flex-col items-center justify-center p-4 pt-20 max-w-md mx-auto">
+      {/* Main content area */}
+      <main className="relative w-full max-w-md mx-auto flex flex-col items-center p-4 pt-24 pb-12">
+        {/* Mobile: single card view */}
+        <div className="md:hidden relative w-full flex flex-col items-center">
           <NavigationArrows onPrev={goPrev} onNext={goNext} />
 
-          <div className="group/card w-full h-[75vh] perspective-1000 relative">
+          <div className="group/card w-full perspective-1000 relative h-[600px]">
             <div
               className={`relative w-full h-full transform-style-3d transition-transform duration-700 ease-in-out shadow-gold-glow rounded-lg ${
                 flipped ? "rotate-y-180" : ""
@@ -498,17 +502,19 @@ export function CastGalleryModal({
               <CharacterCard
                 char={char}
                 onTapReveal={() => setFlipped(true)}
-                endorsementSlot={
-                  <EndorsementFAB
-                    characterId={char.id}
-                    endorsementCount={char.endorsementCount}
-                    onEndorse={onEndorse}
-                    onAuthPrompt={onAuthPrompt}
-                  />
-                }
               />
               <DossierCard char={char} onTapReturn={() => setFlipped(false)} />
             </div>
+          </div>
+
+          {/* Endorsement FAB below card */}
+          <div className="z-50 flex flex-col items-center gap-3 relative mt-8">
+            <EndorsementFAB
+              characterId={char.id}
+              endorsementCount={char.endorsementCount}
+              onEndorse={onEndorse}
+              onAuthPrompt={onAuthPrompt}
+            />
           </div>
 
           {characters.length > 1 && (
@@ -531,8 +537,8 @@ export function CastGalleryModal({
           )}
         </div>
 
-        {/* Tablet/Desktop: 2-col tablet, 3-col desktop grid, gap 24px/32px (THE-64) */}
-        <div className="hidden md:block w-full max-w-7xl mx-auto px-6 pt-20 pb-12">
+        {/* Tablet/Desktop: 2-col tablet, 3-col desktop grid */}
+        <div className="hidden md:block w-full max-w-7xl mx-auto px-6 pt-0 pb-12">
           <div className="grid grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8">
             {characters.map((c) => (
               <CharacterGridCard
@@ -547,12 +553,7 @@ export function CastGalleryModal({
       </main>
 
       {/* Background texture overlay */}
-      <div
-        className="fixed inset-0 pointer-events-none z-0 opacity-20 mix-blend-overlay"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E")`,
-        }}
-      />
+      <div className="fixed inset-0 pointer-events-none z-0 opacity-20 bg-[url('data:image/svg+xml,%3Csvg%20viewBox=%220%200%20200%20200%22%20xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter%20id=%22noiseFilter%22%3E%3CfeTurbulence%20type=%22fractalNoise%22%20baseFrequency=%220.65%22%20numOctaves=%223%22%20stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect%20width=%22100%25%22%20height=%22100%25%22%20filter=%22url(%23noiseFilter)%22%20opacity=%220.05%22/%3E%3C/svg%3E')] mix-blend-overlay" />
     </div>
   );
 }
