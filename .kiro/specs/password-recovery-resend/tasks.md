@@ -44,7 +44,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - Return `TokenValidationResult` with valid flag and optional error type
     - _Requirements: 4.1, 4.2, 4.3, 4.4_
 
-  - [ ] 2.5 Write property test for token expiration
+  - [x] 2.5 Write property test for token expiration
     - **Property 6: Token expiration**
     - **Validates: Requirements 2.4**
 

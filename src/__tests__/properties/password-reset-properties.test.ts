@@ -15,6 +15,13 @@
  * original token SHALL succeed. Verifying with a different token SHALL fail.
  * The hash SHALL be deterministic (same token → same hash).
  *
+ * Property 6: Token expiration
+ * Validates: Requirements 2.4 (Email Password Reset)
+ *
+ * For any reset token, validating it after 1 hour from its creation time
+ * SHALL return an invalid/expired result. Validating it before 1 hour
+ * SHALL return a valid result (assuming not used or invalidated).
+ *
  * Property 10: Token validation correctness
  * Validates: Requirements 4.1, 4.2, 4.3, 4.4 (Email Password Reset)
  *
@@ -23,7 +30,7 @@
  * All other cases (non-existent, expired, used) SHALL return valid: false.
  */
 
-import { describe, it, expect, beforeAll, afterEach, afterAll } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach, beforeAll, afterAll } from "vitest";
 import * as fc from "fast-check";
 import {
   generateResetToken,
@@ -41,6 +48,24 @@ import { randomUUID } from "node:crypto";
 const hasPostgres =
   typeof process.env.POSTGRES_URL === "string" &&
   process.env.POSTGRES_URL.length > 0;
+
+// Property 6 uses mocked getResetTokenByHash; Property 10 uses real DB.
+// Mock delegates to real when no implementation is set.
+const { mockGetResetTokenByHash } = vi.hoisted(() => ({
+  mockGetResetTokenByHash: vi.fn(),
+}));
+vi.mock("@/lib/db", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@/lib/db")>();
+  return {
+    ...actual,
+    getResetTokenByHash: (tokenHash: string) => {
+      if (mockGetResetTokenByHash.getMockImplementation()) {
+        return mockGetResetTokenByHash(tokenHash);
+      }
+      return actual.getResetTokenByHash(tokenHash);
+    },
+  };
+});
 
 /** Base64url encodes 32 bytes to 43 characters (ceil(256/6)). */
 const MIN_TOKEN_LENGTH = 43;
@@ -152,6 +177,55 @@ describe("Property 5: Token storage round-trip", () => {
   });
 });
 
+/** One hour in milliseconds (Req 2.4). */
+const ONE_HOUR_MS = 60 * 60 * 1000;
+
+describe("Property 6: Token expiration", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+    mockGetResetTokenByHash.mockReset();
+  });
+
+  it("token valid before 1 hour, expired after 1 hour", async () => {
+    await fc.assert(
+      fc.asyncProperty(
+        fc.integer({ min: 0, max: 1000 }), // creation time offset (days ago)
+        fc.integer({ min: -5, max: 125 }), // minutes from creation
+        async (daysAgo, offsetMinutes) => {
+          const creationTime =
+            Date.now() - daysAgo * 24 * 60 * 60 * 1000;
+          const expiresAt = new Date(creationTime + ONE_HOUR_MS);
+          const now = new Date(
+            creationTime + offsetMinutes * 60 * 1000
+          );
+
+          vi.setSystemTime(now);
+          mockGetResetTokenByHash.mockResolvedValue({
+            readerId: "reader-1",
+            expiresAt,
+            usedAt: null,
+          });
+
+          const result = await validateResetToken("any-token");
+
+          if (offsetMinutes > 60) {
+            expect(result.valid).toBe(false);
+            expect(result.error).toBe("expired");
+          } else {
+            expect(result.valid).toBe(true);
+            expect(result.readerId).toBe("reader-1");
+          }
+        }
+      ),
+      { numRuns: 100 }
+    );
+  });
+});
+
 describe("Property 10: Token validation correctness", () => {
   let readerId: string | undefined;
 
@@ -200,7 +274,7 @@ describe("Property 10: Token validation correctness", () => {
         fc.asyncProperty(fc.integer({ min: 1, max: 50 }), async (n) => {
           const { token, tokenHash } = generateResetToken();
           const expiresAt = new Date(Date.now() + 3600000);
-          await createPasswordResetToken(readerId, tokenHash, expiresAt);
+          await createPasswordResetToken(readerId!, tokenHash, expiresAt);
           const result = await validateResetToken(token);
           expect(result.valid).toBe(true);
           expect(result.readerId).toBe(readerId);
@@ -218,7 +292,7 @@ describe("Property 10: Token validation correctness", () => {
         fc.asyncProperty(fc.integer({ min: 1, max: 50 }), async (n) => {
           const { token, tokenHash } = generateResetToken();
           const expiresAt = new Date(Date.now() - 1000);
-          await createPasswordResetToken(readerId, tokenHash, expiresAt);
+          await createPasswordResetToken(readerId!, tokenHash, expiresAt);
           const result = await validateResetToken(token);
           expect(result.valid).toBe(false);
           expect(result.error).toBe("expired");
@@ -235,7 +309,7 @@ describe("Property 10: Token validation correctness", () => {
         fc.asyncProperty(fc.integer({ min: 1, max: 50 }), async (n) => {
           const { token, tokenHash } = generateResetToken();
           const expiresAt = new Date(Date.now() + 3600000);
-          await createPasswordResetToken(readerId, tokenHash, expiresAt);
+          await createPasswordResetToken(readerId!, tokenHash, expiresAt);
           await markResetTokenUsed(tokenHash);
           const result = await validateResetToken(token);
           expect(result.valid).toBe(false);
