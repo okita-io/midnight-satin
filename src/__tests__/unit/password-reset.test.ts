@@ -1,6 +1,6 @@
 /**
- * Unit tests for password reset token generation, hashing, and validation.
- * Requirements: 2.1, 2.2, 2.6, 4.1, 4.2, 4.3, 4.4
+ * Unit tests for password reset token generation, hashing, validation, and rate limiting.
+ * Requirements: 2.1, 2.2, 2.6, 4.1, 4.2, 4.3, 4.4, 6.1, 6.2, 6.3
  */
 
 import { describe, it, expect, vi, beforeEach } from "vitest";
@@ -8,12 +8,20 @@ import {
   generateResetToken,
   hashToken,
   validateResetToken,
+  checkRateLimit,
   type ResetTokenResult,
   type TokenValidationResult,
 } from "@/lib/auth/password-reset";
 
+const mockCountRecentResetRequests = vi.fn();
+const mockCountRecentResetRequestsByIp = vi.fn();
+
 vi.mock("@/lib/db", () => ({
   getResetTokenByHash: vi.fn(),
+  countRecentResetRequests: (...args: unknown[]) =>
+    mockCountRecentResetRequests(...args),
+  countRecentResetRequestsByIp: (...args: unknown[]) =>
+    mockCountRecentResetRequestsByIp(...args),
 }));
 
 import { getResetTokenByHash } from "@/lib/db";
@@ -129,6 +137,54 @@ describe("password-reset", () => {
       vi.mocked(getResetTokenByHash).mockResolvedValue(null);
       await validateResetToken("my-token");
       expect(getResetTokenByHash).toHaveBeenCalledWith(hashToken("my-token"));
+    });
+  });
+
+  describe("checkRateLimit", () => {
+    beforeEach(() => {
+      mockCountRecentResetRequests.mockReset();
+      mockCountRecentResetRequestsByIp.mockReset();
+    });
+
+    it("returns allowed: true when both counts are below limits", async () => {
+      mockCountRecentResetRequests.mockResolvedValue(2);
+      mockCountRecentResetRequestsByIp.mockResolvedValue(5);
+      const result = await checkRateLimit("user@example.com", "192.168.1.1");
+      expect(result).toEqual({ allowed: true });
+    });
+
+    it("returns allowed: false when email count >= 3", async () => {
+      mockCountRecentResetRequests.mockResolvedValue(3);
+      mockCountRecentResetRequestsByIp.mockResolvedValue(0);
+      const result = await checkRateLimit("user@example.com", "192.168.1.1");
+      expect(result).toEqual({
+        allowed: false,
+        retryAfterSeconds: 3600,
+      });
+    });
+
+    it("returns allowed: false when IP count >= 10", async () => {
+      mockCountRecentResetRequests.mockResolvedValue(0);
+      mockCountRecentResetRequestsByIp.mockResolvedValue(10);
+      const result = await checkRateLimit("user@example.com", "192.168.1.1");
+      expect(result).toEqual({
+        allowed: false,
+        retryAfterSeconds: 3600,
+      });
+    });
+
+    it("queries both email and IP counts in parallel", async () => {
+      mockCountRecentResetRequests.mockResolvedValue(0);
+      mockCountRecentResetRequestsByIp.mockResolvedValue(0);
+      await checkRateLimit("user@example.com", "10.0.0.1");
+      expect(mockCountRecentResetRequests).toHaveBeenCalledWith(
+        "user@example.com",
+        60
+      );
+      expect(mockCountRecentResetRequestsByIp).toHaveBeenCalledWith(
+        "10.0.0.1",
+        60
+      );
     });
   });
 });

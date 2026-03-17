@@ -1,10 +1,20 @@
 /**
- * Password reset token generation, hashing, and validation.
- * Requirements: 2.1, 2.2, 2.6, 4.1, 4.2, 4.3, 4.4
+ * Password reset token generation, hashing, validation, and rate limiting.
+ * Requirements: 2.1, 2.2, 2.6, 4.1, 4.2, 4.3, 4.4, 6.1, 6.2, 6.3
  */
 
 import { randomBytes, createHash } from "node:crypto";
-import { getResetTokenByHash } from "@/lib/db";
+import {
+  getResetTokenByHash,
+  countRecentResetRequests,
+  countRecentResetRequestsByIp,
+} from "@/lib/db";
+
+/** Result of a rate limit check. Requirements: 6.1, 6.2, 6.3 */
+export interface RateLimitCheck {
+  allowed: boolean;
+  retryAfterSeconds?: number;
+}
 
 /** Result of generating a reset token: plaintext for the link, hash for storage. */
 export interface ResetTokenResult {
@@ -68,4 +78,32 @@ export async function validateResetToken(
   }
 
   return { valid: true, readerId: row.readerId };
+}
+
+const EMAIL_LIMIT_PER_HOUR = 3;
+const IP_LIMIT_PER_HOUR = 10;
+const RATE_LIMIT_WINDOW_MINUTES = 60;
+
+/**
+ * Checks rate limits for password reset requests.
+ * Enforces 3 requests per email per hour (Req 6.1) and 10 per IP per hour (Req 6.2).
+ * Returns RateLimitCheck with allowed flag; when not allowed, includes retryAfterSeconds.
+ */
+export async function checkRateLimit(
+  email: string,
+  ipAddress: string
+): Promise<RateLimitCheck> {
+  const [emailCount, ipCount] = await Promise.all([
+    countRecentResetRequests(email, RATE_LIMIT_WINDOW_MINUTES),
+    countRecentResetRequestsByIp(ipAddress, RATE_LIMIT_WINDOW_MINUTES),
+  ]);
+
+  if (emailCount >= EMAIL_LIMIT_PER_HOUR || ipCount >= IP_LIMIT_PER_HOUR) {
+    return {
+      allowed: false,
+      retryAfterSeconds: 3600, // 1 hour
+    };
+  }
+
+  return { allowed: true };
 }

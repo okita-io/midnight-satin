@@ -68,3 +68,33 @@ export async function markResetTokenUsed(tokenHash: string): Promise<void> {
     WHERE token_hash = ${tokenHash}
   `;
 }
+
+/** Count recent reset requests for an email (by reader_id) within a sliding window. Requirements: 6.1 */
+export async function countRecentResetRequests(
+  email: string,
+  windowMinutes: number
+): Promise<number> {
+  const { rows } = await sql<{ count: string }>`
+    SELECT COUNT(*)::text AS count
+    FROM password_reset_tokens prt
+    JOIN readers r ON prt.reader_id = r.id
+    WHERE LOWER(r.email) = LOWER(${email})
+      AND prt.created_at >= NOW() - make_interval(mins => ${windowMinutes})
+  `;
+  return parseInt(rows[0]?.count ?? "0", 10);
+}
+
+/** Count recent reset requests for an IP address within a sliding window. Requirements: 6.2 */
+export async function countRecentResetRequestsByIp(
+  ipAddress: string,
+  windowMinutes: number
+): Promise<number> {
+  if (!ipAddress || ipAddress.trim() === "") return 0;
+  const { rows } = await sql<{ count: string }>`
+    SELECT COUNT(*)::text AS count
+    FROM password_reset_tokens
+    WHERE ip_address = ${ipAddress}
+      AND created_at >= NOW() - make_interval(mins => ${windowMinutes})
+  `;
+  return parseInt(rows[0]?.count ?? "0", 10);
+}
