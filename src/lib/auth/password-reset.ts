@@ -1,9 +1,10 @@
 /**
- * Password reset token generation and hashing.
- * Requirements: 2.1, 2.2, 2.6
+ * Password reset token generation, hashing, and validation.
+ * Requirements: 2.1, 2.2, 2.6, 4.1, 4.2, 4.3, 4.4
  */
 
 import { randomBytes, createHash } from "node:crypto";
+import { getResetTokenByHash } from "@/lib/db";
 
 /** Result of generating a reset token: plaintext for the link, hash for storage. */
 export interface ResetTokenResult {
@@ -11,6 +12,13 @@ export interface ResetTokenResult {
   token: string;
   /** SHA-256 hash of the token for secure database storage. */
   tokenHash: string;
+}
+
+/** Result of validating a reset token. Requirements: 4.1, 4.2, 4.3, 4.4 */
+export interface TokenValidationResult {
+  valid: boolean;
+  readerId?: string;
+  error?: "invalid" | "expired" | "used";
 }
 
 const TOKEN_BYTES = 32;
@@ -34,4 +42,30 @@ export function generateResetToken(): ResetTokenResult {
  */
 export function hashToken(token: string): string {
   return createHash("sha256").update(token, "utf8").digest("hex");
+}
+
+/**
+ * Validates a reset token from a URL against the database.
+ * Checks existence (Req 4.1), expiry (Req 4.2), and used status (Req 4.3, 4.4).
+ * Returns TokenValidationResult with valid flag and optional error type.
+ */
+export async function validateResetToken(
+  rawToken: string
+): Promise<TokenValidationResult> {
+  const tokenHash = hashToken(rawToken);
+  const row = await getResetTokenByHash(tokenHash);
+
+  if (!row) {
+    return { valid: false, error: "invalid" };
+  }
+
+  if (row.usedAt !== null) {
+    return { valid: false, error: "used" };
+  }
+
+  if (new Date() > row.expiresAt) {
+    return { valid: false, error: "expired" };
+  }
+
+  return { valid: true, readerId: row.readerId };
 }

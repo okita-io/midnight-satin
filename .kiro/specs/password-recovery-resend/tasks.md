@@ -39,7 +39,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - **Property 5: Token storage round-trip**
     - **Validates: Requirements 2.3, 2.6**
 
-  - [ ] 2.4 Implement token validation logic
+  - [x] 2.4 Implement token validation logic
     - Implement `validateResetToken()` that checks existence, expiry, and used status
     - Return `TokenValidationResult` with valid flag and optional error type
     - _Requirements: 4.1, 4.2, 4.3, 4.4_

@@ -29,3 +29,21 @@ export async function readerExistsByEmail(email: string): Promise<boolean> {
   const { rows } = await sql<{ id: string }>`SELECT id FROM readers WHERE LOWER(email) = LOWER(${email})`;
   return rows.length > 0;
 }
+
+/** Look up a password reset token by hash. Returns reader_id, expires_at, used_at or null if not found. */
+export async function getResetTokenByHash(
+  tokenHash: string
+): Promise<{ readerId: string; expiresAt: Date; usedAt: Date | null } | null> {
+  const { rows } = await sql<{
+    reader_id: string;
+    expires_at: Date;
+    used_at: Date | null;
+  }>`SELECT reader_id, expires_at, used_at FROM password_reset_tokens WHERE token_hash = ${tokenHash}`;
+  if (rows.length === 0) return null;
+  const row = rows[0];
+  return {
+    readerId: row.reader_id,
+    expiresAt: row.expires_at,
+    usedAt: row.used_at,
+  };
+}
