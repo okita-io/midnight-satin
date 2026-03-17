@@ -14,11 +14,28 @@
  * For any token, hashing and "storing" the hash, then verifying with the
  * original token SHALL succeed. Verifying with a different token SHALL fail.
  * The hash SHALL be deterministic (same token → same hash).
+ *
+ * Property 6: Token expiration
+ * Validates: Requirements 2.4 (Email Password Reset)
+ *
+ * For any reset token, validating it after 1 hour from its creation time
+ * SHALL return an invalid/expired result. Validating it before 1 hour
+ * SHALL return a valid result (assuming not used or invalidated).
  */
 
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import * as fc from "fast-check";
-import { generateResetToken, hashToken } from "@/lib/auth/password-reset";
+import {
+  generateResetToken,
+  hashToken,
+  validateResetToken,
+} from "@/lib/auth/password-reset";
+
+vi.mock("@/lib/db", () => ({
+  getResetTokenByHash: vi.fn(),
+}));
+
+import { getResetTokenByHash } from "@/lib/db";
 
 /** Base64url encodes 32 bytes to 43 characters (ceil(256/6)). */
 const MIN_TOKEN_LENGTH = 43;
@@ -125,6 +142,55 @@ describe("Property 5: Token storage round-trip", () => {
           expect(hashToken(token)).toBe(tokenHash);
         }
       }),
+      { numRuns: 100 }
+    );
+  });
+});
+
+/** One hour in milliseconds (Req 2.4). */
+const ONE_HOUR_MS = 60 * 60 * 1000;
+
+describe("Property 6: Token expiration", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+    vi.mocked(getResetTokenByHash).mockReset();
+  });
+
+  it("token valid before 1 hour, expired after 1 hour", async () => {
+    await fc.assert(
+      fc.asyncProperty(
+        fc.integer({ min: 0, max: 1000 }), // creation time offset (days ago)
+        fc.integer({ min: -5, max: 125 }), // minutes from creation
+        async (daysAgo, offsetMinutes) => {
+          const creationTime =
+            Date.now() - daysAgo * 24 * 60 * 60 * 1000;
+          const expiresAt = new Date(creationTime + ONE_HOUR_MS);
+          const now = new Date(
+            creationTime + offsetMinutes * 60 * 1000
+          );
+
+          vi.setSystemTime(now);
+          vi.mocked(getResetTokenByHash).mockResolvedValue({
+            readerId: "reader-1",
+            expiresAt,
+            usedAt: null,
+          });
+
+          const result = await validateResetToken("any-token");
+
+          if (offsetMinutes > 60) {
+            expect(result.valid).toBe(false);
+            expect(result.error).toBe("expired");
+          } else {
+            expect(result.valid).toBe(true);
+            expect(result.readerId).toBe("reader-1");
+          }
+        }
+      ),
       { numRuns: 100 }
     );
   });
