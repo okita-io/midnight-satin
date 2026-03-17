@@ -345,6 +345,11 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Add PasswordResetEventType type union
     - Add PasswordResetLogEntry interface
     - _Requirements: 2.3, 7.1_
+  - [x] 17.4 Implement token generation and hashing (THE-101)
+    - Implement generateResetToken() using crypto.randomBytes (32 bytes, base64url encoded)
+    - Implement hashToken() using SHA-256
+    - Export ResetTokenResult interface
+    - _Requirements: 2.1, 2.2, 2.6_
 - [ ] 18. Revise live app (src/) — next milestone
   - Align Novel Detail tablet layout and components with refined reference (the_novel_detail_tablet.html): two-column 50/50 grid, cover + overlay left / synopsis + contents right, nav and chapter list styling, free–locked counts, list-style chapters with dividers
   - Review and apply any remaining reference refinements across Boudoir, Library, Vault, Profile, and shared components as needed
