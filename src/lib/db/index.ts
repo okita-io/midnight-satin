@@ -56,7 +56,7 @@ export async function createPasswordResetToken(
 ): Promise<void> {
   await sql`
     INSERT INTO password_reset_tokens (reader_id, token_hash, expires_at)
-    VALUES (${readerId}, ${tokenHash}, ${expiresAt})
+    VALUES (${readerId}, ${tokenHash}, ${expiresAt.toISOString()})
   `;
 }
 
