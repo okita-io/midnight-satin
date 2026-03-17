@@ -31,6 +31,7 @@ async function run() {
       DROP TABLE IF EXISTS chapters CASCADE;
       DROP TABLE IF EXISTS novels CASCADE;
       DROP TABLE IF EXISTS series CASCADE;
+      DROP TABLE IF EXISTS password_reset_tokens CASCADE;
       DROP TABLE IF EXISTS readers CASCADE;
       DROP TABLE IF EXISTS author_profiles CASCADE;
       DROP TABLE IF EXISTS processed_payment_events CASCADE;

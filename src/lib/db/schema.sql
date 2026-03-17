@@ -75,6 +75,16 @@ CREATE TABLE readers (
   last_login_at TIMESTAMPTZ
 );
 
+CREATE TABLE password_reset_tokens (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  reader_id UUID NOT NULL REFERENCES readers(id) ON DELETE CASCADE,
+  token_hash TEXT NOT NULL,
+  expires_at TIMESTAMPTZ NOT NULL,
+  used_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  ip_address TEXT
+);
+
 CREATE TABLE reading_progress (
   reader_id UUID NOT NULL REFERENCES readers(id) ON DELETE CASCADE,
   chapter_id UUID NOT NULL REFERENCES chapters(id) ON DELETE CASCADE,
@@ -144,6 +154,9 @@ CREATE INDEX idx_chapter_unlocks_reader ON chapter_unlocks(reader_id);
 CREATE INDEX idx_author_follows_reader ON author_follows(reader_id);
 CREATE INDEX idx_reader_bookmarks_reader ON reader_bookmarks(reader_id);
 CREATE INDEX idx_readers_email ON readers(email);
+CREATE INDEX idx_password_reset_tokens_token_hash ON password_reset_tokens(token_hash);
+CREATE INDEX idx_password_reset_tokens_reader_id ON password_reset_tokens(reader_id);
+CREATE INDEX idx_password_reset_tokens_created_at ON password_reset_tokens(created_at);
 CREATE INDEX idx_comments_chapter ON comments(chapter_id, created_at DESC);
 CREATE INDEX idx_comments_reader ON comments(reader_id);
 CREATE INDEX idx_comment_likes_comment ON comment_likes(comment_id);

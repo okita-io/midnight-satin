@@ -330,6 +330,11 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - _Validates: Requirements 12.1, 12.2, 12.3, 12.4, 12.5, 12.6, 12.7_
 - [x] 16. Checkpoint - Ensure all tests pass (THE-56, THE-71)
   - Ensure all tests pass, ask the user if questions arise.
-- [ ] 17. Revise live app (src/) — next milestone
+- [ ] 17. Email Password Reset (THE-98)
+  - [x] 17.1 Create password_reset_tokens table migration
+    - Add SQL migration for password_reset_tokens table with columns: id, reader_id, token_hash, expires_at, used_at, created_at, ip_address
+    - Add indexes on token_hash, reader_id, and created_at
+    - _Requirements: 2.3, 2.4, 2.6_
+- [ ] 18. Revise live app (src/) — next milestone
   - Align Novel Detail tablet layout and components with refined reference (the_novel_detail_tablet.html): two-column 50/50 grid, cover + overlay left / synopsis + contents right, nav and chapter list styling, free–locked counts, list-style chapters with dividers
   - Review and apply any remaining reference refinements across Boudoir, Library, Vault, Profile, and shared components as needed
