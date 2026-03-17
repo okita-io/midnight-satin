@@ -47,3 +47,24 @@ export async function getResetTokenByHash(
     usedAt: row.used_at,
   };
 }
+
+/** Store a hashed reset token. Requirements: 2.3, 2.6 */
+export async function createPasswordResetToken(
+  readerId: string,
+  tokenHash: string,
+  expiresAt: Date
+): Promise<void> {
+  await sql`
+    INSERT INTO password_reset_tokens (reader_id, token_hash, expires_at)
+    VALUES (${readerId}, ${tokenHash}, ${expiresAt})
+  `;
+}
+
+/** Mark a token as used. Requirements: 5.5 */
+export async function markResetTokenUsed(tokenHash: string): Promise<void> {
+  await sql`
+    UPDATE password_reset_tokens
+    SET used_at = NOW()
+    WHERE token_hash = ${tokenHash}
+  `;
+}
