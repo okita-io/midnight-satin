@@ -84,7 +84,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - Ensure no sensitive data (email, token, password) is logged in plaintext
     - _Requirements: 7.1, 7.2, 7.3, 7.4_
 
-  - [ ] 4.4 Write property test for log sanitization
+  - [x] 4.4 Write property test for log sanitization
     - **Property 17: No sensitive data in logs**
     - **Validates: Requirements 7.4**
 

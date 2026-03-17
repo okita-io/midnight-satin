@@ -40,6 +40,13 @@
  *
  * For any IP address, after 10 reset requests within a 1-hour window,
  * subsequent requests SHALL be rate-limited regardless of the email used.
+ *
+ * Property 17: No sensitive data in logs
+ * Validates: Requirements 7.4 (Email Password Reset)
+ *
+ * For any log entry in the password_reset_log table, the entry SHALL NOT
+ * contain plaintext email addresses, raw tokens, or passwords in any field.
+ * Sanitization strips these patterns before logging.
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach, beforeAll, afterAll } from "vitest";
@@ -50,6 +57,10 @@ import {
   validateResetToken,
   checkRateLimit,
 } from "@/lib/auth/password-reset";
+import {
+  sanitizeForSecurityLog,
+  containsSensitiveData,
+} from "@/lib/auth/log-sanitization";
 import {
   createPasswordResetToken,
   logPasswordResetEvent,
@@ -518,6 +529,82 @@ describe("Property 15: IP rate limiting", () => {
   );
 });
 
+/** Property 17: No sensitive data in logs — Validates: Requirements 7.4 */
+describe("Property 17: No sensitive data in logs", () => {
+  it("sanitized output contains no email pattern (@) for any input string", () => {
+    fc.assert(
+      fc.property(fc.string(), (s) => {
+        const sanitized = sanitizeForSecurityLog(s);
+        if (sanitized === null) return true;
+        expect(sanitized).not.toMatch(/@/);
+      }),
+      { numRuns: 100 }
+    );
+  });
+
+  it("sanitized output contains no token-like substring (40+ base64url chars) for any input", () => {
+    fc.assert(
+      fc.property(fc.string(), (s) => {
+        const sanitized = sanitizeForSecurityLog(s);
+        if (sanitized === null) return true;
+        expect(sanitized).not.toMatch(/[A-Za-z0-9_-]{40,}/);
+      }),
+      { numRuns: 100 }
+    );
+  });
+
+  it("for any email address, sanitizeForSecurityLog strips it", () => {
+    fc.assert(
+      fc.property(fc.emailAddress(), (email) => {
+        const sanitized = sanitizeForSecurityLog(email);
+        expect(sanitized).not.toBeNull();
+        expect(containsSensitiveData(sanitized!)).toBe(false);
+      }),
+      { numRuns: 100 }
+    );
+  });
+
+  it("for any token-like string (40+ base64url chars), sanitizeForSecurityLog strips it", () => {
+    const base64urlChar = fc.constantFrom(
+      ..."ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-"
+    );
+    const tokenLike = fc
+      .array(base64urlChar, { minLength: 40, maxLength: 64 })
+      .map((arr) => `prefix-${arr.join("")}-suffix`);
+    fc.assert(
+      fc.property(tokenLike, (s) => {
+        const sanitized = sanitizeForSecurityLog(s);
+        expect(sanitized).not.toBeNull();
+        expect(containsSensitiveData(sanitized!)).toBe(false);
+      }),
+      { numRuns: 100 }
+    );
+  });
+
+  it("null and undefined return null", () => {
+    expect(sanitizeForSecurityLog(null)).toBeNull();
+    expect(sanitizeForSecurityLog(undefined)).toBeNull();
+  });
+
+  it("safe strings (IPs, reason codes) pass through unchanged", () => {
+    const safeStrings = fc.constantFrom(
+      "192.168.1.1",
+      "10.0.0.1",
+      "invalid",
+      "expired",
+      "used",
+      "rate_limited"
+    );
+    fc.assert(
+      fc.property(safeStrings, (s) => {
+        const sanitized = sanitizeForSecurityLog(s);
+        expect(sanitized).toBe(s);
+      }),
+      { numRuns: 100 }
+    );
+  });
+});
+
 /** logPasswordResetEvent - Requirements: 7.1, 7.2, 7.3, 7.4 */
 describe("logPasswordResetEvent", () => {
   const testReaderId = randomUUID();
@@ -622,6 +709,27 @@ describe("logPasswordResetEvent", () => {
       // Sensitive patterns that must NOT appear in logs (Req 7.4)
       expect(allValues).not.toMatch(/@/); // no email addresses
       expect(allValues).not.toMatch(/[A-Za-z0-9_-]{40,}/); // no raw tokens (base64url)
+    }
+  );
+
+  it.skipIf(!hasPostgres)(
+    "sanitizes ip_address when sensitive data is passed (Property 17, Req 7.4)",
+    async () => {
+      await logPasswordResetEvent("rate_limit", {
+        readerId: testReaderId,
+        ipAddress: "attacker@evil.com",
+      });
+
+      const { rows } = await sql<{ ip_address: string | null }>`
+        SELECT ip_address
+        FROM password_reset_log
+        WHERE reader_id = ${testReaderId}
+        ORDER BY created_at DESC
+        LIMIT 1
+      `;
+
+      expect(rows).toHaveLength(1);
+      expect(rows[0].ip_address).toBe("[REDACTED]");
     }
   );
 });
