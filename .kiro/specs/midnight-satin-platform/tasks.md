@@ -340,6 +340,11 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
     - Add CHECK constraint for valid event_type values
     - Add indexes on created_at and reader_id
     - _Requirements: 7.1, 7.2, 7.3_
+  - [x] 17.3 Add TypeScript types for password reset (THE-100)
+    - Add PasswordResetToken interface to src/lib/db/types.ts
+    - Add PasswordResetEventType type union
+    - Add PasswordResetLogEntry interface
+    - _Requirements: 2.3, 7.1_
 - [ ] 18. Revise live app (src/) — next milestone
   - Align Novel Detail tablet layout and components with refined reference (the_novel_detail_tablet.html): two-column 50/50 grid, cover + overlay left / synopsis + contents right, nav and chapter list styling, free–locked counts, list-style chapters with dividers
   - Review and apply any remaining reference refinements across Boudoir, Library, Vault, Profile, and shared components as needed
