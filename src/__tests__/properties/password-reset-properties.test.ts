@@ -21,21 +21,51 @@
  * For any reset token, validating it after 1 hour from its creation time
  * SHALL return an invalid/expired result. Validating it before 1 hour
  * SHALL return a valid result (assuming not used or invalidated).
+ *
+ * Property 10: Token validation correctness
+ * Validates: Requirements 4.1, 4.2, 4.3, 4.4 (Email Password Reset)
+ *
+ * For any token string, the validation function SHALL return valid: true only
+ * when the token exists in the database, has not expired, and has not been used.
+ * All other cases (non-existent, expired, used) SHALL return valid: false.
  */
 
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { describe, it, expect, vi, beforeEach, afterEach, beforeAll, afterAll } from "vitest";
 import * as fc from "fast-check";
 import {
   generateResetToken,
   hashToken,
   validateResetToken,
 } from "@/lib/auth/password-reset";
+import {
+  createPasswordResetToken,
+  markResetTokenUsed,
+  sql,
+} from "@/lib/db";
+import { hashPassword } from "@/lib/auth/password";
+import { randomUUID } from "node:crypto";
 
-vi.mock("@/lib/db", () => ({
-  getResetTokenByHash: vi.fn(),
+const hasPostgres =
+  typeof process.env.POSTGRES_URL === "string" &&
+  process.env.POSTGRES_URL.length > 0;
+
+// Property 6 uses mocked getResetTokenByHash; Property 10 uses real DB.
+// Mock delegates to real when no implementation is set.
+const { mockGetResetTokenByHash } = vi.hoisted(() => ({
+  mockGetResetTokenByHash: vi.fn(),
 }));
-
-import { getResetTokenByHash } from "@/lib/db";
+vi.mock("@/lib/db", async (importOriginal) => {
+  const actual = await importOriginal<typeof import("@/lib/db")>();
+  return {
+    ...actual,
+    getResetTokenByHash: (tokenHash: string) => {
+      if (mockGetResetTokenByHash.getMockImplementation()) {
+        return mockGetResetTokenByHash(tokenHash);
+      }
+      return actual.getResetTokenByHash(tokenHash);
+    },
+  };
+});
 
 /** Base64url encodes 32 bytes to 43 characters (ceil(256/6)). */
 const MIN_TOKEN_LENGTH = 43;
@@ -157,7 +187,7 @@ describe("Property 6: Token expiration", () => {
 
   afterEach(() => {
     vi.useRealTimers();
-    vi.mocked(getResetTokenByHash).mockReset();
+    mockGetResetTokenByHash.mockReset();
   });
 
   it("token valid before 1 hour, expired after 1 hour", async () => {
@@ -174,7 +204,7 @@ describe("Property 6: Token expiration", () => {
           );
 
           vi.setSystemTime(now);
-          vi.mocked(getResetTokenByHash).mockResolvedValue({
+          mockGetResetTokenByHash.mockResolvedValue({
             readerId: "reader-1",
             expiresAt,
             usedAt: null,
@@ -194,4 +224,99 @@ describe("Property 6: Token expiration", () => {
       { numRuns: 100 }
     );
   });
+});
+
+describe("Property 10: Token validation correctness", () => {
+  let readerId: string | undefined;
+
+  beforeAll(async () => {
+    if (!hasPostgres) return;
+    readerId = randomUUID();
+    const email = `prop10-${readerId}@test.example.com`;
+    const passwordHash = await hashPassword("prop10-test-password");
+    await sql`
+      INSERT INTO readers (id, email, password_hash, display_name, credit_balance, role)
+      VALUES (${readerId}, ${email}, ${passwordHash}, 'Prop10 Reader', 0, 'reader')
+    `;
+  });
+
+  afterEach(async () => {
+    if (!hasPostgres || !readerId) return;
+    await sql`DELETE FROM password_reset_tokens WHERE reader_id = ${readerId}`;
+  });
+
+  afterAll(async () => {
+    if (!hasPostgres || !readerId) return;
+    await sql`DELETE FROM readers WHERE id = ${readerId}`;
+  });
+
+  it.skipIf(!hasPostgres)(
+    "non-existent token returns valid: false, error: invalid",
+    async () => {
+      await fc.assert(
+        fc.asyncProperty(
+          fc.string({ minLength: 1, maxLength: 128 }),
+          async (token) => {
+            const result = await validateResetToken(token);
+            expect(result.valid).toBe(false);
+            expect(result.error).toBe("invalid");
+          }
+        ),
+        { numRuns: 100 }
+      );
+    }
+  );
+
+  it.skipIf(!hasPostgres)(
+    "valid token (exists, not expired, not used) returns valid: true with readerId",
+    async () => {
+      await fc.assert(
+        fc.asyncProperty(fc.integer({ min: 1, max: 50 }), async (n) => {
+          const { token, tokenHash } = generateResetToken();
+          const expiresAt = new Date(Date.now() + 3600000);
+          await createPasswordResetToken(readerId!, tokenHash, expiresAt);
+          const result = await validateResetToken(token);
+          expect(result.valid).toBe(true);
+          expect(result.readerId).toBe(readerId);
+          expect(result.error).toBeUndefined();
+        }),
+        { numRuns: 100 }
+      );
+    }
+  );
+
+  it.skipIf(!hasPostgres)(
+    "expired token returns valid: false, error: expired",
+    async () => {
+      await fc.assert(
+        fc.asyncProperty(fc.integer({ min: 1, max: 50 }), async (n) => {
+          const { token, tokenHash } = generateResetToken();
+          const expiresAt = new Date(Date.now() - 1000);
+          await createPasswordResetToken(readerId!, tokenHash, expiresAt);
+          const result = await validateResetToken(token);
+          expect(result.valid).toBe(false);
+          expect(result.error).toBe("expired");
+        }),
+        { numRuns: 100 }
+      );
+    }
+  );
+
+  it.skipIf(!hasPostgres)(
+    "used token returns valid: false, error: used",
+    async () => {
+      await fc.assert(
+        fc.asyncProperty(fc.integer({ min: 1, max: 50 }), async (n) => {
+          const { token, tokenHash } = generateResetToken();
+          const expiresAt = new Date(Date.now() + 3600000);
+          await createPasswordResetToken(readerId!, tokenHash, expiresAt);
+          await markResetTokenUsed(tokenHash);
+          const result = await validateResetToken(token);
+          expect(result.valid).toBe(false);
+          expect(result.error).toBe("used");
+        }),
+        { numRuns: 100 }
+      );
+    }
+  );
 });
