@@ -52,6 +52,7 @@ import {
 } from "@/lib/auth/password-reset";
 import {
   createPasswordResetToken,
+  logPasswordResetEvent,
   markResetTokenUsed,
   sql,
 } from "@/lib/db";
@@ -513,6 +514,114 @@ describe("Property 15: IP rate limiting", () => {
         ),
         { numRuns: 100 }
       );
+    }
+  );
+});
+
+/** logPasswordResetEvent - Requirements: 7.1, 7.2, 7.3, 7.4 */
+describe("logPasswordResetEvent", () => {
+  const testReaderId = randomUUID();
+
+  beforeAll(async () => {
+    if (!hasPostgres) return;
+    const passwordHash = await hashPassword("test-password-123");
+    await sql`
+      INSERT INTO readers (id, email, password_hash, display_name, credit_balance, role)
+      VALUES (${testReaderId}, 'log-test@example.com', ${passwordHash}, 'Log Test', 0, 'reader')
+    `;
+  });
+
+  afterEach(async () => {
+    if (!hasPostgres) return;
+    await sql`DELETE FROM password_reset_log WHERE reader_id = ${testReaderId}`;
+    await sql`DELETE FROM password_reset_log WHERE reader_id IS NULL`;
+  });
+
+  afterAll(async () => {
+    if (!hasPostgres) return;
+    await sql`DELETE FROM password_reset_log WHERE reader_id = ${testReaderId}`;
+    await sql`DELETE FROM readers WHERE id = ${testReaderId}`;
+  });
+
+  it.skipIf(!hasPostgres)(
+    "inserts event into password_reset_log with event_type, reader_id, ip_address, reason_code",
+    async () => {
+      await logPasswordResetEvent("request_sent", {
+        readerId: testReaderId,
+        ipAddress: "192.168.1.100",
+        reasonCode: "rate_limited",
+      });
+
+      const { rows } = await sql<{
+        event_type: string;
+        reader_id: string | null;
+        ip_address: string | null;
+        reason_code: string | null;
+      }>`
+        SELECT event_type, reader_id, ip_address, reason_code
+        FROM password_reset_log
+        WHERE reader_id = ${testReaderId}
+        ORDER BY created_at DESC
+        LIMIT 1
+      `;
+
+      expect(rows).toHaveLength(1);
+      expect(rows[0].event_type).toBe("request_sent");
+      expect(rows[0].reader_id).toBe(testReaderId);
+      expect(rows[0].ip_address).toBe("192.168.1.100");
+      expect(rows[0].reason_code).toBe("rate_limited");
+    }
+  );
+
+  it.skipIf(!hasPostgres)(
+    "accepts optional params; nulls are stored when omitted",
+    async () => {
+      await logPasswordResetEvent("link_expired");
+
+      const { rows } = await sql<{
+        event_type: string;
+        reader_id: string | null;
+        ip_address: string | null;
+        reason_code: string | null;
+      }>`
+        SELECT event_type, reader_id, ip_address, reason_code
+        FROM password_reset_log
+        WHERE reader_id IS NULL
+        ORDER BY created_at DESC
+        LIMIT 1
+      `;
+
+      expect(rows).toHaveLength(1);
+      expect(rows[0].event_type).toBe("link_expired");
+      expect(rows[0].reader_id).toBeNull();
+      expect(rows[0].ip_address).toBeNull();
+      expect(rows[0].reason_code).toBeNull();
+    }
+  );
+
+  it.skipIf(!hasPostgres)(
+    "does not log sensitive data: no email, token, or password in any column (Req 7.4)",
+    async () => {
+      await logPasswordResetEvent("password_changed", {
+        readerId: testReaderId,
+        ipAddress: "10.0.0.1",
+      });
+
+      const { rows } = await sql<Record<string, string | null>>`
+        SELECT event_type, reader_id, ip_address, reason_code
+        FROM password_reset_log
+        WHERE reader_id = ${testReaderId}
+        ORDER BY created_at DESC
+        LIMIT 1
+      `;
+
+      expect(rows).toHaveLength(1);
+      const row = rows[0];
+      const allValues = Object.values(row).filter(Boolean).join(" ");
+
+      // Sensitive patterns that must NOT appear in logs (Req 7.4)
+      expect(allValues).not.toMatch(/@/); // no email addresses
+      expect(allValues).not.toMatch(/[A-Za-z0-9_-]{40,}/); // no raw tokens (base64url)
     }
   );
 });

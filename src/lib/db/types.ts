@@ -201,6 +201,19 @@ export type PasswordResetEventType =
   | "rate_limit"
   | "password_changed";
 
+/**
+ * Allowed reason codes for password reset log entries.
+ * Whitelist ensures no sensitive data (email, token, password) is logged. Requirements: 7.4
+ */
+export type PasswordResetReasonCode =
+  | "invalid"
+  | "expired"
+  | "used"
+  | "rate_limited"
+  | "email_failed"
+  | "resend_error"
+  | "token_not_found";
+
 /** Log entry for password reset security events */
 export interface PasswordResetLogEntry {
   id: string;

@@ -4,7 +4,11 @@
  */
 
 import { sql } from "@vercel/postgres";
-import type { ReaderDbRow } from "./types";
+import type {
+  ReaderDbRow,
+  PasswordResetEventType,
+  PasswordResetReasonCode,
+} from "./types";
 import { readerDbRowToReader } from "./types";
 
 export { sql } from "@vercel/postgres";
@@ -104,4 +108,29 @@ export async function countRecentResetRequestsByIp(
       AND created_at >= NOW() - make_interval(mins => ${windowMinutes})
   `;
   return parseInt(rows[0]?.count ?? "0", 10);
+}
+
+/**
+ * Log a password reset security event. Requirements: 7.1, 7.2, 7.3, 7.4
+ *
+ * Inserts into password_reset_log. Does NOT accept email, token, or password —
+ * only event_type, reader_id (UUID), ip_address, and whitelisted reason_code.
+ * Ensures no sensitive data is logged in plaintext.
+ */
+export async function logPasswordResetEvent(
+  eventType: PasswordResetEventType,
+  options?: {
+    readerId?: string | null;
+    ipAddress?: string | null;
+    reasonCode?: PasswordResetReasonCode | null;
+  }
+): Promise<void> {
+  const readerId = options?.readerId ?? null;
+  const ipAddress = options?.ipAddress ?? null;
+  const reasonCode = options?.reasonCode ?? null;
+
+  await sql`
+    INSERT INTO password_reset_log (event_type, reader_id, ip_address, reason_code)
+    VALUES (${eventType}, ${readerId}, ${ipAddress}, ${reasonCode})
+  `;
 }
