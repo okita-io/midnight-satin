@@ -67,7 +67,7 @@ import {
   sanitizeForSecurityLog,
   containsSensitiveData,
 } from "@/lib/auth/log-sanitization";
-import { sendResetEmail } from "@/lib/auth/resend";
+import { sendResetEmail, isResendConfigured } from "@/lib/auth/resend";
 import {
   createPasswordResetToken,
   logPasswordResetEvent,
@@ -275,6 +275,118 @@ describe("Property 8: Email contains reset link with token", () => {
       ),
       { numRuns: 100 }
     );
+  });
+});
+
+/**
+ * Property 18: Missing environment variables disable feature
+ * Validates: Requirements 8.3 (Email Password Reset)
+ *
+ * For any configuration state where RESEND_API_KEY or RESEND_FROM_EMAIL is
+ * missing or empty, isResendConfigured() SHALL return false. When both are
+ * set and non-empty (after trim), isResendConfigured() SHALL return true.
+ */
+describe("Property 18: Missing environment variables disable feature", () => {
+  const originalEnv = { ...process.env };
+
+  afterEach(() => {
+    process.env.RESEND_API_KEY = originalEnv.RESEND_API_KEY;
+    process.env.RESEND_FROM_EMAIL = originalEnv.RESEND_FROM_EMAIL;
+  });
+
+  it("Feature: password-recovery-resend, Property 18: Missing env vars — isResendConfigured returns false when either var is missing, empty, or whitespace", () => {
+    const emptyOrWhitespace = fc.oneof(
+      fc.constant(""),
+      fc.integer({ min: 1, max: 20 }).map((n) => " ".repeat(n))
+    );
+    const nonEmptyString = fc
+      .string({ minLength: 1, maxLength: 64 })
+      .filter((s) => s.trim().length > 0);
+
+    fc.assert(
+      fc.property(
+        fc.oneof(
+          fc.record({
+            apiKey: emptyOrWhitespace,
+            fromEmail: nonEmptyString,
+          }),
+          fc.record({
+            apiKey: nonEmptyString,
+            fromEmail: emptyOrWhitespace,
+          }),
+          fc.record({
+            apiKey: emptyOrWhitespace,
+            fromEmail: emptyOrWhitespace,
+          })
+        ),
+        (env) => {
+          process.env.RESEND_API_KEY = env.apiKey;
+          process.env.RESEND_FROM_EMAIL = env.fromEmail;
+          expect(isResendConfigured()).toBe(false);
+        }
+      ),
+      { numRuns: 100 }
+    );
+  });
+
+  it("Feature: password-recovery-resend, Property 18: Missing env vars — isResendConfigured returns false when RESEND_API_KEY is undefined", () => {
+    fc.assert(
+      fc.property(fc.integer({ min: 1, max: 50 }), (n) => {
+        delete process.env.RESEND_API_KEY;
+        process.env.RESEND_FROM_EMAIL = `test${n}@midnightsatin.com`;
+        expect(isResendConfigured()).toBe(false);
+      }),
+      { numRuns: 100 }
+    );
+  });
+
+  it("Feature: password-recovery-resend, Property 18: Missing env vars — isResendConfigured returns false when RESEND_FROM_EMAIL is undefined", () => {
+    fc.assert(
+      fc.property(fc.integer({ min: 1, max: 50 }), (n) => {
+        process.env.RESEND_API_KEY = `re_test_${n}`;
+        delete process.env.RESEND_FROM_EMAIL;
+        expect(isResendConfigured()).toBe(false);
+      }),
+      { numRuns: 100 }
+    );
+  });
+
+  it("Feature: password-recovery-resend, Property 18: Missing env vars — isResendConfigured returns true when both vars are non-empty", () => {
+    const nonEmptyString = fc
+      .string({ minLength: 1, maxLength: 64 })
+      .filter((s) => s.trim().length > 0);
+
+    fc.assert(
+      fc.property(
+        fc.record({
+          apiKey: nonEmptyString,
+          fromEmail: nonEmptyString,
+        }),
+        (env) => {
+          process.env.RESEND_API_KEY = env.apiKey;
+          process.env.RESEND_FROM_EMAIL = env.fromEmail;
+          expect(isResendConfigured()).toBe(true);
+        }
+      ),
+      { numRuns: 100 }
+    );
+  });
+
+  it("Feature: password-recovery-resend, Property 18: Missing env vars — sendResetEmail returns error without sending when not configured", async () => {
+    mockResendSend.mockClear();
+    process.env.RESEND_API_KEY = "";
+    process.env.RESEND_FROM_EMAIL = "";
+
+    const result = await sendResetEmail({
+      to: "reader@example.com",
+      resetUrl: "https://app.example.com/auth/reset-password?token=abc",
+      expiresInMinutes: 60,
+    });
+
+    expect(result.success).toBe(false);
+    expect(result.error).toContain("RESEND_API_KEY");
+    expect(result.error).toContain("RESEND_FROM_EMAIL");
+    expect(mockResendSend).not.toHaveBeenCalled();
   });
 });
 

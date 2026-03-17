@@ -99,7 +99,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - **Property 8: Email contains reset link with token**
     - **Validates: Requirements 3.1, 3.2**
 
-  - [ ] 5.3 Write property test for missing env vars
+  - [x] 5.3 Write property test for missing env vars
     - **Property 18: Missing environment variables disable feature**
     - **Validates: Requirements 8.3**
 
