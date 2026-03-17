@@ -10,6 +10,7 @@ import type {
   PasswordResetReasonCode,
 } from "./types";
 import { readerDbRowToReader } from "./types";
+import { sanitizeForSecurityLog } from "@/lib/auth/log-sanitization";
 
 export { sql } from "@vercel/postgres";
 export * from "./types";
@@ -126,8 +127,10 @@ export async function logPasswordResetEvent(
   }
 ): Promise<void> {
   const readerId = options?.readerId ?? null;
-  const ipAddress = options?.ipAddress ?? null;
-  const reasonCode = options?.reasonCode ?? null;
+  const ipAddress = sanitizeForSecurityLog(options?.ipAddress ?? null);
+  const reasonCode = sanitizeForSecurityLog(
+    (options?.reasonCode as string) ?? null
+  );
 
   await sql`
     INSERT INTO password_reset_log (event_type, reader_id, ip_address, reason_code)
