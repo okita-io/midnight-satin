@@ -60,6 +60,13 @@ export async function createPasswordResetToken(
   `;
 }
 
+/** Invalidate all existing tokens for a reader. Requirements: 2.5 */
+export async function invalidateResetTokensForReader(
+  readerId: string
+): Promise<void> {
+  await sql`DELETE FROM password_reset_tokens WHERE reader_id = ${readerId}`;
+}
+
 /** Mark a token as used. Requirements: 5.5 */
 export async function markResetTokenUsed(tokenHash: string): Promise<void> {
   await sql`
