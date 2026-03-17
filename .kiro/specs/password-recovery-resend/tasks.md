@@ -74,7 +74,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - Implement `markResetTokenUsed()`
     - _Requirements: 2.3, 2.5, 5.5_
 
-  - [ ] 4.2 Add rate limiting queries
+  - [x] 4.2 Add rate limiting queries
     - Implement `countRecentResetRequests()` for email-based counting
     - Implement `countRecentResetRequestsByIp()` for IP-based counting
     - _Requirements: 6.1, 6.2_
