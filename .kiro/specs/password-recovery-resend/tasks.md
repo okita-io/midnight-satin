@@ -52,7 +52,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - **Property 10: Token validation correctness**
     - **Validates: Requirements 4.1, 4.2, 4.3, 4.4**
 
-  - [ ] 2.7 Implement rate limiting logic
+  - [x] 2.7 Implement rate limiting logic
     - Implement `checkRateLimit()` that checks email (3/hour) and IP (10/hour) limits
     - Query `password_reset_tokens` table for counts within sliding window
     - Return `RateLimitCheck` with allowed flag
