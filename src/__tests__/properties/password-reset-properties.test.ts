@@ -41,6 +41,12 @@
  * For any IP address, after 10 reset requests within a 1-hour window,
  * subsequent requests SHALL be rate-limited regardless of the email used.
  *
+ * Property 8: Email contains reset link with token
+ * Validates: Requirements 3.1, 3.2 (Email Password Reset)
+ *
+ * For any generated reset email, the email body SHALL contain a URL that
+ * includes the raw token as a query parameter and points to /auth/reset-password.
+ *
  * Property 17: No sensitive data in logs
  * Validates: Requirements 7.4 (Email Password Reset)
  *
@@ -61,6 +67,7 @@ import {
   sanitizeForSecurityLog,
   containsSensitiveData,
 } from "@/lib/auth/log-sanitization";
+import { sendResetEmail } from "@/lib/auth/resend";
 import {
   createPasswordResetToken,
   logPasswordResetEvent,
@@ -69,6 +76,14 @@ import {
 } from "@/lib/db";
 import { hashPassword } from "@/lib/auth/password";
 import { randomUUID } from "node:crypto";
+
+// Property 8: mock Resend to capture email HTML without sending
+const mockResendSend = vi.hoisted(() => vi.fn());
+vi.mock("resend", () => ({
+  Resend: class MockResend {
+    emails = { send: mockResendSend };
+  },
+}));
 
 const hasPostgres =
   typeof process.env.POSTGRES_URL === "string" &&
@@ -197,6 +212,67 @@ describe("Property 5: Token storage round-trip", () => {
           expect(hashToken(token)).toBe(tokenHash);
         }
       }),
+      { numRuns: 100 }
+    );
+  });
+});
+
+/** Property 8: Email contains reset link with token — Validates: Requirements 3.1, 3.2 */
+describe("Property 8: Email contains reset link with token", () => {
+  const originalEnv = process.env;
+
+  beforeEach(() => {
+    mockResendSend.mockReset();
+    mockResendSend.mockResolvedValue({ data: { id: "msg_prop8" }, error: null });
+    process.env.RESEND_API_KEY = "re_prop8_test";
+    process.env.RESEND_FROM_EMAIL = "noreply@midnightsatin.com";
+  });
+
+  afterEach(() => {
+    process.env = originalEnv;
+  });
+
+  it("for any base URL and token, email HTML contains reset URL with token and /auth/reset-password path", async () => {
+    const baseUrlArb = fc.oneof(
+      fc.constant("https://app.example.com"),
+      fc.constant("https://localhost:3000"),
+      fc.constant("https://midnightsatin.com"),
+      fc.constant("https://staging.example.com"),
+      fc.tuple(fc.constantFrom("https://", "http://"), fc.domain()).map(
+        ([scheme, host]) => `${scheme}${host}`
+      )
+    );
+
+    await fc.assert(
+      fc.asyncProperty(
+        baseUrlArb,
+        fc.integer({ min: 1, max: 50 }),
+        async (baseUrl, _n) => {
+          const { token } = generateResetToken();
+          const resetUrl = `${baseUrl.replace(/\/$/, "")}/auth/reset-password?token=${token}`;
+
+          await sendResetEmail({
+            to: "reader@example.com",
+            resetUrl,
+            expiresInMinutes: 60,
+          });
+
+          expect(mockResendSend).toHaveBeenCalled();
+          const lastCall = mockResendSend.mock.calls.at(-1);
+          const html = lastCall?.[0]?.html;
+          expect(html).toBeDefined();
+          expect(typeof html).toBe("string");
+
+          // Email body contains the full reset URL (Req 3.2)
+          expect(html).toContain(resetUrl);
+
+          // URL points to /auth/reset-password path
+          expect(html).toContain("/auth/reset-password");
+
+          // URL includes the raw token as query parameter
+          expect(html).toContain(token);
+        }
+      ),
       { numRuns: 100 }
     );
   });
