@@ -79,7 +79,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - Implement `countRecentResetRequestsByIp()` for IP-based counting
     - _Requirements: 6.1, 6.2_
 
-  - [ ] 4.3 Add security logging queries
+  - [x] 4.3 Add security logging queries
     - Implement `logPasswordResetEvent()` that inserts into password_reset_log
     - Ensure no sensitive data (email, token, password) is logged in plaintext
     - _Requirements: 7.1, 7.2, 7.3, 7.4_
