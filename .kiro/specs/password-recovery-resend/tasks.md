@@ -95,7 +95,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - Include Midnight Satin branding, expiry notice (1 hour), and security warning in email template
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 8.1, 8.2, 8.4_
 
-  - [ ] 5.2 Write property test for email content
+  - [x] 5.2 Write property test for email content
     - **Property 8: Email contains reset link with token**
     - **Validates: Requirements 3.1, 3.2**
 
