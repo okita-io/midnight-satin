@@ -343,7 +343,7 @@ async function createPasswordResetTokenWithIp(
 ): Promise<void> {
   await sql`
     INSERT INTO password_reset_tokens (reader_id, token_hash, expires_at, ip_address)
-    VALUES (${readerId}, ${tokenHash}, ${expiresAt}, ${ipAddress})
+    VALUES (${readerId}, ${tokenHash}, ${expiresAt.toISOString()}, ${ipAddress})
   `;
 }
 
