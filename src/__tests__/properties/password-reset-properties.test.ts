@@ -28,6 +28,18 @@
  * For any token string, the validation function SHALL return valid: true only
  * when the token exists in the database, has not expired, and has not been used.
  * All other cases (non-existent, expired, used) SHALL return valid: false.
+ *
+ * Property 14: Email rate limiting
+ * Validates: Requirements 6.1 (Email Password Reset)
+ *
+ * For any email address, after 3 reset requests within a 1-hour window,
+ * subsequent requests SHALL be rate-limited (allowed: false).
+ *
+ * Property 15: IP rate limiting
+ * Validates: Requirements 6.2 (Email Password Reset)
+ *
+ * For any IP address, after 10 reset requests within a 1-hour window,
+ * subsequent requests SHALL be rate-limited regardless of the email used.
  */
 
 import { describe, it, expect, vi, beforeEach, afterEach, beforeAll, afterAll } from "vitest";
@@ -36,6 +48,7 @@ import {
   generateResetToken,
   hashToken,
   validateResetToken,
+  checkRateLimit,
 } from "@/lib/auth/password-reset";
 import {
   createPasswordResetToken,
@@ -315,6 +328,189 @@ describe("Property 10: Token validation correctness", () => {
           expect(result.valid).toBe(false);
           expect(result.error).toBe("used");
         }),
+        { numRuns: 100 }
+      );
+    }
+  );
+});
+
+/** Helper: insert token with ip_address for IP rate limit tests. */
+async function createPasswordResetTokenWithIp(
+  readerId: string,
+  tokenHash: string,
+  expiresAt: Date,
+  ipAddress: string
+): Promise<void> {
+  await sql`
+    INSERT INTO password_reset_tokens (reader_id, token_hash, expires_at, ip_address)
+    VALUES (${readerId}, ${tokenHash}, ${expiresAt}, ${ipAddress})
+  `;
+}
+
+describe("Property 14: Email rate limiting", () => {
+  it.skipIf(!hasPostgres)(
+    "after 3 reset requests for same email, checkRateLimit returns allowed: false",
+    async () => {
+      await fc.assert(
+        fc.asyncProperty(
+          fc.uuid().map((u) => `prop14-${u}@test.example.com`),
+          async (email) => {
+            const readerId = randomUUID();
+            const passwordHash = await hashPassword("prop14-password");
+            await sql`
+              INSERT INTO readers (id, email, password_hash, display_name, credit_balance, role)
+              VALUES (${readerId}, ${email}, ${passwordHash}, 'Prop14 Reader', 0, 'reader')
+            `;
+            try {
+              const expiresAt = new Date(Date.now() + 3600000);
+              for (let i = 0; i < 3; i++) {
+                const { tokenHash } = generateResetToken();
+                await createPasswordResetToken(readerId, tokenHash, expiresAt);
+              }
+              const result = await checkRateLimit(email, "192.168.1.1");
+              expect(result.allowed).toBe(false);
+              expect(result.retryAfterSeconds).toBe(3600);
+            } finally {
+              await sql`DELETE FROM password_reset_tokens WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM readers WHERE id = ${readerId}`;
+            }
+          }
+        ),
+        { numRuns: 100 }
+      );
+    }
+  );
+
+  it.skipIf(!hasPostgres)(
+    "with 0, 1, or 2 requests for same email, checkRateLimit returns allowed: true",
+    async () => {
+      await fc.assert(
+        fc.asyncProperty(
+          fc.record({
+            email: fc.uuid().map((u) => `prop14b-${u}@test.example.com`),
+            count: fc.integer({ min: 0, max: 2 }),
+          }),
+          async ({ email, count }) => {
+            const readerId = randomUUID();
+            const passwordHash = await hashPassword("prop14b-password");
+            await sql`
+              INSERT INTO readers (id, email, password_hash, display_name, credit_balance, role)
+              VALUES (${readerId}, ${email}, ${passwordHash}, 'Prop14b Reader', 0, 'reader')
+            `;
+            try {
+              const expiresAt = new Date(Date.now() + 3600000);
+              for (let i = 0; i < count; i++) {
+                const { tokenHash } = generateResetToken();
+                await createPasswordResetToken(readerId, tokenHash, expiresAt);
+              }
+              const result = await checkRateLimit(email, "10.0.0.1");
+              expect(result.allowed).toBe(true);
+            } finally {
+              await sql`DELETE FROM password_reset_tokens WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM readers WHERE id = ${readerId}`;
+            }
+          }
+        ),
+        { numRuns: 100 }
+      );
+    }
+  );
+});
+
+describe("Property 15: IP rate limiting", () => {
+  it.skipIf(!hasPostgres)(
+    "after 10 reset requests from same IP, checkRateLimit returns allowed: false",
+    async () => {
+      const ipArb = fc
+        .tuple(
+          fc.integer(1, 254),
+          fc.integer(0, 255),
+          fc.integer(0, 255),
+          fc.integer(1, 254)
+        )
+        .map(([a, b, c, d]) => `${a}.${b}.${c}.${d}`);
+      await fc.assert(
+        fc.asyncProperty(
+          fc.record({
+            email: fc.uuid().map((u) => `prop15-${u}@test.example.com`),
+            ip: ipArb,
+          }),
+          async ({ email, ip }) => {
+            const readerId = randomUUID();
+            const passwordHash = await hashPassword("prop15-password");
+            await sql`
+              INSERT INTO readers (id, email, password_hash, display_name, credit_balance, role)
+              VALUES (${readerId}, ${email}, ${passwordHash}, 'Prop15 Reader', 0, 'reader')
+            `;
+            try {
+              const expiresAt = new Date(Date.now() + 3600000);
+              for (let i = 0; i < 10; i++) {
+                const { tokenHash } = generateResetToken();
+                await createPasswordResetTokenWithIp(
+                  readerId,
+                  tokenHash,
+                  expiresAt,
+                  ip
+                );
+              }
+              const result = await checkRateLimit(email, ip);
+              expect(result.allowed).toBe(false);
+              expect(result.retryAfterSeconds).toBe(3600);
+            } finally {
+              await sql`DELETE FROM password_reset_tokens WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM readers WHERE id = ${readerId}`;
+            }
+          }
+        ),
+        { numRuns: 100 }
+      );
+    }
+  );
+
+  it.skipIf(!hasPostgres)(
+    "with 0 to 9 requests from same IP, checkRateLimit returns allowed: true",
+    async () => {
+      const ipArb = fc
+        .tuple(
+          fc.integer(1, 254),
+          fc.integer(0, 255),
+          fc.integer(0, 255),
+          fc.integer(1, 254)
+        )
+        .map(([a, b, c, d]) => `${a}.${b}.${c}.${d}`);
+      await fc.assert(
+        fc.asyncProperty(
+          fc.record({
+            email: fc.uuid().map((u) => `prop15b-${u}@test.example.com`),
+            ip: ipArb,
+            count: fc.integer({ min: 0, max: 9 }),
+          }),
+          async ({ email, ip, count }) => {
+            const readerId = randomUUID();
+            const passwordHash = await hashPassword("prop15b-password");
+            await sql`
+              INSERT INTO readers (id, email, password_hash, display_name, credit_balance, role)
+              VALUES (${readerId}, ${email}, ${passwordHash}, 'Prop15b Reader', 0, 'reader')
+            `;
+            try {
+              const expiresAt = new Date(Date.now() + 3600000);
+              for (let i = 0; i < count; i++) {
+                const { tokenHash } = generateResetToken();
+                await createPasswordResetTokenWithIp(
+                  readerId,
+                  tokenHash,
+                  expiresAt,
+                  ip
+                );
+              }
+              const result = await checkRateLimit(email, ip);
+              expect(result.allowed).toBe(true);
+            } finally {
+              await sql`DELETE FROM password_reset_tokens WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM readers WHERE id = ${readerId}`;
+            }
+          }
+        ),
         { numRuns: 100 }
       );
     }

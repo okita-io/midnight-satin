@@ -58,7 +58,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - Return `RateLimitCheck` with allowed flag
     - _Requirements: 6.1, 6.2, 6.3_
 
-  - [ ] 2.8 Write property tests for rate limiting
+  - [x] 2.8 Write property tests for rate limiting
     - **Property 14: Email rate limiting**
     - **Property 15: IP rate limiting**
     - **Validates: Requirements 6.1, 6.2**
