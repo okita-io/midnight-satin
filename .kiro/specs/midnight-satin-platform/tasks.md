@@ -353,6 +353,9 @@ Build the Midnight Satin romance reading platform with Next.js 16, React 19, Typ
   - [x] 17.5 Write property test for token entropy (THE-102)
     - **Property 4: Token generation meets minimum entropy**
     - _Validates: Requirements 2.1, 2.2_
+  - [x] 17.6 Write property test for token hashing (THE-103)
+    - **Property 5: Token storage round-trip**
+    - _Validates: Requirements 2.3, 2.6_
 - [ ] 18. Revise live app (src/) — next milestone
   - Align Novel Detail tablet layout and components with refined reference (the_novel_detail_tablet.html): two-column 50/50 grid, cover + overlay left / synopsis + contents right, nav and chapter list styling, free–locked counts, list-style chapters with dividers
   - Review and apply any remaining reference refinements across Boudoir, Library, Vault, Profile, and shared components as needed

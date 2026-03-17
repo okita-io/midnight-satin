@@ -7,11 +7,18 @@
  * - Token length meets minimum (32 bytes → 43 base64url chars)
  * - Token uses valid base64url character set (URL-safe)
  * - Tokens are pairwise distinct across many generations (no collisions)
+ *
+ * Property 5: Token storage round-trip
+ * Validates: Requirements 2.3, 2.6 (Email Password Reset)
+ *
+ * For any token, hashing and "storing" the hash, then verifying with the
+ * original token SHALL succeed. Verifying with a different token SHALL fail.
+ * The hash SHALL be deterministic (same token → same hash).
  */
 
 import { describe, it, expect } from "vitest";
 import * as fc from "fast-check";
-import { generateResetToken } from "@/lib/auth/password-reset";
+import { generateResetToken, hashToken } from "@/lib/auth/password-reset";
 
 /** Base64url encodes 32 bytes to 43 characters (ceil(256/6)). */
 const MIN_TOKEN_LENGTH = 43;
@@ -68,5 +75,57 @@ describe("Property 4: Token generation meets minimum entropy", () => {
       const { token } = generateResetToken();
       expect(token.length).toBe(MIN_TOKEN_LENGTH);
     }
+  });
+});
+
+/** Generator for token-like strings used in Property 5. */
+const tokenLikeString = fc.string({ minLength: 1, maxLength: 128 });
+
+describe("Property 5: Token storage round-trip", () => {
+  it("stored hash verifies when submitted token matches original", () => {
+    fc.assert(
+      fc.property(tokenLikeString, (token) => {
+        const storedHash = hashToken(token);
+        const submittedToken = token;
+        const verifyHash = hashToken(submittedToken);
+        expect(verifyHash).toBe(storedHash);
+      }),
+      { numRuns: 100 }
+    );
+  });
+
+  it("stored hash rejects when submitted token differs", () => {
+    fc.assert(
+      fc.property(
+        fc.uniqueArray(tokenLikeString, { minLength: 2, maxLength: 2 }),
+        ([token, other]) => {
+          const storedHash = hashToken(token);
+          const verifyHash = hashToken(other);
+          expect(verifyHash).not.toBe(storedHash);
+        }
+      ),
+      { numRuns: 100 }
+    );
+  });
+
+  it("hash is deterministic — same token always produces same hash", () => {
+    fc.assert(
+      fc.property(tokenLikeString, (token) => {
+        expect(hashToken(token)).toBe(hashToken(token));
+      }),
+      { numRuns: 100 }
+    );
+  });
+
+  it("generateResetToken round-trip: tokenHash verifies against token", () => {
+    fc.assert(
+      fc.property(fc.integer({ min: 1, max: 50 }), (n) => {
+        for (let i = 0; i < n; i++) {
+          const { token, tokenHash } = generateResetToken();
+          expect(hashToken(token)).toBe(tokenHash);
+        }
+      }),
+      { numRuns: 100 }
+    );
   });
 });
