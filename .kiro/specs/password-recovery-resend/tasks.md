@@ -67,7 +67,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
   - Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 4. Implement database query helpers
-  - [ ] 4.1 Add password reset token queries to `src/lib/db/index.ts`
+  - [x] 4.1 Add password reset token queries to `src/lib/db/index.ts`
     - Implement `createPasswordResetToken()`
     - Implement `invalidateResetTokensForReader()`
     - Implement `getResetTokenByHash()`
