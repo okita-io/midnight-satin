@@ -11,6 +11,7 @@ import {
   checkRateLimit,
 } from "@/lib/auth/password-reset";
 import { sendResetEmail, isResendConfigured } from "@/lib/auth/resend";
+import { isValidEmail } from "@/lib/auth/email-validation";
 import {
   getReaderByEmailWithPassword,
   createPasswordResetToken,
@@ -21,10 +22,6 @@ import {
 const TOKEN_EXPIRY_MINUTES = 60;
 const GENERIC_SUCCESS_MESSAGE =
   "If an account with that email exists, we've sent a reset link.";
-
-function isValidEmail(value: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
-}
 
 /** Extract client IP from request headers (Vercel sets x-forwarded-for). */
 async function getClientIp(): Promise<string> {

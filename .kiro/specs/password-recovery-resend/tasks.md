@@ -126,7 +126,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - **Property 3: Response uniformity**
     - **Validates: Requirements 1.5, 6.3**
 
-  - [ ] 7.3 Write property test for email validation
+  - [x] 7.3 Write property test for email validation
     - **Property 1: Valid email acceptance**
     - **Property 2: Invalid email rejection**
     - **Validates: Requirements 1.3, 1.4**

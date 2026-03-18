@@ -2,6 +2,7 @@
 
 import { sql } from "@vercel/postgres";
 import { redirect } from "next/navigation";
+import { isValidEmail } from "@/lib/auth/email-validation";
 import { hashPassword, verifyPassword } from "@/lib/auth/password";
 import { createSession, deleteSession, getSession } from "@/lib/auth/session";
 import { getReaderByEmailWithPassword, readerExistsByEmail } from "@/lib/db";
@@ -10,10 +11,6 @@ export type AuthFormState = { error: string } | null;
 
 const WELCOME_BONUS_CREDITS = 200;
 const MIN_PASSWORD_LENGTH = 8;
-
-function isValidEmail(value: string): boolean {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
-}
 
 export type RegisterResult =
   | { success: true; readerId: string }

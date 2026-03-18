@@ -1,4 +1,19 @@
 /**
+ * Property 1: Valid email acceptance
+ * Validates: Requirements 1.3 (Email Password Reset)
+ *
+ * For any string that matches a valid email format (contains @, domain part,
+ * no whitespace), isValidEmail SHALL return true. Submitting such a string
+ * to the reset request form should not produce a validation error.
+ *
+ * Property 2: Invalid email rejection
+ * Validates: Requirements 1.4 (Email Password Reset)
+ *
+ * For any string that does not match a valid email format (missing @,
+ * whitespace-only, empty), isValidEmail SHALL return false. Submitting such
+ * a string to the reset request form should produce a validation error and
+ * not trigger any token generation.
+ *
  * Property 3: Response uniformity
  * Validates: Requirements 1.5, 6.3 (Email Password Reset)
  *
@@ -8,6 +23,8 @@
  */
 
 import { requestPasswordResetAction } from "@/app/actions/password-reset";
+import { isValidEmail } from "@/lib/auth/email-validation";
+import * as fc from "fast-check";
 
 const GENERIC_SUCCESS_MESSAGE =
   "If an account with that email exists, we've sent a reset link.";
@@ -20,6 +37,162 @@ vi.mock("next/headers", () => ({
         key === "x-forwarded-for" ? "192.168.1.100" : key === "x-real-ip" ? null : null,
     }),
 }));
+
+describe("Property 1: Valid email acceptance", () => {
+  it("Feature: password-recovery-resend, Property 1: Valid email acceptance — any valid format string is accepted", () => {
+    fc.assert(
+      fc.property(fc.emailAddress(), (email) => {
+        expect(isValidEmail(email)).toBe(true);
+      }),
+      { numRuns: 100 }
+    );
+  });
+
+  it("local@domain.tld format with various local/domain/tld combinations is accepted", () => {
+    const safeChar = fc.constantFrom(
+      ..."abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._+-"
+    );
+    const localPart = fc
+      .array(safeChar, { minLength: 1, maxLength: 64 })
+      .map((arr) => arr.join(""));
+    const domainPart = fc
+      .array(fc.constantFrom(..."abcdefghijklmnopqrstuvwxyz0123456789-"), {
+        minLength: 1,
+        maxLength: 64,
+      })
+      .map((arr) => arr.join(""));
+    const tldPart = fc
+      .array(fc.constantFrom(..."abcdefghijklmnopqrstuvwxyz"), {
+        minLength: 1,
+        maxLength: 24,
+      })
+      .map((arr) => arr.join(""));
+    const validEmailArb = fc
+      .tuple(localPart, domainPart, tldPart)
+      .map(([local, domain, tld]) => `${local}@${domain}.${tld}`);
+
+    fc.assert(
+      fc.property(validEmailArb, (email) => {
+        expect(isValidEmail(email)).toBe(true);
+      }),
+      { numRuns: 100 }
+    );
+  });
+});
+
+describe("Property 2: Invalid email rejection", () => {
+  it("Feature: password-recovery-resend, Property 2: Invalid email rejection — empty and whitespace-only are rejected", () => {
+    const emptyOrWhitespace = fc.oneof(
+      fc.constant(""),
+      fc.integer({ min: 1, max: 20 }).map((n) => " ".repeat(n)),
+      fc.integer({ min: 1, max: 10 }).map((n) => "\t".repeat(n))
+    );
+    fc.assert(
+      fc.property(emptyOrWhitespace, (s) => {
+        expect(isValidEmail(s)).toBe(false);
+      }),
+      { numRuns: 100 }
+    );
+  });
+
+  it("strings without @ are rejected", () => {
+    const noAtChar = fc.constantFrom(
+      ..."abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 .!-"
+    );
+    const noAtString = fc
+      .array(noAtChar, { minLength: 1, maxLength: 64 })
+      .map((arr) => arr.join(""));
+    fc.assert(
+      fc.property(noAtString, (s) => {
+        expect(isValidEmail(s)).toBe(false);
+      }),
+      { numRuns: 100 }
+    );
+  });
+
+  it("strings with @ but no domain dot (e.g. a@b) are rejected", () => {
+    const safeChar = fc.constantFrom(
+      ..."abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    );
+    const localPart = fc
+      .array(safeChar, { minLength: 1, maxLength: 32 })
+      .map((arr) => arr.join(""));
+    const domainNoDot = fc
+      .array(fc.constantFrom(..."abcdefghijklmnopqrstuvwxyz0123456789"), {
+        minLength: 1,
+        maxLength: 32,
+      })
+      .map((arr) => arr.join(""));
+    const noTld = fc.tuple(localPart, domainNoDot).map(([local, domain]) => `${local}@${domain}`);
+    fc.assert(
+      fc.property(noTld, (s) => {
+        expect(isValidEmail(s)).toBe(false);
+      }),
+      { numRuns: 100 }
+    );
+  });
+
+  it("strings with whitespace in middle of local or domain part are rejected", () => {
+    const safeChar = fc.constantFrom(
+      ..."abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+    );
+    const withSpace = fc.oneof(
+      fc
+        .tuple(
+          fc.array(safeChar, { minLength: 1, maxLength: 16 }).map((arr) => arr.join("")),
+          fc.constant(" "),
+          fc.array(safeChar, { minLength: 1, maxLength: 16 }).map((arr) => arr.join("")),
+          fc.constant("@"),
+          fc
+            .array(fc.constantFrom(..."abcdefghijklmnopqrstuvwxyz0123456789"), {
+              minLength: 1,
+              maxLength: 16,
+            })
+            .map((arr) => arr.join("")),
+          fc.constant("."),
+          fc
+            .array(fc.constantFrom(..."abcdefghijklmnopqrstuvwxyz"), {
+              minLength: 1,
+              maxLength: 8,
+            })
+            .map((arr) => arr.join(""))
+        )
+        .map((parts) => parts.join("")),
+      fc
+        .tuple(
+          fc.array(safeChar, { minLength: 1, maxLength: 16 }).map((arr) => arr.join("")),
+          fc.constant("@"),
+          fc
+            .array(fc.constantFrom(..."abcdefghijklmnopqrstuvwxyz0123456789"), {
+              minLength: 1,
+              maxLength: 16,
+            })
+            .map((arr) => arr.join("")),
+          fc.constant(" "),
+          fc
+            .array(fc.constantFrom(..."abcdefghijklmnopqrstuvwxyz0123456789"), {
+              minLength: 1,
+              maxLength: 16,
+            })
+            .map((arr) => arr.join("")),
+          fc.constant("."),
+          fc
+            .array(fc.constantFrom(..."abcdefghijklmnopqrstuvwxyz"), {
+              minLength: 1,
+              maxLength: 8,
+            })
+            .map((arr) => arr.join(""))
+        )
+        .map((parts) => parts.join(""))
+    );
+    fc.assert(
+      fc.property(withSpace, (s) => {
+        expect(isValidEmail(s)).toBe(false);
+      }),
+      { numRuns: 100 }
+    );
+  });
+});
 
 describe("Property 3: Response uniformity", () => {
   const originalEnv = { ...process.env };
