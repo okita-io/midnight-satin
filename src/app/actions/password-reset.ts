@@ -79,10 +79,15 @@ export async function requestPasswordResetAction(
     };
   }
 
-  // 2. Check rate limits (email + IP) (Req 6.1, 6.2)
+  // 2. Log reset_requested on form submission (Req 7.1)
+  await logPasswordResetEvent("reset_requested", {
+    ipAddress: ipAddress || null,
+  });
+
+  // 3. Check rate limits (email + IP) (Req 6.1, 6.2)
   const rateLimit = await checkRateLimit(email, ipAddress);
   if (!rateLimit.allowed) {
-    await logPasswordResetEvent("rate_limit", {
+    await logPasswordResetEvent("rate_limited", {
       ipAddress,
       reasonCode: "rate_limited",
     });
@@ -92,13 +97,19 @@ export async function requestPasswordResetAction(
     };
   }
 
-  // 3. Look up reader by email
+  // 4. Look up reader by email
   const reader = await getReaderByEmailWithPassword(email);
 
-  // 4. If reader exists: generate token, invalidate existing, store new, send email
+  // 5. If reader exists: generate token, invalidate existing, store new, send email
   if (reader) {
     const { token, tokenHash } = generateResetToken();
     const expiresAt = new Date(Date.now() + TOKEN_EXPIRY_MINUTES * 60 * 1000);
+
+    // Log token_generated when token created (Req 7.1)
+    await logPasswordResetEvent("token_generated", {
+      readerId: reader.id,
+      ipAddress: ipAddress || null,
+    });
 
     await invalidateResetTokensForReader(reader.id);
     await createPasswordResetToken(
@@ -108,13 +119,7 @@ export async function requestPasswordResetAction(
       ipAddress || null
     );
 
-    // Log request (Req 7.1)
-    await logPasswordResetEvent("request_sent", {
-      readerId: reader.id,
-      ipAddress: ipAddress || null,
-    });
-
-    // 5. Send email via Resend (handle failures gracefully) (Req 3.1, 3.6)
+    // 6. Send email via Resend (handle failures gracefully) (Req 3.1, 3.6)
     if (!isResendConfigured()) {
       await logPasswordResetEvent("email_failed", {
         readerId: reader.id,
@@ -140,18 +145,18 @@ export async function requestPasswordResetAction(
       expiresInMinutes: TOKEN_EXPIRY_MINUTES,
     });
 
-    if (!sendResult.success) {
+    if (sendResult.success) {
+      await logPasswordResetEvent("email_sent", {
+        readerId: reader.id,
+        ipAddress: ipAddress || null,
+      });
+    } else {
       await logPasswordResetEvent("email_failed", {
         readerId: reader.id,
         ipAddress: ipAddress || null,
         reasonCode: "resend_error",
       });
     }
-  } else {
-    // Reader not found: log attempt (Req 7.1) but no token/email
-    await logPasswordResetEvent("request_sent", {
-      ipAddress: ipAddress || null,
-    });
   }
 
   // 6. Always return generic success message (Req 1.5, 6.3)
@@ -188,7 +193,13 @@ export async function resetPasswordAction(
 
   const validation = await validateResetToken(token);
   if (!validation.valid || !validation.readerId) {
-    await logPasswordResetEvent("invalid_token", {
+    const eventType =
+      validation.error === "expired"
+        ? "token_expired"
+        : validation.error === "used"
+          ? "token_used"
+          : "token_invalid";
+    await logPasswordResetEvent(eventType, {
       ipAddress: ipAddress || null,
       reasonCode: validation.error ?? "invalid",
     });
@@ -196,6 +207,12 @@ export async function resetPasswordAction(
   }
 
   const { readerId } = validation;
+
+  // Log token_validated on successful validation (Req 7.1)
+  await logPasswordResetEvent("token_validated", {
+    readerId,
+    ipAddress: ipAddress || null,
+  });
 
   // 2. Validate password (min 8 chars) and confirmation match (Req 5.2, 5.3)
   const passwordValidation = validatePasswordForReset(password, confirmPassword);
@@ -211,7 +228,7 @@ export async function resetPasswordAction(
   const tokenHash = hashToken(token);
   await markResetTokenUsed(tokenHash);
 
-  // 5. Log success event (Req 7.2)
+  // 5. Log password_changed on successful reset (Req 7.2)
   await logPasswordResetEvent("password_changed", {
     readerId,
     ipAddress: ipAddress || null,
