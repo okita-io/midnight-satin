@@ -180,7 +180,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - _Requirements: 1.1_
 
 - [ ] 10. Implement reset password UI
-  - [ ] 10.1 Create reset password page at `src/app/auth/reset-password/page.tsx`
+  - [x] 10.1 Create reset password page at `src/app/auth/reset-password/page.tsx`
     - Server component that validates token from URL query parameter
     - If valid: render ResetPasswordForm with token
     - If invalid/expired/used: render error message with link to request new reset
