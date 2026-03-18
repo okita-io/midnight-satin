@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useActionState } from "react";
 import { loginFormAction } from "@/app/actions/auth";
 
@@ -46,6 +47,14 @@ export function LoginForm({ redirectTo }: { redirectTo: string }) {
           disabled={isPending}
           className="block w-full h-14 rounded-none border border-surface-highlight bg-surface-highlight px-4 font-ui text-text-main placeholder:text-text-muted/60 focus:border-primary focus:outline-none focus:ring-0 transition-colors duration-300"
         />
+      </div>
+      <div className="flex justify-end pt-1">
+        <Link
+          href="/auth/forgot-password"
+          className="font-ui text-xs uppercase tracking-widest text-text-muted hover:text-primary transition-colors"
+        >
+          Forgot Password?
+        </Link>
       </div>
       <button
         type="submit"
