@@ -191,7 +191,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - **Property 11: Token error message uniformity**
     - **Validates: Requirements 4.5**
 
-  - [ ] 10.3 Create reset password form at `src/app/auth/reset-password/reset-password-form.tsx`
+  - [x] 10.3 Create reset password form at `src/app/auth/reset-password/reset-password-form.tsx`
     - Client component with new password and confirmation fields
     - Use `useActionState` with `resetPasswordAction`
     - Display validation errors for short password or mismatch
