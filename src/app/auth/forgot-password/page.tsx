@@ -7,7 +7,7 @@ export const metadata = {
   description: "Request a password reset link for your Midnight Satin account.",
 };
 
-export default function ForgotPasswordPage() {
+export default async function ForgotPasswordPage() {
   const configured = isResendConfigured();
 
   return (
@@ -29,10 +29,10 @@ export default function ForgotPasswordPage() {
 
         <div className="text-center mb-10">
           <h1 className="font-display font-bold italic text-4xl text-primary">
-            Reset your password
+            Forgot password
           </h1>
           <p className="font-ui text-text-muted mt-2 text-sm tracking-widest uppercase">
-            Enter your email to receive a reset link
+            Request a reset link
           </p>
         </div>
 
@@ -40,10 +40,15 @@ export default function ForgotPasswordPage() {
           <ForgotPasswordForm />
         ) : (
           <div
-            className="w-full rounded-sm border-2 border-accent bg-surface px-4 py-6 font-ui text-sm text-text-main"
+            className="w-full rounded-sm border-2 border-accent bg-surface px-4 py-6 text-center"
             role="alert"
           >
-            Password reset is temporarily unavailable. Please try again later.
+            <p className="font-ui text-text-main">
+              Password reset is temporarily unavailable.
+            </p>
+            <p className="font-ui text-text-muted text-sm mt-2">
+              Please try again later or contact support.
+            </p>
           </div>
         )}
       </div>
