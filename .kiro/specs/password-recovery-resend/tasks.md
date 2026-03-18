@@ -144,7 +144,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - Redirect to login with success message
     - _Requirements: 5.2, 5.3, 5.4, 5.5, 5.6, 7.2_
 
-  - [ ] 7.6 Write property test for password validation
+  - [x] 7.6 Write property test for password validation
     - **Property 12: Password validation rules**
     - **Validates: Requirements 5.2, 5.3**
 

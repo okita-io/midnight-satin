@@ -11,6 +11,7 @@ import {
   generateResetToken,
   checkRateLimit,
   validateResetToken,
+  validatePasswordForReset,
   hashToken,
 } from "@/lib/auth/password-reset";
 import { hashPassword } from "@/lib/auth/password";
@@ -162,7 +163,6 @@ export async function requestPasswordResetAction(
 
 export type PasswordResetState = { error: string } | null;
 
-const MIN_PASSWORD_LENGTH = 8;
 const INVALID_TOKEN_MESSAGE =
   "This reset link is no longer valid. Please request a new one.";
 
@@ -198,11 +198,9 @@ export async function resetPasswordAction(
   const { readerId } = validation;
 
   // 2. Validate password (min 8 chars) and confirmation match (Req 5.2, 5.3)
-  if (password.length < MIN_PASSWORD_LENGTH) {
-    return { error: "Password must be at least 8 characters." };
-  }
-  if (password !== confirmPassword) {
-    return { error: "Passwords do not match." };
+  const passwordValidation = validatePasswordForReset(password, confirmPassword);
+  if (!passwordValidation.valid) {
+    return { error: passwordValidation.error };
   }
 
   // 3. Update reader password hash (Req 5.4)
