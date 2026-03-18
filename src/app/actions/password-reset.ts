@@ -2,14 +2,18 @@
 
 /**
  * Password reset server actions.
- * Requirements: 1.3, 1.4, 1.5, 2.1, 2.3, 2.5, 3.1, 3.6, 6.1, 6.2, 6.3, 6.4, 7.1, 7.3
+ * Requirements: 1.3, 1.4, 1.5, 2.1, 2.3, 2.5, 3.1, 3.6, 5.2, 5.3, 5.4, 5.5, 5.6, 6.1, 6.2, 6.3, 6.4, 7.1, 7.2, 7.3
  */
 
 import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 import {
   generateResetToken,
   checkRateLimit,
+  validateResetToken,
+  hashToken,
 } from "@/lib/auth/password-reset";
+import { hashPassword } from "@/lib/auth/password";
 import { sendResetEmail, isResendConfigured } from "@/lib/auth/resend";
 import { isValidEmail } from "@/lib/auth/email-validation";
 import {
@@ -17,6 +21,8 @@ import {
   createPasswordResetToken,
   invalidateResetTokensForReader,
   logPasswordResetEvent,
+  markResetTokenUsed,
+  updateReaderPassword,
 } from "@/lib/db";
 
 const TOKEN_EXPIRY_MINUTES = 60;
@@ -152,4 +158,67 @@ export async function requestPasswordResetAction(
     message: GENERIC_SUCCESS_MESSAGE,
     success: true,
   };
+}
+
+export type PasswordResetState = { error: string } | null;
+
+const MIN_PASSWORD_LENGTH = 8;
+const INVALID_TOKEN_MESSAGE =
+  "This reset link is no longer valid. Please request a new one.";
+
+/**
+ * Server action for reset-password form.
+ * Validates token from form data, validates password (min 8 chars) and confirmation match,
+ * updates reader password hash, marks token as used, logs success event,
+ * redirects to login with success message. Requirements: 5.2, 5.3, 5.4, 5.5, 5.6, 7.2
+ */
+export async function resetPasswordAction(
+  _prev: PasswordResetState,
+  formData: FormData
+): Promise<PasswordResetState> {
+  const token = ((formData.get("token") as string) ?? "").trim();
+  const password = (formData.get("password") as string) ?? "";
+  const confirmPassword = (formData.get("confirmPassword") as string) ?? "";
+  const ipAddress = await getClientIp();
+
+  // 1. Validate token from form data (Req 4.1, 4.2, 4.3, 4.4)
+  if (!token) {
+    return { error: INVALID_TOKEN_MESSAGE };
+  }
+
+  const validation = await validateResetToken(token);
+  if (!validation.valid || !validation.readerId) {
+    await logPasswordResetEvent("invalid_token", {
+      ipAddress: ipAddress || null,
+      reasonCode: validation.error ?? "invalid",
+    });
+    return { error: INVALID_TOKEN_MESSAGE };
+  }
+
+  const { readerId } = validation;
+
+  // 2. Validate password (min 8 chars) and confirmation match (Req 5.2, 5.3)
+  if (password.length < MIN_PASSWORD_LENGTH) {
+    return { error: "Password must be at least 8 characters." };
+  }
+  if (password !== confirmPassword) {
+    return { error: "Passwords do not match." };
+  }
+
+  // 3. Update reader password hash (Req 5.4)
+  const passwordHash = await hashPassword(password);
+  await updateReaderPassword(readerId, passwordHash);
+
+  // 4. Mark token as used (Req 5.5)
+  const tokenHash = hashToken(token);
+  await markResetTokenUsed(tokenHash);
+
+  // 5. Log success event (Req 7.2)
+  await logPasswordResetEvent("password_changed", {
+    readerId,
+    ipAddress: ipAddress || null,
+  });
+
+  // 6. Redirect to login with success message (Req 5.6)
+  redirect("/auth/login?reset=success");
 }
