@@ -148,7 +148,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - **Property 12: Password validation rules**
     - **Validates: Requirements 5.2, 5.3**
 
-  - [ ] 7.7 Write property test for password reset round-trip
+  - [x] 7.7 Write property test for password reset round-trip
     - **Property 13: Password reset round-trip**
     - **Validates: Requirements 5.4, 5.5**
 
