@@ -122,7 +122,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - Always return generic success message
     - _Requirements: 1.3, 1.4, 1.5, 2.1, 2.3, 2.5, 3.1, 3.6, 6.1, 6.2, 6.3, 6.4, 7.1, 7.3_
 
-  - [ ] 7.2 Write property test for response uniformity
+  - [x] 7.2 Write property test for response uniformity
     - **Property 3: Response uniformity**
     - **Validates: Requirements 1.5, 6.3**
 

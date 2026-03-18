@@ -1,4 +1,116 @@
 /**
+ * Property 3: Response uniformity
+ * Validates: Requirements 1.5, 6.3 (Email Password Reset)
+ *
+ * For any email submission to the reset request form — whether the email exists
+ * in the system, does not exist, or is rate-limited — the user-facing response
+ * message SHALL be identical. Prevents email enumeration and timing attacks.
+ */
+
+import { requestPasswordResetAction } from "@/app/actions/password-reset";
+
+const GENERIC_SUCCESS_MESSAGE =
+  "If an account with that email exists, we've sent a reset link.";
+
+// Mock next/headers for server action (no request context in Vitest)
+vi.mock("next/headers", () => ({
+  headers: () =>
+    Promise.resolve({
+      get: (key: string) =>
+        key === "x-forwarded-for" ? "192.168.1.100" : key === "x-real-ip" ? null : null,
+    }),
+}));
+
+describe("Property 3: Response uniformity", () => {
+  const originalEnv = { ...process.env };
+
+  beforeEach(() => {
+    // Disable Resend so we don't send real emails; action still returns generic success
+    process.env.RESEND_API_KEY = "";
+    process.env.RESEND_FROM_EMAIL = "";
+  });
+
+  afterEach(() => {
+    process.env = originalEnv;
+  });
+
+  it.skipIf(!hasPostgres)(
+    "Feature: password-recovery-resend, Property 3: Response uniformity — email exists, email not exists, and rate-limited all return identical message",
+    async () => {
+      await fc.assert(
+        fc.asyncProperty(
+          fc.uuid().map((u) => `prop3-${u}@test.example.com`),
+          async (existingEmail) => {
+            const nonexistentEmail = `prop3-nonexistent-${randomUUID()}@test.example.com`;
+            const readerId = randomUUID();
+            const passwordHash = await hashPassword("prop3-test-password");
+
+            await sql`
+              INSERT INTO readers (id, email, password_hash, display_name, credit_balance, role)
+              VALUES (${readerId}, ${existingEmail}, ${passwordHash}, 'Prop3 Reader', 0, 'reader')
+            `;
+
+            try {
+              // Scenario 1: Email exists (not rate-limited)
+              const formDataExists = new FormData();
+              formDataExists.set("email", existingEmail);
+              const responseExists = await requestPasswordResetAction(
+                null,
+                formDataExists
+              );
+
+              // Scenario 2: Email does not exist
+              const formDataNotExists = new FormData();
+              formDataNotExists.set("email", nonexistentEmail);
+              const responseNotExists = await requestPasswordResetAction(
+                null,
+                formDataNotExists
+              );
+
+              // Scenario 3: Rate-limited — create 3 tokens to exceed email limit
+              const expiresAt = new Date(Date.now() + 3600000);
+              for (let i = 0; i < 3; i++) {
+                const { tokenHash } = generateResetToken();
+                await createPasswordResetToken(
+                  readerId,
+                  tokenHash,
+                  expiresAt,
+                  "192.168.1.100"
+                );
+              }
+              const formDataRateLimited = new FormData();
+              formDataRateLimited.set("email", existingEmail);
+              const responseRateLimited = await requestPasswordResetAction(
+                null,
+                formDataRateLimited
+              );
+
+              // All three scenarios must return identical user-facing response
+              expect(responseExists).toEqual({
+                message: GENERIC_SUCCESS_MESSAGE,
+                success: true,
+              });
+              expect(responseNotExists).toEqual({
+                message: GENERIC_SUCCESS_MESSAGE,
+                success: true,
+              });
+              expect(responseRateLimited).toEqual({
+                message: GENERIC_SUCCESS_MESSAGE,
+                success: true,
+              });
+            } finally {
+              await sql`DELETE FROM password_reset_tokens WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM readers WHERE id = ${readerId}`;
+            }
+          }
+        ),
+        { numRuns: 100 }
+      );
+    }
+  );
+});
+
+/**
  * Property 4: Token generation meets minimum entropy
  * Validates: Requirements 2.1, 2.2 (Email Password Reset)
  *
