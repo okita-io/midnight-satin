@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { headers } from "next/headers";
 import { validateResetToken } from "@/lib/auth/password-reset";
+import { logPasswordResetEvent } from "@/lib/db";
 import { ResetPasswordForm } from "./reset-password-form";
 
 export const metadata = {
@@ -9,6 +11,22 @@ export const metadata = {
 
 const INVALID_TOKEN_MESSAGE =
   "This reset link is no longer valid. Please request a new one.";
+
+async function getClientIp(): Promise<string> {
+  try {
+    const h = await headers();
+    const forwarded = h.get("x-forwarded-for");
+    if (forwarded) {
+      const first = forwarded.split(",")[0]?.trim();
+      if (first) return first;
+    }
+    const realIp = h.get("x-real-ip");
+    if (realIp) return realIp;
+  } catch {
+    // headers() can throw in some edge cases
+  }
+  return "";
+}
 
 export default async function ResetPasswordPage({
   searchParams,
@@ -20,6 +38,28 @@ export default async function ResetPasswordPage({
 
   const validation =
     rawToken.length > 0 ? await validateResetToken(rawToken) : { valid: false };
+
+  // Log token validation result on page load (Req 7.1, 7.2, 7.3)
+  if (rawToken.length > 0) {
+    const ipAddress = await getClientIp();
+    if (validation.valid && validation.readerId) {
+      await logPasswordResetEvent("token_validated", {
+        readerId: validation.readerId,
+        ipAddress: ipAddress || null,
+      });
+    } else {
+      const eventType =
+        validation.error === "expired"
+          ? "token_expired"
+          : validation.error === "used"
+            ? "token_used"
+            : "token_invalid";
+      await logPasswordResetEvent(eventType, {
+        ipAddress: ipAddress || null,
+        reasonCode: validation.error ?? "invalid",
+      });
+    }
+  }
 
   return (
     <main className="relative flex min-h-screen w-full flex-col overflow-hidden bg-silk-noise">

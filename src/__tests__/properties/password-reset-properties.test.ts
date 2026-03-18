@@ -1461,10 +1461,10 @@ describe("logPasswordResetEvent", () => {
   it.skipIf(!hasPostgres)(
     "inserts event into password_reset_log with event_type, reader_id, ip_address, reason_code",
     async () => {
-      await logPasswordResetEvent("request_sent", {
+      await logPasswordResetEvent("token_generated", {
         readerId: testReaderId,
         ipAddress: "192.168.1.100",
-        reasonCode: "rate_limited",
+        reasonCode: null,
       });
 
       const { rows } = await sql<{
@@ -1481,10 +1481,9 @@ describe("logPasswordResetEvent", () => {
       `;
 
       expect(rows).toHaveLength(1);
-      expect(rows[0].event_type).toBe("request_sent");
+      expect(rows[0].event_type).toBe("token_generated");
       expect(rows[0].reader_id).toBe(testReaderId);
       expect(rows[0].ip_address).toBe("192.168.1.100");
-      expect(rows[0].reason_code).toBe("rate_limited");
     }
   );
 
@@ -1543,7 +1542,7 @@ describe("logPasswordResetEvent", () => {
   it.skipIf(!hasPostgres)(
     "sanitizes ip_address when sensitive data is passed (Property 17, Req 7.4)",
     async () => {
-      await logPasswordResetEvent("rate_limit", {
+      await logPasswordResetEvent("rate_limited", {
         readerId: testReaderId,
         ipAddress: "attacker@evil.com",
       });

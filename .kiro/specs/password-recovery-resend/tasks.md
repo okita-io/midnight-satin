@@ -205,7 +205,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - _Requirements: 5.6_
 
 - [ ] 11. Implement security logging
-  - [ ] 11.1 Add logging calls throughout the flow
+  - [x] 11.1 Add logging calls throughout the flow
     - Log `reset_requested` on form submission
     - Log `token_generated` when token created
     - Log `email_sent` or `email_failed` after Resend call
