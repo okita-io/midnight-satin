@@ -103,7 +103,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - **Property 18: Missing environment variables disable feature**
     - **Validates: Requirements 8.3**
 
-  - [ ] 5.4 Write unit tests for email template
+  - [x] 5.4 Write unit tests for email template
     - Test email HTML contains expiry notice, security warning, branding elements
     - Test `isResendConfigured()` with various env var states
     - _Requirements: 3.3, 3.4, 3.5, 8.3_

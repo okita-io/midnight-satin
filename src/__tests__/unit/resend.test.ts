@@ -186,6 +186,13 @@ describe("resend", () => {
       const html = mockEmailsSend.mock.calls[0][0].html;
       expect(html).toContain("Security notice");
       expect(html).toContain("Do not share this link with anyone");
+      expect(html).toContain("Midnight Satin will never ask for your password or this link by email");
+    });
+
+    it("includes footer branding (Req 3.3)", async () => {
+      await sendResetEmail(params);
+      const html = mockEmailsSend.mock.calls[0][0].html;
+      expect(html).toContain("Your premium romance reading sanctuary");
     });
   });
 });
