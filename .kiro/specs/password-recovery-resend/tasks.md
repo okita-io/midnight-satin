@@ -112,7 +112,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
   - Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 7. Implement server actions
-  - [ ] 7.1 Create `requestPasswordResetAction` in `src/app/actions/password-reset.ts`
+  - [x] 7.1 Create `requestPasswordResetAction` in `src/app/actions/password-reset.ts`
     - Validate email format
     - Check rate limits (email + IP)
     - Look up reader by email
