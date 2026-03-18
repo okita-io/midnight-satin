@@ -199,7 +199,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - Apply Premium_Aesthetic consistent with other auth pages
     - _Requirements: 5.1, 5.2, 5.3, 5.7_
 
-  - [ ] 10.4 Handle success redirect on login page
+  - [x] 10.4 Handle success redirect on login page
     - Check for `reset=success` query parameter on login page
     - Display success banner: "Password updated. Please sign in."
     - _Requirements: 5.6_

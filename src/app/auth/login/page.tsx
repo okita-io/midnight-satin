@@ -9,11 +9,12 @@ export const metadata = {
 export default async function LoginPage({
   searchParams,
 }: {
-  searchParams: Promise<{ returnUrl?: string }>;
+  searchParams: Promise<{ returnUrl?: string; reset?: string }>;
 }) {
-  const { returnUrl } = await searchParams;
+  const { returnUrl, reset } = await searchParams;
   const redirectTo = returnUrl && returnUrl.startsWith("/") ? returnUrl : "/";
   const registerLink = returnUrl ? `/auth/register?returnUrl=${encodeURIComponent(returnUrl)}` : "/auth/register";
+  const showResetSuccess = reset === "success";
 
   return (
     <main className="relative flex min-h-screen w-full flex-col overflow-hidden bg-silk-noise">
@@ -41,7 +42,7 @@ export default async function LoginPage({
           </p>
         </div>
 
-        <LoginForm redirectTo={redirectTo} />
+        <LoginForm redirectTo={redirectTo} showResetSuccess={showResetSuccess} />
       </div>
 
       <footer className="p-8 text-center mt-auto">
