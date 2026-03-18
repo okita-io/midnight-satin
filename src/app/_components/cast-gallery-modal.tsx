@@ -50,38 +50,35 @@ function TrophyBadge() {
   );
 }
 
-/** Character card front - portrait, gradient overlay, description, name, role. */
+/** Character card front - portrait hero top, text content below center, endorsement inline. */
 function CharacterCard({
   char,
   onTapReveal,
+  endorsementSlot,
 }: {
   char: NovelCharacter;
   onTapReveal: () => void;
+  endorsementSlot?: React.ReactNode;
 }) {
   return (
-    <div className="absolute inset-0 w-full h-full backface-hidden bg-surface rounded-lg overflow-hidden border border-white/5 cursor-pointer">
-      {/* Portrait background with gold sheen */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-no-repeat gold-sheen-overlay"
-        style={{
-          backgroundImage: char.portraitUrl ? `url(${char.portraitUrl})` : undefined,
-          backgroundColor: char.portraitUrl ? "transparent" : "var(--surface)",
-        }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-t from-void via-void/60 to-transparent" />
+    <div className="absolute inset-0 w-full h-full backface-hidden bg-surface rounded-lg overflow-hidden border border-white/5 cursor-pointer flex flex-col">
+      {/* Portrait hero — fills top ~55% of card */}
+      <div className="relative w-full flex-[0_0_55%] overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat gold-sheen-overlay"
+          style={{
+            backgroundImage: char.portraitUrl ? `url(${char.portraitUrl})` : undefined,
+            backgroundColor: char.portraitUrl ? "transparent" : "var(--surface)",
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-void via-transparent to-transparent" />
+        {char.hasTrophy && <TrophyBadge />}
       </div>
 
-      {char.hasTrophy && <TrophyBadge />}
-
-      {/* Bottom content - description, role subtitle, name, tap hint */}
-      <div className="absolute bottom-0 left-0 right-0 p-8 pt-32 bg-gradient-to-t from-void via-void/90 to-transparent flex flex-col items-center text-center">
-        {char.description && (
-          <p className="font-body text-sm italic text-text-main/60 leading-relaxed mb-6 max-w-[85%]">
-            {char.description}
-          </p>
-        )}
+      {/* Text content below portrait — flows naturally, no overlap */}
+      <div className="flex-1 flex flex-col items-center text-center px-6 py-5 bg-gradient-to-b from-void to-surface">
         {char.roleSubtitle && (
-          <div className="mb-2 flex items-center gap-2 opacity-80">
+          <div className="mb-1.5 flex items-center gap-2 opacity-80">
             <div className="h-[1px] w-8 bg-primary/50" />
             <span className="font-ui text-primary text-xs tracking-[0.2em] uppercase">
               {char.roleSubtitle}
@@ -89,13 +86,23 @@ function CharacterCard({
             <div className="h-[1px] w-8 bg-primary/50" />
           </div>
         )}
-        <h2 className="font-display text-4xl italic text-white mb-6 drop-shadow-lg">
+        <h2 className="font-display text-3xl md:text-4xl italic text-white mb-3 drop-shadow-lg">
           {char.name}
         </h2>
+        {char.description && (
+          <p className="font-body text-sm italic text-text-main/60 leading-relaxed mb-4 max-w-[90%] line-clamp-3">
+            {char.description}
+          </p>
+        )}
+
+        {endorsementSlot && (
+          <div className="mb-3">{endorsementSlot}</div>
+        )}
+
         <button
           type="button"
           onClick={onTapReveal}
-          className="flex items-center gap-2 text-white/40 hover:text-primary text-xs font-ui tracking-widest uppercase transition-colors cursor-pointer active:scale-95 mb-10"
+          className="mt-auto flex items-center gap-2 text-white/40 hover:text-primary text-xs font-ui tracking-widest uppercase transition-colors cursor-pointer active:scale-95 pb-2"
         >
           <span className="material-symbols-outlined text-sm">cached</span>
           <span>Tap to reveal dossier</span>
@@ -213,22 +220,21 @@ function DossierCard({
 
       {/* Background */}
       {char.backstory && (
-        <div className="flex-1 min-h-0 overflow-hidden relative">
+        <div className="mb-6">
           <p className="font-ui text-xs text-text-muted uppercase tracking-wider mb-2">
             Background
           </p>
-          <p className="font-body text-sm leading-relaxed text-text-muted line-clamp-6">
+          <p className="font-body text-sm leading-relaxed text-text-muted">
             {char.backstory}
           </p>
-          <div className="absolute bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-surface to-transparent pointer-events-none" />
         </div>
       )}
 
-      <div className="mt-auto pt-4 flex justify-center">
+      <div className="mt-auto pt-4 pb-2 flex justify-center shrink-0">
         <button
           type="button"
           onClick={onTapReturn}
-          className="flex items-center gap-2 text-white/30 hover:text-primary text-xs font-ui tracking-widest uppercase transition-colors cursor-pointer active:scale-95 mb-10"
+          className="flex items-center gap-2 text-white/30 hover:text-primary text-xs font-ui tracking-widest uppercase transition-colors cursor-pointer active:scale-95"
         >
           <span className="material-symbols-outlined text-sm">undo</span>
           <span>Return to portrait</span>
@@ -329,8 +335,8 @@ function EndorsementFAB({
 }
 
 /**
- * Single character card for grid layout - flip interaction, portrait aspect ratio (THE-64).
- * Used in tablet/desktop grid; each card has its own flip state and endorsement FAB.
+ * Single character card for grid layout - flip interaction, taller portrait ratio.
+ * Endorsement is inline within the card front, no overlap.
  */
 function CharacterGridCard({
   char,
@@ -344,31 +350,32 @@ function CharacterGridCard({
   const [flipped, setFlipped] = useState(false);
 
   return (
-    <div className="group/card relative w-full aspect-[3/4] min-h-[280px] perspective-1000">
+    <div className="group/card relative w-full aspect-[2/3] min-h-[420px] perspective-1000">
       <div
         className={`relative w-full h-full transform-style-3d transition-transform duration-700 ease-in-out shadow-gold-glow rounded-lg ${
           flipped ? "rotate-y-180" : ""
         }`}
       >
-        <CharacterCard char={char} onTapReveal={() => setFlipped(true)} />
+        <CharacterCard
+          char={char}
+          onTapReveal={() => setFlipped(true)}
+          endorsementSlot={
+            <EndorsementFAB
+              characterId={char.id}
+              endorsementCount={char.endorsementCount}
+              onEndorse={onEndorse}
+              onAuthPrompt={onAuthPrompt}
+              compact
+            />
+          }
+        />
         <DossierCard char={char} onTapReturn={() => setFlipped(false)} />
-      </div>
-      <div className="absolute inset-x-0 bottom-0 flex justify-center pointer-events-none">
-        <div className="pointer-events-auto">
-          <EndorsementFAB
-            characterId={char.id}
-            endorsementCount={char.endorsementCount}
-            onEndorse={onEndorse}
-            onAuthPrompt={onAuthPrompt}
-            compact
-          />
-        </div>
       </div>
     </div>
   );
 }
 
-/** Navigation arrows - left/right, visible on tablet/desktop (Req 5.6). */
+/** Navigation arrows - left/right, visible on all screen sizes. */
 function NavigationArrows({
   onPrev,
   onNext,
@@ -381,18 +388,18 @@ function NavigationArrows({
       <button
         type="button"
         onClick={onPrev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-40 hidden md:flex size-12 items-center justify-center rounded-full text-white/30 hover:text-primary transition-colors cursor-pointer active:scale-95"
+        className="absolute left-2 top-1/2 -translate-y-1/2 z-40 flex size-10 md:size-12 items-center justify-center rounded-full bg-surface/40 backdrop-blur-sm border border-white/10 text-white/50 hover:text-primary hover:border-primary/30 transition-all duration-300 cursor-pointer active:scale-95"
         aria-label="Previous character"
       >
-        <span className="material-symbols-outlined text-4xl">chevron_left</span>
+        <span className="material-symbols-outlined text-2xl md:text-4xl">chevron_left</span>
       </button>
       <button
         type="button"
         onClick={onNext}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-40 hidden md:flex size-12 items-center justify-center rounded-full text-white/30 hover:text-primary transition-colors cursor-pointer active:scale-95"
+        className="absolute right-2 top-1/2 -translate-y-1/2 z-40 flex size-10 md:size-12 items-center justify-center rounded-full bg-surface/40 backdrop-blur-sm border border-white/10 text-white/50 hover:text-primary hover:border-primary/30 transition-all duration-300 cursor-pointer active:scale-95"
         aria-label="Next character"
       >
-        <span className="material-symbols-outlined text-4xl">chevron_right</span>
+        <span className="material-symbols-outlined text-2xl md:text-4xl">chevron_right</span>
       </button>
     </>
   );
@@ -461,24 +468,31 @@ export function CastGalleryModal({
 
   return (
     <div
-      className="fixed inset-0 z-[100] bg-void text-text-main w-full flex flex-col items-center justify-center font-body selection:bg-primary selection:text-void overflow-y-auto"
-      style={{ minHeight: "max(884px, 100dvh)" }}
+      className="fixed inset-0 z-[100] bg-void text-text-main w-full flex flex-col items-center justify-center md:justify-start font-body selection:bg-primary selection:text-void overflow-y-auto"
       role="dialog"
       aria-modal="true"
       aria-label="Cast Gallery"
     >
-      {/* Fixed header with gradient fade */}
-      <div className="fixed top-0 left-0 right-0 z-50 p-6 flex justify-between items-center bg-gradient-to-b from-void/90 to-transparent">
-        <div className="flex items-center gap-2">
-          <span className="font-header text-primary text-xs tracking-[0.2em] uppercase">
-            Cast Gallery
+      {/* Fixed header: back arrow | centered title | close button */}
+      <div className="fixed top-0 left-0 right-0 z-[110] p-4 flex justify-between items-center bg-gradient-to-b from-void/90 to-transparent pointer-events-none">
+        <button
+          type="button"
+          onClick={onClose}
+          className="pointer-events-auto flex items-center justify-center size-10 rounded-full bg-surface/50 backdrop-blur-md border border-white/10 text-text-main hover:bg-surface/70 transition-colors cursor-pointer active:scale-95"
+          aria-label="Go back"
+        >
+          <span className="material-symbols-outlined" style={{ fontSize: 20 }}>
+            arrow_back
           </span>
-        </div>
+        </button>
+        <span className="text-primary font-header text-xs tracking-[0.2em] uppercase pointer-events-none">
+          Cast Gallery
+        </span>
         <button
           ref={closeRef}
           type="button"
           onClick={onClose}
-          className="group flex items-center justify-center size-10 rounded-full bg-surface/50 border border-white/10 backdrop-blur-sm text-text-main hover:bg-primary hover:text-void hover:border-primary transition-all duration-300 cursor-pointer active:scale-95"
+          className="pointer-events-auto group flex items-center justify-center size-10 rounded-full bg-surface/50 border border-white/10 backdrop-blur-md text-text-main hover:bg-primary hover:text-void hover:border-primary transition-all duration-300 cursor-pointer active:scale-95"
           aria-label="Close Cast Gallery"
         >
           <span className="material-symbols-outlined" style={{ fontSize: 20 }}>
@@ -488,9 +502,9 @@ export function CastGalleryModal({
       </div>
 
       {/* Main content area */}
-      <main className="relative w-full max-w-md mx-auto flex flex-col items-center p-4 pt-24 pb-12">
+      <main className="relative w-full mx-auto flex flex-col items-center p-4 pt-24 pb-32">
         {/* Mobile: single card view */}
-        <div className="md:hidden relative w-full flex flex-col items-center">
+        <div className="md:hidden relative w-full max-w-md mx-auto flex flex-col items-center">
           <NavigationArrows onPrev={goPrev} onNext={goNext} />
 
           <div className="group/card w-full perspective-1000 relative h-[600px]">
@@ -507,8 +521,8 @@ export function CastGalleryModal({
             </div>
           </div>
 
-          {/* Endorsement FAB below card */}
-          <div className="z-50 flex flex-col items-center gap-3 relative mt-8">
+          {/* Endorsement FAB - below card, not overlapping */}
+          <div className="relative z-50 mt-8">
             <EndorsementFAB
               characterId={char.id}
               endorsementCount={char.endorsementCount}
@@ -518,7 +532,7 @@ export function CastGalleryModal({
           </div>
 
           {characters.length > 1 && (
-            <div className="flex gap-2 mt-4">
+            <div className="flex gap-2 mt-6">
               {characters.map((_, i) => (
                 <button
                   key={i}
@@ -538,8 +552,8 @@ export function CastGalleryModal({
         </div>
 
         {/* Tablet/Desktop: 2-col tablet, 3-col desktop grid */}
-        <div className="hidden md:block w-full max-w-7xl mx-auto px-6 pt-0 pb-12">
-          <div className="grid grid-cols-2 md:gap-6 lg:grid-cols-3 lg:gap-8">
+        <div className="hidden md:block w-full max-w-6xl mx-auto px-8 lg:px-12 pt-0 pb-12">
+          <div className="grid grid-cols-2 grid-rows-3 gap-8 lg:grid-cols-3 lg:gap-10">
             {characters.map((c) => (
               <CharacterGridCard
                 key={c.id}
