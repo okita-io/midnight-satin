@@ -156,7 +156,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - **Property 7: Token invalidation on re-request**
     - **Validates: Requirements 2.5**
 
-- [ ] 8. Checkpoint - Server actions complete
+- [x] 8. Checkpoint - Server actions complete
   - Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 9. Implement forgot password UI
