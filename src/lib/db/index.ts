@@ -57,11 +57,12 @@ export async function getResetTokenByHash(
 export async function createPasswordResetToken(
   readerId: string,
   tokenHash: string,
-  expiresAt: Date
+  expiresAt: Date,
+  ipAddress?: string | null
 ): Promise<void> {
   await sql`
-    INSERT INTO password_reset_tokens (reader_id, token_hash, expires_at)
-    VALUES (${readerId}, ${tokenHash}, ${expiresAt.toISOString()})
+    INSERT INTO password_reset_tokens (reader_id, token_hash, expires_at, ip_address)
+    VALUES (${readerId}, ${tokenHash}, ${expiresAt.toISOString()}, ${ipAddress ?? null})
   `;
 }
 
