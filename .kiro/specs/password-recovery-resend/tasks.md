@@ -187,7 +187,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - Use uniform error message for all invalid states
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5_
 
-  - [ ] 10.2 Write property test for token error uniformity
+  - [x] 10.2 Write property test for token error uniformity
     - **Property 11: Token error message uniformity**
     - **Validates: Requirements 4.5**
 
