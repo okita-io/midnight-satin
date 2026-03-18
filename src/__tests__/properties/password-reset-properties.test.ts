@@ -1357,6 +1357,276 @@ describe("Property 15: IP rate limiting", () => {
   );
 });
 
+/**
+ * Property 16: Security logging completeness
+ * Validates: Requirements 7.1, 7.2, 7.3 (Email Password Reset)
+ *
+ * For any password reset operation (request, success, or failure), a log entry
+ * SHALL be created with a timestamp and the appropriate event type. Request
+ * logs SHALL include IP address, success logs SHALL include reader ID, and
+ * failure logs SHALL include a reason code.
+ */
+describe("Property 16: Security logging completeness", () => {
+  const originalEnv = { ...process.env };
+
+  beforeEach(() => {
+    process.env.RESEND_API_KEY = "";
+    process.env.RESEND_FROM_EMAIL = "";
+  });
+
+  afterEach(() => {
+    process.env = originalEnv;
+  });
+
+  it.skipIf(!hasPostgres)(
+    "Feature: password-recovery-resend, Property 16: Security logging completeness — any reset request produces log with timestamp and IP (Req 7.1)",
+    async () => {
+      await fc.assert(
+        fc.asyncProperty(
+          fc.uuid().map((u) => `prop16-req-${u}@test.example.com`),
+          async (email) => {
+            const readerId = randomUUID();
+            const passwordHash = await hashPassword("prop16-password");
+            await sql`
+              INSERT INTO readers (id, email, password_hash, display_name, credit_balance, role)
+              VALUES (${readerId}, ${email}, ${passwordHash}, 'Prop16 Reader', 0, 'reader')
+            `;
+
+            try {
+              const formData = new FormData();
+              formData.set("email", email);
+              await requestPasswordResetAction(null, formData);
+
+              const { rows } = await sql<{
+                event_type: string;
+                created_at: Date;
+                ip_address: string | null;
+                reader_id: string | null;
+                reason_code: string | null;
+              }>`
+                SELECT event_type, created_at, ip_address, reader_id, reason_code
+                FROM password_reset_log
+                WHERE reader_id = ${readerId} OR (reader_id IS NULL AND created_at > NOW() - INTERVAL '5 seconds')
+                ORDER BY created_at DESC
+                LIMIT 10
+              `;
+
+              expect(rows.length).toBeGreaterThanOrEqual(1);
+
+              const resetRequested = rows.find((r) => r.event_type === "reset_requested");
+              expect(resetRequested).toBeDefined();
+              expect(resetRequested!.created_at).toBeDefined();
+              expect(resetRequested!.ip_address).toBeTruthy();
+
+              const tokenGenerated = rows.find((r) => r.event_type === "token_generated");
+              expect(tokenGenerated).toBeDefined();
+              expect(tokenGenerated!.reader_id).toBe(readerId);
+              expect(tokenGenerated!.created_at).toBeDefined();
+            } finally {
+              await sql`DELETE FROM password_reset_log WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM password_reset_log WHERE reader_id IS NULL`;
+              await sql`DELETE FROM password_reset_tokens WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM readers WHERE id = ${readerId}`;
+            }
+          }
+        ),
+        { numRuns: 100 }
+      );
+    }
+  );
+
+  it.skipIf(!hasPostgres)(
+    "Feature: password-recovery-resend, Property 16: Security logging completeness — any successful password reset produces log with reader_id (Req 7.2)",
+    async () => {
+      await fc.assert(
+        fc.asyncProperty(
+          fc.uuid().map((u) => `prop16-succ-${u}@test.example.com`),
+          async (email) => {
+            const readerId = randomUUID();
+            const passwordHash = await hashPassword("prop16-old-password");
+            await sql`
+              INSERT INTO readers (id, email, password_hash, display_name, credit_balance, role)
+              VALUES (${readerId}, ${email}, ${passwordHash}, 'Prop16 Success', 0, 'reader')
+            `;
+
+            try {
+              const { token, tokenHash } = generateResetToken();
+              const expiresAt = new Date(Date.now() + 3600000);
+              await createPasswordResetToken(readerId, tokenHash, expiresAt);
+
+              const formData = new FormData();
+              formData.set("token", token);
+              formData.set("password", "prop16-new-password");
+              formData.set("confirmPassword", "prop16-new-password");
+
+              try {
+                await resetPasswordAction(null, formData);
+              } catch (e) {
+                if (typeof e === "object" && e !== null && "digest" in e) {
+                  expect((e as { digest?: string }).digest).toContain("NEXT_REDIRECT");
+                } else throw e;
+              }
+
+              const { rows } = await sql<{
+                event_type: string;
+                created_at: Date;
+                reader_id: string | null;
+              }>`
+                SELECT event_type, created_at, reader_id
+                FROM password_reset_log
+                WHERE reader_id = ${readerId}
+                ORDER BY created_at DESC
+                LIMIT 5
+              `;
+
+              const passwordChanged = rows.find((r) => r.event_type === "password_changed");
+              expect(passwordChanged).toBeDefined();
+              expect(passwordChanged!.reader_id).toBe(readerId);
+              expect(passwordChanged!.created_at).toBeDefined();
+
+              const tokenValidated = rows.find((r) => r.event_type === "token_validated");
+              expect(tokenValidated).toBeDefined();
+              expect(tokenValidated!.reader_id).toBe(readerId);
+            } finally {
+              await sql`DELETE FROM password_reset_log WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM password_reset_tokens WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM readers WHERE id = ${readerId}`;
+            }
+          }
+        ),
+        { numRuns: 100 }
+      );
+    }
+  );
+
+  it.skipIf(!hasPostgres)(
+    "Feature: password-recovery-resend, Property 16: Security logging completeness — any failed token validation produces log with reason_code (Req 7.3)",
+    async () => {
+      const failureTypes = ["invalid", "expired", "used"] as const;
+      await fc.assert(
+        fc.asyncProperty(
+          fc.record({
+            email: fc.uuid().map((u) => `prop16-fail-${u}@test.example.com`),
+            failureType: fc.constantFrom(...failureTypes),
+          }),
+          async ({ email, failureType }) => {
+            const readerId = randomUUID();
+            const passwordHash = await hashPassword("prop16-fail-password");
+            await sql`
+              INSERT INTO readers (id, email, password_hash, display_name, credit_balance, role)
+              VALUES (${readerId}, ${email}, ${passwordHash}, 'Prop16 Fail', 0, 'reader')
+            `;
+
+            try {
+              let token: string;
+              if (failureType === "invalid") {
+                token = "invalid-token-not-in-db";
+              } else if (failureType === "expired") {
+                const { token: t, tokenHash } = generateResetToken();
+                const expiresAt = new Date(Date.now() - 3600000);
+                await createPasswordResetToken(readerId, tokenHash, expiresAt);
+                token = t;
+              } else {
+                const { token: t, tokenHash } = generateResetToken();
+                const expiresAt = new Date(Date.now() + 3600000);
+                await createPasswordResetToken(readerId, tokenHash, expiresAt);
+                await markResetTokenUsed(tokenHash);
+                token = t;
+              }
+
+              const formData = new FormData();
+              formData.set("token", token);
+              formData.set("password", "prop16-new-password");
+              formData.set("confirmPassword", "prop16-new-password");
+
+              await resetPasswordAction(null, formData);
+
+              const { rows } = await sql<{
+                event_type: string;
+                reason_code: string | null;
+                created_at: Date;
+              }>`
+                SELECT event_type, reason_code, created_at
+                FROM password_reset_log
+                WHERE (reader_id = ${readerId} OR reader_id IS NULL)
+                  AND event_type IN ('token_invalid', 'token_expired', 'token_used')
+                ORDER BY created_at DESC
+                LIMIT 5
+              `;
+
+              expect(rows.length).toBeGreaterThanOrEqual(1);
+              const failureLog = rows[0];
+              expect(failureLog.reason_code).toBeTruthy();
+              expect(["invalid", "expired", "used"]).toContain(failureLog.reason_code);
+              expect(failureLog.created_at).toBeDefined();
+            } finally {
+              await sql`DELETE FROM password_reset_log WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM password_reset_log WHERE reader_id IS NULL`;
+              await sql`DELETE FROM password_reset_tokens WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM readers WHERE id = ${readerId}`;
+            }
+          }
+        ),
+        { numRuns: 100 }
+      );
+    }
+  );
+
+  it.skipIf(!hasPostgres)(
+    "Feature: password-recovery-resend, Property 16: Security logging completeness — rate-limited request produces log with reason_code (Req 7.1, 7.3)",
+    async () => {
+      await fc.assert(
+        fc.asyncProperty(
+          fc.uuid().map((u) => `prop16-rate-${u}@test.example.com`),
+          async (email) => {
+            const readerId = randomUUID();
+            const passwordHash = await hashPassword("prop16-rate-password");
+            await sql`
+              INSERT INTO readers (id, email, password_hash, display_name, credit_balance, role)
+              VALUES (${readerId}, ${email}, ${passwordHash}, 'Prop16 Rate', 0, 'reader')
+            `;
+
+            try {
+              const expiresAt = new Date(Date.now() + 3600000);
+              for (let i = 0; i < 3; i++) {
+                const { tokenHash } = generateResetToken();
+                await createPasswordResetToken(readerId, tokenHash, expiresAt);
+              }
+
+              const formData = new FormData();
+              formData.set("email", email);
+              await requestPasswordResetAction(null, formData);
+
+              const { rows } = await sql<{
+                event_type: string;
+                reason_code: string | null;
+                ip_address: string | null;
+              }>`
+                SELECT event_type, reason_code, ip_address
+                FROM password_reset_log
+                WHERE reader_id = ${readerId} OR reader_id IS NULL
+                ORDER BY created_at DESC
+                LIMIT 10
+              `;
+
+              const rateLimited = rows.find((r) => r.event_type === "rate_limited");
+              expect(rateLimited).toBeDefined();
+              expect(rateLimited!.reason_code).toBeTruthy();
+              expect(rateLimited!.ip_address).toBeTruthy();
+            } finally {
+              await sql`DELETE FROM password_reset_log WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM password_reset_log WHERE reader_id IS NULL`;
+              await sql`DELETE FROM password_reset_tokens WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM readers WHERE id = ${readerId}`;
+            }
+          }
+        ),
+        { numRuns: 100 }
+      );
+    }
+  );
+});
+
 /** Property 17: No sensitive data in logs — Validates: Requirements 7.4 */
 describe("Property 17: No sensitive data in logs", () => {
   it("sanitized output contains no email pattern (@) for any input string", () => {

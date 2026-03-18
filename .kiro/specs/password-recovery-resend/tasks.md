@@ -214,7 +214,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - Log `rate_limited` when limits exceeded
     - _Requirements: 7.1, 7.2, 7.3_
 
-  - [ ] 11.2 Write property test for logging completeness
+  - [x] 11.2 Write property test for logging completeness
     - **Property 16: Security logging completeness**
     - **Validates: Requirements 7.1, 7.2, 7.3**
 
