@@ -1,6 +1,6 @@
 /**
  * Password reset token generation, hashing, validation, and rate limiting.
- * Requirements: 2.1, 2.2, 2.6, 4.1, 4.2, 4.3, 4.4, 6.1, 6.2, 6.3
+ * Requirements: 2.1, 2.2, 2.6, 4.1, 4.2, 4.3, 4.4, 5.2, 5.3, 6.1, 6.2, 6.3
  */
 
 import { randomBytes, createHash } from "node:crypto";
@@ -32,6 +32,32 @@ export interface TokenValidationResult {
 }
 
 const TOKEN_BYTES = 32;
+
+/** Minimum password length for reset. Requirements: 5.2 */
+export const MIN_PASSWORD_LENGTH = 8;
+
+/** Result of validating password reset input. Requirements: 5.2, 5.3 */
+export type PasswordResetValidationResult =
+  | { valid: true }
+  | { valid: false; error: string };
+
+/**
+ * Validates password and confirmation for reset form.
+ * Enforces minimum 8 characters (Req 5.2) and matching confirmation (Req 5.3).
+ * Pure function — no DB or side effects.
+ */
+export function validatePasswordForReset(
+  password: string,
+  confirmPassword: string
+): PasswordResetValidationResult {
+  if (password.length < MIN_PASSWORD_LENGTH) {
+    return { valid: false, error: "Password must be at least 8 characters." };
+  }
+  if (password !== confirmPassword) {
+    return { valid: false, error: "Passwords do not match." };
+  }
+  return { valid: true };
+}
 
 /**
  * Generates a cryptographically secure reset token.

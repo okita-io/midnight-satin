@@ -346,6 +346,8 @@ import {
   generateResetToken,
   hashToken,
   validateResetToken,
+  validatePasswordForReset,
+  MIN_PASSWORD_LENGTH,
   checkRateLimit,
 } from "@/lib/auth/password-reset";
 import {
@@ -496,6 +498,55 @@ describe("Property 5: Token storage round-trip", () => {
           const { token, tokenHash } = generateResetToken();
           expect(hashToken(token)).toBe(tokenHash);
         }
+      }),
+      { numRuns: 100 }
+    );
+  });
+});
+
+/**
+ * Property 12: Password validation rules
+ * Validates: Requirements 5.2, 5.3 (Email Password Reset)
+ *
+ * For any password string shorter than 8 characters, the reset form SHALL reject it.
+ * For any pair of non-matching password and confirmation strings, the reset form SHALL reject them.
+ */
+describe("Property 12: Password validation rules", () => {
+  it("Feature: password-recovery-resend, Property 12: Password validation rules — any password shorter than 8 characters is rejected", () => {
+    const shortPassword = fc.string({ minLength: 0, maxLength: MIN_PASSWORD_LENGTH - 1 });
+    fc.assert(
+      fc.property(shortPassword, fc.string(), (password, confirmPassword) => {
+        const result = validatePasswordForReset(password, confirmPassword);
+        expect(result.valid).toBe(false);
+        expect(result.error).toBe("Password must be at least 8 characters.");
+      }),
+      { numRuns: 100 }
+    );
+  });
+
+  it("Feature: password-recovery-resend, Property 12: Password validation rules — any pair of non-matching password and confirmation is rejected", () => {
+    const nonMatchingPair = fc
+      .tuple(
+        fc.string({ minLength: MIN_PASSWORD_LENGTH, maxLength: 128 }),
+        fc.string({ minLength: MIN_PASSWORD_LENGTH, maxLength: 128 })
+      )
+      .filter(([a, b]) => a !== b);
+    fc.assert(
+      fc.property(nonMatchingPair, ([password, confirmPassword]) => {
+        const result = validatePasswordForReset(password, confirmPassword);
+        expect(result.valid).toBe(false);
+        expect(result.error).toBe("Passwords do not match.");
+      }),
+      { numRuns: 100 }
+    );
+  });
+
+  it("for any password 8+ chars with matching confirmation, validation passes", () => {
+    const validPassword = fc.string({ minLength: MIN_PASSWORD_LENGTH, maxLength: 128 });
+    fc.assert(
+      fc.property(validPassword, (password) => {
+        const result = validatePasswordForReset(password, password);
+        expect(result.valid).toBe(true);
       }),
       { numRuns: 100 }
     );
