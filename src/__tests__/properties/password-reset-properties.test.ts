@@ -357,11 +357,13 @@ import {
 import { sendResetEmail, isResendConfigured } from "@/lib/auth/resend";
 import {
   createPasswordResetToken,
+  getReaderByEmailWithPassword,
   logPasswordResetEvent,
   markResetTokenUsed,
   sql,
+  updateReaderPassword,
 } from "@/lib/db";
-import { hashPassword } from "@/lib/auth/password";
+import { hashPassword, verifyPassword } from "@/lib/auth/password";
 import { randomUUID } from "node:crypto";
 
 // Property 8: mock Resend to capture email HTML without sending
@@ -551,6 +553,75 @@ describe("Property 12: Password validation rules", () => {
       { numRuns: 100 }
     );
   });
+});
+
+/**
+ * Property 13: Password reset round-trip
+ * Validates: Requirements 5.4, 5.5 (Email Password Reset)
+ *
+ * For any valid reset token and valid new password, after completing the reset:
+ * (a) verifying the new password against the stored hash should return true,
+ * (b) verifying the old password should return false,
+ * and (c) the used token should fail validation.
+ */
+describe("Property 13: Password reset round-trip", () => {
+  const validPasswordArb = fc
+    .string({ minLength: MIN_PASSWORD_LENGTH, maxLength: 128 })
+    .filter((s) => /[\x20-\x7e]/.test(s)); // printable ASCII to avoid encoding issues
+
+  it.skipIf(!hasPostgres)(
+    "Feature: password-recovery-resend, Property 13: Password reset round-trip — after reset, new password verifies, old password fails, token is invalid",
+    async () => {
+      await fc.assert(
+        fc.asyncProperty(
+          fc.record({
+            oldPassword: validPasswordArb,
+            newPassword: validPasswordArb,
+            email: fc.uuid().map((u) => `prop13-${u}@test.example.com`),
+          }).filter(({ oldPassword, newPassword }) => oldPassword !== newPassword),
+          async ({ oldPassword, newPassword, email }) => {
+            const readerId = randomUUID();
+            const oldPasswordHash = await hashPassword(oldPassword);
+
+            await sql`
+              INSERT INTO readers (id, email, password_hash, display_name, credit_balance, role)
+              VALUES (${readerId}, ${email}, ${oldPasswordHash}, 'Prop13 Reader', 0, 'reader')
+            `;
+
+            try {
+              const { token, tokenHash } = generateResetToken();
+              const expiresAt = new Date(Date.now() + 3600000);
+              await createPasswordResetToken(readerId, tokenHash, expiresAt);
+
+              // Perform the reset: update password and mark token used (Req 5.4, 5.5)
+              const newPasswordHash = await hashPassword(newPassword);
+              await updateReaderPassword(readerId, newPasswordHash);
+              await markResetTokenUsed(tokenHash);
+
+              // (a) New password verifies against stored hash
+              const reader = await getReaderByEmailWithPassword(email);
+              expect(reader).not.toBeNull();
+              const newPasswordValid = await verifyPassword(newPassword, reader!.password_hash);
+              expect(newPasswordValid).toBe(true);
+
+              // (b) Old password should return false
+              const oldPasswordValid = await verifyPassword(oldPassword, reader!.password_hash);
+              expect(oldPasswordValid).toBe(false);
+
+              // (c) Used token should fail validation
+              const tokenValidation = await validateResetToken(token);
+              expect(tokenValidation.valid).toBe(false);
+              expect(tokenValidation.error).toBe("used");
+            } finally {
+              await sql`DELETE FROM password_reset_tokens WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM readers WHERE id = ${readerId}`;
+            }
+          }
+        ),
+        { numRuns: 100 }
+      );
+    }
+  );
 });
 
 /** Property 8: Email contains reset link with token — Validates: Requirements 3.1, 3.2 */
