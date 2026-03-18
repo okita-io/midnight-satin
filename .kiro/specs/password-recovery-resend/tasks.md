@@ -131,11 +131,11 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - **Property 2: Invalid email rejection**
     - **Validates: Requirements 1.3, 1.4**
 
-  - [ ] 7.4 Write property test for email failure handling
+  - [x] 7.4 Write property test for email failure handling
     - **Property 9: Email failure does not change user response**
     - **Validates: Requirements 3.6**
 
-  - [ ] 7.5 Create `resetPasswordAction` in `src/app/actions/password-reset.ts`
+  - [x] 7.5 Create `resetPasswordAction` in `src/app/actions/password-reset.ts`
     - Validate token from form data
     - Validate password (min 8 chars) and confirmation match
     - Update reader password hash
@@ -144,7 +144,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - Redirect to login with success message
     - _Requirements: 5.2, 5.3, 5.4, 5.5, 5.6, 7.2_
 
-  - [ ] 7.6 Write property test for password validation
+  - [x] 7.6 Write property test for password validation
     - **Property 12: Password validation rules**
     - **Validates: Requirements 5.2, 5.3**
 

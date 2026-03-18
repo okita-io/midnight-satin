@@ -40,7 +40,7 @@ export default async function ForgotPasswordPage() {
           <ForgotPasswordForm />
         ) : (
           <div
-            className="w-full rounded-lg border-2 border-surface-highlight bg-surface-highlight px-4 py-6 text-center"
+            className="w-full rounded-sm border-2 border-accent bg-surface px-4 py-6 text-center"
             role="alert"
           >
             <p className="font-ui text-text-main">
@@ -56,7 +56,10 @@ export default async function ForgotPasswordPage() {
       <footer className="p-8 text-center mt-auto">
         <p className="font-ui text-sm text-text-muted">
           Remember your password?{" "}
-          <Link href="/auth/login" className="text-primary border-b border-primary/50 pb-0.5 hover:opacity-90">
+          <Link
+            href="/auth/login"
+            className="text-primary border-b border-primary/50 pb-0.5 hover:opacity-90"
+          >
             Sign in
           </Link>
         </p>

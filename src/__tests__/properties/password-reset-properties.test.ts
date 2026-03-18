@@ -346,6 +346,8 @@ import {
   generateResetToken,
   hashToken,
   validateResetToken,
+  validatePasswordForReset,
+  MIN_PASSWORD_LENGTH,
   checkRateLimit,
 } from "@/lib/auth/password-reset";
 import {
@@ -502,6 +504,55 @@ describe("Property 5: Token storage round-trip", () => {
   });
 });
 
+/**
+ * Property 12: Password validation rules
+ * Validates: Requirements 5.2, 5.3 (Email Password Reset)
+ *
+ * For any password string shorter than 8 characters, the reset form SHALL reject it.
+ * For any pair of non-matching password and confirmation strings, the reset form SHALL reject them.
+ */
+describe("Property 12: Password validation rules", () => {
+  it("Feature: password-recovery-resend, Property 12: Password validation rules — any password shorter than 8 characters is rejected", () => {
+    const shortPassword = fc.string({ minLength: 0, maxLength: MIN_PASSWORD_LENGTH - 1 });
+    fc.assert(
+      fc.property(shortPassword, fc.string(), (password, confirmPassword) => {
+        const result = validatePasswordForReset(password, confirmPassword);
+        expect(result.valid).toBe(false);
+        expect(result.error).toBe("Password must be at least 8 characters.");
+      }),
+      { numRuns: 100 }
+    );
+  });
+
+  it("Feature: password-recovery-resend, Property 12: Password validation rules — any pair of non-matching password and confirmation is rejected", () => {
+    const nonMatchingPair = fc
+      .tuple(
+        fc.string({ minLength: MIN_PASSWORD_LENGTH, maxLength: 128 }),
+        fc.string({ minLength: MIN_PASSWORD_LENGTH, maxLength: 128 })
+      )
+      .filter(([a, b]) => a !== b);
+    fc.assert(
+      fc.property(nonMatchingPair, ([password, confirmPassword]) => {
+        const result = validatePasswordForReset(password, confirmPassword);
+        expect(result.valid).toBe(false);
+        expect(result.error).toBe("Passwords do not match.");
+      }),
+      { numRuns: 100 }
+    );
+  });
+
+  it("for any password 8+ chars with matching confirmation, validation passes", () => {
+    const validPassword = fc.string({ minLength: MIN_PASSWORD_LENGTH, maxLength: 128 });
+    fc.assert(
+      fc.property(validPassword, (password) => {
+        const result = validatePasswordForReset(password, password);
+        expect(result.valid).toBe(true);
+      }),
+      { numRuns: 100 }
+    );
+  });
+});
+
 /** Property 8: Email contains reset link with token — Validates: Requirements 3.1, 3.2 */
 describe("Property 8: Email contains reset link with token", () => {
   const originalEnv = process.env;
@@ -561,6 +612,84 @@ describe("Property 8: Email contains reset link with token", () => {
       { numRuns: 100 }
     );
   });
+});
+
+/**
+ * Property 9: Email failure does not change user response
+ * Validates: Requirements 3.6 (Email Password Reset)
+ *
+ * For any reset request where the Resend service fails, the user-facing response
+ * SHALL be identical to a successful request, and an error SHALL be logged.
+ */
+describe("Property 9: Email failure does not change user response", () => {
+  const originalEnv = { ...process.env };
+
+  beforeEach(() => {
+    process.env.RESEND_API_KEY = "re_prop9_test";
+    process.env.RESEND_FROM_EMAIL = "noreply@midnightsatin.com";
+    mockResendSend.mockReset();
+  });
+
+  afterEach(() => {
+    process.env = originalEnv;
+  });
+
+  it.skipIf(!hasPostgres)(
+    "Feature: password-recovery-resend, Property 9: Email failure does not change user response — Resend success and failure return identical message; failure logs email_failed",
+    async () => {
+      await fc.assert(
+        fc.asyncProperty(
+          fc.uuid().map((u) => `prop9-${u}@test.example.com`),
+          async (email) => {
+            const readerId = randomUUID();
+            const passwordHash = await hashPassword("prop9-test-password");
+
+            await sql`
+              INSERT INTO readers (id, email, password_hash, display_name, credit_balance, role)
+              VALUES (${readerId}, ${email}, ${passwordHash}, 'Prop9 Reader', 0, 'reader')
+            `;
+
+            try {
+              const formData = new FormData();
+              formData.set("email", email);
+
+              // Scenario A: Resend succeeds
+              mockResendSend.mockResolvedValue({ data: { id: "msg_ok" }, error: null });
+              const responseSuccess = await requestPasswordResetAction(null, formData);
+
+              // Scenario B: Resend fails
+              mockResendSend.mockResolvedValue({ data: null, error: { message: "Resend API error" } });
+              const responseFailure = await requestPasswordResetAction(null, formData);
+
+              // Both must return identical user-facing response (Req 3.6)
+              expect(responseSuccess).toEqual({
+                message: GENERIC_SUCCESS_MESSAGE,
+                success: true,
+              });
+              expect(responseFailure).toEqual({
+                message: GENERIC_SUCCESS_MESSAGE,
+                success: true,
+              });
+
+              // When Resend fails, email_failed must be logged
+              const { rows } = await sql<{ event_type: string }>`
+                SELECT event_type FROM password_reset_log
+                WHERE reader_id = ${readerId} AND event_type = 'email_failed'
+                ORDER BY created_at DESC LIMIT 1
+              `;
+              expect(rows.length).toBeGreaterThanOrEqual(1);
+              expect(rows[0].event_type).toBe("email_failed");
+            } finally {
+              await sql`DELETE FROM password_reset_log WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM password_reset_tokens WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM readers WHERE id = ${readerId}`;
+            }
+          }
+        ),
+        { numRuns: 100 }
+      );
+    }
+  );
 });
 
 /**

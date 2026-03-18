@@ -82,6 +82,18 @@ export async function markResetTokenUsed(tokenHash: string): Promise<void> {
   `;
 }
 
+/** Update reader password hash. Requirements: 5.4 */
+export async function updateReaderPassword(
+  readerId: string,
+  passwordHash: string
+): Promise<void> {
+  await sql`
+    UPDATE readers
+    SET password_hash = ${passwordHash}
+    WHERE id = ${readerId}
+  `;
+}
+
 /** Count recent reset requests for an email (by reader_id) within a sliding window. Requirements: 6.1 */
 export async function countRecentResetRequests(
   email: string,
