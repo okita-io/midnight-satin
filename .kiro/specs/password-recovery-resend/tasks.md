@@ -160,13 +160,13 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
   - Ensure all tests pass, ask the user if questions arise.
 
 - [ ] 9. Implement forgot password UI
-  - [ ] 9.1 Create forgot password page at `src/app/auth/forgot-password/page.tsx`
+  - [x] 9.1 Create forgot password page at `src/app/auth/forgot-password/page.tsx`
     - Server component that checks if Resend is configured
     - Show "temporarily unavailable" message if not configured
     - Render ForgotPasswordForm component
     - _Requirements: 1.1, 8.3_
 
-  - [ ] 9.2 Create forgot password form at `src/app/auth/forgot-password/forgot-password-form.tsx`
+  - [x] 9.2 Create forgot password form at `src/app/auth/forgot-password/forgot-password-form.tsx`
     - Client component with email input field
     - Use `useActionState` with `requestPasswordResetAction`
     - Display validation errors for invalid email format
@@ -174,7 +174,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - Apply Premium_Aesthetic with gold accents and dark theme
     - _Requirements: 1.2, 1.4, 1.5, 1.6_
 
-  - [ ] 9.3 Add "Forgot Password?" link to login form
+  - [x] 9.3 Add "Forgot Password?" link to login form
     - Modify `src/app/auth/login/login-form.tsx`
     - Add link below password field pointing to `/auth/forgot-password`
     - _Requirements: 1.1_
