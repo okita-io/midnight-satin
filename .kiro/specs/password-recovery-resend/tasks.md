@@ -152,7 +152,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - **Property 13: Password reset round-trip**
     - **Validates: Requirements 5.4, 5.5**
 
-  - [ ] 7.8 Write property test for token invalidation on re-request
+  - [x] 7.8 Write property test for token invalidation on re-request
     - **Property 7: Token invalidation on re-request**
     - **Validates: Requirements 2.5**
 

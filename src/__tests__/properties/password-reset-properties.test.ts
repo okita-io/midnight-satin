@@ -624,6 +624,74 @@ describe("Property 13: Password reset round-trip", () => {
   );
 });
 
+/**
+ * Property 7: Token invalidation on re-request
+ * Validates: Requirements 2.5 (Email Password Reset)
+ *
+ * For any reader with an existing valid reset token, requesting a new token
+ * SHALL cause the previous token to fail validation.
+ */
+describe("Property 7: Token invalidation on re-request", () => {
+  const originalEnv = { ...process.env };
+
+  beforeEach(() => {
+    process.env.RESEND_API_KEY = "";
+    process.env.RESEND_FROM_EMAIL = "";
+  });
+
+  afterEach(() => {
+    process.env = originalEnv;
+  });
+
+  it.skipIf(!hasPostgres)(
+    "Feature: password-recovery-resend, Property 7: Token invalidation on re-request — requesting new token invalidates previous token",
+    async () => {
+      await fc.assert(
+        fc.asyncProperty(
+          fc.uuid().map((u) => `prop7-${u}@test.example.com`),
+          async (email) => {
+            const readerId = randomUUID();
+            const passwordHash = await hashPassword("prop7-test-password");
+
+            await sql`
+              INSERT INTO readers (id, email, password_hash, display_name, credit_balance, role)
+              VALUES (${readerId}, ${email}, ${passwordHash}, 'Prop7 Reader', 0, 'reader')
+            `;
+
+            try {
+              // Create initial valid token for reader
+              const { token: oldToken, tokenHash: oldTokenHash } =
+                generateResetToken();
+              const expiresAt = new Date(Date.now() + 3600000);
+              await createPasswordResetToken(readerId, oldTokenHash, expiresAt);
+
+              // Verify old token is valid before re-request
+              const beforeValidation = await validateResetToken(oldToken);
+              expect(beforeValidation.valid).toBe(true);
+              expect(beforeValidation.readerId).toBe(readerId);
+
+              // Request new token (invalidates previous via requestPasswordResetAction)
+              const formData = new FormData();
+              formData.set("email", email);
+              await requestPasswordResetAction(null, formData);
+
+              // Previous token must now fail validation (Req 2.5)
+              const afterValidation = await validateResetToken(oldToken);
+              expect(afterValidation.valid).toBe(false);
+              expect(afterValidation.error).toBe("invalid");
+            } finally {
+              await sql`DELETE FROM password_reset_tokens WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM password_reset_log WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM readers WHERE id = ${readerId}`;
+            }
+          }
+        ),
+        { numRuns: 100 }
+      );
+    }
+  );
+});
+
 /** Property 8: Email contains reset link with token — Validates: Requirements 3.1, 3.2 */
 describe("Property 8: Email contains reset link with token", () => {
   const originalEnv = process.env;
