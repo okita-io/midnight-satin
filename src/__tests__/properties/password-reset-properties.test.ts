@@ -22,12 +22,18 @@
  * message SHALL be identical. Prevents email enumeration and timing attacks.
  */
 
-import { requestPasswordResetAction } from "@/app/actions/password-reset";
+import {
+  requestPasswordResetAction,
+  resetPasswordAction,
+} from "@/app/actions/password-reset";
 import { isValidEmail } from "@/lib/auth/email-validation";
 import * as fc from "fast-check";
 
 const GENERIC_SUCCESS_MESSAGE =
   "If an account with that email exists, we've sent a reset link.";
+
+const INVALID_TOKEN_MESSAGE =
+  "This reset link is no longer valid. Please request a new one.";
 
 // Mock next/headers for server action (no request context in Vitest)
 vi.mock("next/headers", () => ({
@@ -342,6 +348,7 @@ describe("Property 3: Response uniformity", () => {
 
 import { describe, it, expect, vi, beforeEach, afterEach, beforeAll, afterAll } from "vitest";
 import * as fc from "fast-check";
+import { resetPasswordAction } from "@/app/actions/password-reset";
 import {
   generateResetToken,
   hashToken,
@@ -1081,6 +1088,86 @@ describe("Property 10: Token validation correctness", () => {
           expect(result.valid).toBe(false);
           expect(result.error).toBe("used");
         }),
+        { numRuns: 100 }
+      );
+    }
+  );
+});
+
+/**
+ * Property 11: Token error message uniformity
+ * Validates: Requirements 4.5 (Email Password Reset)
+ *
+ * For any invalid token (whether non-existent, expired, or already used),
+ * the error message displayed to the user SHALL be identical across all
+ * three cases. Prevents information disclosure about token state.
+ */
+describe("Property 11: Token error message uniformity", () => {
+  const validPassword = "prop11-valid-password-min8";
+
+  it.skipIf(!hasPostgres)(
+    "Feature: password-recovery-resend, Property 11: Token error message uniformity — invalid, expired, and used tokens all return identical user-facing message",
+    async () => {
+      await fc.assert(
+        fc.asyncProperty(
+          fc.uuid().map((u) => `prop11-${u}@test.example.com`),
+          async (email) => {
+            const readerId = randomUUID();
+            const passwordHash = await hashPassword("prop11-test-password");
+
+            await sql`
+              INSERT INTO readers (id, email, password_hash, display_name, credit_balance, role)
+              VALUES (${readerId}, ${email}, ${passwordHash}, 'Prop11 Reader', 0, 'reader')
+            `;
+
+            try {
+              const mkForm = (token: string) => {
+                const fd = new FormData();
+                fd.set("token", token);
+                fd.set("password", validPassword);
+                fd.set("confirmPassword", validPassword);
+                return fd;
+              };
+
+              // Scenario 1: Invalid (non-existent) token
+              const invalidToken = `invalid-${randomUUID().replace(/-/g, "")}`;
+              const responseInvalid = await resetPasswordAction(
+                null,
+                mkForm(invalidToken)
+              );
+
+              // Scenario 2: Expired token
+              const { token: expiredToken, tokenHash: expiredHash } =
+                generateResetToken();
+              const expiresAt = new Date(Date.now() - 1000);
+              await createPasswordResetToken(readerId, expiredHash, expiresAt);
+              const responseExpired = await resetPasswordAction(
+                null,
+                mkForm(expiredToken)
+              );
+
+              // Scenario 3: Used token
+              const { token: usedToken, tokenHash: usedHash } =
+                generateResetToken();
+              const usedExpiresAt = new Date(Date.now() + 3600000);
+              await createPasswordResetToken(readerId, usedHash, usedExpiresAt);
+              await markResetTokenUsed(usedHash);
+              const responseUsed = await resetPasswordAction(
+                null,
+                mkForm(usedToken)
+              );
+
+              // All three must return identical user-facing error (Req 4.5)
+              expect(responseInvalid).toEqual({ error: INVALID_TOKEN_MESSAGE });
+              expect(responseExpired).toEqual({ error: INVALID_TOKEN_MESSAGE });
+              expect(responseUsed).toEqual({ error: INVALID_TOKEN_MESSAGE });
+            } finally {
+              await sql`DELETE FROM password_reset_tokens WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM password_reset_log WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM readers WHERE id = ${readerId}`;
+            }
+          }
+        ),
         { numRuns: 100 }
       );
     }
