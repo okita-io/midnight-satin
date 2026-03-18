@@ -4,12 +4,27 @@ import Link from "next/link";
 import { useActionState } from "react";
 import { loginFormAction } from "@/app/actions/auth";
 
-export function LoginForm({ redirectTo }: { redirectTo: string }) {
+export function LoginForm({
+  redirectTo,
+  showResetSuccess = false,
+}: {
+  redirectTo: string;
+  showResetSuccess?: boolean;
+}) {
   const [state, formAction, isPending] = useActionState(loginFormAction, null);
 
   return (
     <form action={formAction} className="w-full space-y-6">
       <input type="hidden" name="redirectTo" value={redirectTo} />
+      {/* Success banner after password reset (Req 5.6) */}
+      {showResetSuccess && (
+        <div
+          className="rounded border-2 border-primary bg-surface px-3 py-2 font-ui text-sm text-text-main"
+          role="status"
+        >
+          Password updated. Please sign in.
+        </div>
+      )}
       {/* Validation message: same position on mobile, tablet, desktop */}
       {state?.error && (
         <div
