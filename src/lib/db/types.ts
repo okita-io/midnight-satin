@@ -199,7 +199,8 @@ export type PasswordResetEventType =
   | "link_expired"
   | "invalid_token"
   | "rate_limit"
-  | "password_changed";
+  | "password_changed"
+  | "email_failed";
 
 /**
  * Allowed reason codes for password reset log entries.

@@ -93,7 +93,8 @@ CREATE TABLE password_reset_log (
     'link_expired',
     'invalid_token',
     'rate_limit',
-    'password_changed'
+    'password_changed',
+    'email_failed'
   )),
   reader_id UUID REFERENCES readers(id) ON DELETE SET NULL,
   ip_address TEXT,
