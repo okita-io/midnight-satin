@@ -131,7 +131,7 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - **Property 2: Invalid email rejection**
     - **Validates: Requirements 1.3, 1.4**
 
-  - [ ] 7.4 Write property test for email failure handling
+  - [x] 7.4 Write property test for email failure handling
     - **Property 9: Email failure does not change user response**
     - **Validates: Requirements 3.6**
 

@@ -564,6 +564,84 @@ describe("Property 8: Email contains reset link with token", () => {
 });
 
 /**
+ * Property 9: Email failure does not change user response
+ * Validates: Requirements 3.6 (Email Password Reset)
+ *
+ * For any reset request where the Resend service fails, the user-facing response
+ * SHALL be identical to a successful request, and an error SHALL be logged.
+ */
+describe("Property 9: Email failure does not change user response", () => {
+  const originalEnv = { ...process.env };
+
+  beforeEach(() => {
+    process.env.RESEND_API_KEY = "re_prop9_test";
+    process.env.RESEND_FROM_EMAIL = "noreply@midnightsatin.com";
+    mockResendSend.mockReset();
+  });
+
+  afterEach(() => {
+    process.env = originalEnv;
+  });
+
+  it.skipIf(!hasPostgres)(
+    "Feature: password-recovery-resend, Property 9: Email failure does not change user response — Resend success and failure return identical message; failure logs email_failed",
+    async () => {
+      await fc.assert(
+        fc.asyncProperty(
+          fc.uuid().map((u) => `prop9-${u}@test.example.com`),
+          async (email) => {
+            const readerId = randomUUID();
+            const passwordHash = await hashPassword("prop9-test-password");
+
+            await sql`
+              INSERT INTO readers (id, email, password_hash, display_name, credit_balance, role)
+              VALUES (${readerId}, ${email}, ${passwordHash}, 'Prop9 Reader', 0, 'reader')
+            `;
+
+            try {
+              const formData = new FormData();
+              formData.set("email", email);
+
+              // Scenario A: Resend succeeds
+              mockResendSend.mockResolvedValue({ data: { id: "msg_ok" }, error: null });
+              const responseSuccess = await requestPasswordResetAction(null, formData);
+
+              // Scenario B: Resend fails
+              mockResendSend.mockResolvedValue({ data: null, error: { message: "Resend API error" } });
+              const responseFailure = await requestPasswordResetAction(null, formData);
+
+              // Both must return identical user-facing response (Req 3.6)
+              expect(responseSuccess).toEqual({
+                message: GENERIC_SUCCESS_MESSAGE,
+                success: true,
+              });
+              expect(responseFailure).toEqual({
+                message: GENERIC_SUCCESS_MESSAGE,
+                success: true,
+              });
+
+              // When Resend fails, email_failed must be logged
+              const { rows } = await sql<{ event_type: string }>`
+                SELECT event_type FROM password_reset_log
+                WHERE reader_id = ${readerId} AND event_type = 'email_failed'
+                ORDER BY created_at DESC LIMIT 1
+              `;
+              expect(rows.length).toBeGreaterThanOrEqual(1);
+              expect(rows[0].event_type).toBe("email_failed");
+            } finally {
+              await sql`DELETE FROM password_reset_log WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM password_reset_tokens WHERE reader_id = ${readerId}`;
+              await sql`DELETE FROM readers WHERE id = ${readerId}`;
+            }
+          }
+        ),
+        { numRuns: 100 }
+      );
+    }
+  );
+});
+
+/**
  * Property 18: Missing environment variables disable feature
  * Validates: Requirements 8.3 (Email Password Reset)
  *
