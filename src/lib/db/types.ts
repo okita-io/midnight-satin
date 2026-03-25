@@ -247,3 +247,32 @@ export type StorableEntity =
   | AuthorFollow
   | Comment
   | CommentLike;
+
+// --- News Articles (news-updates-system spec) ---
+
+export type NewsArticleType = 'editorial' | 'campaign' | 'ranking' | 'popularity' | 'announcement';
+
+export type SourcePlatform = 'tiktok' | 'instagram' | 'x' | 'youtube' | 'facebook';
+
+export interface NewsArticle {
+  id: string;
+  title: string;
+  slug: string;
+  articleType: NewsArticleType;
+  heroImageUrl: string | null;
+  summary: string;
+  bodyContent: string;
+  tags: string[];
+  attribution: string;
+  sourceUrl: string | null;
+  sourcePlatform: SourcePlatform | null;
+  isPublished: boolean;
+  isFeatured: boolean;
+  featuredOrder: number | null;
+  publishedAt: Date | null;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+/** List view type — omits bodyContent for performance */
+export type NewsArticleSummary = Omit<NewsArticle, 'bodyContent'>;

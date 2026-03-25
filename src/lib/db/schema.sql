@@ -193,3 +193,29 @@ CREATE TABLE processed_payment_events (
   stripe_event_id TEXT PRIMARY KEY,
   processed_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+-- News Articles (news-updates-system spec)
+CREATE TABLE news_articles (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title TEXT NOT NULL,
+  slug TEXT UNIQUE NOT NULL,
+  article_type TEXT NOT NULL CHECK (article_type IN ('editorial', 'campaign', 'ranking', 'popularity', 'announcement')),
+  hero_image_url TEXT,
+  summary TEXT NOT NULL,
+  body_content TEXT NOT NULL,
+  tags TEXT[] DEFAULT '{}',
+  attribution TEXT NOT NULL,
+  source_url TEXT,
+  source_platform TEXT CHECK (source_platform IS NULL OR source_platform IN ('tiktok', 'instagram', 'x', 'youtube', 'facebook')),
+  is_published BOOLEAN DEFAULT FALSE,
+  is_featured BOOLEAN DEFAULT FALSE,
+  featured_order INT,
+  published_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX idx_news_articles_published_at ON news_articles(published_at DESC);
+CREATE INDEX idx_news_articles_type ON news_articles(article_type);
+CREATE INDEX idx_news_articles_featured ON news_articles(is_featured) WHERE is_featured = true;
+CREATE INDEX idx_news_articles_slug ON news_articles(slug);

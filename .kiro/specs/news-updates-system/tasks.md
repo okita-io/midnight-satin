@@ -6,20 +6,20 @@ Add a News/Updates system to Midnight Satin: a `news_articles` database table, c
 
 ## Tasks
 
-- [ ] 1. Database schema, types, and seed data
-  - [ ] 1.1 Add `news_articles` table to `src/lib/db/schema.sql`
+- [x] 1. Database schema, types, and seed data
+  - [x] 1.1 Add `news_articles` table to `src/lib/db/schema.sql`
     - Add CREATE TABLE with all columns: id, title, slug, article_type (CHECK constraint), hero_image_url, summary, body_content, tags, attribution, source_url, source_platform (CHECK constraint), is_published, is_featured, featured_order, published_at, created_at, updated_at
     - Add indexes: published_at DESC, article_type, is_featured (partial), slug
     - _Requirements: 1.1, 1.2_
 
-  - [ ] 1.2 Add TypeScript types to `src/lib/db/types.ts`
+  - [x] 1.2 Add TypeScript types to `src/lib/db/types.ts`
     - Add `NewsArticleType` union type: `'editorial' | 'campaign' | 'ranking' | 'popularity' | 'announcement'`
     - Add `SourcePlatform` union type: `'tiktok' | 'instagram' | 'x' | 'youtube' | 'facebook'`
     - Add `NewsArticle` interface with all fields, `tags: string[]` matching Novel `genreTags` pattern
     - Add `NewsArticleSummary` type as `Omit<NewsArticle, 'bodyContent'>`
     - _Requirements: 1.3, 1.4, 1.5_
 
-  - [ ] 1.3 Create seed data file `src/lib/db/seed-news.sql`
+  - [x] 1.3 Create seed data file `src/lib/db/seed-news.sql`
     - At least 5 seed articles covering all 5 article types (editorial, campaign, ranking, popularity, announcement)
     - At least 2 articles marked as featured with `featured_order` set
     - At least 1 campaign article with `source_url` and `source_platform` populated
@@ -27,14 +27,14 @@ Add a News/Updates system to Midnight Satin: a `news_articles` database table, c
     - Each article has title, hero_image_url (placeholder), summary, body_content, tags, attribution
     - _Requirements: 13.1, 13.2, 13.3, 13.4, 13.5_
 
-- [ ] 2. Content fetching functions and helpers
-  - [ ] 2.1 Add news row mapping and attribution helper to `src/lib/content.ts`
+- [x] 2. Content fetching functions and helpers
+  - [x] 2.1 Add news row mapping and attribution helper to `src/lib/content.ts`
     - Add `NewsArticleRow` interface (snake_case DB row)
     - Add `rowToNewsArticle(row)` and `rowToNewsArticleSummary(row)` functions following existing `rowToNovel` pattern
     - Add `getNewsAttribution(article)` helper: "From the Editor" for editorial/announcement, "Staff" for ranking/popularity, custom or "Staff" for campaign
     - _Requirements: 1.3, 8.1, 8.2, 8.3_
 
-  - [ ]* 2.2 Write property test: row mapping round-trip (Property 1)
+  - [x] 2.2 Write property test: row mapping round-trip (Property 1)
     - **Property 1: News article row mapping round-trip**
     - Generate random NewsArticle objects with fast-check, convert to row representation and back via `rowToNewsArticle`, assert equivalence
     - **Validates: Requirements 1.1**
@@ -44,23 +44,23 @@ Add a News/Updates system to Midnight Satin: a `news_articles` database table, c
     - Generate random article types and attribution strings, verify `getNewsAttribution` returns correct value per rules
     - **Validates: Requirements 8.1, 8.2, 8.3, 11.4**
 
-  - [ ] 2.4 Add `getLatestNewsArticles(limit)` to `src/lib/content.ts`
+  - [x] 2.4 Add `getLatestNewsArticles(limit)` to `src/lib/content.ts`
     - Query `news_articles` WHERE `is_published = true` ORDER BY `published_at DESC` LIMIT `$limit`
     - Return `NewsArticleSummary[]` (exclude body_content)
     - Wrap in try/catch returning empty array on failure
     - _Requirements: 2.1, 2.5_
 
-  - [ ] 2.5 Add `getFeaturedNewsArticles(limit)` to `src/lib/content.ts`
+  - [x] 2.5 Add `getFeaturedNewsArticles(limit)` to `src/lib/content.ts`
     - Query WHERE `is_published = true AND is_featured = true` ORDER BY `featured_order ASC NULLS LAST` LIMIT `$limit`
     - Return `NewsArticleSummary[]`
     - _Requirements: 2.2, 2.5_
 
-  - [ ] 2.6 Add `getNewsArticle(slug)` to `src/lib/content.ts`
+  - [x] 2.6 Add `getNewsArticle(slug)` to `src/lib/content.ts`
     - Query WHERE `slug = $slug AND is_published = true`
     - Return `NewsArticle | null`
     - _Requirements: 2.3, 2.5_
 
-  - [ ] 2.7 Add `getNewsArchive(cursor?, limit?)` to `src/lib/content.ts`
+  - [x] 2.7 Add `getNewsArchive(cursor?, limit?)` to `src/lib/content.ts`
     - Cursor-based pagination using `published_at` ISO timestamp
     - WHERE `published_at < $cursor` (if cursor provided) AND `is_published = true` ORDER BY `published_at DESC` LIMIT `$limit + 1`
     - If rows > limit, pop last and set `nextCursor`

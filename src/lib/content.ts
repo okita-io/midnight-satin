@@ -7,7 +7,7 @@
  */
 
 import { sql } from "@vercel/postgres";
-import type { Novel, AuthorProfile } from "@/lib/db/types";
+import type { Novel, AuthorProfile, NewsArticle, NewsArticleSummary, NewsArticleType } from "@/lib/db/types";
 import {
   cacheGetOrSet,
   cacheGet,
@@ -567,4 +567,207 @@ export async function getAuthorBibliography(
   const avgRating = worksCount > 0 ? totalRating / worksCount : 0;
 
   return { groups, worksCount, avgRating };
+}
+
+
+// ---------------------------------------------------------------------------
+// News Articles (news-updates-system spec)
+// ---------------------------------------------------------------------------
+
+/** News article row from DB (snake_case) */
+export interface NewsArticleRow {
+  id: string;
+  title: string;
+  slug: string;
+  article_type: string;
+  hero_image_url: string | null;
+  summary: string;
+  body_content: string;
+  tags: string[];
+  attribution: string;
+  source_url: string | null;
+  source_platform: string | null;
+  is_published: boolean;
+  is_featured: boolean;
+  featured_order: number | null;
+  published_at: Date | null;
+  created_at: Date;
+  updated_at: Date;
+}
+
+export function rowToNewsArticle(row: NewsArticleRow): NewsArticle {
+  return {
+    id: row.id,
+    title: row.title,
+    slug: row.slug,
+    articleType: row.article_type as NewsArticleType,
+    heroImageUrl: row.hero_image_url,
+    summary: row.summary,
+    bodyContent: row.body_content,
+    tags: Array.isArray(row.tags) ? row.tags : [],
+    attribution: row.attribution,
+    sourceUrl: row.source_url,
+    sourcePlatform: row.source_platform as NewsArticle["sourcePlatform"],
+    isPublished: Boolean(row.is_published),
+    isFeatured: Boolean(row.is_featured),
+    featuredOrder: row.featured_order != null ? Number(row.featured_order) : null,
+    publishedAt: row.published_at ? new Date(row.published_at) : null,
+    createdAt: new Date(row.created_at),
+    updatedAt: new Date(row.updated_at),
+  };
+}
+
+export function rowToNewsArticleSummary(
+  row: Omit<NewsArticleRow, "body_content">
+): NewsArticleSummary {
+  return {
+    id: row.id,
+    title: row.title,
+    slug: row.slug,
+    articleType: row.article_type as NewsArticleType,
+    heroImageUrl: row.hero_image_url,
+    summary: row.summary,
+    tags: Array.isArray(row.tags) ? row.tags : [],
+    attribution: row.attribution,
+    sourceUrl: row.source_url,
+    sourcePlatform: row.source_platform as NewsArticle["sourcePlatform"],
+    isPublished: Boolean(row.is_published),
+    isFeatured: Boolean(row.is_featured),
+    featuredOrder: row.featured_order != null ? Number(row.featured_order) : null,
+    publishedAt: row.published_at ? new Date(row.published_at) : null,
+    createdAt: new Date(row.created_at),
+    updatedAt: new Date(row.updated_at),
+  };
+}
+
+/** Attribution helper per Req 8.1–8.3 */
+export function getNewsAttribution(article: {
+  articleType: NewsArticleType;
+  attribution: string;
+}): string {
+  switch (article.articleType) {
+    case "editorial":
+    case "announcement":
+      return "From the Editor";
+    case "ranking":
+    case "popularity":
+      return "Staff";
+    case "campaign":
+      return article.attribution || "Staff";
+  }
+}
+
+/**
+ * Get latest published news articles ordered by published_at DESC.
+ */
+export async function getLatestNewsArticles(
+  limit: number = 3
+): Promise<NewsArticleSummary[]> {
+  try {
+    const { rows } = await sql<Omit<NewsArticleRow, "body_content">>`
+      SELECT id, title, slug, article_type, hero_image_url, summary, tags,
+             attribution, source_url, source_platform, is_published, is_featured,
+             featured_order, published_at, created_at, updated_at
+      FROM news_articles
+      WHERE is_published = true
+      ORDER BY published_at DESC
+      LIMIT ${limit}
+    `;
+    return rows.map(rowToNewsArticleSummary);
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Get featured published news articles ordered by featured_order ASC.
+ */
+export async function getFeaturedNewsArticles(
+  limit: number = 3
+): Promise<NewsArticleSummary[]> {
+  try {
+    const { rows } = await sql<Omit<NewsArticleRow, "body_content">>`
+      SELECT id, title, slug, article_type, hero_image_url, summary, tags,
+             attribution, source_url, source_platform, is_published, is_featured,
+             featured_order, published_at, created_at, updated_at
+      FROM news_articles
+      WHERE is_published = true AND is_featured = true
+      ORDER BY featured_order ASC NULLS LAST
+      LIMIT ${limit}
+    `;
+    return rows.map(rowToNewsArticleSummary);
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Get a single published news article by slug.
+ */
+export async function getNewsArticle(
+  slug: string
+): Promise<NewsArticle | null> {
+  try {
+    const { rows } = await sql<NewsArticleRow>`
+      SELECT id, title, slug, article_type, hero_image_url, summary, body_content,
+             tags, attribution, source_url, source_platform, is_published, is_featured,
+             featured_order, published_at, created_at, updated_at
+      FROM news_articles
+      WHERE slug = ${slug} AND is_published = true
+    `;
+    if (rows.length === 0) return null;
+    return rowToNewsArticle(rows[0]);
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Get paginated news archive with cursor-based pagination on published_at.
+ */
+export async function getNewsArchive(
+  cursor?: string,
+  limit: number = 12
+): Promise<{ articles: NewsArticleSummary[]; nextCursor: string | null }> {
+  try {
+    const fetchLimit = limit + 1;
+    let rows: Omit<NewsArticleRow, "body_content">[];
+
+    if (cursor) {
+      const result = await sql<Omit<NewsArticleRow, "body_content">>`
+        SELECT id, title, slug, article_type, hero_image_url, summary, tags,
+               attribution, source_url, source_platform, is_published, is_featured,
+               featured_order, published_at, created_at, updated_at
+        FROM news_articles
+        WHERE is_published = true AND published_at < ${cursor}
+        ORDER BY published_at DESC
+        LIMIT ${fetchLimit}
+      `;
+      rows = result.rows;
+    } else {
+      const result = await sql<Omit<NewsArticleRow, "body_content">>`
+        SELECT id, title, slug, article_type, hero_image_url, summary, tags,
+               attribution, source_url, source_platform, is_published, is_featured,
+               featured_order, published_at, created_at, updated_at
+        FROM news_articles
+        WHERE is_published = true
+        ORDER BY published_at DESC
+        LIMIT ${fetchLimit}
+      `;
+      rows = result.rows;
+    }
+
+    let nextCursor: string | null = null;
+    if (rows.length > limit) {
+      const last = rows.pop()!;
+      nextCursor = last.published_at ? new Date(last.published_at).toISOString() : null;
+    }
+
+    return {
+      articles: rows.map(rowToNewsArticleSummary),
+      nextCursor,
+    };
+  } catch {
+    return { articles: [], nextCursor: null };
+  }
 }
