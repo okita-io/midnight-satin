@@ -87,8 +87,8 @@ Add a News/Updates system to Midnight Satin: a `news_articles` database table, c
     - Generate random published article sets, paginate through all pages, verify no duplicates, no gaps, correct ordering
     - **Validates: Requirements 2.4, 9.2, 9.3**
 
-- [ ] 3. Navigation helpers and navigation bar update
-  - [ ] 3.1 Add path helpers to `src/lib/navigation.ts`
+- [x] 3. Navigation helpers and navigation bar update
+  - [x] 3.1 Add path helpers to `src/lib/navigation.ts`
     - Add `newsArchivePath()` returning `"/updates"`
     - Add `newsArticlePath(slug)` returning `/updates/${encodeURIComponent(slug)}`
     - _Requirements: 4.4, 6.1, 9.1, 10.4_
@@ -98,7 +98,7 @@ Add a News/Updates system to Midnight Satin: a `news_articles` database table, c
     - Generate random slug strings, verify `newsArticlePath` produces `/updates/{encodedSlug}` and `newsArchivePath()` returns `"/updates"`
     - **Validates: Requirements 4.4, 6.1, 9.1, 10.4**
 
-  - [ ] 3.3 Add "Updates" tab to `src/app/_components/navigation-bar.tsx`
+  - [x] 3.3 Add "Updates" tab to `src/app/_components/navigation-bar.tsx`
     - Extend `NavTab` type to include `"updates"`
     - Add tab `{ id: "updates", href: "/updates", label: "Updates", icon: "newspaper" }` between Vault and Profile (index 3)
     - _Requirements: 10.1, 10.2, 10.3, 10.4, 10.5, 10.6_
@@ -106,8 +106,8 @@ Add a News/Updates system to Midnight Satin: a `news_articles` database table, c
 - [ ] 4. Checkpoint — Verify data layer and navigation
   - Ensure all tests pass, ask the user if questions arise.
 
-- [ ] 5. NewsArticleCard component
-  - [ ] 5.1 Create `src/app/_components/news-article-card.tsx`
+- [x] 5. NewsArticleCard component
+  - [x] 5.1 Create `src/app/_components/news-article-card.tsx`
     - Accept `NewsArticleSummary` and optional `className` props
     - Render: hero image (16:9 aspect ratio with fallback placeholder), title (Playfair Display italic bold), attribution via `getNewsAttribution` (Marcellus, `text-text-muted`), 2-line summary (Literata, `line-clamp-2`), tags via `MetadataPills`
     - Gold border (`border-primary/40`), `.card` background, `.overlay-sheen` hover, `card-depth` shadow
@@ -115,7 +115,7 @@ Add a News/Updates system to Midnight Satin: a `news_articles` database table, c
     - Mobile: ~280px width for horizontal scroll; tablet/desktop: fills grid cell
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 5.2, 5.3, 5.4, 7.1, 8.4, 8.5_
 
-  - [ ]* 5.2 Write property test: card renders all required fields (Property 7)
+  - [ ] 5.2 Write property test: card renders all required fields (Property 7)
     - **Property 7: News article card renders all required fields**
     - Generate random `NewsArticleSummary` objects, render `NewsArticleCard`, verify output contains title, attribution, summary, tags, and link to `/updates/{slug}`
     - **Validates: Requirements 4.1, 4.4, 5.4, 8.4**

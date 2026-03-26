@@ -2,12 +2,13 @@
 
 import Link from "next/link";
 
-export type NavTab = "boudoir" | "library" | "vault" | "profile";
+export type NavTab = "boudoir" | "library" | "vault" | "updates" | "profile";
 
 const TABS: { id: NavTab; href: string; label: string; icon: string }[] = [
   { id: "boudoir", href: "/", label: "Boudoir", icon: "history_edu" },
   { id: "library", href: "/library", label: "Library", icon: "local_library" },
   { id: "vault", href: "/vault", label: "Vault", icon: "storefront" },
+  { id: "updates", href: "/updates", label: "Updates", icon: "newspaper" },
   { id: "profile", href: "/profile", label: "Profile", icon: "person_3" },
 ];
 

@@ -17,3 +17,13 @@ export function authorStudyPath(authorId: string): string {
 export function readingRoomPath(novelId: string, chapterId: string): string {
   return `/novel/${encodeURIComponent(novelId)}/read/${encodeURIComponent(chapterId)}`;
 }
+
+/** News archive: /updates */
+export function newsArchivePath(): string {
+  return "/updates";
+}
+
+/** News article detail: /updates/[slug] */
+export function newsArticlePath(slug: string): string {
+  return `/updates/${encodeURIComponent(slug)}`;
+}
