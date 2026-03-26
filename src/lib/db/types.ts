@@ -276,3 +276,20 @@ export interface NewsArticle {
 
 /** List view type — omits bodyContent for performance */
 export type NewsArticleSummary = Omit<NewsArticle, 'bodyContent'>;
+
+// --- Paperback Orders (buy-paperback spec) ---
+
+export interface PaperbackOrder {
+  id: string;
+  readerId: string;
+  novelId: string;
+  stripeSessionId: string;
+  stripePaymentIntentId: string | null;
+  amountCents: number;
+  currency: string;
+  shippingName: string | null;
+  shippingAddress: Record<string, unknown> | null;
+  status: string;
+  createdAt: Date;
+  updatedAt: Date;
+}

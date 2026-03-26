@@ -3,6 +3,7 @@
 import React, { useTransition, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { toggleBookmark } from "@/app/actions/bookmarks";
+import Link from "next/link";
 import { AuthPrompt } from "./auth-prompt";
 
 interface NovelDetailHeaderProps {
@@ -61,14 +62,23 @@ export function NovelDetailHeader({
       className="fixed top-0 left-0 right-0 z-50 p-3 xs:p-4 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent w-full pointer-events-none"
       style={{ paddingTop: "calc(1rem + env(safe-area-inset-top, 0px))" }}
     >
-      <button
-        type="button"
-        onClick={handleBack}
-        className="pointer-events-auto flex items-center justify-center w-10 h-10 rounded-full bg-surface/30 backdrop-blur-md text-white border border-white/10 hover:bg-surface/50 transition-colors cursor-pointer active:scale-95"
-        aria-label="Go back"
-      >
-        <span className="material-symbols-outlined text-shadow-sm">arrow_back</span>
-      </button>
+      <div className="flex gap-3 pointer-events-auto">
+        <button
+          type="button"
+          onClick={handleBack}
+          className="flex items-center justify-center w-10 h-10 rounded-full bg-surface/30 backdrop-blur-md text-white border border-white/10 hover:bg-surface/50 transition-colors cursor-pointer active:scale-95"
+          aria-label="Go back"
+        >
+          <span className="material-symbols-outlined text-shadow-sm">arrow_back</span>
+        </button>
+        <Link
+          href={`/novel/${novelId}/paperback`}
+          className="flex items-center justify-center w-10 h-10 rounded-full bg-surface/30 backdrop-blur-md text-white border border-white/10 hover:bg-surface/50 transition-colors active:scale-95"
+          aria-label="Get the paperback"
+        >
+          <span className="material-symbols-outlined text-shadow-sm">menu_book</span>
+        </Link>
+      </div>
       <div className="flex gap-3 pointer-events-auto">
         <button
           type="button"
