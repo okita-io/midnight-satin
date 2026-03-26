@@ -41,6 +41,8 @@
     "vitest": "^4.0.18"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/bcryptjs": "^2.4.6",
     "@types/node": "^20",
     "@types/react": "^19",
@@ -50,6 +52,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "fast-check": "^4.5.3",
+    "jsdom": "^29.0.1",
     "typescript": "^5"
   }
 }

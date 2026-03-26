@@ -4,12 +4,16 @@ import { BoudoirHeader } from "./_components/boudoir-header";
 import { HeroCarousel } from "./_components/hero-carousel";
 import { CurrentAffairsSection } from "./_components/current-affairs-section";
 import { HighSocietySection } from "./_components/high-society-section";
+import { TheLatestSection } from "./_components/the-latest-section";
 import { VaultTeaserCard } from "./_components/vault-teaser-card";
 import {
   getFeaturedNovels,
   getTrendingNovels,
   getCurrentReading,
+  getFeaturedNewsArticles,
+  getLatestNewsArticles,
 } from "@/lib/content";
+import type { NewsArticleSummary } from "@/lib/db/types";
 
 export const revalidate = 60; // ISR: 60s revalidation per design doc
 
@@ -30,6 +34,17 @@ export default async function BoudoirPage() {
   const currentReading = session
     ? await getCurrentReading(session.readerId)
     : null;
+
+  // Fetch news articles: prefer featured, fall back to latest
+  let newsArticles: NewsArticleSummary[] = [];
+  try {
+    newsArticles = await getFeaturedNewsArticles(3);
+    if (newsArticles.length === 0) {
+      newsArticles = await getLatestNewsArticles(3);
+    }
+  } catch {
+    newsArticles = [];
+  }
 
   // Build search pool from featured + trending for header search
   const allNovels = [...featured, ...trending];
@@ -61,6 +76,8 @@ export default async function BoudoirPage() {
 
       <main className="flex-1 pb-24">
         <HeroCarousel items={heroItems} itemsPerView={{ tablet: 2, desktop: 3 }} />
+
+        <TheLatestSection articles={newsArticles} />
 
         <CurrentAffairsSection
           currentReading={currentReading}

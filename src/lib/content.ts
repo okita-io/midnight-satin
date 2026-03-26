@@ -759,8 +759,11 @@ export async function getNewsArchive(
 
     let nextCursor: string | null = null;
     if (rows.length > limit) {
-      const last = rows.pop()!;
-      nextCursor = last.published_at ? new Date(last.published_at).toISOString() : null;
+      rows.pop(); // discard the extra sentinel row
+      const lastReturned = rows[rows.length - 1];
+      nextCursor = lastReturned.published_at
+        ? new Date(lastReturned.published_at).toISOString()
+        : null;
     }
 
     return {

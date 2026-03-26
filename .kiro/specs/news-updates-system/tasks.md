@@ -39,7 +39,7 @@ Add a News/Updates system to Midnight Satin: a `news_articles` database table, c
     - Generate random NewsArticle objects with fast-check, convert to row representation and back via `rowToNewsArticle`, assert equivalence
     - **Validates: Requirements 1.1**
 
-  - [ ]* 2.3 Write property test: attribution logic correctness (Property 6)
+  - [x] 2.3 Write property test: attribution logic correctness (Property 6)
     - **Property 6: Attribution logic correctness**
     - Generate random article types and attribution strings, verify `getNewsAttribution` returns correct value per rules
     - **Validates: Requirements 8.1, 8.2, 8.3, 11.4**
@@ -67,22 +67,22 @@ Add a News/Updates system to Midnight Satin: a `news_articles` database table, c
     - Return `{ articles: NewsArticleSummary[]; nextCursor: string | null }`
     - _Requirements: 2.4, 9.2, 9.3_
 
-  - [ ]* 2.8 Write property test: latest articles published and ordered (Property 2)
+  - [x] 2.8 Write property test: latest articles published and ordered (Property 2)
     - **Property 2: Latest articles are published and ordered**
     - Verify `getLatestNewsArticles` returns only published articles in descending `published_at` order within limit
     - **Validates: Requirements 2.1, 2.5**
 
-  - [ ]* 2.9 Write property test: featured articles published, featured, and ordered (Property 3)
+  - [x] 2.9 Write property test: featured articles published, featured, and ordered (Property 3)
     - **Property 3: Featured articles are published, featured, and ordered**
     - Verify `getFeaturedNewsArticles` returns only published+featured articles ordered by `featured_order`
     - **Validates: Requirements 2.2, 2.5**
 
-  - [ ]* 2.10 Write property test: get article by slug (Property 4)
+  - [x] 2.10 Write property test: get article by slug (Property 4)
     - **Property 4: Get article by slug returns correct result**
     - Generate random articles with random slugs and published states, verify correct article or null
     - **Validates: Requirements 2.3, 2.5**
 
-  - [ ]* 2.11 Write property test: archive pagination correctness (Property 5)
+  - [x] 2.11 Write property test: archive pagination correctness (Property 5)
     - **Property 5: Archive pagination correctness**
     - Generate random published article sets, paginate through all pages, verify no duplicates, no gaps, correct ordering
     - **Validates: Requirements 2.4, 9.2, 9.3**
@@ -93,7 +93,7 @@ Add a News/Updates system to Midnight Satin: a `news_articles` database table, c
     - Add `newsArticlePath(slug)` returning `/updates/${encodeURIComponent(slug)}`
     - _Requirements: 4.4, 6.1, 9.1, 10.4_
 
-  - [ ]* 3.2 Write property test: navigation path construction (Property 9)
+  - [x] 3.2 Write property test: navigation path construction (Property 9)
     - **Property 9: Navigation path construction**
     - Generate random slug strings, verify `newsArticlePath` produces `/updates/{encodedSlug}` and `newsArchivePath()` returns `"/updates"`
     - **Validates: Requirements 4.4, 6.1, 9.1, 10.4**
@@ -103,7 +103,7 @@ Add a News/Updates system to Midnight Satin: a `news_articles` database table, c
     - Add tab `{ id: "updates", href: "/updates", label: "Updates", icon: "newspaper" }` between Vault and Profile (index 3)
     - _Requirements: 10.1, 10.2, 10.3, 10.4, 10.5, 10.6_
 
-- [ ] 4. Checkpoint — Verify data layer and navigation
+- [x] 4. Checkpoint — Verify data layer and navigation
   - Ensure all tests pass, ask the user if questions arise.
 
 - [x] 5. NewsArticleCard component
@@ -115,13 +115,13 @@ Add a News/Updates system to Midnight Satin: a `news_articles` database table, c
     - Mobile: ~280px width for horizontal scroll; tablet/desktop: fills grid cell
     - _Requirements: 4.1, 4.2, 4.3, 4.4, 4.5, 5.2, 5.3, 5.4, 7.1, 8.4, 8.5_
 
-  - [ ] 5.2 Write property test: card renders all required fields (Property 7)
+  - [x] 5.2 Write property test: card renders all required fields (Property 7)
     - **Property 7: News article card renders all required fields**
     - Generate random `NewsArticleSummary` objects, render `NewsArticleCard`, verify output contains title, attribution, summary, tags, and link to `/updates/{slug}`
     - **Validates: Requirements 4.1, 4.4, 5.4, 8.4**
 
-- [ ] 6. TheLatestSection and Boudoir integration
-  - [ ] 6.1 Create `src/app/_components/the-latest-section.tsx`
+- [x] 6. TheLatestSection and Boudoir integration
+  - [x] 6.1 Create `src/app/_components/the-latest-section.tsx`
     - Server component accepting `NewsArticleSummary[]`
     - Section header "THE LATEST" in Cinzel uppercase with tracking matching `HighSocietySection`
     - Up to 3 articles displayed as `NewsArticleCard` components
@@ -130,14 +130,14 @@ Add a News/Updates system to Midnight Satin: a `news_articles` database table, c
     - Return `null` when `articles.length === 0`
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.6, 14.1, 14.2, 14.3_
 
-  - [ ] 6.2 Integrate TheLatestSection into `src/app/page.tsx`
+  - [x] 6.2 Integrate TheLatestSection into `src/app/page.tsx`
     - Import and call `getFeaturedNewsArticles(3)` (falling back to `getLatestNewsArticles(3)`) in the data fetch
     - Add `<TheLatestSection>` between `<HeroCarousel>` and `<CurrentAffairsSection>`
     - Wrap in try/catch to gracefully handle DB errors (empty array fallback)
     - _Requirements: 3.1, 3.5_
 
-- [ ] 7. Article detail page
-  - [ ] 7.1 Create `src/app/updates/[slug]/page.tsx`
+- [x] 7. Article detail page
+  - [x] 7.1 Create `src/app/updates/[slug]/page.tsx`
     - Server component with `export const revalidate = 60` (ISR)
     - Fetch article via `getNewsArticle(slug)`, call `notFound()` if null
     - Parallax hero layout: full-width hero image with gradient fade to void, title overlay (Playfair Display italic), attribution line via `getNewsAttribution`, `MetadataPills` for tags
@@ -148,13 +148,13 @@ Add a News/Updates system to Midnight Satin: a `news_articles` database table, c
     - Back button navigating to previous page or `/`
     - _Requirements: 6.1, 6.2, 6.3, 6.4, 6.5, 6.6, 6.7, 6.8, 6.9, 7.2, 7.3, 12.3, 12.4, 14.4_
 
-  - [ ]* 7.2 Write property test: campaign article CTA and platform (Property 8)
+  - [x] 7.2 Write property test: campaign article CTA and platform (Property 8)
     - **Property 8: Campaign article detail shows CTA and platform**
     - Generate random campaign and non-campaign articles, verify "Visit Campaign" CTA presence/absence and platform display
     - **Validates: Requirements 6.7, 6.9, 12.3, 12.4**
 
-- [ ] 8. News archive page
-  - [ ] 8.1 Create `src/app/updates/page.tsx`
+- [x] 8. News archive page
+  - [x] 8.1 Create `src/app/updates/page.tsx`
     - Server component with `export const revalidate = 60` (ISR)
     - Page header "THE GAZETTE" in Cinzel uppercase gold with tracking
     - Fetch initial articles via `getNewsArchive(undefined, 12)`
@@ -163,7 +163,7 @@ Add a News/Updates system to Midnight Satin: a `news_articles` database table, c
     - Include `<NavigationBar activeTab="updates" />`
     - _Requirements: 9.1, 9.2, 9.3, 9.4, 9.5, 9.6, 9.7, 14.1, 14.2, 14.3_
 
-- [ ] 9. Final checkpoint — Ensure all tests pass
+- [x] 9. Final checkpoint — Ensure all tests pass
   - Ensure all tests pass, ask the user if questions arise.
 
 ## Notes
