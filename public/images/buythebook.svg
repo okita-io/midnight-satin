@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 73 115" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g transform="matrix(1.346133,0,0,1.522727,-0.587618,-17.321262)">
+        <path d="M52.193,12.238L51.66,86.32L25.99,71.132L4.735,81.721L4.221,44.464" style="fill-opacity:0.68;"/>
+    </g>
+    <g transform="matrix(1.346133,0,0,1.346133,-246.293062,-355.3922)">
+        <path d="M190.651,264.607C190.651,264.607 184.399,267.028 184.352,272.656C184.24,286.084 184.151,342.607 184.151,342.607L207.134,328.69L230.27,344.18C230.501,345.45 230.042,289.338 230.075,271.607C230.082,267.495 235.232,264.573 235.232,264.573L190.651,264.607Z" style="fill:url(#_Radial1);"/>
+    </g>
+    <g transform="matrix(1.589264,0,0,2.128732,-2.482398,-6.5957)">
+        <path d="M5.466,4.659L43.715,4.659C42.604,5.448 41.469,6.577 41.466,7.903C41.462,9.521 41.467,17.278 41.477,19.725L2.697,19.725C2.71,17.403 2.724,9.855 2.738,8.566C2.758,6.767 4.122,5.485 5.466,4.659Z" style="fill:url(#_Linear2);"/>
+    </g>
+    <g transform="matrix(1.346133,0,0,1.346133,-0.420203,-1.88854)">
+        <path d="M52.442,2.356C48.944,2.356 47.118,8.348 47.118,12.762L48.051,81.852" style="fill:none;stroke:rgb(93,0,0);stroke-width:0.74px;"/>
+    </g>
+    <g transform="matrix(1.346133,0,0,1.346133,-0.420203,-1.88854)">
+        <path d="M48.22,2.262C48.22,2.262 43.195,3.158 43.195,11.768C43.195,20.378 43.738,75.235 43.738,75.235L24.323,62.312L3.776,75.402C3.776,75.402 3.961,18.797 4.139,12.021C4.333,4.605 11.504,2.365 11.504,2.365" style="fill:none;stroke:rgb(255,162,107);stroke-width:0.35px;"/>
+    </g>
+    <g transform="matrix(1.346133,0,0,1.346133,-0.587618,-2.131421)">
+        <path d="M2.136,80.183L24.586,66.632" style="fill:none;stroke:rgb(93,0,0);stroke-width:0.74px;"/>
+    </g>
+    <g transform="matrix(0.930065,0,0,0.930065,-15.352503,8.626443)">
+        <text x="28.3px" y="31.686px" style="font-family:'Apple-Chancery', 'Apple Chancery', cursive;font-style:italic;font-size:12.724px;fill:rgb(1,1,0);">Buy the</text>
+        <text x="22.245px" y="46.53px" style="font-family:'Apple-Chancery', 'Apple Chancery', cursive;font-style:italic;font-size:12.724px;fill:rgb(1,1,0);">Paperback</text>
+        <g transform="matrix(12.724097,0,0,12.724097,69.923103,61.375268)">
+        </g>
+        <text x="29.421px" y="61.375px" style="font-family:'Apple-Chancery', 'Apple Chancery', cursive;font-style:italic;font-size:12.724px;fill:rgb(1,1,0);">Edition</text>
+    </g>
+    <g transform="matrix(0.930065,0,0,0.930065,-15.58155,8.234386)">
+        <text x="28.3px" y="31.686px" style="font-family:'Apple-Chancery', 'Apple Chancery', cursive;font-style:italic;font-size:12.724px;fill:rgb(255,223,0);">Buy the</text>
+        <text x="22.245px" y="46.53px" style="font-family:'Apple-Chancery', 'Apple Chancery', cursive;font-style:italic;font-size:12.724px;fill:rgb(255,223,0);">Paperback</text>
+        <g transform="matrix(12.724097,0,0,12.724097,69.923103,61.375268)">
+        </g>
+        <text x="29.421px" y="61.375px" style="font-family:'Apple-Chancery', 'Apple Chancery', cursive;font-style:italic;font-size:12.724px;fill:rgb(255,223,0);">Edition</text>
+    </g>
+    <defs>
+        <radialGradient id="_Radial1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="matrix(31.027188,56.208936,-56.208936,31.027188,195.651209,282.770363)"><stop offset="0" style="stop-color:rgb(236,50,50);stop-opacity:1"/><stop offset="0.26" style="stop-color:rgb(188,30,20);stop-opacity:1"/><stop offset="0.48" style="stop-color:rgb(168,22,7);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(242,97,62);stop-opacity:1"/></radialGradient>
+        <linearGradient id="_Linear2" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,11.066786,-14.823349,0,20.399603,5.430962)"><stop offset="0" style="stop-color:white;stop-opacity:0"/><stop offset="0.49" style="stop-color:rgb(255,136,136);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(179,179,179);stop-opacity:0"/></linearGradient>
+    </defs>
+</svg>

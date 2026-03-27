@@ -69,6 +69,7 @@ export default async function NovelDetailPage({
         {/* Mobile: full-bleed parallax hero */}
         <div className="md:hidden">
           <ParallaxHero
+            novelId={novelId}
             title={novel.title}
             authorId={novel.authorId}
             authorName={novel.authorName}
@@ -106,6 +107,7 @@ export default async function NovelDetailPage({
             {/* Left column: cover card + players */}
             <div className="flex flex-col gap-8 md:gap-10">
               <ParallaxHero
+                novelId={novelId}
                 title={novel.title}
                 authorId={novel.authorId}
                 authorName={novel.authorName}

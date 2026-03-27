@@ -15,7 +15,7 @@ import * as fc from "fast-check";
 
 /**
  * Pure URL construction functions matching the patterns used in:
- * - novel-detail-header.tsx (Buy Paperback button)
+ * - parallax-hero.tsx (paperback badge on cover)
  * - paperback/page.tsx (Back to Novel button)
  * - paperback/success/page.tsx (Back to Novel button)
  */
