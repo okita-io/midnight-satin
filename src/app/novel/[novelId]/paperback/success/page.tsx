@@ -28,6 +28,10 @@ export default async function PaperbackSuccessPage({
     redirect(`/novel/${novelId}`);
   }
 
+  if (stripeSession.metadata?.novel_id !== novelId) {
+    redirect(`/novel/${novelId}`);
+  }
+
   // Extract display data from the session
   const novelTitle =
     stripeSession.line_items?.data?.[0]?.description ?? "Your Novel";

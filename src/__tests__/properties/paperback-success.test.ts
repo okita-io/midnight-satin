@@ -65,4 +65,38 @@ describe("Property 14: Success page redirects on invalid session", () => {
       { numRuns: 100 }
     );
   });
+
+  /**
+   * Mirrors success/page.tsx: session must belong to the novel in the URL
+   * (metadata.novel_id === novelId from the route).
+   */
+  function redirectIfMetadataMismatch(
+    routeNovelId: string,
+    sessionMetadataNovelId: string | undefined
+  ): string | null {
+    if (sessionMetadataNovelId !== routeNovelId)
+      return `/novel/${routeNovelId}`;
+    return null;
+  }
+
+  it("redirects when Stripe session metadata novel_id does not match route novelId", () => {
+    fc.assert(
+      fc.property(fc.uuid(), fc.uuid(), (routeId, otherId) => {
+        fc.pre(routeId !== otherId);
+        expect(redirectIfMetadataMismatch(routeId, otherId)).toBe(
+          `/novel/${routeId}`
+        );
+      }),
+      { numRuns: 100 }
+    );
+  });
+
+  it("does not redirect on metadata check when novel_id matches route", () => {
+    fc.assert(
+      fc.property(fc.uuid(), (novelId) => {
+        expect(redirectIfMetadataMismatch(novelId, novelId)).toBeNull();
+      }),
+      { numRuns: 100 }
+    );
+  });
 });
