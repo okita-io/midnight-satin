@@ -61,6 +61,18 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  const shipping =
+    session.collected_information?.shipping_details ??
+    (
+      session as Stripe.Checkout.Session & {
+        shipping_details?: {
+          name?: string | null;
+          address?: Stripe.Address | null;
+        } | null;
+      }
+    ).shipping_details ??
+    null;
+
   try {
     await insertPaperbackOrder({
       readerId,
@@ -72,9 +84,10 @@ export async function POST(request: NextRequest) {
           : session.payment_intent?.id ?? null,
       amountCents: session.amount_total ?? 0,
       currency: session.currency ?? "usd",
-      shippingName: session.shipping_details?.name ?? null,
-      shippingAddress:
-        (session.shipping_details?.address as Record<string, unknown>) ?? null,
+      shippingName: shipping?.name ?? null,
+      shippingAddress: shipping?.address
+        ? (shipping.address as unknown as Record<string, unknown>)
+        : null,
       status: "paid",
     });
   } catch (err) {
