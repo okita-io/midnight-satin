@@ -139,4 +139,5 @@ When delegating to subagents, assign by domain so the right skills apply:
 
 ```bash
 if [ "$VERCEL_ENV" == "production" ] || [ "$VERCEL_ENV" == "beta" ]; then exit 1; else exit 0; fi
+if [ "$VERCEL_GIT_COMMIT_REF" == "production" ] || [ "$VERCEL_GIT_COMMIT_REF" == "beta" ]; then exit 1; else exit 0; fi
 ```
