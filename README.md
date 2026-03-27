@@ -134,3 +134,9 @@ When delegating to subagents, assign by domain so the right skills apply:
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Vercel Postgres](https://vercel.com/docs/storage/vercel-postgres), [Blob](https://vercel.com/docs/storage/vercel-blob), [KV](https://vercel.com/docs/storage/vercel-kv)
 - Deploy on [Vercel](https://vercel.com/new) using the Next.js deployment guide.
+
+### Vercel production
+
+```bash
+if [ "$VERCEL_ENV" == "production" ] || [ "$VERCEL_ENV" == "beta" ]; then exit 1; else exit 0; fi
+```
