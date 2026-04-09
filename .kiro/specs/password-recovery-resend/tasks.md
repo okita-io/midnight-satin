@@ -88,8 +88,8 @@ This plan implements a two-phase password recovery flow for the Midnight Satin p
     - **Property 17: No sensitive data in logs**
     - **Validates: Requirements 7.4**
 
-- [ ] 5. Implement Resend email integration
-  - [ ] 5.1 Create Resend wrapper in `src/lib/auth/resend.ts`
+- [x] 5. Implement Resend email integration
+  - [x] 5.1 Create Resend wrapper in `src/lib/auth/resend.ts`
     - Implement `isResendConfigured()` checking RESEND_API_KEY and RESEND_FROM_EMAIL
     - Implement `sendResetEmail()` using Resend SDK
     - Include Midnight Satin branding, expiry notice (1 hour), and security warning in email template
