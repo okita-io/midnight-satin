@@ -84,6 +84,116 @@ function titleCaseRole(role) {
     .join(" ");
 }
 
+function isNonEmptyString(v) {
+  return typeof v === "string" && v.trim().length > 0;
+}
+
+function uniqStrings(arr) {
+  if (!Array.isArray(arr)) return [];
+  const out = [];
+  const seen = new Set();
+  for (const x of arr) {
+    const s = String(x ?? "").trim();
+    if (!s) continue;
+    const key = s.toLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(s);
+  }
+  return out;
+}
+
+function pickString(...vals) {
+  for (const v of vals) {
+    if (isNonEmptyString(v)) return v.trim();
+  }
+  return "";
+}
+
+function validateStoryBundle({
+  storyPath,
+  authorProfile,
+  bookCover,
+  outline,
+  dossiers,
+  manuscriptMeta,
+  chapters,
+  allowDefaults,
+}) {
+  const errors = [];
+  const warnings = [];
+
+  const storyArc = outline && outline.story_arc ? outline.story_arc : {};
+  const bcp = bookCover || (manuscriptMeta && manuscriptMeta.book_cover_prompt) || {};
+
+  const title = pickString(bcp?.title, storyArc?.title);
+  const synopsis = pickString(bcp?.back_cover_blurb, storyArc?.premise, storyArc?.logline);
+  const coverPrompt = pickString(bcp?.cover_image_prompt);
+  const authorName = pickString(
+    bcp?.author_name,
+    authorProfile?.pen_name,
+    authorProfile?.name
+  );
+  const authorBio = pickString(authorProfile?.biography, authorProfile?.bio);
+  const genreTags = uniqStrings(bcp?.genre_tags ?? authorProfile?.style_tags ?? (storyArc?.subgenre ? [storyArc.subgenre] : []));
+
+  // Required for a clean upload (unless explicitly allowing defaults).
+  if (!isNonEmptyString(title)) errors.push("Missing title (book_cover.json.title or story_outline.json.story_arc.title).");
+  if (!isNonEmptyString(authorName)) errors.push("Missing author name (book_cover.json.author_name or author_profile.json.pen_name/name).");
+  if (!isNonEmptyString(synopsis)) errors.push("Missing synopsis/blurb (book_cover.json.back_cover_blurb or story_outline.json.story_arc.premise/logline).");
+  if (genreTags.length === 0) errors.push("Missing genre tags (book_cover.json.genre_tags or author_profile.json.style_tags).");
+  if (!Array.isArray(chapters) || chapters.length === 0) errors.push("Missing chapters (chapters/chapter_*.md or manuscript.txt split).");
+
+  // Strict finalization: require these fields be authored/generated, not silently synthesized.
+  if (!allowDefaults) {
+    if (!isNonEmptyString(coverPrompt)) errors.push("Missing cover image prompt (book_cover.json.cover_image_prompt).");
+    if (!isNonEmptyString(authorBio)) errors.push("Missing author biography (author_profile.json.biography/bio).");
+  } else {
+    if (!isNonEmptyString(coverPrompt)) warnings.push("Cover image prompt missing; will be synthesized from title + synopsis.");
+    if (!isNonEmptyString(authorBio)) warnings.push("Author bio missing; will default to a generic bio.");
+  }
+
+  // Character dossiers and portrait prompts.
+  const characterRows = extractCharacters(dossiers || {});
+  if (characterRows.length === 0) {
+    if (!allowDefaults) errors.push("Missing character dossiers (character_dossiers.json has no characters).");
+    else warnings.push("No character dossiers found; story will import without character cards.");
+  } else {
+    for (const c of characterRows) {
+      if (!isNonEmptyString(c?.name)) errors.push("A character dossier entry is missing a name.");
+      if (!allowDefaults && !isNonEmptyString(c?.portrait_prompt) && !isNonEmptyString(c?.physical_description)) {
+        errors.push(`Character "${c?.name || "?"}" missing portrait prompt/physical description (needed for portrait generation).`);
+      }
+      if (!allowDefaults && !isNonEmptyString(c?.description)) {
+        warnings.push(`Character "${c?.name || "?"}" has thin dossier text (description).`);
+      }
+    }
+  }
+
+  // Chapter titles/content sanity.
+  for (const ch of chapters || []) {
+    if (!Number.isFinite(ch.number) || ch.number <= 0) errors.push("A chapter is missing a valid chapter number.");
+    if (!isNonEmptyString(ch.title)) errors.push(`Chapter ${ch.number || "?"} is missing a title.`);
+    if (!isNonEmptyString(ch.content)) errors.push(`Chapter ${ch.number || "?"} is missing content.`);
+  }
+
+  if (errors.length) {
+    const banner = [
+      "",
+      "Story bundle validation failed. Fix the story directory before uploading.",
+      `Story path: ${storyPath}`,
+      "",
+      "Errors:",
+      ...errors.map((e) => `- ${e}`),
+    ];
+    if (warnings.length) {
+      banner.push("", "Warnings:", ...warnings.map((w) => `- ${w}`));
+    }
+    throw new Error(banner.join("\n"));
+  }
+  return { warnings, title, authorName, synopsis, genreTags, coverPrompt, authorBio };
+}
+
 /**
  * Load chapters: prefer chapters/chapter_NN.md; else split manuscript.txt.
  * @returns {{ number: number, title: string, content: string }[]}
@@ -245,6 +355,7 @@ async function main() {
   const skipImages = Boolean(args["skip-images"] || args.skipimages);
   const noGit = Boolean(args["no-git"] || args.nogit);
   const featured = Boolean(args.featured);
+  const allowDefaults = Boolean(args["allow-defaults"] || args.allowdefaults);
   const featuredOrder = args["featured-order"] != null ? Number(args["featured-order"]) : null;
   const maxCharacters = args["max-characters"] != null ? Math.max(1, Number(args["max-characters"])) : 12;
   const reuseAuthorId = (args["reuse-author-id"] || args["author-id"] || "").toString().trim() || null;
@@ -287,22 +398,23 @@ async function main() {
 
   const bcp = bookCover || (manuscriptMeta && manuscriptMeta.book_cover_prompt) || {};
   const storyArc = outline && outline.story_arc ? outline.story_arc : {};
-  const title =
-    (bcp && bcp.title) || storyArc.title || path.basename(storyPath);
-  const synopsis = String(
-    (bcp && bcp.back_cover_blurb) || storyArc.premise || storyArc.logline || ""
-  ).slice(0, 12000);
-  const coverPrompt = String(
-    (bcp && bcp.cover_image_prompt) || ""
-  ).trim();
-  const authorName = String(
-    (bcp && bcp.author_name) ||
-      (authorProfile && (authorProfile.pen_name || authorProfile.name)) ||
-      "Author"
-  ).trim();
-  const authorBio = String(
-    (authorProfile && (authorProfile.biography || authorProfile.bio)) || "Romance author."
-  ).slice(0, 8000);
+  const chapters = await loadChapters(storyPath);
+  const validated = validateStoryBundle({
+    storyPath,
+    authorProfile,
+    bookCover,
+    outline,
+    dossiers,
+    manuscriptMeta,
+    chapters,
+    allowDefaults,
+  });
+
+  const title = validated.title || path.basename(storyPath);
+  const synopsis = String(validated.synopsis || "").slice(0, 12000);
+  const coverPrompt = String(validated.coverPrompt || "").trim();
+  const authorName = String(validated.authorName || "Author").trim();
+  const authorBio = String((validated.authorBio || (allowDefaults ? "Romance author." : ""))).slice(0, 8000);
   const authorPortraitPrompt = String(
     (authorProfile && authorProfile.author_portrait_prompt) || ""
   ).trim();
@@ -320,10 +432,8 @@ async function main() {
     ? bcp.genre_tags.map(String)
     : styleTags;
 
-  const chapters = await loadChapters(storyPath);
-  if (chapters.length === 0) {
-    console.error("No chapters found. Add chapters/chapter_*.md or manuscript.txt with parts.");
-    process.exit(1);
+  if (validated.warnings?.length) {
+    for (const w of validated.warnings) console.warn(`Warning: ${w}`);
   }
 
   const characters = extractCharacters(dossiers || {}).slice(0, maxCharacters);
