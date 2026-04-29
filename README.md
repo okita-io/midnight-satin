@@ -21,6 +21,38 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000). Design reference files live in `reference/`; always implement screens to match the corresponding HTML mockups and the design system in `reference/midnight_satin_prd.html`. To preview reference mockups in the browser, run `npm run preview:reference` and open [http://localhost:3333](http://localhost:3333) (e.g. `/tablet_the_boudoir.html`).
 
+### Romance Factory story import
+
+From the repo root, import a **completed Romance Factory** story directory (author profile, book cover, chapters, character dossiers) into Postgres, generate cover/author/character art via [Replicate](https://replicate.com/) (recraft-v4) into `public/images/generated/`, and write a manifest at `<story>/midnightsatin_import.json`. Run against Neon using `POSTGRES_URL` from `.env.local` (or `.env`).
+
+**Environment**
+
+- `POSTGRES_URL` — required unless `--dry-run`
+- `REPLICATE_API_TOKEN` — required unless `--dry-run` or `--skip-images`
+- Optional: `ENV_FILE` or `DOTENV_CONFIG_PATH` to load a specific env file (see script)
+
+**Examples**
+
+```bash
+node scripts/import-romance-factory-story.mjs --story-path /path/to/story
+node scripts/import-romance-factory-story.mjs --story-path ./stories/my-story --featured --featured-order 1
+node scripts/import-romance-factory-story.mjs --story-path ./stories/my-story --skip-images --no-git
+```
+
+**Flags**
+
+| Flag | Meaning |
+|------|--------|
+| `--story-path <dir>` | Path to the completed story bundle (required) |
+| `--dry-run` | No DB or image API calls; prints planned `/images/generated/...` paths |
+| `--skip-images` | Do not call Replicate; uses placeholders where needed |
+| `--no-git` | Do not `git add` / `commit` new files under `public/images/generated/` |
+| `--featured` | Set the novel as featured in the database |
+| `--featured-order <n>` | Optional ordering when featured |
+| `--allow-defaults` | Relax validation (synth cover prompt / bio if missing, etc.) |
+| `--max-characters <n>` | Cap character imports (default: 12) |
+| `--reuse-author-id` / `--author-id` | Attach the novel to an existing author id |
+
 ### Payment (Stripe)
 
 For credit purchases, set:
@@ -37,7 +69,7 @@ Configure the webhook endpoint `https://your-domain/api/webhooks/payment` in Str
 - **`.cursor/rules/`** — Cursor rules (e.g. `midnight-satin-design.mdc`, always applied)
 - **`.kiro/specs/midnight-satin-platform/`** — Requirements, design doc, tasks, correctness properties
 - **`src/app/`** — Next.js App Router pages and layout
-- **`scripts/`** — Utilities (e.g. `fetchStitchDesigns` for Stitch designs)
+- **`scripts/`** — Utilities: `import-romance-factory-story.mjs` (publish Romance Factory bundles; see [Romance Factory story import](#romance-factory-story-import)), `fetchStitchDesigns` for Stitch designs
 - **`.agents/`** — Subagent directories; place agent-specific skills and scope here (see [Subagents and parallel task division](#subagents-and-parallel-task-division))
 
 ---

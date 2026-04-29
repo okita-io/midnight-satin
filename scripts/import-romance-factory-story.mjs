@@ -315,10 +315,64 @@ function extractCharacters(dossiers) {
   return rows;
 }
 
-async function generateImage(replicate, prompt, destBasename, aspectRatio = "1:1", dryRun) {
+/**
+ * Romance Factory (phase 12) may write ``storyPath/publish_manifest.json`` and
+ * ``publish_images/*.webp`` — copy into the app’s static tree instead of Replicate.
+ */
+function resolvePreGeneratedImageRel(publishManifest, kind, characterName) {
+  if (!publishManifest || !publishManifest.images) return null;
+  const m = publishManifest.images;
+  if (kind === "cover") return m.cover || null;
+  if (kind === "author") return m.author || null;
+  if (kind === "character" && characterName) {
+    const k = "character_" + slug(characterName);
+    return m[k] || null;
+  }
+  return null;
+}
+
+async function copyPreGeneratedToPublic(storyPath, relFromStory, destBasename) {
+  if (!relFromStory) return null;
+  const src = path.join(storyPath, relFromStory);
+  let st;
+  try {
+    st = await fs.stat(src);
+  } catch {
+    return null;
+  }
+  if (!st.isFile()) return null;
+  const baseName = path.basename(String(destBasename), path.extname(String(destBasename)));
+  const savedFilename = `${baseName}.webp`;
+  const outPath = path.join(projectRoot, "public", "images", "generated", savedFilename);
+  await fs.mkdir(path.dirname(outPath), { recursive: true });
+  await fs.copyFile(src, outPath);
+  return `/images/generated/${savedFilename}`;
+}
+
+/**
+ * @param {object} [extra] — ``{ storyPath, publishManifest, imageKind, characterName }``
+ *   imageKind: ``cover`` | ``author`` | ``character``
+ */
+async function generateImage(
+  replicate,
+  prompt,
+  destBasename,
+  aspectRatio = "1:1",
+  dryRun,
+  extra = {}
+) {
   if (dryRun) {
     const base = String(destBasename).replace(/\.webp$/i, "");
     return `/images/generated/${base}.webp`;
+  }
+  const { storyPath, publishManifest, imageKind, characterName } = extra;
+  if (storyPath && publishManifest && imageKind) {
+    const rel = resolvePreGeneratedImageRel(publishManifest, imageKind, characterName);
+    const copied = await copyPreGeneratedToPublic(storyPath, rel, destBasename);
+    if (copied) return copied;
+  }
+  if (!replicate) {
+    return null;
   }
   const output = await replicate.run("recraft-ai/recraft-v4", {
     input: { prompt, aspect_ratio: aspectRatio },
@@ -376,15 +430,38 @@ async function main() {
     console.error("Missing POSTGRES_URL. Add to midnightsatin .env.local (Neon from Vercel).");
     process.exit(1);
   }
-  if (!skipImages && !dryRun && !process.env.REPLICATE_API_TOKEN) {
+
+  const prePublishManifest = await readJsonIfExists(path.join(storyPath, "publish_manifest.json"));
+  let hasLocalCoverAuthor = false;
+  if (prePublishManifest && prePublishManifest.images) {
+    const cRel = prePublishManifest.images.cover;
+    const aRel = prePublishManifest.images.author;
+    if (cRel && aRel) {
+      try {
+        await Promise.all([fs.access(path.join(storyPath, cRel)), fs.access(path.join(storyPath, aRel))]);
+        hasLocalCoverAuthor = true;
+      } catch {
+        /* incomplete bundle */
+      }
+    }
+  }
+  if (!skipImages && !dryRun && !process.env.REPLICATE_API_TOKEN && !hasLocalCoverAuthor) {
     console.error("Missing REPLICATE_API_TOKEN. Add to .env or .env.local, or pass --skip-images");
+    console.error("(Pre-generated cover+author in story publish_images/ also satisfies this when publish_manifest.json is present.)");
     process.exit(1);
   }
+  if (!skipImages && !dryRun && hasLocalCoverAuthor && !process.env.REPLICATE_API_TOKEN) {
+    console.log("Using pre-generated cover/author from Romance Factory publish_images/ (no Replicate).");
+  }
+  const publishManifest = prePublishManifest;
 
   const pool = dryRun
     ? null
     : createPool({ connectionString: process.env.POSTGRES_URL });
-  const replicate = skipImages || dryRun ? null : new Replicate({ auth: process.env.REPLICATE_API_TOKEN });
+  const replicate =
+    !skipImages && !dryRun && process.env.REPLICATE_API_TOKEN
+      ? new Replicate({ auth: process.env.REPLICATE_API_TOKEN })
+      : null;
 
   const storySlug = slug(path.basename(storyPath));
 
@@ -453,14 +530,15 @@ async function main() {
   let authorId = reuseAuthorId;
   let authorAvatar = "/seed/images/author_avatar.png";
   if (!authorId) {
-    if (!skipImages && replicate) {
+    if (!skipImages) {
       authorAvatar =
         (await generateImage(
           replicate,
           authorImagePrompt,
           `author-${storySlug}`,
           "2:3",
-          dryRun
+          dryRun,
+          { storyPath, publishManifest, imageKind: "author" }
         )) || authorAvatar;
     }
     if (authorAvatar && authorAvatar.startsWith("/images/")) {
@@ -479,14 +557,15 @@ async function main() {
       authorId = ar[0].id;
     }
   } else {
-    if (!skipImages && replicate) {
+    if (!skipImages) {
       authorAvatar =
         (await generateImage(
           replicate,
           authorImagePrompt,
           `author-${storySlug}`,
           "2:3",
-          dryRun
+          dryRun,
+          { storyPath, publishManifest, imageKind: "author" }
         )) || authorAvatar;
     }
     if (authorAvatar.startsWith("/images/") && !dryRun) {
@@ -499,14 +578,15 @@ async function main() {
   }
 
   let coverPath = "/seed/images/novel_cover.png";
-  if (!skipImages && replicate) {
+  if (!skipImages) {
     coverPath =
       (await generateImage(
         replicate,
         coverImagePrompt,
         `cover-${storySlug}`,
         "3:4",
-        dryRun
+        dryRun,
+        { storyPath, publishManifest, imageKind: "cover" }
       )) || coverPath;
   }
   if (coverPath.startsWith("/images/")) {
@@ -561,14 +641,15 @@ async function main() {
       : `Romance character portrait, head and shoulders, cinematic. ${c.name}. ${c.physical_description}`.trim();
     const fullPrompt = `No text, no watermarks. ${portraitHint}`;
     let pUrl = "/seed/images/character_portrait_1.png";
-    if (!skipImages && replicate) {
+    if (!skipImages) {
       pUrl =
         (await generateImage(
           replicate,
           fullPrompt,
           `character-${novelId}-${slug(c.name)}`,
           "1:1",
-          dryRun
+          dryRun,
+          { storyPath, publishManifest, imageKind: "character", characterName: c.name }
         )) || pUrl;
     }
     if (pUrl.startsWith("/images/")) {
