@@ -76,6 +76,27 @@ async function readJsonIfExists(p) {
   }
 }
 
+function unwrapJsonArtifact(obj) {
+  if (!obj || typeof obj !== "object") return obj;
+  // Romance Factory v2 often stores disk artifacts as JSONArtifact envelopes with parsed_data.
+  if (obj.parsed_data && typeof obj.parsed_data === "object" && obj.parsed_data) {
+    return obj.parsed_data;
+  }
+  // Some artifacts may have "text" containing a JSON string; parse best-effort.
+  if (typeof obj.text === "string") {
+    const s = obj.text.trim();
+    if (s.startsWith("{") && s.endsWith("}")) {
+      try {
+        const parsed = JSON.parse(s);
+        if (parsed && typeof parsed === "object") return parsed;
+      } catch {
+        /* ignore */
+      }
+    }
+  }
+  return obj;
+}
+
 function titleCaseRole(role) {
   if (!role || typeof role !== "string") return "Cast member";
   return role
@@ -465,13 +486,18 @@ async function main() {
 
   const storySlug = slug(path.basename(storyPath));
 
-  const [authorProfile, bookCover, outline, dossiers, manuscriptMeta] = await Promise.all([
+  const [authorProfileRaw, bookCoverRaw, outlineRaw, dossiersRaw, manuscriptMetaRaw] = await Promise.all([
     readJsonIfExists(path.join(storyPath, "author_profile.json")),
     readJsonIfExists(path.join(storyPath, "book_cover.json")),
     readJsonIfExists(path.join(storyPath, "story_outline.json")),
     readJsonIfExists(path.join(storyPath, "character_dossiers.json")),
     readJsonIfExists(path.join(storyPath, "manuscript_metadata.json")),
   ]);
+  const authorProfile = unwrapJsonArtifact(authorProfileRaw);
+  const bookCover = unwrapJsonArtifact(bookCoverRaw);
+  const outline = unwrapJsonArtifact(outlineRaw);
+  const dossiers = unwrapJsonArtifact(dossiersRaw);
+  const manuscriptMeta = unwrapJsonArtifact(manuscriptMetaRaw);
 
   const bcp = bookCover || (manuscriptMeta && manuscriptMeta.book_cover_prompt) || {};
   const storyArc = outline && outline.story_arc ? outline.story_arc : {};
@@ -493,7 +519,7 @@ async function main() {
   const authorName = String(validated.authorName || "Author").trim();
   const authorBio = String((validated.authorBio || (allowDefaults ? "Romance author." : ""))).slice(0, 8000);
   const authorPortraitPrompt = String(
-    (authorProfile && authorProfile.author_portrait_prompt) || ""
+    (authorProfile && (authorProfile.author_portrait_prompt || authorProfile.author_portrait)) || ""
   ).trim();
   let styleTags = [];
   if (authorProfile && Array.isArray(authorProfile.style_tags)) {
