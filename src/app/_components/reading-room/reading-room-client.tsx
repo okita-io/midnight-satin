@@ -217,16 +217,16 @@ export function ReadingRoomClient({
   }, [chapterId, isAuthenticated, creditBalance, isUnlocking]);
 
   return (
-    <div className="h-screen flex flex-col bg-void bg-silk-noise overflow-hidden text-text-main font-body antialiased selection:bg-primary/30 selection:text-white">
-      {/* Main reading area - tap to toggle HUD */}
+    <div className="reading-room-root h-screen flex min-h-0 flex-col bg-void bg-silk-noise overflow-hidden text-text-main font-body antialiased selection:bg-primary/30 selection:text-white">
+      {/* Main: lg:mr-80 shrinks the scrollport so the scrollbar sits on the comments edge (not under pr padding). */}
       <main
         ref={scrollRef}
-        className="flex-1 overflow-y-auto relative w-full scroll-smooth bg-silk-noise lg:pr-80"
+        className="reading-room-main-scroll flex-1 min-h-0 overflow-y-auto relative w-full scroll-smooth bg-silk-noise lg:mr-80"
         onClick={handleTap}
         role="main"
         aria-label="Chapter content"
       >
-          <div className="max-w-xl md:max-w-2xl mx-auto px-4 xs:px-6 md:px-10 pt-24 pb-32">
+        <div className="mx-auto w-full max-w-xl px-4 xs:px-6 md:max-w-2xl md:px-10 pt-24 pb-32">
           <ChapterContent
             content={content}
             chapterTitle={chapterTitle}
