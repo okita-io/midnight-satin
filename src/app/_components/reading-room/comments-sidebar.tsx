@@ -22,6 +22,7 @@ import {
   COMMENT_AUTHOR_CLASSES,
   COMMENT_CONTENT_CLASSES,
   COMMENT_LIKE_CLASSES,
+  READING_ROOM_SIDEBAR_BOTTOM_OFFSET_WHEN_HUD_VISIBLE,
 } from "@/lib/comments-ui-constants";
 import { AuthPrompt } from "@/app/_components/auth-prompt";
 
@@ -44,6 +45,8 @@ export interface CommentsSidebarProps {
   chapterId: string;
   isAuthenticated: boolean;
   commentCount: number;
+  /** When true, sidebar bottom clears the fixed ReadingHUD; when false, extends to viewport bottom. */
+  readingHudVisible: boolean;
   onCommentCountChange?: (count: number) => void;
   returnUrl?: string;
 }
@@ -52,6 +55,7 @@ export function CommentsSidebar({
   chapterId,
   isAuthenticated,
   commentCount,
+  readingHudVisible,
   onCommentCountChange,
   returnUrl,
 }: CommentsSidebarProps) {
@@ -146,10 +150,12 @@ export function CommentsSidebar({
     <>
       {/* Desktop-only fixed sidebar - hidden on mobile/tablet */}
       <aside
-        className="hidden lg:flex lg:flex-col fixed right-0 top-0 bottom-0 w-80 z-40 bg-gradient-to-b from-surface to-void border-l border-primary/40 shadow-[-10px_0_40px_rgba(0,0,0,0.8)]"
+        className="hidden lg:flex lg:flex-col fixed right-0 top-0 bottom-0 w-80 z-40 bg-gradient-to-b from-surface to-void border-l border-primary/40 shadow-[-10px_0_40px_rgba(0,0,0,0.8)] lg:[bottom:var(--reading-sidebar-bottom)] lg:transition-[bottom] lg:duration-300 lg:ease-in-out"
         style={{
           paddingTop: "env(safe-area-inset-top, 0px)",
-          paddingBottom: "env(safe-area-inset-bottom, 0px)",
+          ["--reading-sidebar-bottom" as string]: readingHudVisible
+            ? READING_ROOM_SIDEBAR_BOTTOM_OFFSET_WHEN_HUD_VISIBLE
+            : "0px",
         }}
         aria-label="Chapter comments"
       >

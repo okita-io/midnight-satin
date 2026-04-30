@@ -4,6 +4,15 @@
  * @see Linear THE-63 Property 19
  */
 
+/**
+ * Inset from the viewport bottom when the ReadingHUD toolbar is **visible** — keeps
+ * the comments composer above the HUD. When the HUD is hidden, use `0px` instead
+ * so the sidebar meets the screen bottom.
+ * @see reading-hud.tsx bottom nav
+ */
+export const READING_ROOM_SIDEBAR_BOTTOM_OFFSET_WHEN_HUD_VISIBLE =
+  "calc(6rem + env(safe-area-inset-bottom, 0px))" as const;
+
 /** Header title for comments panel (Req 19.1, design reference) */
 export const COMMENTS_HEADER_TITLE = "Thoughts from the Boudoir" as const;
 

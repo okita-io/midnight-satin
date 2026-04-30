@@ -13,7 +13,15 @@ import { saveReadingProgress } from "@/app/actions/reading-progress";
 import { unlockChapter } from "@/app/actions/unlock-chapter";
 import { ChapterContent } from "./chapter-content";
 import { TheVeil } from "@/app/_components/the-veil";
-import { ReadingHUD, getStoredReaderSettings, setStoredReaderSettings, type FontSize, type LineHeight } from "./reading-hud";
+import {
+  ReadingHUD,
+  DEFAULT_READER_SETTINGS,
+  getStoredReaderSettings,
+  setStoredReaderSettings,
+  type FontSize,
+  type LineHeight,
+  type ReaderSettings,
+} from "./reading-hud";
 import { CommentsSection } from "./comments-section";
 import { CommentsSidebar } from "./comments-sidebar";
 
@@ -84,7 +92,14 @@ export function ReadingRoomClient({
   const [commentsOpen, setCommentsOpen] = useState(false);
   const [commentCount, setCommentCount] = useState(initialCommentCount);
   const [progressPercent, setProgressPercent] = useState(0);
-  const [settings, setSettings] = useState(() => getStoredReaderSettings());
+  /** Same defaults as SSR so ChapterContent matches server HTML; localStorage applied after mount. */
+  const [settings, setSettings] = useState<ReaderSettings>(() => ({
+    ...DEFAULT_READER_SETTINGS,
+  }));
+
+  useEffect(() => {
+    setSettings(getStoredReaderSettings());
+  }, []);
   const [unlocked, setUnlocked] = useState(isUnlocked);
   const [creditBalance, setCreditBalance] = useState(initialCreditBalance);
   const [unlockError, setUnlockError] = useState<string | null>(null);
@@ -270,6 +285,7 @@ export function ReadingRoomClient({
         chapterId={chapterId}
         isAuthenticated={isAuthenticated}
         commentCount={commentCount}
+        readingHudVisible={hudVisible}
         onCommentCountChange={setCommentCount}
         returnUrl={`/novel/${encodeURIComponent(novelId)}/read/${encodeURIComponent(chapterId)}`}
       />

@@ -166,11 +166,12 @@ export const DESKTOP_MAX_WIDTH = 1440;
 export const SIDEBAR_WIDTH = 280;
 
 /**
- * Reading HUD footer icon row layout (THE-95, THE-96).
- * Must use justify-between and w-full so icons are evenly spaced on mobile.
+ * Reading HUD bottom toolbar (THE-95, THE-96).
+ * Tight 4-col grid on small viewports; md+ becomes flex row with wider max-width
+ * and flex-1 columns (aligns with NavigationBar: icon over label, labels share a baseline).
  */
 export const READING_HUD_FOOTER_ICON_ROW_CLASSES =
-  "min-w-0 flex-1 px-6 py-4 flex items-center justify-between w-full";
+  "w-full min-w-0 mx-auto max-w-md grid grid-cols-4 items-end gap-x-1.5 sm:gap-x-2 px-3 sm:px-4 pt-4 md:max-w-3xl md:flex md:flex-row md:items-end md:justify-between md:gap-4 md:px-6 lg:max-w-4xl lg:px-8 xl:max-w-5xl";
 
 /**
  * Interaction constants for touch and pointer (THE-86, THE-87).

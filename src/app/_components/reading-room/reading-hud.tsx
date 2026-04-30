@@ -2,7 +2,7 @@
 
 /**
  * Reading HUD: toggle overlay with header (back, chapter title, bookmark),
- * footer (font settings, progress bar, chapter nav) (Req 3.5, 3.6, 3.8, 3.9).
+ * bottom nav (font settings, progress bar, chapter nav) (Req 3.5, 3.6, 3.8, 3.9).
  * Safe area insets applied (Req 3.10).
  */
 
@@ -44,24 +44,30 @@ export interface ReaderSettings {
   lineHeight: LineHeight;
 }
 
+/** Matches SSR and empty localStorage; use for initial client state before hydration completes. */
+export const DEFAULT_READER_SETTINGS: ReaderSettings = {
+  fontSize: 18,
+  lineHeight: 1.6,
+};
+
 export function getStoredReaderSettings(): ReaderSettings {
   if (typeof window === "undefined") {
-    return { fontSize: 18, lineHeight: 1.6 };
+    return DEFAULT_READER_SETTINGS;
   }
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { fontSize: 18, lineHeight: 1.6 };
+    if (!raw) return DEFAULT_READER_SETTINGS;
     const parsed = JSON.parse(raw) as Partial<ReaderSettings>;
     return {
       fontSize: FONT_SIZES.includes(parsed.fontSize as FontSize)
         ? (parsed.fontSize as FontSize)
-        : 18,
+        : DEFAULT_READER_SETTINGS.fontSize,
       lineHeight: LINE_HEIGHTS.includes(parsed.lineHeight as LineHeight)
         ? (parsed.lineHeight as LineHeight)
-        : 1.6,
+        : DEFAULT_READER_SETTINGS.lineHeight,
     };
   } catch {
-    return { fontSize: 18, lineHeight: 1.6 };
+    return DEFAULT_READER_SETTINGS;
   }
 }
 
@@ -176,12 +182,13 @@ export function ReadingHUD({
         </div>
       </header>
 
-      {/* Footer HUD with ProgressBar */}
-      <footer
-        className="fixed bottom-0 inset-x-0 z-50 flex w-full min-w-0 flex-col bg-[#0a0a0a] border-t border-white/5 shadow-2xl shadow-black md:max-w-md md:left-1/2 md:right-auto md:-translate-x-1/2"
+      {/* Bottom bar: same shell as main NavigationBar (full-bleed drawer) */}
+      <nav
+        className="fixed bottom-0 left-0 right-0 z-50 flex w-full min-w-0 flex-col bg-[#080808] border-t border-[#1F1F1F] shadow-[0_-10px_40px_rgba(0,0,0,0.8)] transition-all duration-300 ease-in-out"
         style={{
-          paddingBottom: "calc(1rem + env(safe-area-inset-bottom, 0px))",
+          paddingBottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))",
         }}
+        aria-label="Reading tools"
       >
         {/* Progress Bar */}
         <div className="w-full h-1 shrink-0 bg-white/10 relative">
@@ -195,30 +202,44 @@ export function ReadingHUD({
         </div>
 
         <div className={READING_HUD_FOOTER_ICON_ROW_CLASSES}>
-          {/* Font panel toggle */}
-          <div className="relative">
+          {/* Font panel toggle — column 1 (match NavTabLink: icon over label) */}
+          <div className="relative z-10 flex min-w-0 flex-col items-center justify-end md:min-w-0 md:flex-1">
             <button
               type="button"
               onClick={() => {
                 setShowFontPanel((v) => !v);
                 setShowLinePanel(false);
               }}
-              className="flex flex-col items-center gap-1 text-text-muted hover:text-white transition-colors cursor-pointer active:scale-95"
+              className={`flex w-full min-w-0 max-w-full flex-col items-center gap-1.5 transition-colors duration-300 ease-in-out cursor-pointer active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-void rounded-sm ${
+                showFontPanel
+                  ? "text-primary"
+                  : "text-text-muted hover:text-white"
+              }`}
               aria-label="Font settings"
               aria-expanded={showFontPanel}
             >
               <span
-                className="material-symbols-outlined"
-                style={{ fontSize: 24 }}
+                className="material-symbols-outlined transition-all duration-300 ease-in-out"
+                style={{
+                  fontSize: showFontPanel ? 28 : 24,
+                  color: "inherit",
+                  ...(showFontPanel && {
+                    filter: "drop-shadow(0 0 8px rgba(212,175,55,0.6))",
+                  }),
+                }}
               >
                 text_fields
               </span>
-              <span className="text-[10px] font-ui uppercase tracking-wider">
+              <span
+                className={`text-[10px] md:text-xs font-ui md:font-header font-medium tracking-wider md:tracking-[0.2em] uppercase ${
+                  showFontPanel ? "text-primary" : ""
+                }`}
+              >
                 Type
               </span>
             </button>
             {showFontPanel && (
-              <div className="absolute bottom-full left-0 mb-2 p-3 rounded bg-surface border border-white/10 shadow-lg flex gap-2">
+              <div className="absolute bottom-full left-0 mb-2 p-3 rounded bg-surface border border-[#1F1F1F] shadow-lg flex gap-2">
                 {FONT_SIZES.map((s) => (
                   <button
                     key={s}
@@ -240,71 +261,130 @@ export function ReadingHUD({
             )}
           </div>
 
-          {/* Chapter nav */}
-          <div className="flex flex-col items-center justify-center w-full">
-            <div className="w-[200px] flex justify-between text-[10px] font-ui text-text-muted uppercase tracking-wider mb-2">
-              <span>Prev</span>
-              <span>{Math.round(progressPercent)}%</span>
-              <span>Next</span>
-            </div>
-            <div className="flex items-center gap-6 text-text-main w-[200px] justify-between">
-              {prevChapterId ? (
+          {/* Chapter — column 2: three NavTabLink-style stacks (icon over label) */}
+          <div
+            className="z-0 flex min-w-0 min-h-0 flex-col items-center justify-end px-0 md:min-w-0 md:max-w-none md:flex-[1.4]"
+            role="group"
+            aria-label="Chapter navigation"
+          >
+            <div
+              className="flex w-full min-w-0 max-w-full flex-row items-end justify-center gap-0.5 min-[400px]:gap-1.5 sm:gap-2 md:gap-5 lg:gap-8"
+              style={{ minWidth: 0 }}
+            >
+              {/* Previous */}
+              <div className="flex min-w-0 flex-1 flex-col items-center justify-end gap-1.5">
+                {prevChapterId ? (
+                  <Link
+                    href={readingRoomPath(prevChapterId)}
+                    className="relative flex items-center justify-center text-text-main transition-transform duration-300 ease-in-out hover:text-primary active:scale-95"
+                    aria-label="Previous chapter"
+                  >
+                    <span
+                      className="material-symbols-outlined transition-[font-size,filter] duration-300 ease-in-out"
+                      style={{ fontSize: 24, lineHeight: 1 }}
+                    >
+                      skip_previous
+                    </span>
+                  </Link>
+                ) : (
+                  <span
+                    className="relative flex items-center justify-center text-text-muted/50"
+                    aria-hidden
+                  >
+                    <span
+                      className="material-symbols-outlined"
+                      style={{ fontSize: 24, lineHeight: 1 }}
+                    >
+                      skip_previous
+                    </span>
+                  </span>
+                )}
+                <span className="max-w-full truncate text-center text-[9px] font-ui font-medium uppercase text-text-muted tabular-nums tracking-wider min-[400px]:text-[10px] sm:text-xs md:font-header md:tracking-[0.15em]">
+                  Prev
+                </span>
+              </div>
+              {/* Center: list + progress (label matches progress) */}
+              <div className="flex min-w-0 flex-1 flex-col items-center justify-end gap-1.5">
                 <Link
-                  href={readingRoomPath(prevChapterId)}
-                  className="hover:text-primary transition-colors cursor-pointer active:scale-95"
-                  aria-label="Previous chapter"
+                  href={novelDetailPath(novelId)}
+                  className="relative flex items-center justify-center text-text-main transition-transform duration-300 ease-in-out hover:text-primary active:scale-95"
+                  aria-label="Chapter list"
                 >
-                  <span className="material-symbols-outlined">
-                    skip_previous
+                  <span
+                    className="material-symbols-outlined transition-[font-size,filter] duration-300 ease-in-out"
+                    style={{ fontSize: 24, lineHeight: 1 }}
+                  >
+                    play_circle
                   </span>
                 </Link>
-              ) : (
-                <span className="text-text-muted/50 cursor-default">
-                  <span className="material-symbols-outlined">
-                    skip_previous
+                <span className="max-w-full text-center text-[9px] font-ui font-medium tabular-nums text-text-muted tracking-wider min-[400px]:text-[10px] sm:text-xs md:font-header md:tracking-[0.15em]">
+                  {Math.round(progressPercent)}%
+                </span>
+              </div>
+              {/* Next */}
+              <div className="flex min-w-0 flex-1 flex-col items-center justify-end gap-1.5">
+                {nextChapterId ? (
+                  <Link
+                    href={readingRoomPath(nextChapterId)}
+                    className="relative flex items-center justify-center text-text-main transition-transform duration-300 ease-in-out hover:text-primary active:scale-95"
+                    aria-label="Next chapter"
+                  >
+                    <span
+                      className="material-symbols-outlined transition-[font-size,filter] duration-300 ease-in-out"
+                      style={{ fontSize: 24, lineHeight: 1 }}
+                    >
+                      skip_next
+                    </span>
+                  </Link>
+                ) : (
+                  <span
+                    className="relative flex items-center justify-center text-text-muted/50"
+                    aria-hidden
+                  >
+                    <span
+                      className="material-symbols-outlined"
+                      style={{ fontSize: 24, lineHeight: 1 }}
+                    >
+                      skip_next
+                    </span>
                   </span>
+                )}
+                <span className="max-w-full truncate text-center text-[9px] font-ui font-medium uppercase text-text-muted tabular-nums tracking-wider min-[400px]:text-[10px] sm:text-xs md:font-header md:tracking-[0.15em]">
+                  Next
                 </span>
-              )}
-              <Link
-                href={novelDetailPath(novelId)}
-                className="hover:text-primary transition-colors cursor-pointer active:scale-95"
-                aria-label="Chapter list"
-              >
-                <span className="material-symbols-outlined">play_circle</span>
-              </Link>
-              {nextChapterId ? (
-                <Link
-                  href={readingRoomPath(nextChapterId)}
-                  className="hover:text-primary transition-colors cursor-pointer active:scale-95"
-                  aria-label="Next chapter"
-                >
-                  <span className="material-symbols-outlined">skip_next</span>
-                </Link>
-              ) : (
-                <span className="text-text-muted/50 cursor-default">
-                  <span className="material-symbols-outlined">skip_next</span>
-                </span>
-              )}
+              </div>
             </div>
           </div>
 
-          {/* Comments toggle */}
+          {/* Comments toggle — column 3 */}
           <button
             type="button"
             onClick={onCommentsClick}
-            className={`relative flex flex-col items-center gap-1 transition-colors cursor-pointer active:scale-95 ${
-              commentsActive ? "text-primary" : "text-text-muted hover:text-white"
+            className={`relative z-10 flex w-full min-w-0 max-w-full min-h-0 flex-col items-center gap-1.5 rounded-sm transition-colors duration-300 ease-in-out cursor-pointer active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-void md:min-w-0 md:flex-1 ${
+              commentsActive
+                ? "text-primary"
+                : "text-text-muted hover:text-white"
             }`}
             aria-label={`Comments (${commentCount})`}
             aria-pressed={commentsActive}
           >
             <span
-              className="material-symbols-outlined"
-              style={{ fontSize: 24 }}
+              className="material-symbols-outlined transition-all duration-300 ease-in-out"
+              style={{
+                fontSize: commentsActive ? 28 : 24,
+                color: "inherit",
+                ...(commentsActive && {
+                  filter: "drop-shadow(0 0 8px rgba(212,175,55,0.6))",
+                }),
+              }}
             >
               history_edu
             </span>
-            <span className="text-[10px] font-ui uppercase tracking-wider">
+            <span
+              className={`text-[10px] md:text-xs font-ui font-medium tracking-wider md:font-header md:tracking-[0.2em] uppercase ${
+                commentsActive ? "text-primary" : ""
+              }`}
+            >
               Notes
             </span>
             {commentCount > 0 && (
@@ -314,30 +394,44 @@ export function ReadingHUD({
             )}
           </button>
 
-          {/* Line spacing toggle */}
-          <div className="relative">
+          {/* Line spacing toggle — column 4 */}
+          <div className="relative z-10 flex min-w-0 max-w-full min-h-0 flex-col items-center justify-end md:min-w-0 md:flex-1">
             <button
               type="button"
               onClick={() => {
                 setShowLinePanel((v) => !v);
                 setShowFontPanel(false);
               }}
-              className="flex flex-col items-center gap-1 text-text-muted hover:text-white transition-colors cursor-pointer active:scale-95"
+              className={`flex w-full min-w-0 max-w-full flex-col items-center gap-1.5 transition-colors duration-300 ease-in-out cursor-pointer active:scale-95 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-void rounded-sm ${
+                showLinePanel
+                  ? "text-primary"
+                  : "text-text-muted hover:text-white"
+              }`}
               aria-label="Line spacing"
               aria-expanded={showLinePanel}
             >
               <span
-                className="material-symbols-outlined"
-                style={{ fontSize: 24 }}
+                className="material-symbols-outlined transition-all duration-300 ease-in-out"
+                style={{
+                  fontSize: showLinePanel ? 28 : 24,
+                  color: "inherit",
+                  ...(showLinePanel && {
+                    filter: "drop-shadow(0 0 8px rgba(212,175,55,0.6))",
+                  }),
+                }}
               >
                 format_line_spacing
               </span>
-              <span className="text-[10px] font-ui uppercase tracking-wider">
+              <span
+                className={`text-[10px] md:text-xs font-ui font-medium tracking-wider md:font-header md:tracking-[0.2em] uppercase ${
+                  showLinePanel ? "text-primary" : ""
+                }`}
+              >
                 Line
               </span>
             </button>
             {showLinePanel && (
-              <div className="absolute bottom-full right-0 mb-2 p-3 rounded bg-surface border border-white/10 shadow-lg flex gap-2">
+              <div className="absolute bottom-full right-0 mb-2 p-3 rounded bg-surface border border-[#1F1F1F] shadow-lg flex gap-2">
                 {LINE_HEIGHTS.map((lh) => (
                   <button
                     key={lh}
@@ -359,7 +453,7 @@ export function ReadingHUD({
             )}
           </div>
         </div>
-      </footer>
+      </nav>
     </>
   );
 }

@@ -8,6 +8,12 @@ import { OrnamentalDivider } from "./ornamental-divider";
 const ORNAMENTAL_EVERY_N_PARAGRAPHS = 4;
 /** Free preview paragraphs before the Veil (Req 4.1). Exported for Property 17 tests. */
 export const FREE_PREVIEW_PARAGRAPHS = 5;
+/**
+ * Locked content is not fully rendered: only a short blurred teaser (plus The Veil overlay).
+ * Long chapters would otherwise create a huge blurred stack and make the paywall feel like
+ * it fills the whole chapter. Full prose still appears after unlock (veilMode false).
+ */
+export const VEIL_BLURRED_TEASER_PARAGRAPHS = 8;
 /** Blur levels: 1px/60%, 3px/40%, 6px/20% per design reference (Req 4.1). Exported for Property 17 tests. */
 export const BLUR_LEVELS: { blur: string; opacity: string }[] = [
   { blur: "blur-[1px]", opacity: "opacity-60" },
@@ -53,7 +59,14 @@ export function ChapterContent({
     ? Math.min(FREE_PREVIEW_PARAGRAPHS, paragraphs.length)
     : paragraphs.length;
   const blurredStart = freeEnd;
-  const blurredCount = paragraphs.length - blurredStart;
+  const blurredEnd = veilMode
+    ? Math.min(
+        paragraphs.length,
+        blurredStart + VEIL_BLURRED_TEASER_PARAGRAPHS
+      )
+    : paragraphs.length;
+  const blurredSlice = paragraphs.slice(blurredStart, blurredEnd);
+  const blurredCount = blurredSlice.length;
 
   return (
     <article
@@ -94,7 +107,7 @@ export function ChapterContent({
       {/* Progressively blurred content + Veil overlay (Req 4.1) */}
       {veilMode && blurredCount > 0 && (
         <div className="relative">
-          {paragraphs.slice(blurredStart).map((text, i) => {
+          {blurredSlice.map((text, i) => {
             const level =
               BLUR_LEVELS[Math.min(i, BLUR_LEVELS.length - 1)];
             const showDivider =

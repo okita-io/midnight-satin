@@ -18,6 +18,7 @@
     "db:pull-images": "node scripts/pull-generated-images.mjs",
     "db:fix-images": "node scripts/fix-image-urls.mjs",
     "import:romance-story": "node scripts/import-romance-factory-story.mjs",
+    "import:eternal-embrace": "node scripts/import-romance-factory-story.mjs --story-path ../romance-factory/stories/Eternal_Embrace --skip-images --no-git",
     "seed": "node scripts/seed-db.mjs",
     "seed:test-data": "node scripts/generate-test-data.mjs",
     "preview:reference": "npx serve reference -p 3333"

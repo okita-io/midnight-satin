@@ -27,6 +27,7 @@ import {
 import {
   BLUR_LEVELS,
   FREE_PREVIEW_PARAGRAPHS,
+  VEIL_BLURRED_TEASER_PARAGRAPHS,
 } from "@/app/_components/reading-room/chapter-content";
 import {
   COMMENTS_HEADER_TITLE,
@@ -111,6 +112,10 @@ describe("Property 17: Reading Room Component Preservation", () => {
 
   it("free preview paragraphs is 5 per Req 4.1", () => {
     expect(FREE_PREVIEW_PARAGRAPHS).toBe(5);
+  });
+
+  it("veil mode only teases a capped number of blurred paragraphs (long-chapter layout)", () => {
+    expect(VEIL_BLURRED_TEASER_PARAGRAPHS).toBe(8);
   });
 
   it("blur levels have distinct blur values in ascending order", () => {
@@ -231,22 +236,22 @@ describe("Property 19: Comments Styling Consistency", () => {
 });
 
 describe("Property 34: Reading HUD control bar icons evenly spaced on mobile", () => {
-  it("footer icon row uses justify-between for even spacing (THE-96)", () => {
-    expect(READING_HUD_FOOTER_ICON_ROW_CLASSES).toContain("justify-between");
+  it("footer icon row uses a four-column grid for even spacing (THE-96)", () => {
+    expect(READING_HUD_FOOTER_ICON_ROW_CLASSES).toContain("grid-cols-4");
   });
 
   it("footer icon row uses w-full so icons span full width on mobile", () => {
     expect(READING_HUD_FOOTER_ICON_ROW_CLASSES).toContain("w-full");
   });
 
-  it("footer icon row uses flex layout for horizontal icon row", () => {
-    expect(READING_HUD_FOOTER_ICON_ROW_CLASSES).toContain("flex");
+  it("footer icon row uses grid layout for the horizontal toolbar", () => {
+    expect(READING_HUD_FOOTER_ICON_ROW_CLASSES).toContain("grid");
   });
 
   it("even spacing layout is invariant across viewports", () => {
     fc.assert(
       fc.property(fc.integer({ min: 0, max: 4096 }), () => {
-        expect(READING_HUD_FOOTER_ICON_ROW_CLASSES).toContain("justify-between");
+        expect(READING_HUD_FOOTER_ICON_ROW_CLASSES).toContain("grid-cols-4");
         expect(READING_HUD_FOOTER_ICON_ROW_CLASSES).toContain("w-full");
       }),
       { numRuns: 100 }
