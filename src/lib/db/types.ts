@@ -182,6 +182,7 @@ export interface NovelReview {
   novelId: string;
   readerId: string;
   content: string;
+  starRating: number;
   likeCount: number;
   createdAt: Date;
   updatedAt: Date;

@@ -11,6 +11,7 @@ import {
 import {
   listNovelReviewsPreviewDb,
   getReaderNovelReviewDb,
+  getNovelReviewAggregateDb,
 } from "@/lib/db/novel-reviews";
 import { formatUpdatedAgo } from "@/lib/format";
 import { readingRoomPath } from "@/lib/navigation";
@@ -31,7 +32,7 @@ export default async function NovelDetailPage({
 }) {
   const { novelId } = await params;
 
-  const [novel, chapters, characters, latestUpdated, session, reviewPreview] =
+  const [novel, chapters, characters, latestUpdated, session, reviewPreview, reviewAggregate] =
     await Promise.all([
       getNovel(novelId),
       getChapters(novelId),
@@ -39,13 +40,14 @@ export default async function NovelDetailPage({
       getLatestChapterUpdatedAt(novelId),
       getCurrentSession(),
       listNovelReviewsPreviewDb(novelId, 5),
+      getNovelReviewAggregateDb(novelId),
     ]);
 
   if (!novel) notFound();
 
   let unlockedIds = new Set<string>();
   let bookmarked = false;
-  let myReview: { id: string; content: string } | null = null;
+  let myReview: { id: string; content: string; starRating: number } | null = null;
 
   if (session) {
     const [u, b, r] = await Promise.all([
@@ -55,8 +57,28 @@ export default async function NovelDetailPage({
     ]);
     unlockedIds = u;
     bookmarked = b;
-    myReview = r ? { id: r.id, content: r.content } : null;
+    myReview = r
+      ? { id: r.id, content: r.content, starRating: r.starRating }
+      : null;
   }
+
+  const coverRating =
+    reviewAggregate.reviewCount > 0
+      ? reviewAggregate.averageRating
+      : novel.rating;
+  const coverRatingCount =
+    reviewAggregate.reviewCount > 0
+      ? reviewAggregate.reviewCount
+      : novel.ratingCount;
+
+  const reviewCardsForSection = reviewPreview.map((r) => ({
+    id: r.id,
+    content: r.content,
+    likeCount: r.likeCount,
+    starRating: r.starRating,
+    createdAt: r.createdAt,
+    readerDisplayName: r.readerDisplayName,
+  }));
 
   const firstChapterId = chapters[0]?.id ?? "";
   const updatedAgo = formatUpdatedAgo(latestUpdated);
@@ -80,8 +102,8 @@ export default async function NovelDetailPage({
             authorName={novel.authorName}
             coverImageUrl={novel.coverImageUrl}
             genreTags={novel.genreTags}
-            rating={novel.rating}
-            ratingCount={novel.ratingCount}
+            rating={coverRating}
+            ratingCount={coverRatingCount}
             startReadingHref={
               firstChapterId
                 ? readingRoomPath(novelId, firstChapterId)
@@ -101,7 +123,7 @@ export default async function NovelDetailPage({
           <ReviewsSection
             novelId={novelId}
             isAuthenticated={!!session}
-            preview={reviewPreview}
+            preview={reviewCardsForSection}
             myReview={myReview}
           />
           <ChapterList
@@ -124,10 +146,10 @@ export default async function NovelDetailPage({
                 authorName={novel.authorName}
                 coverImageUrl={novel.coverImageUrl}
                 genreTags={novel.genreTags}
-                rating={novel.rating}
-                ratingCount={novel.ratingCount}
-                startReadingHref={
-                  firstChapterId
+            rating={coverRating}
+            ratingCount={coverRatingCount}
+            startReadingHref={
+              firstChapterId
                     ? readingRoomPath(novelId, firstChapterId)
                     : undefined
                 }
@@ -141,7 +163,7 @@ export default async function NovelDetailPage({
               <ReviewsSection
                 novelId={novelId}
                 isAuthenticated={!!session}
-                preview={reviewPreview}
+                preview={reviewCardsForSection}
                 myReview={myReview}
               />
             </div>

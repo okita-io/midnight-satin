@@ -2,7 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 import { getSession } from "@/lib/auth/session";
-import { validateNovelReviewContent } from "@/lib/reviews/validation";
+import {
+  validateNovelReviewContent,
+  isValidStarRating,
+} from "@/lib/reviews/validation";
 import {
   getReaderNovelReviewDb,
   insertNovelReviewDb,
@@ -24,7 +27,8 @@ export type DeleteNovelReviewResult =
 
 export async function postNovelReview(
   novelId: string,
-  content: string
+  content: string,
+  starRating: number
 ): Promise<PostNovelReviewResult> {
   const session = await getSession();
   if (!session) {
@@ -34,6 +38,9 @@ export async function postNovelReview(
   const validation = validateNovelReviewContent(content);
   if (!validation.valid) {
     return { success: false, error: validation.error };
+  }
+  if (!isValidStarRating(starRating)) {
+    return { success: false, error: "Choose a star rating from 1 to 5." };
   }
 
   const trimmed = content.trim();
@@ -46,7 +53,7 @@ export async function postNovelReview(
   }
 
   try {
-    await insertNovelReviewDb(novelId, session.readerId, trimmed);
+    await insertNovelReviewDb(novelId, session.readerId, trimmed, starRating);
   } catch (e) {
     console.error("postNovelReview:", e);
     return { success: false, error: "Could not post your review. Try again." };
@@ -60,7 +67,8 @@ export async function postNovelReview(
 export async function updateNovelReview(
   novelId: string,
   reviewId: string,
-  content: string
+  content: string,
+  starRating: number
 ): Promise<UpdateNovelReviewResult> {
   const session = await getSession();
   if (!session) {
@@ -71,6 +79,9 @@ export async function updateNovelReview(
   if (!validation.valid) {
     return { success: false, error: validation.error };
   }
+  if (!isValidStarRating(starRating)) {
+    return { success: false, error: "Choose a star rating from 1 to 5." };
+  }
 
   const trimmed = content.trim();
   const existing = await getReaderNovelReviewDb(novelId, session.readerId);
@@ -79,7 +90,7 @@ export async function updateNovelReview(
   }
 
   try {
-    await updateNovelReviewDb(reviewId, session.readerId, trimmed);
+    await updateNovelReviewDb(reviewId, session.readerId, trimmed, starRating);
   } catch (e) {
     console.error("updateNovelReview:", e);
     return { success: false, error: "Could not update your review. Try again." };

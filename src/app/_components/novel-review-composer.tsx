@@ -9,13 +9,20 @@ import {
   deleteNovelReview,
 } from "@/app/actions/novel-reviews";
 import { MAX_NOVEL_REVIEW_LENGTH } from "@/lib/reviews/validation";
+import { StarRatingInput } from "./star-rating-input";
+
+export interface MyNovelReviewDraft {
+  id: string;
+  content: string;
+  starRating: number;
+}
 
 interface NovelReviewComposerProps {
   novelId: string;
   isAuthenticated: boolean;
   /** Path for login returnUrl (novel detail or reviews subpage) */
   returnPath: string;
-  myReview: { id: string; content: string } | null;
+  myReview: MyNovelReviewDraft | null;
 }
 
 export function NovelReviewComposer({
@@ -27,12 +34,14 @@ export function NovelReviewComposer({
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const [draft, setDraft] = useState(myReview?.content ?? "");
+  const [stars, setStars] = useState(myReview?.starRating ?? 5);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     setDraft(myReview?.content ?? "");
+    setStars(myReview?.starRating ?? 5);
     setError(null);
-  }, [myReview?.id, myReview?.content]);
+  }, [myReview?.id, myReview?.content, myReview?.starRating]);
 
   if (!isAuthenticated) {
     const loginHref = `/auth/login?returnUrl=${encodeURIComponent(returnPath)}`;
@@ -53,24 +62,30 @@ export function NovelReviewComposer({
 
   const trimmed = draft.trim();
   const savedTrim = (myReview?.content ?? "").trim();
+  const savedStars = myReview?.starRating ?? 5;
   const hasExisting = !!myReview;
   const primaryDisabled =
     pending ||
     trimmed.length === 0 ||
-    (hasExisting && trimmed === savedTrim);
+    (hasExisting && trimmed === savedTrim && stars === savedStars);
   const primaryLabel = hasExisting ? "Update review" : "Submit";
 
   function submit() {
     setError(null);
     startTransition(async () => {
       if (hasExisting && myReview) {
-        const res = await updateNovelReview(novelId, myReview.id, draft);
+        const res = await updateNovelReview(
+          novelId,
+          myReview.id,
+          draft,
+          stars,
+        );
         if (!res.success) {
           setError(res.error);
           return;
         }
       } else {
-        const res = await postNovelReview(novelId, draft);
+        const res = await postNovelReview(novelId, draft, stars);
         if (!res.success) {
           setError(res.error);
           return;
@@ -97,6 +112,7 @@ export function NovelReviewComposer({
         return;
       }
       setDraft("");
+      setStars(5);
       router.refresh();
     });
   }
@@ -117,6 +133,14 @@ export function NovelReviewComposer({
         rows={4}
         placeholder="What stayed with you after the last page?"
         className="w-full resize-y min-h-[100px] rounded-sm border border-white/10 bg-void/80 px-3 py-2.5 font-body text-sm text-text-main placeholder:text-text-muted/50 focus:outline-none focus:ring-1 focus:ring-primary/40"
+      />
+      <p className="text-center text-[10px] text-text-muted font-ui uppercase tracking-[0.2em] mt-3 mb-1">
+        Rating
+      </p>
+      <StarRatingInput
+        value={stars}
+        onChange={setStars}
+        disabled={pending}
       />
       <div className="flex items-center justify-between mt-2 mb-3">
         <span className="text-[10px] text-text-muted font-ui">

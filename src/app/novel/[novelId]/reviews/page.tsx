@@ -30,12 +30,12 @@ export default async function NovelReviewsPage({
   if (!novel) notFound();
 
   let bookmarked = false;
-  let myReview: { id: string; content: string } | null = null;
+  let myReview: { id: string; content: string; starRating: number } | null = null;
   if (session) {
     [bookmarked, myReview] = await Promise.all([
       isNovelBookmarked(novelId),
       getReaderNovelReviewDb(novelId, session.readerId).then((r) =>
-        r ? { id: r.id, content: r.content } : null
+        r ? { id: r.id, content: r.content, starRating: r.starRating } : null
       ),
     ]);
   }
@@ -84,6 +84,7 @@ export default async function NovelReviewsPage({
                   id: r.id,
                   content: r.content,
                   likeCount: r.likeCount,
+                  starRating: r.starRating,
                   createdAt: r.createdAt,
                   readerDisplayName: r.readerDisplayName,
                 }}

@@ -173,6 +173,7 @@ CREATE TABLE novel_reviews (
   novel_id UUID NOT NULL REFERENCES novels(id) ON DELETE CASCADE,
   reader_id UUID NOT NULL REFERENCES readers(id) ON DELETE CASCADE,
   content TEXT NOT NULL CHECK (char_length(content) <= 2000),
+  star_rating INT NOT NULL DEFAULT 5 CHECK (star_rating >= 1 AND star_rating <= 5),
   like_count INT DEFAULT 0 NOT NULL,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW(),

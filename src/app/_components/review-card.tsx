@@ -4,6 +4,7 @@ export interface ReviewCardData {
   id: string;
   content: string;
   likeCount: number;
+  starRating: number;
   createdAt: Date | string;
   readerDisplayName: string | null;
 }
@@ -38,6 +39,24 @@ export function ReviewCard({ review, variant = "carousel" }: ReviewCardProps) {
         <span className="text-[10px] text-text-muted whitespace-nowrap font-ui uppercase tracking-wider">
           {when}
         </span>
+      </div>
+      <div className="flex items-center gap-0.5 mb-2" aria-label={`${review.starRating} out of 5 stars`}>
+        {Array.from({ length: 5 }, (_, i) => {
+          const n = i + 1;
+          const on = n <= review.starRating;
+          return (
+            <span
+              key={n}
+              className={`material-symbols-outlined text-sm ${
+                on ? "text-primary" : "text-primary/20"
+              }`}
+              style={{ fontVariationSettings: on ? "'FILL' 1" : "'FILL' 0" }}
+              aria-hidden
+            >
+              star
+            </span>
+          );
+        })}
       </div>
       <p
         className={`font-body text-sm text-text-main/90 leading-relaxed flex-1 ${

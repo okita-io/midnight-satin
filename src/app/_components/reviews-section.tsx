@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ReviewCard, type ReviewCardData } from "./review-card";
-import { NovelReviewComposer } from "./novel-review-composer";
+import { NovelReviewComposer, type MyNovelReviewDraft } from "./novel-review-composer";
 
 const PREVIEW_LIMIT = 5;
 
@@ -8,7 +8,7 @@ export interface ReviewsSectionProps {
   novelId: string;
   isAuthenticated: boolean;
   preview: ReviewCardData[];
-  myReview: { id: string; content: string } | null;
+  myReview: MyNovelReviewDraft | null;
 }
 
 export function ReviewsSection({

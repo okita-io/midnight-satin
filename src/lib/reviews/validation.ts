@@ -8,6 +8,10 @@ export type ValidateNovelReviewResult =
   | { valid: true }
   | { valid: false; error: string };
 
+export function isValidStarRating(n: number): boolean {
+  return Number.isInteger(n) && n >= 1 && n <= 5;
+}
+
 export function validateNovelReviewContent(content: string): ValidateNovelReviewResult {
   const trimmed = content.trim();
   if (trimmed.length === 0) {
