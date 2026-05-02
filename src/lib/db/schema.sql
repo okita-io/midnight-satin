@@ -168,6 +168,24 @@ CREATE TABLE comment_likes (
   PRIMARY KEY (reader_id, comment_id)
 );
 
+CREATE TABLE novel_reviews (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  novel_id UUID NOT NULL REFERENCES novels(id) ON DELETE CASCADE,
+  reader_id UUID NOT NULL REFERENCES readers(id) ON DELETE CASCADE,
+  content TEXT NOT NULL CHECK (char_length(content) <= 2000),
+  like_count INT DEFAULT 0 NOT NULL,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  updated_at TIMESTAMPTZ DEFAULT NOW(),
+  UNIQUE (novel_id, reader_id)
+);
+
+CREATE TABLE review_likes (
+  reader_id UUID NOT NULL REFERENCES readers(id) ON DELETE CASCADE,
+  review_id UUID NOT NULL REFERENCES novel_reviews(id) ON DELETE CASCADE,
+  created_at TIMESTAMPTZ DEFAULT NOW(),
+  PRIMARY KEY (reader_id, review_id)
+);
+
 -- Indexes for common queries
 CREATE INDEX idx_novels_author ON novels(author_id);
 CREATE INDEX idx_novels_series ON novels(series_id);
@@ -187,6 +205,9 @@ CREATE INDEX idx_password_reset_log_reader_id ON password_reset_log(reader_id);
 CREATE INDEX idx_comments_chapter ON comments(chapter_id, created_at DESC);
 CREATE INDEX idx_comments_reader ON comments(reader_id);
 CREATE INDEX idx_comment_likes_comment ON comment_likes(comment_id);
+CREATE INDEX idx_novel_reviews_novel ON novel_reviews(novel_id, like_count DESC, created_at DESC);
+CREATE INDEX idx_novel_reviews_reader ON novel_reviews(reader_id);
+CREATE INDEX idx_review_likes_review ON review_likes(review_id);
 
 -- Idempotency for payment webhooks (Req 8.4)
 CREATE TABLE processed_payment_events (

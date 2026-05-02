@@ -18,24 +18,20 @@ async function run() {
   const action = process.argv[2] || "check";
 
   if (action === "schema") {
-    console.log("Dropping existing tables (clean slate)...");
+    console.log("Dropping all public tables (clean slate)...");
     await pool.query(`
-      DROP TABLE IF EXISTS comment_likes CASCADE;
-      DROP TABLE IF EXISTS comments CASCADE;
-      DROP TABLE IF EXISTS reader_bookmarks CASCADE;
-      DROP TABLE IF EXISTS author_follows CASCADE;
-      DROP TABLE IF EXISTS chapter_unlocks CASCADE;
-      DROP TABLE IF EXISTS credit_transactions CASCADE;
-      DROP TABLE IF EXISTS reading_progress CASCADE;
-      DROP TABLE IF EXISTS characters CASCADE;
-      DROP TABLE IF EXISTS chapters CASCADE;
-      DROP TABLE IF EXISTS novels CASCADE;
-      DROP TABLE IF EXISTS series CASCADE;
-      DROP TABLE IF EXISTS password_reset_log CASCADE;
-      DROP TABLE IF EXISTS password_reset_tokens CASCADE;
-      DROP TABLE IF EXISTS readers CASCADE;
-      DROP TABLE IF EXISTS author_profiles CASCADE;
-      DROP TABLE IF EXISTS processed_payment_events CASCADE;
+      DO $$
+      DECLARE
+        r RECORD;
+      BEGIN
+        FOR r IN (
+          SELECT tablename
+          FROM pg_tables
+          WHERE schemaname = 'public'
+        ) LOOP
+          EXECUTE format('DROP TABLE IF EXISTS public.%I CASCADE', r.tablename);
+        END LOOP;
+      END $$;
     `);
     console.log("  Done.\n");
 

@@ -1,0 +1,63 @@
+import { formatShortAgo } from "@/lib/format";
+
+export interface ReviewCardData {
+  id: string;
+  content: string;
+  likeCount: number;
+  createdAt: Date | string;
+  readerDisplayName: string | null;
+}
+
+interface ReviewCardProps {
+  review: ReviewCardData;
+  /** Narrow card for horizontal carousel; full width for reviews page */
+  variant?: "carousel" | "stack";
+}
+
+export function ReviewCard({ review, variant = "carousel" }: ReviewCardProps) {
+  const created =
+    typeof review.createdAt === "string"
+      ? new Date(review.createdAt)
+      : review.createdAt;
+  const when = formatShortAgo(created);
+  const name = review.readerDisplayName?.trim() || "Reader";
+
+  const shell =
+    variant === "carousel"
+      ? "snap-center shrink-0 w-[min(85vw,280px)] min-h-[120px]"
+      : "w-full";
+
+  return (
+    <article
+      className={`${shell} flex flex-col rounded-sm border border-primary/15 bg-white/[0.02] p-4 backdrop-blur-sm`}
+    >
+      <div className="flex items-start justify-between gap-2 mb-2">
+        <span className="font-ui text-xs uppercase tracking-widest text-primary/90 truncate">
+          {name}
+        </span>
+        <span className="text-[10px] text-text-muted whitespace-nowrap font-ui uppercase tracking-wider">
+          {when}
+        </span>
+      </div>
+      <p
+        className={`font-body text-sm text-text-main/90 leading-relaxed flex-1 ${
+          variant === "carousel" ? "line-clamp-5" : "whitespace-pre-wrap"
+        }`}
+      >
+        {review.content}
+      </p>
+      <div className="mt-3 flex items-center gap-1 text-text-muted/80">
+        <span
+          className="material-symbols-outlined text-base text-primary/50"
+          style={{ fontVariationSettings: "'FILL' 0" }}
+          aria-hidden
+        >
+          favorite
+        </span>
+        <span className="text-[10px] font-ui uppercase tracking-wider">
+          {review.likeCount} helpful
+        </span>
+      </div>
+    </article>
+  );
+}

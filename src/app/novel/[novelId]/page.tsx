@@ -7,9 +7,11 @@ import {
   getCharacters,
   getLatestChapterUpdatedAt,
   getUnlockedChapterIds,
-  getReadingProgressForNovel,
-  getFirstUnreadChapterId,
 } from "@/lib/content";
+import {
+  listNovelReviewsPreviewDb,
+  getReaderNovelReviewDb,
+} from "@/lib/db/novel-reviews";
 import { formatUpdatedAgo } from "@/lib/format";
 import { readingRoomPath } from "@/lib/navigation";
 import { NavigationBar } from "../../_components/navigation-bar";
@@ -18,7 +20,7 @@ import { ParallaxHero } from "../../_components/parallax-hero";
 import { SynopsisSection } from "../../_components/synopsis-section";
 import { PlayersSection } from "../../_components/players-section";
 import { ChapterList } from "../../_components/chapter-list";
-import { FloatingActionButton } from "../../_components/floating-action-button";
+import { ReviewsSection } from "../../_components/reviews-section";
 
 export const revalidate = 60;
 
@@ -29,31 +31,34 @@ export default async function NovelDetailPage({
 }) {
   const { novelId } = await params;
 
-  const [novel, chapters, characters, latestUpdated, session] = await Promise.all([
-    getNovel(novelId),
-    getChapters(novelId),
-    getCharacters(novelId),
-    getLatestChapterUpdatedAt(novelId),
-    getCurrentSession(),
-  ]);
+  const [novel, chapters, characters, latestUpdated, session, reviewPreview] =
+    await Promise.all([
+      getNovel(novelId),
+      getChapters(novelId),
+      getCharacters(novelId),
+      getLatestChapterUpdatedAt(novelId),
+      getCurrentSession(),
+      listNovelReviewsPreviewDb(novelId, 5),
+    ]);
 
   if (!novel) notFound();
 
   let unlockedIds = new Set<string>();
-  let progress = new Map<string, number>();
   let bookmarked = false;
+  let myReview: { id: string; content: string } | null = null;
 
   if (session) {
-    [unlockedIds, progress, bookmarked] = await Promise.all([
+    const [u, b, r] = await Promise.all([
       getUnlockedChapterIds(session.readerId, novelId),
-      getReadingProgressForNovel(session.readerId, novelId),
       isNovelBookmarked(novelId),
+      getReaderNovelReviewDb(novelId, session.readerId),
     ]);
+    unlockedIds = u;
+    bookmarked = b;
+    myReview = r ? { id: r.id, content: r.content } : null;
   }
 
-  const firstUnreadChapterId = getFirstUnreadChapterId(chapters, progress);
   const firstChapterId = chapters[0]?.id ?? "";
-  const fabChapterId = firstUnreadChapterId || firstChapterId;
   const updatedAgo = formatUpdatedAgo(latestUpdated);
 
   return (
@@ -93,6 +98,12 @@ export default async function NovelDetailPage({
             novelId={novelId}
             isAuthenticated={!!session}
           />
+          <ReviewsSection
+            novelId={novelId}
+            isAuthenticated={!!session}
+            preview={reviewPreview}
+            myReview={myReview}
+          />
           <ChapterList
             novelId={novelId}
             chapters={chapters}
@@ -127,6 +138,12 @@ export default async function NovelDetailPage({
                 novelId={novelId}
                 isAuthenticated={!!session}
               />
+              <ReviewsSection
+                novelId={novelId}
+                isAuthenticated={!!session}
+                preview={reviewPreview}
+                myReview={myReview}
+              />
             </div>
 
             {/* Right column: synopsis + scrollable contents */}
@@ -141,10 +158,6 @@ export default async function NovelDetailPage({
             </div>
           </div>
         </div>
-
-        {fabChapterId && (
-          <FloatingActionButton novelId={novelId} chapterId={fabChapterId} />
-        )}
       </main>
 
       <NavigationBar activeTab="boudoir" />

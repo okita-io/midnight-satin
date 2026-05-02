@@ -3,7 +3,8 @@
  * Validates: Requirements 2.6, 16.4
  *
  * For any chapter in a novel, the chapter list should display "Free" for chapters
- * where is_free is true and a lock icon for chapters where is_free is false.
+ * where is_free is true, "Unlocked" for chapters the reader unlocked (is_free false
+ * with a chapter_unlock record), and a lock icon for inaccessible chapters.
  * For any authenticated reader, chapters that have been unlocked should also
  * display as accessible regardless of is_free status.
  *

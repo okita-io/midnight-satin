@@ -36,8 +36,11 @@ export function ChapterList({
   unlockedIds,
   updatedAgo: _updatedAgo,
 }: ChapterListProps) {
-  const freeCount = chapters.filter((ch) => ch.isFree || unlockedIds.has(ch.id)).length;
-  const lockedCount = chapters.length - freeCount;
+  const freeOnlyCount = chapters.filter((ch) => ch.isFree).length;
+  const unlockedPaidCount = chapters.filter(
+    (ch) => !ch.isFree && unlockedIds.has(ch.id),
+  ).length;
+  const lockedCount = chapters.length - freeOnlyCount - unlockedPaidCount;
 
   return (
     <div className="mb-24">
@@ -45,10 +48,17 @@ export function ChapterList({
         <h3 className="text-text-muted text-sm uppercase tracking-[0.2em] font-medium border-b border-primary/20 pb-2">
           Contents
         </h3>
-        <div className="flex items-center gap-4">
-          <span className="text-[10px] text-primary/60 uppercase tracking-widest font-ui">
-            {freeCount} Free {freeCount === 1 ? "Chapter" : "Chapters"}
-          </span>
+        <div className="flex items-center gap-4 flex-wrap justify-end">
+          {freeOnlyCount > 0 ? (
+            <span className="text-[10px] text-primary/60 uppercase tracking-widest font-ui">
+              {freeOnlyCount} Free {freeOnlyCount === 1 ? "Chapter" : "Chapters"}
+            </span>
+          ) : null}
+          {unlockedPaidCount > 0 ? (
+            <span className="text-[10px] text-primary/60 uppercase tracking-widest font-ui">
+              {unlockedPaidCount} Unlocked
+            </span>
+          ) : null}
           <span className="text-[10px] text-primary/60 uppercase tracking-widest font-ui">
             {lockedCount} Locked
           </span>
@@ -86,7 +96,9 @@ export function ChapterList({
               <div className="flex items-center gap-3">
                 {isAccessible ? (
                   <>
-                    <span className="text-xs text-text-muted">Free</span>
+                    <span className="text-xs text-text-muted">
+                      {ch.isFree ? "Free" : "Unlocked"}
+                    </span>
                     <span className="material-symbols-outlined text-text-muted/50 text-xl">
                       chevron_right
                     </span>

@@ -176,6 +176,23 @@ export interface CommentLike {
   createdAt: Date;
 }
 
+/** One novel review per reader (enforced by UNIQUE(novel_id, reader_id)). */
+export interface NovelReview {
+  id: string;
+  novelId: string;
+  readerId: string;
+  content: string;
+  likeCount: number;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface ReviewLike {
+  readerId: string;
+  reviewId: string;
+  createdAt: Date;
+}
+
 export interface CommentThreadPage {
   comments: Comment[];
   nextCursor: string | null;
