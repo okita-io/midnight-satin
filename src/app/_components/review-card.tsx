@@ -11,11 +11,11 @@ export interface ReviewCardData {
 
 interface ReviewCardProps {
   review: ReviewCardData;
-  /** Narrow card for horizontal carousel; full width for reviews page */
-  variant?: "carousel" | "stack";
+  /** Novel detail preview: full width, clamped body. Reviews page: full text. */
+  variant?: "compact" | "full";
 }
 
-export function ReviewCard({ review, variant = "carousel" }: ReviewCardProps) {
+export function ReviewCard({ review, variant = "compact" }: ReviewCardProps) {
   const created =
     typeof review.createdAt === "string"
       ? new Date(review.createdAt)
@@ -23,14 +23,9 @@ export function ReviewCard({ review, variant = "carousel" }: ReviewCardProps) {
   const when = formatShortAgo(created);
   const name = review.readerDisplayName?.trim() || "Reader";
 
-  const shell =
-    variant === "carousel"
-      ? "snap-center shrink-0 w-[min(85vw,280px)] min-h-[120px]"
-      : "w-full";
-
   return (
     <article
-      className={`${shell} flex flex-col rounded-sm border border-primary/15 bg-white/[0.02] p-4 backdrop-blur-sm`}
+      className="w-full flex flex-col rounded-sm border border-primary/15 bg-white/[0.02] p-4 backdrop-blur-sm"
     >
       <div className="flex items-start justify-between gap-2 mb-2">
         <span className="font-ui text-xs uppercase tracking-widest text-primary/90 truncate">
@@ -60,7 +55,7 @@ export function ReviewCard({ review, variant = "carousel" }: ReviewCardProps) {
       </div>
       <p
         className={`font-body text-sm text-text-main/90 leading-relaxed flex-1 ${
-          variant === "carousel" ? "line-clamp-5" : "whitespace-pre-wrap"
+          variant === "compact" ? "line-clamp-6" : "whitespace-pre-wrap"
         }`}
       >
         {review.content}

@@ -1,4 +1,5 @@
--- Per-review star rating (1–5) for aggregates on novel cover (upgrade from 008).
+-- Per-review star rating (1–5) for aggregates on novel cover.
+-- Prerequisite: 008_add_novel_reviews.sql must already be applied (table `novel_reviews` exists).
 
 ALTER TABLE novel_reviews
   ADD COLUMN IF NOT EXISTS star_rating INT DEFAULT 5;

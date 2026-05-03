@@ -88,7 +88,7 @@ export default async function NovelReviewsPage({
                   createdAt: r.createdAt,
                   readerDisplayName: r.readerDisplayName,
                 }}
-                variant="stack"
+                variant="full"
               />
             ))
           )}

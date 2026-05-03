@@ -1,4 +1,5 @@
 -- Novel reviews (one per reader per novel) + helpful likes for sorting / future UI
+-- Run this before 009_add_novel_review_star_rating.sql (stars column).
 
 CREATE TABLE IF NOT EXISTS novel_reviews (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
