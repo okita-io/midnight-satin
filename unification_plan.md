@@ -202,6 +202,8 @@ Static HTML today includes, among others: `midnight_satin_prd.html`, `midnight_s
 - **Same look and feel:** Visual regression stays minimal (pixel-parity migrations first).
 - **Reading rhythm:** Fewer adjacent arbitrary `font-*` / size pairings; grep or review finds **one pattern per semantic role** on polished surfaces.
 - **Reference parity:** Pencil and HTML agree on shared patterns; fewer “this screen’s section title is 1px different” surprises when implementing.
+- **CSS and markup hygiene:** Fewer one-off hover/focus/loading paths as Issues 3–6 and the catalog absorb repeated patterns; optional checks include grep counts for inline icon sizing and duplicated `@media` blocks.
+- **Contributor velocity:** New UI work starts from README + reference HTML rather than rediscovering conventions file by file.
 
 ---
 
@@ -215,69 +217,15 @@ Static HTML today includes, among others: `midnight_satin_prd.html`, `midnight_s
 - **Section / actions:** `section-view-all.tsx`, `current-affairs-section.tsx`, `the-latest-section.tsx`, `author/trophy-case.tsx`, `players-section.tsx`, `reviews-section.tsx`, `synopsis-section.tsx`, `chapter-list.tsx`
 - **Stars / cards:** `rating-display.tsx`, `review-card.tsx`, `novel-card.tsx`, `library-catalog.tsx`
 
-## Special Design Considerations
+## Design considerations (breakpoints and reading)
 
-The most common responsive design breakpoints in 2026 generally follow a standard set of ranges to cover mobile, tablet, and desktop devices in both portrait and landscape orientations. [1, 2] 
+**Source of truth:** `reference/midnight_satin_prd.html`, Tailwind `screens` in `tailwind.config.ts`, and `src/lib/responsive/constants.ts` (`BREAKPOINTS`). When breakpoints change, update those together so Tailwind classes, JS helpers, and property tests stay aligned (see **Issue 3** below).
 
-### Standard Breakpoint Ranges (2026)
-The following table summarizes the widely accepted industry standards for targeting different device views. [2, 3] 
+Generic industry ranges (480 / 768 / 1024 / 1280px, etc.) are a sanity check only. Prefer **content-based** tweaks when a layout looks cramped at a width that does not match a tier—then document the exception in CSS or component notes rather than inventing a third breakpoint system.
 
-| Device Type [3, 4, 5, 6, 7, 8] | Orientation | Width Range | Purpose |
-|---|---|---|---|
-| Mobile | Portrait | Up to 480px | Smartphones like iPhone, Samsung Galaxy |
-| Mobile | Landscape | 481px – 768px | Landscape phones, mini tablets, or large phablets |
-| Tablet | Portrait | 769px – 1024px | Standard tablets (iPad, Galaxy Tab) in portrait |
-| Tablet | Landscape | 1025px – 1280px | Large tablets or small laptops |
-| Desktop | Landscape | 1281px – 1440px | Standard laptops and medium monitors |
-| Large Desktop | Landscape | 1441px and up | Extra-large external monitors and 4K displays |
+**Reading product:** Long sessions need typographic calm. Follow the PRD **font roles** (`font-display` / `font-header` / `font-body` / `font-ui` / `font-script`) and the typography matrix earlier in this doc. For fluid type between mobile and tablet, prefer **`clamp()`** or Tailwind steps that match exported reference HTML, instead of stacking many unrelated `min-width` blocks.
 
-### Common Specific Values
-If you need specific single-point markers for your media queries, these are the most frequently used: [9, 10] 
-
-* 320px – 360px: Minimum mobile portrait target.
-* 768px: The most common starting point for tablets (portrait).
-* 1024px: Common transition point for tablet landscape or entry-level desktop.
-* 1366px: Pegged as the ideal desktop breakpoint to capture major market share.
-* 1920px: Standard for high-definition (HD) desktop monitors. [1, 3, 7, 9, 11, 12] 
-
-### Key Design Considerations
-
-* Mobile-First Approach: Start your styling at the smallest width (0–480px) and use min-width media queries to add complexity as the screen expands. [3, 13] 
-* Fluid Layouts: Use relative units like rem, vh/vw, or CSS clamp() for typography and spacing to ensure a smooth transition between fixed breakpoints. [14, 15] 
-* Content-Based Breakpoints: While device-specific ranges are useful, always test your design and add custom breakpoints at the exact point where your layout starts to look cramped or "breaks". [1, 
-
-### Mobile first considerations
-
-For an app like Midnight Satin that focuses on long-form storytelling, your most appropriate approach is a Mobile-First, Content-Centric design. Since your users are reading in "comfort" mode (couch, bed), their cognitive state is relaxed but their eyes are prone to fatigue. [1] 
-The industry standard for 2026 suggests the following strategic focus for a premium reading experience:
-
-### 1. Optimized Mobile Typography
-
-Your mobile view isn't just a "smaller desktop"—it's a dedicated reading surface. [2] 
-
-* Base Font Size: Use 18px as your floor for body text. While 16px is standard for UI, 18px reduces the cognitive load required for long stories. [3, 4] 
-* Line Height (Leading): Set this between 1.5 and 1.6 times the font size. This "opens up" the text, preventing the "wall of words" effect that causes users to lose their place. [5, 6, 7] 
-* Line Length: Aim for 35–45 characters per line in portrait mode. This matches the natural eye-scanning width of a smartphone screen, preventing "horizontal fatigue." [7] 
-
-### 2. "Leaning-In" Reading Features
-
-Since your users are likely in bed or on a couch, design for low-light and single-handed use:
-
-* OLED-Friendly Dark Mode: Essential for late-night reading to reduce eye strain and blue light exposure. [1, 8] 
-* Pagination over Scrolling: Research shows that "scrolling" text through a fixed window can inhibit information retention. Consider a horizontal "swipe-to-page" mechanic (like Kindle or Apple Books) which mimics physical book landmarks. [5, 9] 
-* Progress "Visual Tails": Design your layout so the bottom of the screen always cuts off a partial line of text. This is a 2026 UX standard that signals more content is available without needing explicit "scroll" icons. [4] 
-
-### 3. Responsive Priorities
-
-| Feature [10] | Mobile (Primary) | Tablet / Desktop (Secondary) |
-|---|---|---|
-| Navigation | Bottom-docked (Thumb zone) | Top or Side-rail |
-| Margins | Minimal (to maximize width) | Generous "gutters" to prevent long lines |
-| Interactive | Large 44px touch targets | Standard cursor-optimized links |
-
-## Recommended Tech Stack for Layout
-Use the CSS clamp() function for your typography. This allows the text to scale perfectly between your mobile and tablet breakpoints without needing dozens of media queries:
-font-size: clamp(1.125rem, 2vw + 1rem, 1.5rem);
+**Mobile-first:** Implement from the narrowest reference artboard upward; use `min-width` media queries for larger tiers. Bottom navigation and thumb zones on small screens should stay consistent with `reference/` and existing chrome (`navigation-bar`, reader HUD).
 
 ## Issues Identified
 
@@ -528,7 +476,6 @@ Implement a shared **`Icon`** (or equivalent) under `src/components/ui/` first, 
 - `Badge` (status indicators, tags, chips)
 - `Avatar` (user/author avatars with fallbacks)
 - `Loader` (spinners, skeleton placeholders)
-- `Tooltip` (consistent tooltip behavior)
 - `Modal` / `Dialog` (overlay containers)
 - `Tooltip` (consistent tooltip behavior)
 
@@ -540,104 +487,30 @@ Implement a shared **`Icon`** (or equivalent) under `src/components/ui/` first, 
 - Consistent naming for callbacks: `onChange`, `onClick`, `onSubmit`
 - All components forward refs to root element when appropriate
 
-### 3. Establish Design Token Usage
-**Use existing Tailwind config but create utility functions**:
-```typescript
-// lib/theme/useColors.ts
-export function useColors() {
-  return {
-    primary: 'var(--primary)',
-    primaryDark: 'var(--primary-dark)',
-    textMain: 'var(--text-main)',
-    textMuted: 'var(--text-muted)',
-    // ... etc
-  };
-}
+### 3. Establish design token usage
 
-// lib/theme/useSpacing.ts
-export function useSpacing() {
-  return {
-    xs: '0.5rem',
-    sm: '1rem',
-    md: '1.5rem',
-    lg: '2rem',
-    xl: '3rem',
-  };
-}
-```
+Prefer **CSS variables** wired in `src/app/layout.tsx` and **Tailwind theme extensions** in `tailwind.config.ts` (colors, `fontFamily`, spacing). Add small helpers only when they remove real duplication; avoid a parallel `lib/theme/*` stack unless the team explicitly wants one.
 
-### 4. Create Standardized Hooks
-**Location**: `lib/ui/`
+### 4. Hooks and responsive behavior
 
-**Hooks to create**:
-- `useHover` - consistent hover state management
-- `useFocusVisible` - proper focus ring handling
-- `useClickOutside` - for dropdowns, menus
-- `useResponsive` - unified breakpoint detection
-- `useDeviceType` - touch vs pointer detection (with SSR safety)
+Prefer **`src/lib/responsive/`** for breakpoint math, pointer/hover policy, and tests. Add new hooks there (or thin wrappers in `src/components/ui/`) only when CSS cannot express the behavior—see **Issue 3** and **Issue 5** for coordination.
 
-### 5. Implement Consistent State Patterns
-**Guidelines**:
-- UI-only state (toggles, hover, focus): local `useState` or custom hooks
-- Shared state (user data, navigation): lift to appropriate context or state management
-- Form state: consider React Hook Form or zod integration
-- Server state: continue using React Query/SWR patterns as appropriate
+### 5. Consistent state patterns
 
-### 6. Standardize Loading & Error States
-**Create components**:
-- `SkeletonLoader` - for placeholder content
-- `LoadingIndicator` - spinner variants
-- `ErrorBoundary` - component-level error handling
-- `EmptyState` - consistent empty state illustration + message
+Align with **Issue 4**: derive nav/tab state from the URL where possible, lift shared overlay state to parents, and name modal/auth toggles consistently before introducing new abstractions.
 
-### 7. Documentation & Enforcement
-**Create**:
-- `src/components/ui/README.md` - usage guidelines, examples
-- Component stories (if using Storybook) or example pages
-- ESLint rules for prop consistency (optional)
-- Code review checklist for UI components
+### 6. Loading and error states
 
-## Implementation Roadmap
+Align with **Issue 6** and the catalog: promote `ShimmerPlaceholder` / `EmptyState`, document a loading taxonomy (route vs section vs inline), and prefer error boundaries over silent `catch` when users should see a failure.
 
-### Phase 1: Foundation (Week 1)
-- [ ] Create `src/components/ui/` directory
-- [ ] Implement `Icon` component with consistent API
-- [ ] Create `Button` component (primary/secondary variants)
-- [ ] Establish theme utility functions
-- [ ] Create `useHover` and `useFocusVisible` hooks
+### 7. Documentation and enforcement
 
-### Phase 2: Core Components (Week 2)
-- [ ] Implement `Input`, `Textarea` components
-- [ ] Create `Card` component with variants
-- [ ] Implement `Badge` and `Avatar` components
-- [ ] Create `Loader` and `SkeletonLoader` components
+- `src/components/ui/README.md` as the catalog index (cross-linked in [Discovery for contributors](#discovery-for-contributors))
+- Optional Storybook or `/dev/ui` only if the team wants visual browsing
+- Optional ESLint or review checklist for new primitives
 
-### Phase 3: Container & Feedback (Week 3)
-- [ ] Implement `Modal`/`Dialog` system
-- [ ] Create `Tooltip` component
-- [ ] Implement `LoadingIndicator` and `ErrorBoundary`
-- [ ] Standardize `EmptyState` usage
+---
 
-### Phase 4: Migration (Week 4)
-- [ ] Replace icon usage in `navigation-bar.tsx`, `boudoir-header.tsx`
-- [ ] Refactor `novel-card.tsx` to use new UI components
-- [ ] Update `library-catalog.tsx` to use standardized components
-- [ ] Migrate form components to use new `Input`, `Button`
-- [ ] Replace custom hover logic with `useHover` hook
+## Rollout note (avoid duplicate roadmaps)
 
-### Phase 5: Review & Refinement (Week 5)
-- [ ] Audit all components for API consistency
-- [ ] Test responsive behavior across breakpoints
-- [ ] Verify accessibility (color contrast, focus order, ARIA labels)
-- [ ] Document usage examples in README
-- [ ] Gather feedback from team/stakeholders
-
-## Success Metrics
-- Reduction in custom CSS/inline styles in components
-- Increased component reusability (measured by reuse count)
-- Consistent visual language across all screens
-- Improved developer onboarding time for new UI work
-- Reduced CSS bundle size through utility-first approach
-- Fewer UI-related bugs reported
-
-## Files to Reference
+**Authoritative sequencing** is [Implementation roadmap (suggested)](#implementation-roadmap-suggested) (Phases 0–5) earlier in this document. If you map work to calendar weeks, line **Week 1** up with **Phase 1**, **Weeks 2–3** with **Phases 2–3**, and later weeks with **Phases 4–5** plus hardening—do not maintain a separate numbered phase system without stating which doc section wins.
