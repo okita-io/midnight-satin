@@ -4,14 +4,14 @@
     {
       "type": "frame",
       "id": "slide-ds-cover",
+      "name": "DS — Cover",
       "x": 0,
       "y": 0,
-      "name": "DS — Cover",
-      "clip": true,
       "width": 1920,
       "height": 1080,
       "fill": "$color.void",
       "layout": "none",
+      "clip": true,
       "children": [
         {
           "type": "frame",
@@ -23,6 +23,7 @@
           "layout": "vertical",
           "gap": 28,
           "justifyContent": "center",
+          "alignItems": "start",
           "children": [
             {
               "type": "text",
@@ -39,21 +40,20 @@
               "id": "cover-title",
               "fill": "$color.textMain",
               "content": "Midnight Satin\nDesign System",
-              "lineHeight": 1.08,
               "fontFamily": "Playfair Display",
               "fontSize": 72,
               "fontWeight": "700",
-              "fontStyle": "italic"
+              "fontStyle": "italic",
+              "lineHeight": 1.08
             },
             {
               "type": "text",
               "id": "cover-sub",
               "fill": "$color.textMuted",
               "content": "Tactile Noir Luxury — tokens, type, and slide shells for HTML → .pen conversion.",
-              "lineHeight": 1.35,
               "fontFamily": "Literata",
               "fontSize": 28,
-              "fontWeight": "normal"
+              "lineHeight": 1.35
             }
           ]
         }
@@ -62,14 +62,14 @@
     {
       "type": "frame",
       "id": "slide-ds-colors",
+      "name": "DS — Color tokens",
       "x": 2000,
       "y": 0,
-      "name": "DS — Color tokens",
-      "clip": true,
       "width": 1920,
       "height": 1080,
       "fill": "$color.void",
       "layout": "none",
+      "clip": true,
       "children": [
         {
           "type": "frame",
@@ -94,10 +94,9 @@
               "id": "colors-sub",
               "fill": "$color.textMuted",
               "content": "Use $color.* variables in fills and strokes — match production Tailwind tokens.",
-              "lineHeight": 1.35,
               "fontFamily": "Literata",
               "fontSize": 24,
-              "fontWeight": "normal"
+              "lineHeight": 1.35
             }
           ]
         },
@@ -108,27 +107,29 @@
           "y": 260,
           "width": 1720,
           "height": 420,
+          "layout": "horizontal",
           "gap": 20,
+          "alignItems": "start",
           "children": [
             {
               "type": "frame",
               "id": "sw-wrap-primary",
-              "width": 160,
               "layout": "vertical",
               "gap": 10,
               "alignItems": "center",
+              "width": 160,
               "children": [
                 {
                   "type": "rectangle",
-                  "cornerRadius": 8,
                   "id": "sw-rect-primary",
-                  "fill": "$color.primary",
                   "width": 140,
                   "height": 140,
+                  "cornerRadius": 8,
+                  "fill": "$color.primary",
                   "stroke": {
                     "align": "inside",
-                    "thickness": 1,
-                    "fill": "#FFFFFF22"
+                    "fill": "#FFFFFF22",
+                    "thickness": 1
                   }
                 },
                 {
@@ -136,42 +137,41 @@
                   "id": "sw-label-primary",
                   "fill": "$color.textMain",
                   "content": "primary",
-                  "textAlign": "center",
                   "fontFamily": "Marcellus",
                   "fontSize": 18,
-                  "fontWeight": "500"
+                  "fontWeight": "500",
+                  "textAlign": "center"
                 },
                 {
                   "type": "text",
                   "id": "sw-hex-primary",
                   "fill": "$color.textMuted",
                   "content": "#D4AF37",
-                  "textAlign": "center",
                   "fontFamily": "Literata",
                   "fontSize": 15,
-                  "fontWeight": "normal"
+                  "textAlign": "center"
                 }
               ]
             },
             {
               "type": "frame",
               "id": "sw-wrap-void",
-              "width": 160,
               "layout": "vertical",
               "gap": 10,
               "alignItems": "center",
+              "width": 160,
               "children": [
                 {
                   "type": "rectangle",
-                  "cornerRadius": 8,
                   "id": "sw-rect-void",
-                  "fill": "$color.void",
                   "width": 140,
                   "height": 140,
+                  "cornerRadius": 8,
+                  "fill": "$color.void",
                   "stroke": {
                     "align": "inside",
-                    "thickness": 1,
-                    "fill": "#FFFFFF22"
+                    "fill": "#FFFFFF22",
+                    "thickness": 1
                   }
                 },
                 {
@@ -179,42 +179,41 @@
                   "id": "sw-label-void",
                   "fill": "$color.textMain",
                   "content": "void",
-                  "textAlign": "center",
                   "fontFamily": "Marcellus",
                   "fontSize": 18,
-                  "fontWeight": "500"
+                  "fontWeight": "500",
+                  "textAlign": "center"
                 },
                 {
                   "type": "text",
                   "id": "sw-hex-void",
                   "fill": "$color.textMuted",
                   "content": "#050505",
-                  "textAlign": "center",
                   "fontFamily": "Literata",
                   "fontSize": 15,
-                  "fontWeight": "normal"
+                  "textAlign": "center"
                 }
               ]
             },
             {
               "type": "frame",
               "id": "sw-wrap-surface",
-              "width": 160,
               "layout": "vertical",
               "gap": 10,
               "alignItems": "center",
+              "width": 160,
               "children": [
                 {
                   "type": "rectangle",
-                  "cornerRadius": 8,
                   "id": "sw-rect-surface",
-                  "fill": "$color.surface",
                   "width": 140,
                   "height": 140,
+                  "cornerRadius": 8,
+                  "fill": "$color.surface",
                   "stroke": {
                     "align": "inside",
-                    "thickness": 1,
-                    "fill": "#FFFFFF22"
+                    "fill": "#FFFFFF22",
+                    "thickness": 1
                   }
                 },
                 {
@@ -222,42 +221,41 @@
                   "id": "sw-label-surface",
                   "fill": "$color.textMain",
                   "content": "surface",
-                  "textAlign": "center",
                   "fontFamily": "Marcellus",
                   "fontSize": 18,
-                  "fontWeight": "500"
+                  "fontWeight": "500",
+                  "textAlign": "center"
                 },
                 {
                   "type": "text",
                   "id": "sw-hex-surface",
                   "fill": "$color.textMuted",
                   "content": "#121212",
-                  "textAlign": "center",
                   "fontFamily": "Literata",
                   "fontSize": 15,
-                  "fontWeight": "normal"
+                  "textAlign": "center"
                 }
               ]
             },
             {
               "type": "frame",
               "id": "sw-wrap-surfaceHi",
-              "width": 160,
               "layout": "vertical",
               "gap": 10,
               "alignItems": "center",
+              "width": 160,
               "children": [
                 {
                   "type": "rectangle",
-                  "cornerRadius": 8,
                   "id": "sw-rect-surfaceHi",
-                  "fill": "$color.surfaceHighlight",
                   "width": 140,
                   "height": 140,
+                  "cornerRadius": 8,
+                  "fill": "$color.surfaceHighlight",
                   "stroke": {
                     "align": "inside",
-                    "thickness": 1,
-                    "fill": "#FFFFFF22"
+                    "fill": "#FFFFFF22",
+                    "thickness": 1
                   }
                 },
                 {
@@ -265,42 +263,41 @@
                   "id": "sw-label-surfaceHi",
                   "fill": "$color.textMain",
                   "content": "surfaceHighlight",
-                  "textAlign": "center",
                   "fontFamily": "Marcellus",
                   "fontSize": 18,
-                  "fontWeight": "500"
+                  "fontWeight": "500",
+                  "textAlign": "center"
                 },
                 {
                   "type": "text",
                   "id": "sw-hex-surfaceHi",
                   "fill": "$color.textMuted",
                   "content": "#1A1A1A",
-                  "textAlign": "center",
                   "fontFamily": "Literata",
                   "fontSize": 15,
-                  "fontWeight": "normal"
+                  "textAlign": "center"
                 }
               ]
             },
             {
               "type": "frame",
               "id": "sw-wrap-accent",
-              "width": 160,
               "layout": "vertical",
               "gap": 10,
               "alignItems": "center",
+              "width": 160,
               "children": [
                 {
                   "type": "rectangle",
-                  "cornerRadius": 8,
                   "id": "sw-rect-accent",
-                  "fill": "$color.accent",
                   "width": 140,
                   "height": 140,
+                  "cornerRadius": 8,
+                  "fill": "$color.accent",
                   "stroke": {
                     "align": "inside",
-                    "thickness": 1,
-                    "fill": "#FFFFFF22"
+                    "fill": "#FFFFFF22",
+                    "thickness": 1
                   }
                 },
                 {
@@ -308,42 +305,41 @@
                   "id": "sw-label-accent",
                   "fill": "$color.textMain",
                   "content": "accent",
-                  "textAlign": "center",
                   "fontFamily": "Marcellus",
                   "fontSize": 18,
-                  "fontWeight": "500"
+                  "fontWeight": "500",
+                  "textAlign": "center"
                 },
                 {
                   "type": "text",
                   "id": "sw-hex-accent",
                   "fill": "$color.textMuted",
                   "content": "#800020",
-                  "textAlign": "center",
                   "fontFamily": "Literata",
                   "fontSize": 15,
-                  "fontWeight": "normal"
+                  "textAlign": "center"
                 }
               ]
             },
             {
               "type": "frame",
               "id": "sw-wrap-textMain",
-              "width": 160,
               "layout": "vertical",
               "gap": 10,
               "alignItems": "center",
+              "width": 160,
               "children": [
                 {
                   "type": "rectangle",
-                  "cornerRadius": 8,
                   "id": "sw-rect-textMain",
-                  "fill": "$color.textMain",
                   "width": 140,
                   "height": 140,
+                  "cornerRadius": 8,
+                  "fill": "$color.textMain",
                   "stroke": {
                     "align": "inside",
-                    "thickness": 1,
-                    "fill": "#FFFFFF22"
+                    "fill": "#FFFFFF22",
+                    "thickness": 1
                   }
                 },
                 {
@@ -351,42 +347,41 @@
                   "id": "sw-label-textMain",
                   "fill": "$color.textMain",
                   "content": "textMain",
-                  "textAlign": "center",
                   "fontFamily": "Marcellus",
                   "fontSize": 18,
-                  "fontWeight": "500"
+                  "fontWeight": "500",
+                  "textAlign": "center"
                 },
                 {
                   "type": "text",
                   "id": "sw-hex-textMain",
                   "fill": "$color.textMuted",
                   "content": "#EAEAEA",
-                  "textAlign": "center",
                   "fontFamily": "Literata",
                   "fontSize": 15,
-                  "fontWeight": "normal"
+                  "textAlign": "center"
                 }
               ]
             },
             {
               "type": "frame",
               "id": "sw-wrap-textMuted",
-              "width": 160,
               "layout": "vertical",
               "gap": 10,
               "alignItems": "center",
+              "width": 160,
               "children": [
                 {
                   "type": "rectangle",
-                  "cornerRadius": 8,
                   "id": "sw-rect-textMuted",
-                  "fill": "$color.textMuted",
                   "width": 140,
                   "height": 140,
+                  "cornerRadius": 8,
+                  "fill": "$color.textMuted",
                   "stroke": {
                     "align": "inside",
-                    "thickness": 1,
-                    "fill": "#FFFFFF22"
+                    "fill": "#FFFFFF22",
+                    "thickness": 1
                   }
                 },
                 {
@@ -394,42 +389,41 @@
                   "id": "sw-label-textMuted",
                   "fill": "$color.textMain",
                   "content": "textMuted",
-                  "textAlign": "center",
                   "fontFamily": "Marcellus",
                   "fontSize": 18,
-                  "fontWeight": "500"
+                  "fontWeight": "500",
+                  "textAlign": "center"
                 },
                 {
                   "type": "text",
                   "id": "sw-hex-textMuted",
                   "fill": "$color.textMuted",
                   "content": "#8A8A8A",
-                  "textAlign": "center",
                   "fontFamily": "Literata",
                   "fontSize": 15,
-                  "fontWeight": "normal"
+                  "textAlign": "center"
                 }
               ]
             },
             {
               "type": "frame",
               "id": "sw-wrap-navBg",
-              "width": 160,
               "layout": "vertical",
               "gap": 10,
               "alignItems": "center",
+              "width": 160,
               "children": [
                 {
                   "type": "rectangle",
-                  "cornerRadius": 8,
                   "id": "sw-rect-navBg",
-                  "fill": "$color.navBg",
                   "width": 140,
                   "height": 140,
+                  "cornerRadius": 8,
+                  "fill": "$color.navBg",
                   "stroke": {
                     "align": "inside",
-                    "thickness": 1,
-                    "fill": "#FFFFFF22"
+                    "fill": "#FFFFFF22",
+                    "thickness": 1
                   }
                 },
                 {
@@ -437,20 +431,19 @@
                   "id": "sw-label-navBg",
                   "fill": "$color.textMain",
                   "content": "navBg",
-                  "textAlign": "center",
                   "fontFamily": "Marcellus",
                   "fontSize": 18,
-                  "fontWeight": "500"
+                  "fontWeight": "500",
+                  "textAlign": "center"
                 },
                 {
                   "type": "text",
                   "id": "sw-hex-navBg",
                   "fill": "$color.textMuted",
                   "content": "#080808",
-                  "textAlign": "center",
                   "fontFamily": "Literata",
                   "fontSize": 15,
-                  "fontWeight": "normal"
+                  "textAlign": "center"
                 }
               ]
             }
@@ -461,14 +454,14 @@
     {
       "type": "frame",
       "id": "slide-ds-typography",
+      "name": "DS — Typography",
       "x": 4000,
       "y": 0,
-      "name": "DS — Typography",
-      "clip": true,
       "width": 1920,
       "height": 1080,
       "fill": "$color.void",
       "layout": "none",
+      "clip": true,
       "children": [
         {
           "type": "frame",
@@ -494,8 +487,7 @@
               "fill": "$color.textMuted",
               "content": "PRD: Display Playfair · Headings Cinzel · Body Literata · UI Marcellus",
               "fontFamily": "Literata",
-              "fontSize": 22,
-              "fontWeight": "normal"
+              "fontSize": 22
             }
           ]
         },
@@ -512,9 +504,9 @@
             {
               "type": "frame",
               "id": "type-row-display",
-              "width": "fill_container",
               "layout": "vertical",
               "gap": 12,
+              "width": "fill_container",
               "children": [
                 {
                   "type": "text",
@@ -531,29 +523,28 @@
                   "id": "type-sample-display",
                   "fill": "$color.textMain",
                   "content": "The Duke’s Forbidden Vow",
-                  "lineHeight": 1.15,
                   "fontFamily": "Playfair Display",
                   "fontSize": 52,
-                  "fontWeight": "700"
+                  "fontWeight": "700",
+                  "lineHeight": 1.15
                 },
                 {
                   "type": "text",
                   "id": "type-meta-display",
                   "fill": "$color.textMuted",
                   "content": "Italic allowed · high contrast on void",
-                  "lineHeight": 1.35,
                   "fontFamily": "Literata",
                   "fontSize": 20,
-                  "fontWeight": "normal"
+                  "lineHeight": 1.35
                 }
               ]
             },
             {
               "type": "frame",
               "id": "type-row-heading",
-              "width": "fill_container",
               "layout": "vertical",
               "gap": 12,
+              "width": "fill_container",
               "children": [
                 {
                   "type": "text",
@@ -570,29 +561,28 @@
                   "id": "type-sample-heading",
                   "fill": "$color.textMain",
                   "content": "HIGH SOCIETY",
-                  "lineHeight": 1.15,
                   "fontFamily": "Cinzel",
                   "fontSize": 22,
-                  "fontWeight": "500"
+                  "fontWeight": "500",
+                  "lineHeight": 1.15
                 },
                 {
                   "type": "text",
                   "id": "type-meta-heading",
                   "fill": "$color.textMuted",
                   "content": "Uppercase · letter-spacing ~3–4px · app sizes often 10–13px on mobile",
-                  "lineHeight": 1.35,
                   "fontFamily": "Literata",
                   "fontSize": 20,
-                  "fontWeight": "normal"
+                  "lineHeight": 1.35
                 }
               ]
             },
             {
               "type": "frame",
               "id": "type-row-body",
-              "width": "fill_container",
               "layout": "vertical",
               "gap": 12,
+              "width": "fill_container",
               "children": [
                 {
                   "type": "text",
@@ -609,29 +599,28 @@
                   "id": "type-sample-body",
                   "fill": "$color.textMain",
                   "content": "She closed the ledger slowly, as if the ink might still be wet.",
-                  "lineHeight": 1.15,
                   "fontFamily": "Literata",
                   "fontSize": 26,
-                  "fontWeight": "normal"
+                  "fontWeight": "400",
+                  "lineHeight": 1.15
                 },
                 {
                   "type": "text",
                   "id": "type-meta-body",
                   "fill": "$color.textMuted",
                   "content": "Long-form ~18px in product; scaled up here for slide legibility",
-                  "lineHeight": 1.35,
                   "fontFamily": "Literata",
                   "fontSize": 20,
-                  "fontWeight": "normal"
+                  "lineHeight": 1.35
                 }
               ]
             },
             {
               "type": "frame",
               "id": "type-row-ui",
-              "width": "fill_container",
               "layout": "vertical",
               "gap": 12,
+              "width": "fill_container",
               "children": [
                 {
                   "type": "text",
@@ -648,20 +637,19 @@
                   "id": "type-sample-ui",
                   "fill": "$color.textMain",
                   "content": "Continue reading",
-                  "lineHeight": 1.15,
                   "fontFamily": "Marcellus",
                   "fontSize": 22,
-                  "fontWeight": "normal"
+                  "fontWeight": "400",
+                  "lineHeight": 1.15
                 },
                 {
                   "type": "text",
                   "id": "type-meta-ui",
                   "fill": "$color.textMuted",
                   "content": "~14px in UI chrome; tracking on micro-labels",
-                  "lineHeight": 1.35,
                   "fontFamily": "Literata",
                   "fontSize": 20,
-                  "fontWeight": "normal"
+                  "lineHeight": 1.35
                 }
               ]
             }
@@ -672,14 +660,14 @@
     {
       "type": "frame",
       "id": "slide-ds-mobile-shell",
+      "name": "DS — Mobile shell 390",
       "x": 6000,
       "y": 0,
-      "name": "DS — Mobile shell 390",
-      "clip": true,
       "width": 1920,
       "height": 1080,
       "fill": "$color.void",
       "layout": "none",
+      "clip": true,
       "children": [
         {
           "type": "frame",
@@ -703,13 +691,10 @@
               "type": "text",
               "id": "mobile-body",
               "fill": "$color.textMuted",
-              "textGrowth": "fixed-width",
-              "width": 473,
               "content": "Reference HTML is mobile-first at 390pt width.\n\nWhen converting a screen, start from this frame: void background, $space.screenPad horizontal padding on sections, $radius.card on cards.",
-              "lineHeight": 1.45,
               "fontFamily": "Literata",
               "fontSize": 24,
-              "fontWeight": "normal"
+              "lineHeight": 1.45
             }
           ]
         },
@@ -718,17 +703,17 @@
           "id": "mobile-chrome",
           "x": 620,
           "y": 120,
-          "clip": true,
           "width": 390,
           "height": 900,
           "fill": "$color.void",
-          "cornerRadius": 4,
           "stroke": {
             "align": "inside",
-            "thickness": 2,
-            "fill": "$color.primary"
+            "fill": "$color.primary",
+            "thickness": 2
           },
           "layout": "vertical",
+          "clip": true,
+          "cornerRadius": 4,
           "children": [
             {
               "type": "frame",
@@ -736,12 +721,13 @@
               "width": "fill_container",
               "height": 72,
               "fill": "$color.surface",
+              "layout": "horizontal",
               "padding": [
                 16,
                 24
               ],
-              "justifyContent": "center",
               "alignItems": "center",
+              "justifyContent": "center",
               "children": [
                 {
                   "type": "text",
@@ -762,11 +748,11 @@
               "height": "fill_container",
               "fill": "$color.void",
               "layout": "vertical",
-              "gap": 16,
               "padding": [
                 32,
                 24
               ],
+              "gap": 16,
               "children": [
                 {
                   "type": "text",
@@ -782,14 +768,10 @@
                   "type": "text",
                   "id": "mobile-chrome-p",
                   "fill": "$color.textMuted",
-                  "textGrowth": "fixed-width-height",
-                  "width": 341,
-                  "height": 48,
                   "content": "Duplicate this slide or pull components from the library strip (x > 10k).",
-                  "lineHeight": 1.5,
                   "fontFamily": "Literata",
                   "fontSize": 16,
-                  "fontWeight": "normal"
+                  "lineHeight": 1.5
                 }
               ]
             }
@@ -800,14 +782,14 @@
     {
       "type": "frame",
       "id": "slide-ds-workflow",
+      "name": "DS — HTML → slides workflow",
       "x": 8000,
       "y": 0,
-      "name": "DS — HTML → slides workflow",
-      "clip": true,
       "width": 1920,
       "height": 1080,
       "fill": "$color.void",
       "layout": "none",
+      "clip": true,
       "children": [
         {
           "type": "frame",
@@ -833,30 +815,27 @@
               "id": "wf-1",
               "fill": "$color.textMain",
               "content": "1. Copy variables from this file into each new screen .pen (or keep one library file open).",
-              "lineHeight": 1.4,
               "fontFamily": "Literata",
               "fontSize": 26,
-              "fontWeight": "normal"
+              "lineHeight": 1.4
             },
             {
               "type": "text",
               "id": "wf-2",
               "fill": "$color.textMain",
               "content": "2. One idea per slide (Pencil Slides guide): split dense HTML across multiple 1920×1080 frames.",
-              "lineHeight": 1.4,
               "fontFamily": "Literata",
               "fontSize": 26,
-              "fontWeight": "normal"
+              "lineHeight": 1.4
             },
             {
               "type": "text",
               "id": "wf-3",
               "fill": "$color.textMain",
               "content": "3. Replace ephemeral image URLs with repo assets under public/images/generated/ or reference/pencil/images/.",
-              "lineHeight": 1.4,
               "fontFamily": "Literata",
               "fontSize": 26,
-              "fontWeight": "normal"
+              "lineHeight": 1.4
             },
             {
               "type": "text",
@@ -865,7 +844,6 @@
               "content": "Regenerate: node reference/pencil/build-design-system-pencil.mjs",
               "fontFamily": "Marcellus",
               "fontSize": 22,
-              "fontWeight": "normal",
               "letterSpacing": 1
             }
           ]
@@ -875,18 +853,18 @@
     {
       "type": "frame",
       "id": "strip-ds-reusables",
+      "name": "DS — Reusable primitives",
       "x": 10000,
       "y": 0,
-      "name": "DS — Reusable primitives",
       "width": 420,
       "height": 1080,
       "fill": "#0A0A0A",
       "stroke": {
         "align": "inside",
+        "fill": "#2A2A2A",
         "thickness": {
           "left": 1
-        },
-        "fill": "#2A2A2A"
+        }
       },
       "layout": "vertical",
       "gap": 32,
@@ -909,14 +887,10 @@
           "type": "text",
           "id": "strip-hint",
           "fill": "$color.textMuted",
-          "textGrowth": "fixed-width-height",
-          "width": 360,
-          "height": 52,
-          "content": "Insert instances via ref to these IDs from other .pen files in the same project.",
-          "lineHeight": 1.45,
+          "content": "Insert instances via ref to these IDs from other .pen files in the same project (section label, card chrome, gold pill, character portrait, character dossier).",
           "fontFamily": "Literata",
           "fontSize": 16,
-          "fontWeight": "normal"
+          "lineHeight": 1.45
         },
         {
           "type": "frame",
@@ -924,12 +898,13 @@
           "name": "MS · Section label",
           "reusable": true,
           "width": "fill_container",
+          "layout": "horizontal",
+          "justifyContent": "space_between",
+          "alignItems": "center",
           "padding": [
             0,
             8
           ],
-          "justifyContent": "space_between",
-          "alignItems": "center",
           "children": [
             {
               "type": "text",
@@ -948,7 +923,6 @@
               "content": "View all →",
               "fontFamily": "Marcellus",
               "fontSize": 12,
-              "fontWeight": "normal",
               "letterSpacing": 1
             }
           ]
@@ -964,12 +938,12 @@
           "cornerRadius": 2,
           "stroke": {
             "align": "inside",
-            "thickness": 1,
-            "fill": "#FFFFFF0D"
+            "fill": "#FFFFFF0D",
+            "thickness": 1
           },
+          "padding": 16,
           "layout": "vertical",
           "gap": 12,
-          "padding": 16,
           "justifyContent": "center",
           "children": [
             {
@@ -987,8 +961,7 @@
               "fill": "$color.textMuted",
               "content": "Author · Marcellus 13px",
               "fontFamily": "Marcellus",
-              "fontSize": 13,
-              "fontWeight": "normal"
+              "fontSize": 13
             }
           ]
         },
@@ -997,6 +970,7 @@
           "id": "reuse-ms-gold-pill",
           "name": "MS · Gold pill button",
           "reusable": true,
+          "width": "fit_content",
           "height": 44,
           "fill": "$color.primary",
           "cornerRadius": 2,
@@ -1004,8 +978,9 @@
             12,
             28
           ],
-          "justifyContent": "center",
+          "layout": "horizontal",
           "alignItems": "center",
+          "justifyContent": "center",
           "children": [
             {
               "type": "text",
@@ -1016,6 +991,679 @@
               "fontSize": 14,
               "fontWeight": "500",
               "letterSpacing": 1
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "reuse-ms-character-portrait",
+          "name": "MS · Character portrait card",
+          "reusable": true,
+          "width": 358,
+          "height": 600,
+          "fill": "$color.surface",
+          "cornerRadius": 2,
+          "clip": true,
+          "stroke": {
+            "align": "inside",
+            "fill": "#FFFFFF0D",
+            "thickness": 1
+          },
+          "layout": "none",
+          "children": [
+            {
+              "type": "rectangle",
+              "id": "reuse-ms-character-portrait-photo",
+              "x": 0,
+              "y": 0,
+              "width": 358,
+              "height": 600,
+              "fill": {
+                "type": "image",
+                "enabled": true,
+                "mode": "fill",
+                "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuDbV5TijEhfdu5lu1dP6DSAS6PvVPCnRe2F_k32RLtSk8xYkX8NodrOPWQJjua_E-yqZIzV2zWVDqQuMJtvK5YnXn9o3lU85Y963540yPYWXd-K7toH3Fz05ujkW7kSbxSg9QxMMbsYwlOehSsAWolRd2V1juQEIygZHbAr3QKmspm5mliFndhQ03-q11nhkhMNIhNtUoM_ZV7KugsvY0ItOcYl1o2azfjpKvL-49wCMwujdDLxs32uEo7blAGsuDO8JQaO45xyTJc"
+              }
+            },
+            {
+              "type": "rectangle",
+              "id": "reuse-ms-character-portrait-vignette",
+              "x": 0,
+              "y": 0,
+              "width": 358,
+              "height": 600,
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "rotation": 180,
+                "colors": [
+                  {
+                    "color": "#05050500",
+                    "position": 0
+                  },
+                  {
+                    "color": "#05050566",
+                    "position": 0.5
+                  },
+                  {
+                    "color": "#050505AA",
+                    "position": 1
+                  }
+                ]
+              }
+            },
+            {
+              "type": "frame",
+              "id": "reuse-ms-character-portrait-trophy",
+              "x": 286,
+              "y": 16,
+              "width": 56,
+              "height": 72,
+              "layout": "vertical",
+              "gap": 6,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "reuse-ms-character-portrait-trophy-badge",
+                  "width": 40,
+                  "height": 40,
+                  "fill": "#121212CC",
+                  "cornerRadius": 20,
+                  "stroke": {
+                    "align": "inside",
+                    "fill": "$color.primary",
+                    "thickness": 1
+                  },
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "blur": 12,
+                    "spread": 0,
+                    "color": "#D4AF3766",
+                    "offset": {
+                      "x": 0,
+                      "y": 0
+                    }
+                  },
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "reuse-ms-character-portrait-trophy-icon",
+                      "width": 22,
+                      "height": 22,
+                      "fill": "$color.primary",
+                      "iconFontName": "emoji_events",
+                      "iconFontFamily": "Material Symbols Outlined",
+                      "weight": 400
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "reuse-ms-character-portrait-trophy-caption",
+                  "content": "Top Pick",
+                  "fill": "$color.primary",
+                  "fontFamily": "Cinzel",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "reuse-ms-character-portrait-bottom",
+              "x": 0,
+              "y": 208,
+              "width": 358,
+              "height": 392,
+              "layout": "vertical",
+              "alignItems": "center",
+              "justifyContent": "start",
+              "gap": 20,
+              "padding": [
+                112,
+                32,
+                40,
+                32
+              ],
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "rotation": 180,
+                "colors": [
+                  {
+                    "color": "#05050500",
+                    "position": 0
+                  },
+                  {
+                    "color": "#050505E6",
+                    "position": 0.55
+                  },
+                  {
+                    "color": "#050505",
+                    "position": 1
+                  }
+                ]
+              },
+              "children": [
+                {
+                  "type": "text",
+                  "id": "reuse-ms-character-portrait-teaser",
+                  "content": "A brooding exile emerging from the shadows of his past, Alistair returns to a city that forgot him, determined to reclaim a legacy stolen by betrayal.",
+                  "fill": "#EAEAEA99",
+                  "fontFamily": "Literata",
+                  "fontSize": 14,
+                  "fontStyle": "italic",
+                  "lineHeight": 1.45,
+                  "textGrowth": "fixed-width",
+                  "width": 300,
+                  "textAlign": "center"
+                },
+                {
+                  "type": "frame",
+                  "id": "reuse-ms-character-portrait-role-row",
+                  "layout": "horizontal",
+                  "width": "fit_content",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "id": "reuse-ms-character-portrait-role-rule-l",
+                      "width": 32,
+                      "height": 1,
+                      "fill": "#D4AF3780"
+                    },
+                    {
+                      "type": "text",
+                      "id": "reuse-ms-character-portrait-role",
+                      "content": "The Exiled Heir",
+                      "fill": "$color.primary",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 12,
+                      "letterSpacing": 3
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "reuse-ms-character-portrait-role-rule-r",
+                      "width": 32,
+                      "height": 1,
+                      "fill": "#D4AF3780"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "reuse-ms-character-portrait-name",
+                  "content": "Duke Alistair",
+                  "fill": "#FFFFFF",
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 36,
+                  "fontStyle": "italic",
+                  "fontWeight": "700",
+                  "textAlign": "center"
+                },
+                {
+                  "type": "frame",
+                  "id": "reuse-ms-character-portrait-cta",
+                  "layout": "horizontal",
+                  "width": "fit_content",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "reuse-ms-character-portrait-cta-icon",
+                      "width": 16,
+                      "height": 16,
+                      "fill": "#FFFFFF66",
+                      "iconFontName": "cached",
+                      "iconFontFamily": "Material Symbols Outlined",
+                      "weight": 400
+                    },
+                    {
+                      "type": "text",
+                      "id": "reuse-ms-character-portrait-cta-label",
+                      "content": "Tap to reveal dossier",
+                      "fill": "#FFFFFF66",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 11,
+                      "letterSpacing": 3
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "reuse-ms-character-dossier",
+          "name": "MS · Character dossier card",
+          "reusable": true,
+          "width": 358,
+          "height": "fit_content",
+          "fill": "$color.surface",
+          "cornerRadius": 2,
+          "stroke": {
+            "align": "inside",
+            "fill": "#D4AF3733",
+            "thickness": 1
+          },
+          "effect": {
+            "type": "shadow",
+            "shadowType": "inner",
+            "blur": 24,
+            "spread": 0,
+            "color": "#D4AF3726",
+            "offset": {
+              "x": 0,
+              "y": 0
+            }
+          },
+          "layout": "vertical",
+          "gap": 24,
+          "padding": 32,
+          "children": [
+            {
+              "type": "frame",
+              "id": "reuse-ms-character-dossier-header",
+              "layout": "vertical",
+              "width": "fill_container",
+              "gap": 16,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "reuse-ms-character-dossier-title-row",
+                  "layout": "horizontal",
+                  "width": "fill_container",
+                  "justifyContent": "space_between",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "reuse-ms-character-dossier-confidential",
+                      "content": "Confidential",
+                      "fill": "$color.primary",
+                      "fontFamily": "Cinzel",
+                      "fontSize": 18,
+                      "fontWeight": "500",
+                      "letterSpacing": 4
+                    },
+                    {
+                      "type": "text",
+                      "id": "reuse-ms-character-dossier-ref",
+                      "content": "REF: 09-22-A",
+                      "fill": "#FFFFFF33",
+                      "fontFamily": "Literata",
+                      "fontSize": 11,
+                      "fontStyle": "italic",
+                      "letterSpacing": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "rectangle",
+                  "id": "reuse-ms-character-dossier-rule",
+                  "width": "fill_container",
+                  "height": 1,
+                  "fill": "#D4AF3733"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "reuse-ms-character-dossier-stats",
+              "layout": "vertical",
+              "width": "fill_container",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "reuse-ms-character-dossier-stats-r1",
+                  "layout": "horizontal",
+                  "width": "fill_container",
+                  "gap": 24,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "reuse-ms-character-dossier-stat-age",
+                      "layout": "vertical",
+                      "width": "fill_container",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "reuse-ms-character-dossier-label-age",
+                          "content": "Age",
+                          "fill": "$color.textMuted",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 11,
+                          "letterSpacing": 2
+                        },
+                        {
+                          "type": "text",
+                          "id": "reuse-ms-character-dossier-value-age",
+                          "content": "29 Years",
+                          "fill": "$color.textMain",
+                          "fontFamily": "Literata",
+                          "fontSize": 18
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "reuse-ms-character-dossier-stat-status",
+                      "layout": "vertical",
+                      "width": "fill_container",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "reuse-ms-character-dossier-label-status",
+                          "content": "Status",
+                          "fill": "$color.textMuted",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 11,
+                          "letterSpacing": 2
+                        },
+                        {
+                          "type": "text",
+                          "id": "reuse-ms-character-dossier-value-status",
+                          "content": "Unmarried",
+                          "fill": "$color.textMain",
+                          "fontFamily": "Literata",
+                          "fontSize": 18
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "reuse-ms-character-dossier-stats-r2",
+                  "layout": "horizontal",
+                  "width": "fill_container",
+                  "gap": 24,
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "reuse-ms-character-dossier-stat-height",
+                      "layout": "vertical",
+                      "width": "fill_container",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "reuse-ms-character-dossier-label-height",
+                          "content": "Height",
+                          "fill": "$color.textMuted",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 11,
+                          "letterSpacing": 2
+                        },
+                        {
+                          "type": "text",
+                          "id": "reuse-ms-character-dossier-value-height",
+                          "content": "6' 2\"",
+                          "fill": "$color.textMain",
+                          "fontFamily": "Literata",
+                          "fontSize": 18
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "reuse-ms-character-dossier-stat-occ",
+                      "layout": "vertical",
+                      "width": "fill_container",
+                      "gap": 4,
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "reuse-ms-character-dossier-label-occ",
+                          "content": "Occupation",
+                          "fill": "$color.textMuted",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 11,
+                          "letterSpacing": 2
+                        },
+                        {
+                          "type": "text",
+                          "id": "reuse-ms-character-dossier-value-occ",
+                          "content": "Landowner",
+                          "fill": "$color.textMain",
+                          "fontFamily": "Literata",
+                          "fontSize": 18
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "reuse-ms-character-dossier-tastes",
+              "layout": "vertical",
+              "width": "fill_container",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "reuse-ms-character-dossier-tastes-row",
+                  "layout": "horizontal",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "reuse-ms-character-dossier-tastes-icon",
+                      "width": 16,
+                      "height": 16,
+                      "fill": "$color.primary",
+                      "iconFontName": "favorite",
+                      "iconFontFamily": "Material Symbols Outlined",
+                      "weight": 400
+                    },
+                    {
+                      "type": "text",
+                      "id": "reuse-ms-character-dossier-tastes-title",
+                      "content": "Tastes & Temptations",
+                      "fill": "$color.primary",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 11,
+                      "letterSpacing": 2
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "reuse-ms-character-dossier-tastes-panel",
+                  "layout": "vertical",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "padding": 16,
+                  "fill": "#0D0D0D",
+                  "cornerRadius": 2,
+                  "stroke": {
+                    "align": "inside",
+                    "fill": "#FFFFFF0D",
+                    "thickness": 1
+                  },
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "reuse-ms-character-dossier-tastes-fav-label",
+                      "content": "Favorites",
+                      "fill": "$color.textMuted",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 10,
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "reuse-ms-character-dossier-tastes-fav-text",
+                      "content": "Single-malt Scotch, rain on slate roofs",
+                      "fill": "$color.textMain",
+                      "fontFamily": "Literata",
+                      "fontSize": 14,
+                      "fontStyle": "italic",
+                      "lineHeight": 1.45,
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "reuse-ms-character-dossier-secrets",
+              "layout": "vertical",
+              "width": "fill_container",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "reuse-ms-character-dossier-secrets-head",
+                  "layout": "horizontal",
+                  "width": "fill_container",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon_font",
+                      "id": "reuse-ms-character-dossier-secrets-lock",
+                      "width": 16,
+                      "height": 16,
+                      "fill": "$color.primary",
+                      "iconFontName": "lock",
+                      "iconFontFamily": "Material Symbols Outlined",
+                      "weight": 400
+                    },
+                    {
+                      "type": "text",
+                      "id": "reuse-ms-character-dossier-secrets-title",
+                      "content": "Known Secrets",
+                      "fill": "$color.primary",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 11,
+                      "letterSpacing": 2
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "reuse-ms-character-dossier-quote-box",
+                  "layout": "horizontal",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "alignItems": "start",
+                  "padding": 16,
+                  "fill": "#0D0D0D",
+                  "cornerRadius": 2,
+                  "stroke": {
+                    "align": "inside",
+                    "fill": "#FFFFFF0D",
+                    "thickness": 1
+                  },
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "id": "reuse-ms-character-dossier-quote-accent",
+                      "width": 4,
+                      "height": 72,
+                      "fill": "$color.accent",
+                      "cornerRadius": 1
+                    },
+                    {
+                      "type": "text",
+                      "id": "reuse-ms-character-dossier-quote-text",
+                      "content": "He refuses to sign documents with his family name, opting instead for a wax seal of a broken sword.",
+                      "fill": "$color.textMain",
+                      "fontFamily": "Literata",
+                      "fontSize": 14,
+                      "fontStyle": "italic",
+                      "lineHeight": 1.45,
+                      "textGrowth": "fixed-width",
+                      "width": "fill_container"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "reuse-ms-character-dossier-bg",
+              "layout": "vertical",
+              "width": "fill_container",
+              "gap": 8,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "reuse-ms-character-dossier-bg-label",
+                  "content": "Background",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 11,
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "reuse-ms-character-dossier-bg-text",
+                  "content": "Cast out from the capital after the Great Scandal of '92, Alistair retreated to the shadowed moors of his ancestral estate. Though rumors paint him as a villain, the locals whisper of his quiet generosity towards the forgotten.",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Literata",
+                  "fontSize": 14,
+                  "lineHeight": 1.45,
+                  "textGrowth": "fixed-width",
+                  "width": "fill_container"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "reuse-ms-character-dossier-footer",
+              "layout": "horizontal",
+              "width": "fill_container",
+              "justifyContent": "center",
+              "alignItems": "center",
+              "gap": 8,
+              "padding": [
+                16,
+                0,
+                0,
+                0
+              ],
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "reuse-ms-character-dossier-footer-icon",
+                  "width": 16,
+                  "height": 16,
+                  "fill": "#FFFFFF4D",
+                  "iconFontName": "undo",
+                  "iconFontFamily": "Material Symbols Outlined",
+                  "weight": 400
+                },
+                {
+                  "type": "text",
+                  "id": "reuse-ms-character-dossier-footer-hint",
+                  "content": "Return to portrait",
+                  "fill": "#FFFFFF4D",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 11,
+                  "letterSpacing": 3
+                }
+              ]
             }
           ]
         }
