@@ -1,7 +1,7 @@
 # Midnight Satin Component Unification Plan
 
 This document outlines inconsistencies found in the Midnight Satin Next.js app and proposes a unification strategy to create a more cohesive, stable, and maintainable UI component system.
-
+ 
 ## Purpose
 
 The app’s **current UI is in good shape**: screens align with `reference/`, typography and noir–gold language read as intentional, and feature components under `src/app/_components/` are maintainable for what exists today.

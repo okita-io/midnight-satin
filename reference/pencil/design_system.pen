@@ -1,0 +1,1080 @@
+{
+  "version": "2.11",
+  "children": [
+    {
+      "type": "frame",
+      "id": "slide-ds-cover",
+      "x": 0,
+      "y": 0,
+      "name": "DS — Cover",
+      "clip": true,
+      "width": 1920,
+      "height": 1080,
+      "fill": "$color.void",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "slide-cover-stack",
+          "x": 100,
+          "y": 100,
+          "width": 1720,
+          "height": 880,
+          "layout": "vertical",
+          "gap": 28,
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "cover-eyebrow",
+              "fill": "$color.primary",
+              "content": "REFERENCE · PENCIL",
+              "fontFamily": "Cinzel",
+              "fontSize": 14,
+              "fontWeight": "500",
+              "letterSpacing": 4
+            },
+            {
+              "type": "text",
+              "id": "cover-title",
+              "fill": "$color.textMain",
+              "content": "Midnight Satin\nDesign System",
+              "lineHeight": 1.08,
+              "fontFamily": "Playfair Display",
+              "fontSize": 72,
+              "fontWeight": "700",
+              "fontStyle": "italic"
+            },
+            {
+              "type": "text",
+              "id": "cover-sub",
+              "fill": "$color.textMuted",
+              "content": "Tactile Noir Luxury — tokens, type, and slide shells for HTML → .pen conversion.",
+              "lineHeight": 1.35,
+              "fontFamily": "Literata",
+              "fontSize": 28,
+              "fontWeight": "normal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "slide-ds-colors",
+      "x": 2000,
+      "y": 0,
+      "name": "DS — Color tokens",
+      "clip": true,
+      "width": 1920,
+      "height": 1080,
+      "fill": "$color.void",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "colors-head",
+          "x": 100,
+          "y": 100,
+          "width": 1720,
+          "layout": "vertical",
+          "gap": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "colors-title",
+              "fill": "$color.textMain",
+              "content": "Palette",
+              "fontFamily": "Playfair Display",
+              "fontSize": 48,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "colors-sub",
+              "fill": "$color.textMuted",
+              "content": "Use $color.* variables in fills and strokes — match production Tailwind tokens.",
+              "lineHeight": 1.35,
+              "fontFamily": "Literata",
+              "fontSize": 24,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "colors-row",
+          "x": 100,
+          "y": 260,
+          "width": 1720,
+          "height": 420,
+          "gap": 20,
+          "children": [
+            {
+              "type": "frame",
+              "id": "sw-wrap-primary",
+              "width": 160,
+              "layout": "vertical",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 8,
+                  "id": "sw-rect-primary",
+                  "fill": "$color.primary",
+                  "width": 140,
+                  "height": 140,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#FFFFFF22"
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "sw-label-primary",
+                  "fill": "$color.textMain",
+                  "content": "primary",
+                  "textAlign": "center",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 18,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "sw-hex-primary",
+                  "fill": "$color.textMuted",
+                  "content": "#D4AF37",
+                  "textAlign": "center",
+                  "fontFamily": "Literata",
+                  "fontSize": 15,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "sw-wrap-void",
+              "width": 160,
+              "layout": "vertical",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 8,
+                  "id": "sw-rect-void",
+                  "fill": "$color.void",
+                  "width": 140,
+                  "height": 140,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#FFFFFF22"
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "sw-label-void",
+                  "fill": "$color.textMain",
+                  "content": "void",
+                  "textAlign": "center",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 18,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "sw-hex-void",
+                  "fill": "$color.textMuted",
+                  "content": "#050505",
+                  "textAlign": "center",
+                  "fontFamily": "Literata",
+                  "fontSize": 15,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "sw-wrap-surface",
+              "width": 160,
+              "layout": "vertical",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 8,
+                  "id": "sw-rect-surface",
+                  "fill": "$color.surface",
+                  "width": 140,
+                  "height": 140,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#FFFFFF22"
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "sw-label-surface",
+                  "fill": "$color.textMain",
+                  "content": "surface",
+                  "textAlign": "center",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 18,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "sw-hex-surface",
+                  "fill": "$color.textMuted",
+                  "content": "#121212",
+                  "textAlign": "center",
+                  "fontFamily": "Literata",
+                  "fontSize": 15,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "sw-wrap-surfaceHi",
+              "width": 160,
+              "layout": "vertical",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 8,
+                  "id": "sw-rect-surfaceHi",
+                  "fill": "$color.surfaceHighlight",
+                  "width": 140,
+                  "height": 140,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#FFFFFF22"
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "sw-label-surfaceHi",
+                  "fill": "$color.textMain",
+                  "content": "surfaceHighlight",
+                  "textAlign": "center",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 18,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "sw-hex-surfaceHi",
+                  "fill": "$color.textMuted",
+                  "content": "#1A1A1A",
+                  "textAlign": "center",
+                  "fontFamily": "Literata",
+                  "fontSize": 15,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "sw-wrap-accent",
+              "width": 160,
+              "layout": "vertical",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 8,
+                  "id": "sw-rect-accent",
+                  "fill": "$color.accent",
+                  "width": 140,
+                  "height": 140,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#FFFFFF22"
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "sw-label-accent",
+                  "fill": "$color.textMain",
+                  "content": "accent",
+                  "textAlign": "center",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 18,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "sw-hex-accent",
+                  "fill": "$color.textMuted",
+                  "content": "#800020",
+                  "textAlign": "center",
+                  "fontFamily": "Literata",
+                  "fontSize": 15,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "sw-wrap-textMain",
+              "width": 160,
+              "layout": "vertical",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 8,
+                  "id": "sw-rect-textMain",
+                  "fill": "$color.textMain",
+                  "width": 140,
+                  "height": 140,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#FFFFFF22"
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "sw-label-textMain",
+                  "fill": "$color.textMain",
+                  "content": "textMain",
+                  "textAlign": "center",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 18,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "sw-hex-textMain",
+                  "fill": "$color.textMuted",
+                  "content": "#EAEAEA",
+                  "textAlign": "center",
+                  "fontFamily": "Literata",
+                  "fontSize": 15,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "sw-wrap-textMuted",
+              "width": 160,
+              "layout": "vertical",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 8,
+                  "id": "sw-rect-textMuted",
+                  "fill": "$color.textMuted",
+                  "width": 140,
+                  "height": 140,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#FFFFFF22"
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "sw-label-textMuted",
+                  "fill": "$color.textMain",
+                  "content": "textMuted",
+                  "textAlign": "center",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 18,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "sw-hex-textMuted",
+                  "fill": "$color.textMuted",
+                  "content": "#8A8A8A",
+                  "textAlign": "center",
+                  "fontFamily": "Literata",
+                  "fontSize": 15,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "sw-wrap-navBg",
+              "width": 160,
+              "layout": "vertical",
+              "gap": 10,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "cornerRadius": 8,
+                  "id": "sw-rect-navBg",
+                  "fill": "$color.navBg",
+                  "width": 140,
+                  "height": 140,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#FFFFFF22"
+                  }
+                },
+                {
+                  "type": "text",
+                  "id": "sw-label-navBg",
+                  "fill": "$color.textMain",
+                  "content": "navBg",
+                  "textAlign": "center",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 18,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "sw-hex-navBg",
+                  "fill": "$color.textMuted",
+                  "content": "#080808",
+                  "textAlign": "center",
+                  "fontFamily": "Literata",
+                  "fontSize": 15,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "slide-ds-typography",
+      "x": 4000,
+      "y": 0,
+      "name": "DS — Typography",
+      "clip": true,
+      "width": 1920,
+      "height": 1080,
+      "fill": "$color.void",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "type-head",
+          "x": 100,
+          "y": 100,
+          "width": 1720,
+          "layout": "vertical",
+          "gap": 12,
+          "children": [
+            {
+              "type": "text",
+              "id": "type-title",
+              "fill": "$color.textMain",
+              "content": "Typography",
+              "fontFamily": "Playfair Display",
+              "fontSize": 48,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "type-sub",
+              "fill": "$color.textMuted",
+              "content": "PRD: Display Playfair · Headings Cinzel · Body Literata · UI Marcellus",
+              "fontFamily": "Literata",
+              "fontSize": 22,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "type-stack",
+          "x": 100,
+          "y": 220,
+          "width": 1720,
+          "height": 780,
+          "layout": "vertical",
+          "gap": 36,
+          "children": [
+            {
+              "type": "frame",
+              "id": "type-row-display",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "type-role-display",
+                  "fill": "$color.primary",
+                  "content": "DISPLAY (TITLES)",
+                  "fontFamily": "Cinzel",
+                  "fontSize": 12,
+                  "fontWeight": "500",
+                  "letterSpacing": 3
+                },
+                {
+                  "type": "text",
+                  "id": "type-sample-display",
+                  "fill": "$color.textMain",
+                  "content": "The Duke’s Forbidden Vow",
+                  "lineHeight": 1.15,
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 52,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "type-meta-display",
+                  "fill": "$color.textMuted",
+                  "content": "Italic allowed · high contrast on void",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Literata",
+                  "fontSize": 20,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "type-row-heading",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "type-role-heading",
+                  "fill": "$color.primary",
+                  "content": "HEADINGS (SECTION RAILS)",
+                  "fontFamily": "Cinzel",
+                  "fontSize": 12,
+                  "fontWeight": "500",
+                  "letterSpacing": 3
+                },
+                {
+                  "type": "text",
+                  "id": "type-sample-heading",
+                  "fill": "$color.textMain",
+                  "content": "HIGH SOCIETY",
+                  "lineHeight": 1.15,
+                  "fontFamily": "Cinzel",
+                  "fontSize": 22,
+                  "fontWeight": "500"
+                },
+                {
+                  "type": "text",
+                  "id": "type-meta-heading",
+                  "fill": "$color.textMuted",
+                  "content": "Uppercase · letter-spacing ~3–4px · app sizes often 10–13px on mobile",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Literata",
+                  "fontSize": 20,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "type-row-body",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "type-role-body",
+                  "fill": "$color.primary",
+                  "content": "BODY (READING)",
+                  "fontFamily": "Cinzel",
+                  "fontSize": 12,
+                  "fontWeight": "500",
+                  "letterSpacing": 3
+                },
+                {
+                  "type": "text",
+                  "id": "type-sample-body",
+                  "fill": "$color.textMain",
+                  "content": "She closed the ledger slowly, as if the ink might still be wet.",
+                  "lineHeight": 1.15,
+                  "fontFamily": "Literata",
+                  "fontSize": 26
+                },
+                {
+                  "type": "text",
+                  "id": "type-meta-body",
+                  "fill": "$color.textMuted",
+                  "content": "Long-form ~18px in product; scaled up here for slide legibility",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Literata",
+                  "fontSize": 20,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "type-row-ui",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "type-role-ui",
+                  "fill": "$color.primary",
+                  "content": "UI (BUTTONS, LABELS)",
+                  "fontFamily": "Cinzel",
+                  "fontSize": 12,
+                  "fontWeight": "500",
+                  "letterSpacing": 3
+                },
+                {
+                  "type": "text",
+                  "id": "type-sample-ui",
+                  "fill": "$color.textMain",
+                  "content": "Continue reading",
+                  "lineHeight": 1.15,
+                  "fontFamily": "Marcellus",
+                  "fontSize": 22
+                },
+                {
+                  "type": "text",
+                  "id": "type-meta-ui",
+                  "fill": "$color.textMuted",
+                  "content": "~14px in UI chrome; tracking on micro-labels",
+                  "lineHeight": 1.35,
+                  "fontFamily": "Literata",
+                  "fontSize": 20,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "slide-ds-mobile-shell",
+      "x": 6000,
+      "y": 0,
+      "name": "DS — Mobile shell 390",
+      "clip": true,
+      "width": 1920,
+      "height": 1080,
+      "fill": "$color.void",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "mobile-annot",
+          "x": 100,
+          "y": 100,
+          "width": 520,
+          "layout": "vertical",
+          "gap": 20,
+          "children": [
+            {
+              "type": "text",
+              "id": "mobile-title",
+              "fill": "$color.textMain",
+              "content": "Screen grid",
+              "fontFamily": "Playfair Display",
+              "fontSize": 44,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "mobile-body",
+              "fill": "$color.textMuted",
+              "content": "Reference HTML is mobile-first at 390pt width.\n\nWhen converting a screen, start from this frame: void background, $space.screenPad horizontal padding on sections, $radius.card on cards.",
+              "lineHeight": 1.45,
+              "fontFamily": "Literata",
+              "fontSize": 24,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "mobile-chrome",
+          "x": 620,
+          "y": 120,
+          "clip": true,
+          "width": 390,
+          "height": 900,
+          "fill": "$color.void",
+          "cornerRadius": 4,
+          "stroke": {
+            "align": "inside",
+            "thickness": 2,
+            "fill": "$color.primary"
+          },
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "mobile-chrome-header",
+              "width": "fill_container",
+              "height": 72,
+              "fill": "$color.surface",
+              "padding": [
+                16,
+                24
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "mobile-chrome-brand",
+                  "fill": "$color.primary",
+                  "content": "Midnight Satin",
+                  "fontFamily": "Cinzel",
+                  "fontSize": 13,
+                  "fontWeight": "500",
+                  "letterSpacing": 3
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "mobile-chrome-body",
+              "width": "fill_container",
+              "height": "fill_container",
+              "fill": "$color.void",
+              "layout": "vertical",
+              "gap": 16,
+              "padding": [
+                32,
+                24
+              ],
+              "children": [
+                {
+                  "type": "text",
+                  "id": "mobile-chrome-h1",
+                  "fill": "$color.textMain",
+                  "content": "Placeholder artboard",
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 28,
+                  "fontWeight": "700",
+                  "fontStyle": "italic"
+                },
+                {
+                  "type": "text",
+                  "id": "mobile-chrome-p",
+                  "fill": "$color.textMuted",
+                  "content": "Duplicate this slide or pull components from the library strip (x > 10k).",
+                  "lineHeight": 1.5,
+                  "fontFamily": "Literata",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "slide-ds-workflow",
+      "x": 8000,
+      "y": 0,
+      "name": "DS — HTML → slides workflow",
+      "clip": true,
+      "width": 1920,
+      "height": 1080,
+      "fill": "$color.void",
+      "layout": "none",
+      "children": [
+        {
+          "type": "frame",
+          "id": "wf-col",
+          "x": 100,
+          "y": 100,
+          "width": 1720,
+          "height": 880,
+          "layout": "vertical",
+          "gap": 28,
+          "children": [
+            {
+              "type": "text",
+              "id": "wf-title",
+              "fill": "$color.textMain",
+              "content": "Conversion checklist",
+              "fontFamily": "Playfair Display",
+              "fontSize": 48,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "wf-1",
+              "fill": "$color.textMain",
+              "content": "1. Copy variables from this file into each new screen .pen (or keep one library file open).",
+              "lineHeight": 1.4,
+              "fontFamily": "Literata",
+              "fontSize": 26,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "wf-2",
+              "fill": "$color.textMain",
+              "content": "2. One idea per slide (Pencil Slides guide): split dense HTML across multiple 1920×1080 frames.",
+              "lineHeight": 1.4,
+              "fontFamily": "Literata",
+              "fontSize": 26,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "wf-3",
+              "fill": "$color.textMain",
+              "content": "3. Replace ephemeral image URLs with repo assets under public/images/generated/ or reference/pencil/images/.",
+              "lineHeight": 1.4,
+              "fontFamily": "Literata",
+              "fontSize": 26,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "wf-4",
+              "fill": "$color.textMuted",
+              "content": "Regenerate: node reference/pencil/build-design-system-pencil.mjs",
+              "fontFamily": "Marcellus",
+              "fontSize": 22,
+              "fontWeight": "normal",
+              "letterSpacing": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "strip-ds-reusables",
+      "x": 10000,
+      "y": 0,
+      "name": "DS — Reusable primitives",
+      "width": 420,
+      "height": 1080,
+      "fill": "#0A0A0A",
+      "stroke": {
+        "align": "inside",
+        "thickness": {
+          "left": 1
+        },
+        "fill": "#2A2A2A"
+      },
+      "layout": "vertical",
+      "gap": 32,
+      "padding": [
+        100,
+        32
+      ],
+      "children": [
+        {
+          "type": "text",
+          "id": "strip-title",
+          "fill": "$color.primary",
+          "content": "Components",
+          "fontFamily": "Cinzel",
+          "fontSize": 12,
+          "fontWeight": "500",
+          "letterSpacing": 3
+        },
+        {
+          "type": "text",
+          "id": "strip-hint",
+          "fill": "$color.textMuted",
+          "textGrowth": "fixed-width-height",
+          "width": 360,
+          "height": 52,
+          "content": "Insert instances via ref to these IDs from other .pen files in the same project.",
+          "lineHeight": 1.45,
+          "fontFamily": "Literata",
+          "fontSize": 16,
+          "fontWeight": "normal"
+        },
+        {
+          "type": "frame",
+          "id": "reuse-ms-section-label",
+          "name": "MS · Section label",
+          "reusable": true,
+          "width": "fill_container",
+          "padding": [
+            0,
+            8
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "reuse-ms-section-label-text",
+              "fill": "$color.primary",
+              "content": "SECTION LABEL",
+              "fontFamily": "Cinzel",
+              "fontSize": 11,
+              "fontWeight": "500",
+              "letterSpacing": 4
+            },
+            {
+              "type": "text",
+              "id": "reuse-ms-section-label-action",
+              "fill": "$color.textMuted",
+              "content": "View all →",
+              "fontFamily": "Marcellus",
+              "fontSize": 12,
+              "fontWeight": "normal",
+              "letterSpacing": 1
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "reuse-ms-card-chrome",
+          "name": "MS · Card chrome",
+          "reusable": true,
+          "width": "fill_container",
+          "height": 160,
+          "fill": "$color.surface",
+          "cornerRadius": 2,
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "#FFFFFF0D"
+          },
+          "layout": "vertical",
+          "gap": 12,
+          "padding": 16,
+          "justifyContent": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "reuse-ms-card-chrome-title",
+              "fill": "$color.textMain",
+              "content": "Card title",
+              "fontFamily": "Playfair Display",
+              "fontSize": 18,
+              "fontWeight": "700"
+            },
+            {
+              "type": "text",
+              "id": "reuse-ms-card-chrome-meta",
+              "fill": "$color.textMuted",
+              "content": "Author · Marcellus 13px",
+              "fontFamily": "Marcellus",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "reuse-ms-gold-pill",
+          "name": "MS · Gold pill button",
+          "reusable": true,
+          "height": 44,
+          "fill": "$color.primary",
+          "cornerRadius": 2,
+          "padding": [
+            12,
+            28
+          ],
+          "justifyContent": "center",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "reuse-ms-gold-pill-label",
+              "fill": "$color.void",
+              "content": "Primary action",
+              "fontFamily": "Marcellus",
+              "fontSize": 14,
+              "fontWeight": "500",
+              "letterSpacing": 1
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "color.primary": {
+      "type": "color",
+      "value": "#D4AF37"
+    },
+    "color.void": {
+      "type": "color",
+      "value": "#050505"
+    },
+    "color.surface": {
+      "type": "color",
+      "value": "#121212"
+    },
+    "color.surfaceHighlight": {
+      "type": "color",
+      "value": "#1A1A1A"
+    },
+    "color.textMain": {
+      "type": "color",
+      "value": "#EAEAEA"
+    },
+    "color.textMuted": {
+      "type": "color",
+      "value": "#8A8A8A"
+    },
+    "color.accent": {
+      "type": "color",
+      "value": "#800020"
+    },
+    "color.navBg": {
+      "type": "color",
+      "value": "#080808"
+    },
+    "font.display": {
+      "type": "string",
+      "value": "Playfair Display"
+    },
+    "font.heading": {
+      "type": "string",
+      "value": "Cinzel"
+    },
+    "font.body": {
+      "type": "string",
+      "value": "Literata"
+    },
+    "font.ui": {
+      "type": "string",
+      "value": "Marcellus"
+    },
+    "radius.card": {
+      "type": "number",
+      "value": 2
+    },
+    "space.screenPad": {
+      "type": "number",
+      "value": 24
+    },
+    "space.sectionGap": {
+      "type": "number",
+      "value": 16
+    }
+  }
+}
