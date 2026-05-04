@@ -611,7 +611,8 @@
                   "content": "She closed the ledger slowly, as if the ink might still be wet.",
                   "lineHeight": 1.15,
                   "fontFamily": "Literata",
-                  "fontSize": 26
+                  "fontSize": 26,
+                  "fontWeight": "normal"
                 },
                 {
                   "type": "text",
@@ -649,7 +650,8 @@
                   "content": "Continue reading",
                   "lineHeight": 1.15,
                   "fontFamily": "Marcellus",
-                  "fontSize": 22
+                  "fontSize": 22,
+                  "fontWeight": "normal"
                 },
                 {
                   "type": "text",
@@ -701,6 +703,8 @@
               "type": "text",
               "id": "mobile-body",
               "fill": "$color.textMuted",
+              "textGrowth": "fixed-width",
+              "width": 473,
               "content": "Reference HTML is mobile-first at 390pt width.\n\nWhen converting a screen, start from this frame: void background, $space.screenPad horizontal padding on sections, $radius.card on cards.",
               "lineHeight": 1.45,
               "fontFamily": "Literata",
@@ -778,6 +782,9 @@
                   "type": "text",
                   "id": "mobile-chrome-p",
                   "fill": "$color.textMuted",
+                  "textGrowth": "fixed-width-height",
+                  "width": 341,
+                  "height": 48,
                   "content": "Duplicate this slide or pull components from the library strip (x > 10k).",
                   "lineHeight": 1.5,
                   "fontFamily": "Literata",
