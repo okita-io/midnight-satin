@@ -119,14 +119,110 @@ These are the same underlying observations as before, reframed as **catalog gaps
 
 ### Current inventory (`reference/`)
 
-Static HTML today includes, among others: `midnight_satin_prd.html`, `midnight_satin_home.html`, `midnight_satin_home_tablet.html`, `the_novel_detail.html`, `the_novel_detail_tablet.html`, `the_reading_room.html`, `the_reading_room_tablet.html`, `the_reading_room_with_comments.html`, `the_cast_gallery.html`, `the_cast_gallery_with_endorsements.html`, `the_authors_study.html`, `the_authors_study_tablet.html`, `the_vault_store.html`, `the_library_grid.html`, `the_library_list.html`, `the_library_empty.html`, `the_login.html`, `the_register.html`. **No `.pencil` files in repo yet**—this is a planned addition.
+Static HTML today includes, among others: `midnight_satin_prd.html`, `midnight_satin_home.html`, `midnight_satin_home_tablet.html`, `the_novel_detail.html`, `the_novel_detail_tablet.html`, `the_reading_room.html`, `the_reading_room_tablet.html`, `the_reading_room_with_comments.html`, `the_cast_gallery.html`, `the_cast_gallery_with_endorsements.html`, `the_authors_study.html`, `the_authors_study_tablet.html`, `the_vault_store.html`, `the_library_grid.html`, `the_library_list.html`, `the_library_empty.html`, `the_login.html`, `the_register.html`. **Pencil track started:** `reference/pencil/midnight_satin_home.pencil` (generated artboard + `build-midnight-satin-home-pencil.mjs`). **`reference/pencil/design_system.pen`** — shared component library; backlog checklist lives in [Pencil design system pen — component backlog](#pencil-design-system-pen--component-backlog-from-src-audit) below.
 
 ### Target layout (suggested)
 
 - Add **`reference/pencil/`** (or repo root `design/` if you prefer separation from shipped HTML—pick one and document it in AGENTS / Cursor rule).
 - **Naming parity:** one `.pencil` per **logical screen family** where it helps, e.g. `midnight_satin_home.pencil` containing **mobile + tablet** artboards, mirroring `midnight_satin_home.html` + `midnight_satin_home_tablet.html`; same idea for novel detail, reading room, author study, library.
 - **Shared library:** in Pencil, define **reusable blocks** aligned with the app catalog intent: back row, bottom nav, section title + “View all”, novel card tile, reader HUD strip, empty state, primary button—so unification is **edit once, propagate** before touching HTML/React.
-- **PRD:** `midnight_satin_prd.html` stays the **token and type spec**; either a **dedicated `design_system.pencil`** slice or a pinned page in the main workspace that **does not drift** from PRD numbers (colors, font roles).
+- **PRD:** `midnight_satin_prd.html` stays the **token and type spec**; either a **dedicated `design_system.pen`** (recommended; same JSON schema as `.pen` / `.pencil`) or a pinned page in the main workspace that **does not drift** from PRD numbers (colors, font roles).
+
+### Pencil design system pen — component backlog (from src audit)
+
+**Linear (umbrella task):** [THE-221 — Pencil design_system.pen component library backlog](https://linear.app/theclawffice/issue/THE-221/midnight-satin-pencil-design_systempen-component-library-backlog) (checklist of record remains in this doc).
+
+**Linear child issues (grouped work under THE-221):**
+
+| Issue | Group |
+|-------|--------|
+| [THE-232 — Foundation (variables)](https://linear.app/theclawffice/issue/THE-232/midnight-satin-pencil-ds-foundation-variables) | Tokens in `design_system.pen` |
+| [THE-231 — Typography text blocks](https://linear.app/theclawffice/issue/THE-231/midnight-satin-pencil-ds-typography-text-blocks) | Display, section, body, script, links |
+| [THE-230 — Buttons and controls](https://linear.app/theclawffice/issue/THE-230/midnight-satin-pencil-ds-buttons-and-controls) | CTAs, ghost, HUD, stars |
+| [THE-229 — Links](https://linear.app/theclawffice/issue/THE-229/midnight-satin-pencil-ds-links) | View-all variants, card-as-link |
+| [THE-228 — Icons and indicators](https://linear.app/theclawffice/issue/THE-228/midnight-satin-pencil-ds-icons-and-indicators) | Material scale, badges, rules |
+| [THE-227 — Surfaces and layout chrome](https://linear.app/theclawffice/issue/THE-227/midnight-satin-pencil-ds-surfaces-and-layout-chrome) | Cards, modal, bars, progress |
+| [THE-226 — Tags and metadata](https://linear.app/theclawffice/issue/THE-226/midnight-satin-pencil-ds-tags-and-metadata) | Genre pills |
+| [THE-225 — Navigation composites](https://linear.app/theclawffice/issue/THE-225/midnight-satin-pencil-ds-navigation-composites) | Tab bar, HUD footer, admin nav |
+| [THE-224 — Blocks (empty, vault, hero)](https://linear.app/theclawffice/issue/THE-224/midnight-satin-pencil-ds-blocks-empty-vault-hero) | Marketing / empty blocks |
+| [THE-223 — Forms](https://linear.app/theclawffice/issue/THE-223/midnight-satin-pencil-ds-forms) | Field + label |
+| [THE-222 — Follow-ups (back, news, cast)](https://linear.app/theclawffice/issue/THE-222/midnight-satin-pencil-ds-follow-ups-back-news-cast) | Lower-frequency patterns |
+
+Track these as **`reusable: true`** components in `reference/pencil/design_system.pen`. Cross-reference `src/lib/design-tokens.ts`, `src/app/globals.css`, and the paths in each row. **Check boxes here** as components land in Pencil (and optionally mirror the same names in `src/components/ui/` during the React catalog phases).
+
+#### Foundation
+
+- [ ] **Variables** — mirror PRD colors, radii, shadows, and font role names (`display`, `header`, `body`, `ui`, `script`)
+
+#### Typography — text blocks
+
+- [ ] **Type / Display hero title** — Playfair italic bold, tight leading (hero, large titles)
+- [ ] **Type / Section title (Cinzel)** — small, wide letter-spacing, near-white (e.g. `current-affairs-section.tsx`, `high-society-section.tsx`)
+- [ ] **Type / Subsection label** — muted uppercase, optional bottom border (`synopsis-section.tsx` “Synopsis”)
+- [ ] **Type / UI label** — Marcellus, `text-xs`, uppercase, widened tracking (form labels, `review-card.tsx` meta)
+- [ ] **Type / Body default** — Literata, relaxed leading (`review-card.tsx`, long copy)
+- [ ] **Type / Script accent** — Pinyon Script, large, gold (`empty-state.tsx`)
+- [ ] **Text link / muted → primary** — tertiary links (`login-form.tsx` forgot password, similar)
+- [ ] **Text control / Read more** — primary, uppercase, `expand_more` icon (`synopsis-section.tsx`)
+
+#### Buttons and controls
+
+- [ ] **Button / Primary gold** — void text, UI font, uppercase, gold glow (`.btn-gold` in `globals.css`, `auth-prompt.tsx`, `empty-state.tsx`, `login-form.tsx`)
+- [ ] **Button / Secondary outline** — gold border + gold text, hover fill (`auth-prompt.tsx` Register)
+- [ ] **Button / Follow toggle** — filled primary vs outline “Following” (`follow-button.tsx`)
+- [ ] **Button / Icon ghost** — circular hit target, surface/blur, hairline border (`novel-detail-header.tsx`)
+- [ ] **Button / HUD icon column** — icon + micro-label, 24↔28 active + gold glow (`reading-room/reading-hud.tsx`; align with `navigation-bar.tsx`)
+- [ ] **Button / Segmented chip** — small rounded choice (font size / line height popovers in `reading-hud.tsx`)
+- [ ] **Button / The Veil CTA** — dark fill, gold border, optional sheen (`the-veil.tsx`)
+- [ ] **Control / Star rating** — display + input variants (`rating-display.tsx`, `review-card.tsx`, `star-rating-input.tsx`)
+
+#### Links
+
+- [ ] **Link / Section view-all (Literata)** — `section-view-all.tsx`
+- [ ] **Link / Section view-all (UI uppercase)** — `current-affairs-section.tsx` (treat as **variant** of the above or a second named style in Pencil)
+- [ ] **Link / Full-bleed card link** — whole tile tappable (`novel-card.tsx`, `vault-teaser-card.tsx`)
+
+#### Icons and indicators
+
+- [ ] **Icon / Material scale** — 16 / 18 / 24 / 28px + `FILL` 0/1 convention (Material Symbols usage across `src/app/_components/`)
+- [ ] **Icon / Notification dot** — accent badge on icon (`boudoir-header.tsx`, comment badge in `reading-hud.tsx`)
+- [ ] **Icon / Decorative rule** — short gradient line + center icon (`vault/vault-client.tsx`)
+
+#### Surfaces and layout chrome
+
+- [ ] **Surface / Card** — surface fill, hairline border, card depth, optional gold sheen (`.card`, `.overlay-sheen` in `globals.css`; `novel-card.tsx`, current affairs inner card)
+- [ ] **Surface / Review card** — lighter gold border, glassy fill (`review-card.tsx`)
+- [ ] **Surface / Modal panel** — bordered surface + gold glow shadow (`auth-prompt.tsx`)
+- [ ] **Surface / Form banner** — success (gold border) vs error (accent border) (`login-form.tsx`)
+- [ ] **Layout / Gradient header strip** — top fade for overlays (`boudoir-header.tsx`, `novel-detail-header.tsx`, `reading-hud.tsx`)
+- [ ] **Layout / Fixed bottom bar** — `#080808`, top border `#1F1F1F`, upward shadow, safe-area padding (`navigation-bar.tsx`, `reading-hud.tsx`)
+- [ ] **Layout / Progress bar** — muted track + gold fill with glow (`reading-hud.tsx`, progress on cover in `current-affairs-section.tsx`)
+
+#### Tags and metadata
+
+- [ ] **Tag / Genre pill** — uppercase, bordered, translucent void (`metadata-pills.tsx`)
+
+#### Navigation composites
+
+- [ ] **Nav / Primary tab bar item** — icon + label, active size, glow, optional dot (`navigation-bar.tsx`)
+- [ ] **Nav / Reading HUD footer** — progress + multi-column tools (`reading-hud.tsx`, `lib/responsive/constants.ts` footer classes)
+- [ ] **Nav / Admin sidebar item** (optional separate artboard) — icon + label, active pill (`admin/layout.tsx`)
+
+#### Blocks
+
+- [ ] **Block / Empty state** — blur halo, icon ring, script headline, optional gold CTA (`empty-state.tsx`)
+- [ ] **Block / Vault teaser** — horizontal gradient, copy + diamond icon (`vault-teaser-card.tsx`)
+- [ ] **Block / Hero slide** (optional) — layered image + vignette + CTA stack (`hero-carousel.tsx` + reference home HTML)
+
+#### Forms
+
+- [ ] **Field / Text input + label** — h-14, surface-highlight fill, gold focus border (`auth/login/login-form.tsx` and register analogs)
+
+#### Follow-ups (fewer repeats, high polish)
+
+- [ ] **Back control** — icon vs text back patterns (`updates/[slug]/back-button.tsx`, `paperback-page-shell.tsx`, novel/reading headers)
+- [ ] **News / campaign row** — `news-article-card.tsx`, `campaign-detail.tsx`
+- [ ] **Cast chrome** — portrait frame, endorsement affordances (`cast-gallery-modal.tsx`, `character-portrait.tsx`, `hexagon-avatar.tsx`)
 
 ### Workflow (recommended)
 
@@ -154,8 +250,9 @@ Static HTML today includes, among others: `midnight_satin_prd.html`, `midnight_s
 ### Phase 0 — Reference: Pencil + HTML unification (design track)
 
 - [ ] Add **`reference/pencil/`** and **naming convention** doc (screen ↔ pencil ↔ HTML ↔ app route)
+- [ ] Create **`reference/pencil/design_system.pen`** and implement the [design system pen backlog](#pencil-design-system-pen--component-backlog-from-src-audit) checklist (reusable components + variables)
 - [ ] Create **initial `.pen`** files for home + novel detail (mobile + tablet artboards per file where useful)
-- [ ] Build **shared components** in Pencil for section headers, nav, primary actions, card tiles—match **PRD type roles**
+- [ ] Build **shared components** in Pencil for section headers, nav, primary actions, card tiles—match **PRD type roles** (compose from `design_system.pen` where possible)
 - [ ] **Unification pass** on `reference/*.html` to match Pencil (typography, spacing, repeated chrome)
 - [ ] Update **`.cursor/rules/midnight-satin-design.mdc`** (or AGENTS) with **source-of-truth order**: Pencil → HTML → implementation
 
