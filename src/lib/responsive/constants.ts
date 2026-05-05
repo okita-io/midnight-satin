@@ -166,7 +166,7 @@ export const DESKTOP_MAX_WIDTH = 1440;
 export const SIDEBAR_WIDTH = 280;
 
 /**
- * Reading HUD bottom toolbar (THE-95, THE-96).
+ * Reading HUD bottom toolbar (THE-95, THE-96; Pencil THE-225 `reuse-ms-reading-hud-footer`).
  * Tight 4-col grid on small viewports; md+ becomes flex row with wider max-width
  * and flex-1 columns (aligns with NavigationBar: icon over label, labels share a baseline).
  */

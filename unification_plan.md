@@ -204,9 +204,9 @@ Track these as **`reusable: true`** components in `reference/pencil/design_syste
 
 #### Navigation composites
 
-- [ ] **Nav / Primary tab bar item** — icon + label, active size, glow, optional dot (`navigation-bar.tsx`)
-- [ ] **Nav / Reading HUD footer** — progress + multi-column tools (`reading-hud.tsx`, `lib/responsive/constants.ts` footer classes)
-- [ ] **Nav / Admin sidebar item** (optional separate artboard) — icon + label, active pill (`admin/layout.tsx`)
+- [x] **Nav / Primary tab bar item** — icon + label, active size, glow, optional dot (`navigation-bar.tsx`)
+- [x] **Nav / Reading HUD footer** — progress + multi-column tools (`reading-hud.tsx`, `lib/responsive/constants.ts` footer classes)
+- [x] **Nav / Admin sidebar item** (optional separate artboard) — icon + label, active pill (`admin/layout.tsx`)
 
 #### Blocks
 
