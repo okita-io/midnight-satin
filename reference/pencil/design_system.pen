@@ -874,7 +874,6 @@
       "y": 0,
       "name": "DS — Reusable primitives",
       "width": 420,
-      "height": 1080,
       "fill": "#0A0A0A",
       "stroke": {
         "align": "inside",
@@ -2206,6 +2205,406 @@
               "y": 28,
               "width": 300,
               "height": 400
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "GnXO1",
+          "name": "MS · Surface card (sheen)",
+          "reusable": true,
+          "clip": true,
+          "width": "fill_container",
+          "height": 160,
+          "fill": "#121212",
+          "cornerRadius": 2,
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "#FFFFFF0D"
+          },
+          "layout": "none",
+          "children": [
+            {
+              "type": "frame",
+              "id": "CIDBH",
+              "x": 0,
+              "y": 0,
+              "width": "fill_container(0)",
+              "height": "fill_container(0)",
+              "layout": "vertical",
+              "gap": 12,
+              "padding": 16,
+              "justifyContent": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "oUD8l",
+                  "fill": "#EAEAEA",
+                  "content": "Card title",
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 18,
+                  "fontWeight": "700"
+                },
+                {
+                  "type": "text",
+                  "id": "F9N0ki",
+                  "fill": "#8A8A8A",
+                  "content": "Author · Marcellus 13px",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 13,
+                  "fontWeight": "normal"
+                }
+              ]
+            },
+            {
+              "type": "rectangle",
+              "id": "fC4WS",
+              "x": 0,
+              "y": 0,
+              "opacity": 0.12,
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 45,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#D4AF374D",
+                    "position": 0
+                  },
+                  {
+                    "color": "#D4AF3700",
+                    "position": 0.6
+                  },
+                  {
+                    "color": "#FFFFFF00",
+                    "position": 1
+                  }
+                ]
+              },
+              "width": "fill_container(0)",
+              "height": "fill_container(0)"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "jsDzr",
+          "name": "MS · Review card",
+          "reusable": true,
+          "width": "fill_container",
+          "fill": "#121212CC",
+          "cornerRadius": 2,
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "#D4AF3733"
+          },
+          "effect": [
+            {
+              "type": "background_blur",
+              "radius": 16
+            },
+            {
+              "type": "shadow",
+              "shadowType": "outer",
+              "color": "#D4AF371A",
+              "offset": {
+                "x": 0,
+                "y": 10
+              },
+              "blur": 30
+            }
+          ],
+          "layout": "vertical",
+          "gap": 12,
+          "padding": 16,
+          "children": [
+            {
+              "type": "text",
+              "id": "ghMEO",
+              "fill": "#EAEAEA",
+              "content": "“Lethal and luscious.”",
+              "fontFamily": "Playfair Display",
+              "fontSize": 18,
+              "fontWeight": "700",
+              "fontStyle": "italic"
+            },
+            {
+              "type": "text",
+              "id": "QziLv",
+              "fill": "#8A8A8A",
+              "content": "Lady S. · 2d ago",
+              "fontFamily": "Marcellus",
+              "fontSize": 12,
+              "fontWeight": "normal",
+              "letterSpacing": 1
+            },
+            {
+              "type": "text",
+              "id": "Y3hNpV",
+              "fill": "#EAEAEA",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "A velvet-dark romance with gold-flecked prose. I devoured the chapter by candlelight and never looked away.",
+              "lineHeight": 1.45,
+              "fontFamily": "Literata",
+              "fontSize": 14,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Mo6QJ",
+          "name": "MS · Modal panel",
+          "reusable": true,
+          "width": "fill_container",
+          "fill": "#121212",
+          "cornerRadius": 4,
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "#D4AF3733"
+          },
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#D4AF3726",
+            "offset": {
+              "x": 0,
+              "y": 16
+            },
+            "blur": 48
+          },
+          "layout": "vertical",
+          "gap": 16,
+          "padding": 20,
+          "children": [
+            {
+              "type": "text",
+              "id": "V6KpUh",
+              "fill": "#D4AF37",
+              "content": "Sign in to continue",
+              "fontFamily": "Cinzel",
+              "fontSize": 14,
+              "fontWeight": "500",
+              "letterSpacing": 3
+            },
+            {
+              "type": "text",
+              "id": "w5fPC",
+              "fill": "#EAEAEA",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Create an account to unlock chapters, send roses, and keep your place in the shadows.",
+              "lineHeight": 1.45,
+              "fontFamily": "Literata",
+              "fontSize": 14,
+              "fontWeight": "normal",
+              "fontStyle": "italic"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "Z8DIan",
+          "name": "MS · Form banner (success)",
+          "reusable": true,
+          "width": "fill_container",
+          "fill": "#121212",
+          "cornerRadius": 2,
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "#D4AF374D"
+          },
+          "gap": 12,
+          "padding": 12,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon_font",
+              "id": "C6G1x",
+              "width": 20,
+              "height": 20,
+              "iconFontName": "check_circle",
+              "iconFontFamily": "Material Symbols Outlined",
+              "fill": "#D4AF37"
+            },
+            {
+              "type": "text",
+              "id": "sA795",
+              "fill": "#EAEAEA",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "Welcome back. Your account is ready.",
+              "lineHeight": 1.4,
+              "fontFamily": "Marcellus",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "R1G76D",
+          "name": "MS · Form banner (error)",
+          "reusable": true,
+          "width": "fill_container",
+          "fill": "#121212",
+          "cornerRadius": 2,
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "#80002099"
+          },
+          "gap": 12,
+          "padding": 12,
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon_font",
+              "id": "n0Mrb",
+              "width": 20,
+              "height": 20,
+              "iconFontName": "error",
+              "iconFontFamily": "Material Symbols Outlined",
+              "fill": "#800020"
+            },
+            {
+              "type": "text",
+              "id": "wri0m",
+              "fill": "#EAEAEA",
+              "textGrowth": "fixed-width",
+              "width": "fill_container",
+              "content": "That email or password doesn't match our records.",
+              "lineHeight": 1.4,
+              "fontFamily": "Marcellus",
+              "fontSize": 13,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "l9RsWZ",
+          "name": "MS · Gradient header strip",
+          "reusable": true,
+          "clip": true,
+          "width": "fill_container",
+          "height": 96,
+          "fill": {
+            "type": "gradient",
+            "gradientType": "linear",
+            "enabled": true,
+            "rotation": 180,
+            "size": {
+              "height": 1
+            },
+            "colors": [
+              {
+                "color": "#050505",
+                "position": 0
+              },
+              {
+                "color": "#050505CC",
+                "position": 0.35
+              },
+              {
+                "color": "#05050500",
+                "position": 1
+              }
+            ]
+          },
+          "layout": "none"
+        },
+        {
+          "type": "frame",
+          "id": "H6lPpw",
+          "name": "MS · Fixed bottom bar",
+          "reusable": true,
+          "width": "fill_container",
+          "height": 84,
+          "fill": "#080808",
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "top": 1
+            },
+            "fill": "#1F1F1F"
+          },
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#00000099",
+            "offset": {
+              "x": 0,
+              "y": -8
+            },
+            "blur": 24
+          },
+          "gap": 12,
+          "padding": [
+            12,
+            16,
+            20,
+            16
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "text",
+              "id": "PFbi2",
+              "fill": "#8A8A8A",
+              "content": "Left",
+              "fontFamily": "Marcellus",
+              "fontSize": 12,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "text",
+              "id": "EiUOz",
+              "fill": "#8A8A8A",
+              "content": "Right",
+              "fontFamily": "Marcellus",
+              "fontSize": 12,
+              "fontWeight": "normal"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "gtFrZ",
+          "name": "MS · Progress bar",
+          "reusable": true,
+          "clip": true,
+          "width": 240,
+          "height": 4,
+          "fill": "#FFFFFF1A",
+          "cornerRadius": 2,
+          "layout": "none",
+          "children": [
+            {
+              "type": "rectangle",
+              "cornerRadius": 2,
+              "id": "P7OSqs",
+              "x": 0,
+              "y": 0,
+              "fill": "#D4AF37",
+              "width": 120,
+              "height": "fill_container(0)",
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#D4AF374D",
+                "blur": 10
+              }
             }
           ]
         }
