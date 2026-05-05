@@ -156,14 +156,14 @@ Track these as **`reusable: true`** components in `reference/pencil/design_syste
 
 #### Typography — text blocks
 
-- [ ] **Type / Display hero title** — Playfair italic bold, tight leading (hero, large titles)
-- [ ] **Type / Section title (Cinzel)** — small, wide letter-spacing, near-white (e.g. `current-affairs-section.tsx`, `high-society-section.tsx`)
-- [ ] **Type / Subsection label** — muted uppercase, optional bottom border (`synopsis-section.tsx` “Synopsis”)
-- [ ] **Type / UI label** — Marcellus, `text-xs`, uppercase, widened tracking (form labels, `review-card.tsx` meta)
-- [ ] **Type / Body default** — Literata, relaxed leading (`review-card.tsx`, long copy)
-- [ ] **Type / Script accent** — Pinyon Script, large, gold (`empty-state.tsx`)
-- [ ] **Text link / muted → primary** — tertiary links (`login-form.tsx` forgot password, similar)
-- [ ] **Text control / Read more** — primary, uppercase, `expand_more` icon (`synopsis-section.tsx`)
+- [x] **Type / Display hero title** — Playfair italic bold, tight leading (hero, large titles)
+- [x] **Type / Section title (Cinzel)** — small, wide letter-spacing, near-white (e.g. `current-affairs-section.tsx`, `high-society-section.tsx`)
+- [x] **Type / Subsection label** — muted uppercase, optional bottom border (`synopsis-section.tsx` “Synopsis”)
+- [x] **Type / UI label** — Marcellus, `text-xs`, uppercase, widened tracking (form labels, `review-card.tsx` meta)
+- [x] **Type / Body default** — Literata, relaxed leading (`review-card.tsx`, long copy)
+- [x] **Type / Script accent** — Pinyon Script, large, gold (`empty-state.tsx`)
+- [x] **Text link / muted → primary** — tertiary links (`login-form.tsx` forgot password, similar)
+- [x] **Text control / Read more** — primary, uppercase, `expand_more` icon (`synopsis-section.tsx`)
 
 #### Buttons and controls
 
