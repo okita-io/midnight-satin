@@ -152,7 +152,7 @@ Track these as **`reusable: true`** components in `reference/pencil/design_syste
 
 #### Foundation
 
-- [ ] **Variables** — mirror PRD colors, radii, shadows, and font role names (`display`, `header`, `body`, `ui`, `script`)
+- [x] **Variables** — mirror PRD colors, radii, shadows, and font role names (`display`, `header`, `body`, `ui`, `script`) — `reference/pencil/build-design-system-pencil.mjs` `variables` + color slide note (THE-232); `$font.header`, `$radius.*`, `$shadow.*`
 
 #### Typography — text blocks
 
@@ -167,40 +167,40 @@ Track these as **`reusable: true`** components in `reference/pencil/design_syste
 
 #### Buttons and controls
 
-- [ ] **Button / Primary gold** — void text, UI font, uppercase, gold glow (`.btn-gold` in `globals.css`, `auth-prompt.tsx`, `empty-state.tsx`, `login-form.tsx`)
-- [ ] **Button / Secondary outline** — gold border + gold text, hover fill (`auth-prompt.tsx` Register)
-- [ ] **Button / Follow toggle** — filled primary vs outline “Following” (`follow-button.tsx`)
-- [ ] **Button / Icon ghost** — circular hit target, surface/blur, hairline border (`novel-detail-header.tsx`)
-- [ ] **Button / HUD icon column** — icon + micro-label, 24↔28 active + gold glow (`reading-room/reading-hud.tsx`; align with `navigation-bar.tsx`)
-- [ ] **Button / Segmented chip** — small rounded choice (font size / line height popovers in `reading-hud.tsx`)
-- [ ] **Button / The Veil CTA** — dark fill, gold border, optional sheen (`the-veil.tsx`)
-- [ ] **Control / Star rating** — display + input variants (`rating-display.tsx`, `review-card.tsx`, `star-rating-input.tsx`)
+- [x] **Button / Primary gold** — void text, UI font, uppercase, gold glow (`.btn-gold` in `globals.css`, `auth-prompt.tsx`, `empty-state.tsx`, `login-form.tsx`) — `reuse-ms-gold-pill` in strip
+- [x] **Button / Secondary outline** — gold border + gold text, hover fill (`auth-prompt.tsx` Register) — `reuse-ms-btn-secondary-outline`
+- [x] **Button / Follow toggle** — filled primary vs outline “Following” (`follow-button.tsx`) — `reuse-ms-btn-follow-off`, `reuse-ms-btn-follow-on`
+- [x] **Button / Icon ghost** — circular hit target, surface/blur, hairline border (`novel-detail-header.tsx`) — `reuse-ms-btn-icon-ghost`
+- [x] **Button / HUD icon column** — icon + micro-label, 24↔28 active + gold glow (`reading-room/reading-hud.tsx`; align with `navigation-bar.tsx`) — `reuse-ms-hud-icon-column`
+- [x] **Button / Segmented chip** — small rounded choice (font size / line height popovers in `reading-hud.tsx`) — `reuse-ms-chip-segmented-pair`
+- [x] **Button / The Veil CTA** — dark fill, gold border, optional sheen (`the-veil.tsx`) — `reuse-ms-btn-veil-cta`
+- [x] **Control / Star rating** — display + input variants (`rating-display.tsx`, `review-card.tsx`, `star-rating-input.tsx`) — `reuse-ms-stars-display`, `reuse-ms-stars-input`
 
 #### Links
 
-- [ ] **Link / Section view-all (Literata)** — `section-view-all.tsx`
-- [ ] **Link / Section view-all (UI uppercase)** — `current-affairs-section.tsx` (treat as **variant** of the above or a second named style in Pencil)
-- [ ] **Link / Full-bleed card link** — whole tile tappable (`novel-card.tsx`, `vault-teaser-card.tsx`)
+- [x] **Link / Section view-all (Literata)** — `section-view-all.tsx` — `reuse-ms-link-view-all-literata`
+- [x] **Link / Section view-all (UI uppercase)** — `current-affairs-section.tsx` (treat as **variant** of the above or a second named style in Pencil) — `reuse-ms-link-view-all-ui`
+- [x] **Link / Full-bleed card link** — whole tile tappable (`novel-card.tsx`, `vault-teaser-card.tsx`) — `reuse-ms-link-card-bleed` (+ `GnXO1` card chrome)
 
 #### Icons and indicators
 
-- [ ] **Icon / Material scale** — 16 / 18 / 24 / 28px + `FILL` 0/1 convention (Material Symbols usage across `src/app/_components/`)
-- [ ] **Icon / Notification dot** — accent badge on icon (`boudoir-header.tsx`, comment badge in `reading-hud.tsx`)
-- [ ] **Icon / Decorative rule** — short gradient line + center icon (`vault/vault-client.tsx`)
+- [x] **Icon / Material scale** — 16 / 18 / 24 / 28px + `FILL` 0/1 convention (Material Symbols usage across `src/app/_components/`) — `reuse-ms-icon-material-scale`
+- [x] **Icon / Notification dot** — accent badge on icon (`boudoir-header.tsx`, comment badge in `reading-hud.tsx`) — `reuse-ms-icon-notify-dot`
+- [x] **Icon / Decorative rule** — short gradient line + center icon (`vault/vault-client.tsx`) — `reuse-ms-decorative-rule-icon`
 
 #### Surfaces and layout chrome
 
-- [ ] **Surface / Card** — surface fill, hairline border, card depth, optional gold sheen (`.card`, `.overlay-sheen` in `globals.css`; `novel-card.tsx`, current affairs inner card)
-- [ ] **Surface / Review card** — lighter gold border, glassy fill (`review-card.tsx`)
-- [ ] **Surface / Modal panel** — bordered surface + gold glow shadow (`auth-prompt.tsx`)
-- [ ] **Surface / Form banner** — success (gold border) vs error (accent border) (`login-form.tsx`)
-- [ ] **Layout / Gradient header strip** — top fade for overlays (`boudoir-header.tsx`, `novel-detail-header.tsx`, `reading-hud.tsx`)
-- [ ] **Layout / Fixed bottom bar** — `#080808`, top border `#1F1F1F`, upward shadow, safe-area padding (`navigation-bar.tsx`, `reading-hud.tsx`)
-- [ ] **Layout / Progress bar** — muted track + gold fill with glow (`reading-hud.tsx`, progress on cover in `current-affairs-section.tsx`)
+- [x] **Surface / Card** — surface fill, hairline border, card depth, optional gold sheen (`.card`, `.overlay-sheen` in `globals.css`; `novel-card.tsx`, current affairs inner card) — `reuse-ms-card-chrome`, `GnXO1` in `reference/pencil/design_system.pen` (THE-227)
+- [x] **Surface / Review card** — lighter gold border, glassy fill (`review-card.tsx`) — `jsDzr`
+- [x] **Surface / Modal panel** — bordered surface + gold glow shadow (`auth-prompt.tsx`) — `Mo6QJ`
+- [x] **Surface / Form banner** — success (gold border) vs error (accent border) (`login-form.tsx`) — `Z8DIan`, `R1G76D`, `K9pLm2` (plain success)
+- [x] **Layout / Gradient header strip** — top fade for overlays (`boudoir-header.tsx`, `novel-detail-header.tsx`, `reading-hud.tsx`) — `l9RsWZ`
+- [x] **Layout / Fixed bottom bar** — `#080808`, top border `#1F1F1F`, upward shadow, safe-area padding (`navigation-bar.tsx`, `reading-hud.tsx`) — `H6lPpw`
+- [x] **Layout / Progress bar** — muted track + gold fill with glow (`reading-hud.tsx`, progress on cover in `current-affairs-section.tsx`) — `gtFrZ`
 
 #### Tags and metadata
 
-- [ ] **Tag / Genre pill** — uppercase, bordered, translucent void (`metadata-pills.tsx`)
+- [x] **Tag / Genre pill** — uppercase, bordered, translucent void (`metadata-pills.tsx`) — `j6a3AT` hero tags + `reuse-ms-character-dossier` patterns; THE-226
 
 #### Navigation composites
 
@@ -210,19 +210,19 @@ Track these as **`reusable: true`** components in `reference/pencil/design_syste
 
 #### Blocks
 
-- [ ] **Block / Empty state** — blur halo, icon ring, script headline, optional gold CTA (`empty-state.tsx`)
-- [ ] **Block / Vault teaser** — horizontal gradient, copy + diamond icon (`vault-teaser-card.tsx`)
-- [ ] **Block / Hero slide** (optional) — layered image + vignette + CTA stack (`hero-carousel.tsx` + reference home HTML)
+- [x] **Block / Empty state** — blur halo, icon ring, script headline, optional gold CTA (`empty-state.tsx`) — `uvuPF`
+- [x] **Block / Vault teaser** — horizontal gradient, copy + diamond icon (`vault-teaser-card.tsx`) — `rbR1K`
+- [x] **Block / Hero slide** (optional) — layered image + vignette + CTA stack (`hero-carousel.tsx` + reference home HTML) — `j6a3AT`, `l4pgH`
 
 #### Forms
 
-- [ ] **Field / Text input + label** — h-14, surface-highlight fill, gold focus border (`auth/login/login-form.tsx` and register analogs)
+- [x] **Field / Text input + label** — h-14, surface-highlight fill, gold focus border (`auth/login/login-form.tsx` and register analogs) — `reuse-ms-form-text-field`
 
 #### Follow-ups (fewer repeats, high polish)
 
-- [ ] **Back control** — icon vs text back patterns (`updates/[slug]/back-button.tsx`, `paperback-page-shell.tsx`, novel/reading headers)
-- [ ] **News / campaign row** — `news-article-card.tsx`, `campaign-detail.tsx`
-- [ ] **Cast chrome** — portrait frame, endorsement affordances (`cast-gallery-modal.tsx`, `character-portrait.tsx`, `hexagon-avatar.tsx`)
+- [x] **Back control** — icon vs text back patterns (`updates/[slug]/back-button.tsx`, `paperback-page-shell.tsx`, novel/reading headers) — `reuse-ms-back-control-arrow`
+- [x] **News / campaign row** — `news-article-card.tsx`, `campaign-detail.tsx` — `reuse-ms-news-row-compact`
+- [x] **Cast chrome** — portrait frame, endorsement affordances (`cast-gallery-modal.tsx`, `character-portrait.tsx`, `hexagon-avatar.tsx`) — `reuse-ms-character-portrait`, `reuse-ms-hex-avatar-chrome`
 
 ### Workflow (recommended)
 

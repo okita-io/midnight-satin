@@ -5,12 +5,22 @@
  *
  * Use when converting reference/*.html screens into Pencil: copy variables from this file
  * or open both documents and align fills/fonts to $color.* / font families below.
+ *
+ * Extended reusables (after character dossier on the strip) live in
+ * strip-reusables-after-dossier.json — empty state, vault teaser, hero, surfaces/chrome, etc.
+ * Edit that JSON, then run this script to regenerate design_system.pen.
  */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+/** THE-224 / THE-227: empty, vault, hero deck, surfaces — edit JSON to change; merged into strip below. */
+const STRIP_REUSABLES_AFTER_DOSSIER_PATH = path.join(__dirname, "strip-reusables-after-dossier.json");
+const stripReusablesAfterDossier = fs.existsSync(STRIP_REUSABLES_AFTER_DOSSIER_PATH)
+  ? JSON.parse(fs.readFileSync(STRIP_REUSABLES_AFTER_DOSSIER_PATH, "utf8"))
+  : [];
 
 const SLIDE_W = 1920;
 const SLIDE_H = 1080;
@@ -31,13 +41,23 @@ const variables = {
   "color.accent": { type: "color", value: "#800020" },
   "color.navBg": { type: "color", value: "#080808" },
   "font.display": { type: "string", value: "Playfair Display" },
+  /** PRD / `design-tokens.ts` role name; same family as `font.heading`. */
+  "font.header": { type: "string", value: "Cinzel" },
   "font.heading": { type: "string", value: "Cinzel" },
   "font.body": { type: "string", value: "Literata" },
   "font.ui": { type: "string", value: "Marcellus" },
   "font.script": { type: "string", value: "Pinyon Script" },
   "radius.card": { type: "number", value: 2 },
+  /** Auth inputs: `rounded-none` in Tailwind */
+  "radius.input": { type: "number", value: 0 },
+  "radius.modal": { type: "number", value: 4 },
   "space.screenPad": { type: "number", value: 24 },
   "space.sectionGap": { type: "number", value: 16 },
+  /** Documentary px for `.card` / reusable shadows — match `globals.css` */
+  "shadow.card.offsetY": { type: "number", value: 10 },
+  "shadow.card.blur": { type: "number", value: 30 },
+  "shadow.modalGlow.blur": { type: "number", value: 20 },
+  "shadow.goldGlow.blur": { type: "number", value: 24 },
 };
 
 function slideX(index) {
@@ -241,6 +261,38 @@ const doc = {
           swatchColumn("textMain", "textMain", "#EAEAEA", "$color.textMain"),
           swatchColumn("textMuted", "textMuted", "#8A8A8A", "$color.textMuted"),
           swatchColumn("navBg", "navBg", "#080808", "$color.navBg"),
+        ],
+      },
+      {
+        type: "frame",
+        id: "colors-tokens-meta",
+        x: PAD,
+        y: 720,
+        width: SLIDE_W - PAD * 2,
+        layout: "vertical",
+        gap: 10,
+        children: [
+          {
+            type: "text",
+            id: "colors-tokens-title",
+            fill: "$color.primary",
+            content: "THE-232 · Radii & shadow notes (see document variables)",
+            fontFamily: "Marcellus",
+            fontSize: 14,
+            letterSpacing: 2,
+          },
+          {
+            type: "text",
+            id: "colors-tokens-body",
+            fill: "$color.textMuted",
+            content:
+              "$radius.card (2) · $radius.input (0) · $radius.modal (4) · $shadow.card.offsetY / .blur · $shadow.modalGlow.blur · $shadow.goldGlow.blur — align with src/lib/design-tokens.ts and globals.css.",
+            fontFamily: "Literata",
+            fontSize: 20,
+            lineHeight: 1.45,
+            textGrowth: "fixed-width",
+            width: 1600,
+          },
         ],
       },
     ]),
@@ -770,16 +822,16 @@ const doc = {
           fontWeight: "500",
           letterSpacing: 3,
         },
-        {
-          type: "text",
-          id: "strip-hint",
-          fill: "$color.textMuted",
-          content:
-            "Insert instances via ref to these IDs from other .pen files in the same project (section label, card chrome, gold pill, nav tabs, reading HUD footer, admin nav row, character portrait, character dossier). Linear THE-225.",
-          fontFamily: "Literata",
-          fontSize: 16,
-          lineHeight: 1.45,
-        },
+          {
+            type: "text",
+            id: "strip-hint",
+            fill: "$color.textMuted",
+            content:
+              "Refs: type, links, section label, card chrome, gold pill, nav tabs, HUD footer, admin row, portrait, dossier; strip-reusables-after-dossier.json — blocks/surfaces (uvuPF…gtFrZ) + THE-223–230,228,229,222 reusables (form field, buttons, links, icons, back, news). Variables: $font.header, $radius.input, $shadow.*. Nav THE-225.",
+            fontFamily: "Literata",
+            fontSize: 16,
+            lineHeight: 1.45,
+          },
         /** THE-231: Typography text blocks — reusable text frames */
         {
           type: "frame",
@@ -1022,6 +1074,13 @@ const doc = {
           fill: "$color.surface",
           cornerRadius: 2,
           stroke: { align: "inside", fill: "#FFFFFF0D", thickness: 1 },
+          effect: {
+            type: "shadow",
+            shadowType: "outer",
+            color: "#000000CC",
+            offset: { x: 0, y: 10 },
+            blur: 30,
+          },
           padding: 16,
           layout: "vertical",
           gap: 12,
@@ -2121,6 +2180,7 @@ const doc = {
             },
           ],
         },
+        ...stripReusablesAfterDossier,
       ],
     },
   ],
