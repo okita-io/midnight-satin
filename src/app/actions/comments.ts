@@ -45,6 +45,7 @@ export type LikeCommentResult =
  * Get total comment count for a chapter. Public (guests can view).
  */
 export async function getChapterCommentCount(chapterId: string): Promise<number> {
+  await getSession();
   try {
     return await getChapterCommentCountDb(chapterId);
   } catch {
@@ -60,8 +61,8 @@ export async function getChapterComments(
   chapterId: string,
   options?: { cursor?: string; limit?: number }
 ): Promise<GetChapterCommentsResult> {
+  const session = await getSession();
   try {
-    const session = await getSession();
     const result = await getChapterCommentsDb(
       chapterId,
       options,

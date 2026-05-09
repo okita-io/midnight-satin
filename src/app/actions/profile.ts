@@ -35,7 +35,7 @@ export interface FollowedAuthorItem {
  * Get reader profile stats: chapters read, hours read estimate, roses sent, authors followed.
  * Req 18.3: derived from Reading_Progress, Chapter_Unlock, Credit_Transactions, Author_Follow.
  */
-export async function getReaderProfileStats(
+async function getReaderProfileStats(
   readerId: string
 ): Promise<ReaderProfileStats> {
   try {
@@ -83,7 +83,7 @@ export async function getReaderProfileStats(
  * Get "Currently Reading" list: novels with scroll_percent > 0 and < 100,
  * ordered by last_read_at descending. Req 18.4.
  */
-export async function getCurrentlyReadingList(
+async function getCurrentlyReadingList(
   readerId: string
 ): Promise<LibraryNovelItem[]> {
   try {
@@ -141,7 +141,7 @@ export async function getCurrentlyReadingList(
  * Get "Finished" list: novels where all chapters have scroll_percent = 100,
  * ordered by most recently completed. Req 18.5.
  */
-export async function getFinishedList(
+async function getFinishedList(
   readerId: string
 ): Promise<LibraryNovelItem[]> {
   try {
@@ -209,7 +209,7 @@ export async function getFinishedList(
 /**
  * Get followed authors for the horizontal strip. Req 18.7.
  */
-export async function getFollowedAuthors(
+async function getFollowedAuthors(
   readerId: string
 ): Promise<FollowedAuthorItem[]> {
   try {

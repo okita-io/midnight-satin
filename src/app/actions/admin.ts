@@ -19,8 +19,7 @@ import {
   type UpdateContentParams,
 } from "@/lib/admin/admin-data";
 
-async function checkAdmin() {
-  const session = await getSession();
+function checkAdminSession(session: Awaited<ReturnType<typeof getSession>>) {
   if (!session || session.role !== "admin") {
     return { success: false, error: "Forbidden" };
   }
@@ -30,7 +29,8 @@ async function checkAdmin() {
 export async function createAuthorAction(
   params: CreateAuthorParams
 ): Promise<{ success: boolean; id?: string; error?: string }> {
-  const err = await checkAdmin();
+  const session = await getSession();
+  const err = checkAdminSession(session);
   if (err) return err;
   const result = await createAuthor(params);
   if ("id" in result) return { success: true, id: result.id };
@@ -40,7 +40,8 @@ export async function createAuthorAction(
 export async function createSeriesAction(
   params: CreateSeriesParams
 ): Promise<{ success: boolean; id?: string; error?: string }> {
-  const err = await checkAdmin();
+  const session = await getSession();
+  const err = checkAdminSession(session);
   if (err) return err;
   const result = await createSeries(params);
   if ("id" in result) return { success: true, id: result.id };
@@ -50,7 +51,8 @@ export async function createSeriesAction(
 export async function createNovelAction(
   params: CreateNovelParams
 ): Promise<{ success: boolean; id?: string; error?: string }> {
-  const err = await checkAdmin();
+  const session = await getSession();
+  const err = checkAdminSession(session);
   if (err) return err;
   const result = await createNovel(params);
   if ("id" in result) return { success: true, id: result.id };
@@ -60,7 +62,8 @@ export async function createNovelAction(
 export async function createChapterAction(
   params: CreateChapterParams
 ): Promise<{ success: boolean; id?: string; error?: string }> {
-  const err = await checkAdmin();
+  const session = await getSession();
+  const err = checkAdminSession(session);
   if (err) return err;
   const result = await createChapter(params);
   if ("id" in result) return { success: true, id: result.id };
@@ -70,7 +73,8 @@ export async function createChapterAction(
 export async function createCharacterAction(
   params: CreateCharacterParams
 ): Promise<{ success: boolean; id?: string; error?: string }> {
-  const err = await checkAdmin();
+  const session = await getSession();
+  const err = checkAdminSession(session);
   if (err) return err;
   const result = await createCharacter(params);
   if ("id" in result) return { success: true, id: result.id };
@@ -80,7 +84,8 @@ export async function createCharacterAction(
 export async function updateContentAction(
   params: UpdateContentParams
 ): Promise<{ success: boolean; error?: string }> {
-  const err = await checkAdmin();
+  const session = await getSession();
+  const err = checkAdminSession(session);
   if (err) return err;
   const result = await updateContent(params);
   if ("success" in result) return { success: true };
@@ -92,7 +97,8 @@ export async function adjustCreditsAction(
   amount: number,
   reason: string
 ): Promise<{ success: boolean; error?: string }> {
-  const err = await checkAdmin();
+  const session = await getSession();
+  const err = checkAdminSession(session);
   if (err) return err;
   return adjustUserCredits(readerId, amount, reason);
 }
@@ -100,7 +106,8 @@ export async function adjustCreditsAction(
 export async function hideCommentAction(
   commentId: string
 ): Promise<{ success: boolean; error?: string }> {
-  const err = await checkAdmin();
+  const session = await getSession();
+  const err = checkAdminSession(session);
   if (err) return err;
   return hideComment(commentId);
 }
@@ -108,7 +115,8 @@ export async function hideCommentAction(
 export async function restoreCommentAction(
   commentId: string
 ): Promise<{ success: boolean; error?: string }> {
-  const err = await checkAdmin();
+  const session = await getSession();
+  const err = checkAdminSession(session);
   if (err) return err;
   return restoreComment(commentId);
 }

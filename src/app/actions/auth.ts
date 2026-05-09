@@ -26,6 +26,10 @@ export async function registerReader(
   password: string,
   displayName: string
 ): Promise<RegisterResult> {
+  const existingSession = await getSession();
+  if (existingSession) {
+    return { success: false, error: "You are already signed in." };
+  }
   const trimmedEmail = email.trim().toLowerCase();
   const trimmedName = displayName.trim();
 
@@ -58,6 +62,10 @@ export async function registerReader(
 
 /** Log in with email and password. */
 export async function loginReader(email: string, password: string): Promise<LoginResult> {
+  const existingSession = await getSession();
+  if (existingSession) {
+    return { success: false, error: "You are already signed in." };
+  }
   const trimmedEmail = email.trim().toLowerCase();
   if (!trimmedEmail) return { success: false, error: "Email is required." };
   if (!password) return { success: false, error: "Password is required." };
@@ -94,6 +102,8 @@ export async function getCurrentReader() {
 
 /** Server action for login form (use with useActionState). Redirects on success. */
 export async function loginFormAction(prev: AuthFormState, formData: FormData): Promise<AuthFormState> {
+  const session = await getSession();
+  if (session) redirect("/");
   const redirectTo = ((formData.get("redirectTo") as string) ?? "").trim() || "/";
   const email = (formData.get("email") as string) ?? "";
   const password = (formData.get("password") as string) ?? "";
@@ -104,6 +114,8 @@ export async function loginFormAction(prev: AuthFormState, formData: FormData): 
 
 /** Server action for register form (use with useActionState). Redirects on success. */
 export async function registerFormAction(prev: AuthFormState, formData: FormData): Promise<AuthFormState> {
+  const session = await getSession();
+  if (session) redirect("/");
   const redirectTo = ((formData.get("redirectTo") as string) ?? "").trim() || "/";
   const email = (formData.get("email") as string) ?? "";
   const password = (formData.get("password") as string) ?? "";

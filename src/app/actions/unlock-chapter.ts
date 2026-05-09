@@ -20,6 +20,8 @@ export async function isChapterUnlocked(
   readerId: string,
   chapterId: string
 ): Promise<boolean> {
+  const session = await getSession();
+  if (!session || session.readerId !== readerId) return false;
   const { rows } = await sql<{ chapter_id: string }>`
     SELECT chapter_id FROM chapter_unlocks
     WHERE reader_id = ${readerId} AND chapter_id = ${chapterId}

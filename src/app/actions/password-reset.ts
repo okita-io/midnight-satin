@@ -7,6 +7,7 @@
 
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { getSession } from "@/lib/auth/session";
 import {
   generateResetToken,
   checkRateLimit,
@@ -62,6 +63,7 @@ export async function requestPasswordResetAction(
   _prev: PasswordResetRequestState,
   formData: FormData
 ): Promise<PasswordResetRequestState> {
+  await getSession();
   const email = ((formData.get("email") as string) ?? "").trim().toLowerCase();
   const ipAddress = await getClientIp();
 
@@ -181,6 +183,7 @@ export async function resetPasswordAction(
   _prev: PasswordResetState,
   formData: FormData
 ): Promise<PasswordResetState> {
+  await getSession();
   const token = ((formData.get("token") as string) ?? "").trim();
   const password = (formData.get("password") as string) ?? "";
   const confirmPassword = (formData.get("confirmPassword") as string) ?? "";
