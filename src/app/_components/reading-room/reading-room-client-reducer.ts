@@ -1,7 +1,7 @@
 import {
   DEFAULT_READER_SETTINGS,
   type ReaderSettings,
-} from "./reading-hud";
+} from "./reading-hud-settings";
 
 export type ReadingRoomClientState = {
   hudVisible: boolean;
