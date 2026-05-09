@@ -82,7 +82,7 @@ export function PaperbackClient({
 
   return (
     <div className="w-full flex flex-col gap-6 xs:gap-8">
-      {/* Hero card — .card from globals (Tactile Noir) */}
+      {/* Hero card: .card from globals (Tactile Noir) */}
       <div className="card w-full p-6 xs:p-8 flex flex-col items-center gap-6">
         <div className="overlay-sheen" aria-hidden />
 
@@ -130,7 +130,7 @@ export function PaperbackClient({
 
         <div className="space-y-4 pt-1">
           <FeatureRow icon="auto_stories" title="Trade-quality paperback">
-            Professionally bound softcover sized for your shelf—printed once
+            Professionally bound softcover sized for your shelf, printed once
             our fulfillment partner is finalized.
           </FeatureRow>
           <FeatureRow icon="local_shipping" title="Shipped to your door">
@@ -202,7 +202,7 @@ export function PaperbackClient({
             </p>
             {isAuthenticated ? (
               <p className="font-literata text-white/35 text-[11px] text-center">
-                You&apos;re signed in—no need to do anything else for now.
+                You&apos;re signed in; no need to do anything else for now.
               </p>
             ) : (
               <p className="font-literata text-white/45 text-xs text-center max-w-sm">

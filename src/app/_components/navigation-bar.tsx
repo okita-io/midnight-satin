@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { FixedBottomBar } from "./chrome-primitives";
 
-export type NavTab = "boudoir" | "library" | "vault" | "updates" | "profile";
+type NavTab = "boudoir" | "library" | "vault" | "updates" | "profile";
 
 const TABS: { id: NavTab; href: string; label: string; icon: string }[] = [
   { id: "boudoir", href: "/", label: "Boudoir", icon: "history_edu" },

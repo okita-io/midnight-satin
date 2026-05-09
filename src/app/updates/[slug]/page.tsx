@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getNewsArticle, getNewsAttribution } from "@/lib/content";
 import { MetadataPills } from "@/app/_components/metadata-pills";
@@ -6,6 +7,26 @@ import { NavigationBar } from "@/app/_components/navigation-bar";
 import { BackButton } from "./back-button";
 
 export const revalidate = 60;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const article = await getNewsArticle(slug);
+  if (!article) {
+    return { title: "Article | Midnight Satin" };
+  }
+  const description =
+    article.summary.length > 160
+      ? `${article.summary.slice(0, 157)}…`
+      : article.summary;
+  return {
+    title: `${article.title} | Midnight Satin`,
+    description,
+  };
+}
 
 /** Platform display labels and Material Symbols icon names */
 const PLATFORM_META: Record<string, { label: string; icon: string }> = {
@@ -31,10 +52,10 @@ export default async function ArticleDetailPage({
     ? PLATFORM_META[article.sourcePlatform]
     : null;
 
-  const paragraphs = article.bodyContent
-    .split(/\n\n+/)
-    .map((p) => p.trim())
-    .filter(Boolean);
+  const paragraphs = article.bodyContent.split(/\n\n+/).flatMap((p) => {
+    const t = p.trim();
+    return t ? [t] : [];
+  });
 
   return (
     <>

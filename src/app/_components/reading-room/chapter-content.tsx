@@ -42,10 +42,10 @@ export function ChapterContent({
   veilMode = false,
   veilSlot,
 }: ChapterContentProps) {
-  const paragraphs = content
-    .split(/\n\n+/)
-    .map((p) => p.trim())
-    .filter(Boolean);
+  const paragraphs = content.split(/\n\n+/).flatMap((p) => {
+    const t = p.trim();
+    return t ? [t] : [];
+  });
 
   if (paragraphs.length === 0) {
     return (

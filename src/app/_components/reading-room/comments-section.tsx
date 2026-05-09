@@ -83,9 +83,8 @@ export function CommentsSection({
   }, [chapterId]);
 
   useEffect(() => {
-    if (isOpen && chapterId) {
-      queueMicrotask(() => fetchComments());
-    }
+    if (!isOpen || !chapterId) return;
+    void fetchComments();
   }, [isOpen, chapterId, fetchComments]);
 
   useEffect(() => {
@@ -202,7 +201,7 @@ export function CommentsSection({
         >
           {loading && (
             <p className="font-ui text-sm text-text-muted italic">
-              Loading thoughts...
+              Loading thoughts…
             </p>
           )}
           {error && (
@@ -230,7 +229,7 @@ export function CommentsSection({
         </div>
 
         {/* Input form */}
-        <div className="px-6 py-6 pb-10 bg-void/50 border-t border-white/5 shrink-0">
+        <div className="p-6 pb-10 bg-void/50 border-t border-white/5 shrink-0">
           <div className="relative">
             <textarea
               ref={inputRef}
@@ -245,7 +244,7 @@ export function CommentsSection({
                   handleSubmit();
                 }
               }}
-              placeholder={isAuthenticated ? "Add a thought..." : "Sign in to add a thought"}
+              placeholder={isAuthenticated ? "Add a thought…" : "Sign in to add a thought"}
               maxLength={MAX_COMMENT_LENGTH}
               rows={2}
               className="w-full bg-transparent border-0 border-b border-primary/30 py-2 px-0 text-sm font-body italic focus:ring-0 focus:border-primary placeholder:text-text-muted text-text-main transition-colors resize-none"

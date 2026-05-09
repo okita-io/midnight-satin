@@ -39,31 +39,33 @@ export default async function AdminChaptersPage() {
             </tr>
           </thead>
           <tbody>
-            {chapters
-              .filter((c): c is typeof c & { type: "chapter" } => c.type === "chapter")
-              .map((c) => (
-                <tr
-                  key={c.id}
-                  className="border-b border-primary/10 hover:bg-surface-highlight/50"
-                >
-                  <td className="px-4 py-3 text-text-muted text-sm font-mono">
-                    {c.novelId.slice(0, 8)}…
-                  </td>
-                  <td className="px-4 py-3 font-ui">{c.chapterNumber}</td>
-                  <td className="px-4 py-3 font-ui">{c.title}</td>
-                  <td className="px-4 py-3 text-text-muted">
-                    {c.isFree ? "Yes" : "No"}
-                  </td>
-                  <td className="px-4 py-3">
-                    <Link
-                      href={`/admin/chapters/${c.id}`}
-                      className="text-primary hover:underline font-ui text-sm"
+            {chapters.flatMap((c) =>
+              c.type === "chapter"
+                ? [
+                    <tr
+                      key={c.id}
+                      className="border-b border-primary/10 hover:bg-surface-highlight/50"
                     >
-                      Edit
-                    </Link>
-                  </td>
-                </tr>
-              ))}
+                      <td className="px-4 py-3 text-text-muted text-sm font-mono">
+                        {c.novelId.slice(0, 8)}…
+                      </td>
+                      <td className="px-4 py-3 font-ui">{c.chapterNumber}</td>
+                      <td className="px-4 py-3 font-ui">{c.title}</td>
+                      <td className="px-4 py-3 text-text-muted">
+                        {c.isFree ? "Yes" : "No"}
+                      </td>
+                      <td className="px-4 py-3">
+                        <Link
+                          href={`/admin/chapters/${c.id}`}
+                          className="text-primary hover:underline font-ui text-sm"
+                        >
+                          Edit
+                        </Link>
+                      </td>
+                    </tr>,
+                  ]
+                : []
+            )}
           </tbody>
         </table>
         {chapters.length === 0 && (

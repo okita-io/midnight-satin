@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 /**
  * Circular character portrait, 80px diameter by default, gold border.
  * Used in Novel Detail "The Players" and Cast Gallery.
@@ -38,12 +40,13 @@ export function CharacterPortrait({
       >
         <div className="w-full h-full rounded-full overflow-hidden bg-surface relative">
           {portraitUrl ? (
-            <img
+            <Image
               src={portraitUrl}
               alt=""
-              className="w-full h-full object-cover opacity-90 group-hover:scale-110 transition-transform duration-500"
-              loading="lazy"
-              decoding="async"
+              fill
+              className="object-cover opacity-90 group-hover:scale-110 transition-transform duration-500"
+              sizes="112px"
+              unoptimized
             />
           ) : (
             <span className="material-symbols-outlined absolute inset-0 flex items-center justify-center text-text-muted text-2xl">

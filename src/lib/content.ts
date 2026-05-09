@@ -409,26 +409,6 @@ export async function getUnlockedChapterIds(readerId: string, novelId: string): 
 }
 
 /**
- * Get reading progress for a novel (chapter_id -> scroll_percent) for first-unread logic.
- */
-export async function getReadingProgressForNovel(
-  readerId: string,
-  novelId: string
-): Promise<Map<string, number>> {
-  try {
-    const { rows } = await sql<{ chapter_id: string; scroll_percent: number }>`
-      SELECT rp.chapter_id, rp.scroll_percent
-      FROM reading_progress rp
-      JOIN chapters c ON c.id = rp.chapter_id
-      WHERE rp.reader_id = ${readerId} AND c.novel_id = ${novelId}
-    `;
-    return new Map(rows.map((r) => [r.chapter_id, Number(r.scroll_percent)]));
-  } catch {
-    return new Map();
-  }
-}
-
-/**
  * Get a single chapter by ID.
  */
 export async function getChapter(chapterId: string): Promise<NovelChapter | null> {
