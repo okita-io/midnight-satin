@@ -53,7 +53,7 @@ export function ParallaxHero({
       <span className="font-heading text-[10px] tracking-[0.3em] text-white mb-2 uppercase border-b border-white/40 pb-1 hero-text-shadow">
         Editor&apos;s Pick
       </span>
-      <h1 className="text-3xl sm:text-4xl font-display italic font-bold text-white leading-tight gold-text-shadow mt-1">
+      <h1 className="text-3xl sm:text-4xl font-display italic font-semibold text-white leading-tight gold-text-shadow mt-1" style={{ fontWeight: 700 }}>
         {title}
       </h1>
       <p className="text-sm text-white font-ui tracking-wide hero-text-shadow mt-2">
@@ -71,7 +71,7 @@ export function ParallaxHero({
       {startReadingHref && (
         <Link
           href={startReadingHref}
-          className="mt-4 bg-primary text-void font-ui font-bold text-sm px-8 py-3 rounded-sm hover:bg-white transition-colors duration-300 shadow-gold-glow uppercase tracking-wider"
+          className="btn-gold mt-4 h-11 px-7 inline-flex items-center justify-center text-xs font-medium tracking-[0.25em] active:scale-[0.98]"
         >
           Start Reading
         </Link>
@@ -123,7 +123,7 @@ export function ParallaxHero({
         <span className="text-[10px] tracking-[0.3em] text-white mb-3 uppercase border-b border-white/40 pb-1 hero-text-shadow">
           Editor&apos;s Pick
         </span>
-        <h1 className="text-4xl md:text-5xl font-display italic font-bold text-white leading-tight gold-text-shadow">
+        <h1 className="text-4xl md:text-5xl font-display italic font-semibold text-white leading-tight gold-text-shadow" style={{ fontWeight: 700 }}>
           {title}
         </h1>
         <p className="text-lg text-white font-display tracking-wide hero-text-shadow mt-2">
@@ -141,7 +141,7 @@ export function ParallaxHero({
         {startReadingHref && (
           <Link
             href={startReadingHref}
-            className="mt-6 bg-primary text-void font-bold text-sm px-8 py-3 rounded-sm hover:bg-white transition-colors duration-300 shadow-gold-glow uppercase tracking-wider"
+            className="btn-gold mt-6 h-11 px-7 inline-flex items-center justify-center text-xs font-medium tracking-[0.25em] active:scale-[0.98]"
           >
             Start Reading
           </Link>

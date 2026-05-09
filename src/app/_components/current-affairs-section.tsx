@@ -116,7 +116,7 @@ function CurrentAffairsCard({ currentReading }: { currentReading: CurrentReading
         <span className="text-[10px] text-primary/80 font-ui uppercase tracking-wider mb-1">
           {chapterTitle}
         </span>
-        <h3 className="font-display font-bold italic text-xl text-white truncate pr-2 mb-1">
+        <h3 className="font-display font-semibold italic text-xl text-white truncate pr-2 mb-1" style={{ fontWeight: 700 }}>
           {novel.title}
         </h3>
         <p className="font-ui text-xs text-text-muted mb-4">{novel.authorName}</p>

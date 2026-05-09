@@ -13,7 +13,7 @@ export function VaultTeaserCard() {
     >
       <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black/20 to-transparent pointer-events-none" />
       <div className="relative z-10 flex-1 min-w-0">
-        <h4 className="font-display italic text-lg font-bold text-primary mb-1">
+        <h4 className="font-display italic text-lg font-semibold text-primary mb-1" style={{ fontWeight: 700 }}>
           Refill your purse
         </h4>
         <p className="font-ui text-[12px] leading-[1.4] text-text-muted max-w-[200px]">

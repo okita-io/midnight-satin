@@ -29,7 +29,7 @@ export default function Error({
         <p className="font-header text-sm tracking-[0.2em] text-primary uppercase mb-4">
           Something went wrong
         </p>
-        <h1 className="font-display italic font-bold text-3xl md:text-4xl text-text-main mb-4">
+        <h1 className="font-display italic font-semibold text-3xl md:text-4xl text-text-main mb-4" style={{ fontWeight: 700 }}>
           The candle flickered out
         </h1>
         <p className="font-ui text-text-muted text-sm mb-8 max-w-sm">

@@ -70,8 +70,8 @@ export function AuthPrompt({ isOpen, onClose, returnUrl, message }: AuthPromptPr
         <div className="flex justify-between items-start gap-4 mb-4">
           <h2
             id="auth-prompt-title"
-            className="font-display font-bold italic text-xl text-[var(--primary)]"
-            style={{ fontFamily: "var(--font-display)" }}
+            className="font-display font-semibold italic text-xl text-[var(--primary)]"
+            style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}
           >
             Sign in to continue
           </h2>

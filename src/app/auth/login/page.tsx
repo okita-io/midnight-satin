@@ -34,7 +34,10 @@ export default async function LoginPage({
         </div>
 
         <div className="text-center mb-10">
-          <h1 className="font-display font-bold italic text-4xl text-primary">
+          <h1
+            className="font-display font-semibold italic text-4xl text-primary"
+            style={{ fontWeight: 700 }}
+          >
             Welcome back
           </h1>
           <p className="font-ui text-text-muted mt-2 text-sm tracking-widest uppercase">

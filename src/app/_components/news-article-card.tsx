@@ -47,7 +47,10 @@ export function NewsArticleCard({ article, className = "" }: NewsArticleCardProp
 
       {/* Content */}
       <div className="flex flex-col flex-1 p-4 gap-2">
-        <h3 className="font-display font-bold italic text-lg text-text-main leading-tight group-hover:text-primary transition-colors">
+        <h3
+          className="font-display font-semibold italic text-lg text-text-main leading-tight group-hover:text-primary transition-colors"
+          style={{ fontWeight: 700 }}
+        >
           {article.title}
         </h3>
 

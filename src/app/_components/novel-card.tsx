@@ -62,7 +62,7 @@ export function NovelCard({ novel, variant = "default", fill = false, className 
           )}
         </div>
         <div className="flex flex-col justify-center flex-1 min-w-0">
-          <h3 className="font-display font-bold italic text-lg xs:text-xl text-text-main truncate pr-2 mb-1 group-hover:text-primary transition-colors">
+          <h3 className="font-display font-semibold italic text-lg xs:text-xl text-text-main truncate pr-2 mb-1 group-hover:text-primary transition-colors" style={{ fontWeight: 700 }}>
             {novel.title}
           </h3>
           <p className="font-ui text-xs text-text-muted">{novel.authorName}</p>
@@ -119,7 +119,7 @@ export function NovelCard({ novel, variant = "default", fill = false, className 
           )}
         </div>
         <div className="flex flex-col justify-center flex-1 min-w-0 py-1">
-          <h3 className="font-display font-bold italic text-xl text-text-main mb-1 group-hover:text-primary transition-colors line-clamp-2">
+          <h3 className="font-display font-semibold italic text-xl text-text-main mb-1 group-hover:text-primary transition-colors line-clamp-2" style={{ fontWeight: 700 }}>
             {novel.title}
           </h3>
           <p className="font-ui text-sm text-text-muted uppercase tracking-wider mb-2">
@@ -196,7 +196,7 @@ export function NovelCard({ novel, variant = "default", fill = false, className 
           </div>
         )}
       </div>
-      <h3 className="font-display font-bold italic text-base text-white leading-tight mb-1 truncate group-hover:text-primary transition-colors">
+      <h3 className="font-display font-semibold italic text-base text-white leading-tight mb-1 truncate group-hover:text-primary transition-colors" style={{ fontWeight: 700 }}>
         {novel.title}
       </h3>
       <p className="font-ui text-[11px] text-text-muted truncate">{novel.authorName}</p>

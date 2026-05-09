@@ -17,7 +17,7 @@ export default function NotFound() {
         <p className="font-header text-sm tracking-[0.2em] text-primary uppercase mb-4">
           Lost in the stacks
         </p>
-        <h1 className="font-display italic font-bold text-3xl md:text-4xl text-text-main mb-4 gold-text-shadow">
+        <h1 className="font-display italic font-semibold text-3xl md:text-4xl text-text-main mb-4 gold-text-shadow" style={{ fontWeight: 700 }}>
           This page has slipped into the shadows
         </h1>
         <p className="font-ui text-text-muted text-sm mb-8 max-w-sm">

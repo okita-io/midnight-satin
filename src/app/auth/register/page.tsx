@@ -29,7 +29,10 @@ export default async function RegisterPage({
 
       <div className="flex-1 flex flex-col items-center px-8 pb-12 max-w-md mx-auto w-full">
         <div className="text-center mb-8">
-          <h1 className="font-display font-bold italic text-[32px] text-primary gold-text-shadow">
+          <h1
+            className="font-display font-semibold italic text-[32px] text-primary gold-text-shadow"
+            style={{ fontWeight: 700 }}
+          >
             Join Midnight Satin
           </h1>
           <p className="font-ui text-text-muted/60 mt-2 text-sm tracking-wide">
@@ -41,14 +44,18 @@ export default async function RegisterPage({
         <div className="relative w-full flex justify-center items-center mb-10">
           <div className="relative bg-surface/80 backdrop-blur-sm border border-primary/20 rounded-sm px-8 py-5 text-center overflow-hidden">
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-              <span className="text-[140px] font-display font-bold text-primary opacity-10">200</span>
+              <span className="text-[140px] font-display font-semibold text-primary opacity-10" style={{ fontWeight: 700 }}>
+                200
+              </span>
             </div>
             <div className="relative z-10">
               <span className="material-symbols-outlined text-primary text-2xl mb-1" style={{ fontVariationSettings: "'FILL' 1" }}>
                 diamond
               </span>
               <p className="font-header text-primary text-sm tracking-[0.2em] uppercase">Welcome Gift</p>
-              <p className="font-display text-2xl text-white font-bold mt-1">200 Credits</p>
+              <p className="font-display text-2xl text-white font-semibold mt-1" style={{ fontWeight: 700 }}>
+                200 Credits
+              </p>
             </div>
           </div>
         </div>
