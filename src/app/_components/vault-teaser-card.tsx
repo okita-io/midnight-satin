@@ -20,7 +20,7 @@ export function VaultTeaserCard() {
           Unlock exclusive chapters and endorse your favorite suitors.
         </p>
       </div>
-      <div className="relative z-10 w-11 h-11 bg-primary/10 rounded-full border border-primary/30 text-primary flex items-center justify-center">
+      <div className="relative z-10 size-11 bg-primary/10 rounded-full border border-primary/30 text-primary flex items-center justify-center">
         <span className="material-symbols-outlined" style={{ fontSize: 24 }} aria-hidden>
           diamond
         </span>

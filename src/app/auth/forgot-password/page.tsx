@@ -13,8 +13,8 @@ export default async function ForgotPasswordPage() {
   return (
     <main className="relative flex min-h-screen w-full flex-col overflow-hidden bg-silk-noise">
       {/* Decorative blurs */}
-      <div className="absolute -bottom-24 -left-24 w-48 h-48 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -top-24 -right-24 w-48 h-48 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -bottom-24 -left-24 size-48 bg-primary/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute -top-24 -right-24 size-48 bg-primary/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="flex-1 flex flex-col items-center justify-center px-8 max-w-md mx-auto w-full">
         {/* Branding icon */}
