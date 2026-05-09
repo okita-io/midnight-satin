@@ -53,7 +53,7 @@ export function ParallaxHero({
       <span className="font-heading text-[10px] tracking-[0.3em] text-white mb-2 uppercase border-b border-white/40 pb-1 hero-text-shadow">
         Editor&apos;s Pick
       </span>
-      <h1 className="text-3xl sm:text-4xl font-display italic font-semibold text-white leading-tight gold-text-shadow mt-1" style={{ fontWeight: 700 }}>
+      <h1 className="text-3xl sm:text-4xl font-display italic font-semibold text-white leading-tight gold-text-shadow mt-1">
         {title}
       </h1>
       <p className="text-sm text-white font-ui tracking-wide hero-text-shadow mt-2">
@@ -123,7 +123,7 @@ export function ParallaxHero({
         <span className="text-[10px] tracking-[0.3em] text-white mb-3 uppercase border-b border-white/40 pb-1 hero-text-shadow">
           Editor&apos;s Pick
         </span>
-        <h1 className="text-4xl md:text-5xl font-display italic font-semibold text-white leading-tight gold-text-shadow" style={{ fontWeight: 700 }}>
+        <h1 className="text-4xl md:text-5xl font-display italic font-semibold text-white leading-tight gold-text-shadow">
           {title}
         </h1>
         <p className="text-lg text-white font-display tracking-wide hero-text-shadow mt-2">

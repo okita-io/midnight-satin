@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect } from "react";
+import { SecondaryOutlineLink } from "./_components/button-primitives";
 
 /**
  * Themed error boundary: void background, gold accents, generic message.
@@ -29,7 +29,7 @@ export default function Error({
         <p className="font-header text-sm tracking-[0.2em] text-primary uppercase mb-4">
           Something went wrong
         </p>
-        <h1 className="font-display italic font-semibold text-3xl md:text-4xl text-text-main mb-4" style={{ fontWeight: 700 }}>
+        <h1 className="font-display italic font-semibold text-3xl md:text-4xl text-text-main mb-4">
           The candle flickered out
         </h1>
         <p className="font-ui text-text-muted text-sm mb-8 max-w-sm">
@@ -44,13 +44,13 @@ export default function Error({
           >
             Try again
           </button>
-          <Link
+          <SecondaryOutlineLink
             href="/"
-            className="font-ui text-sm font-bold text-primary border border-primary py-3 px-6 rounded-sm hover:bg-primary hover:text-void transition-colors text-center"
+            className="py-3 px-6 text-center"
             aria-label="Return to home"
           >
             Return home
-          </Link>
+          </SecondaryOutlineLink>
         </div>
       </div>
     </div>
