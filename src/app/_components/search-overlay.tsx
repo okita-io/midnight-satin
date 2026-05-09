@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useEffectEvent, useRef } from "react";
 import Link from "next/link";
 import { novelDetailPath, authorStudyPath } from "@/lib/navigation";
 
@@ -46,6 +46,10 @@ export function SearchOverlay({
   const overlayRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
 
+  const onEscapeClose = useEffectEvent(() => {
+    onClose();
+  });
+
   useEffect(() => {
     if (!isOpen) return;
     closeButtonRef.current?.focus();
@@ -55,7 +59,7 @@ export function SearchOverlay({
     if (!isOpen) return;
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === "Escape") {
-        onClose();
+        onEscapeClose();
         return;
       }
       if (e.key !== "Tab") return;
@@ -75,7 +79,7 @@ export function SearchOverlay({
     }
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
   if (!isOpen) return null;
 

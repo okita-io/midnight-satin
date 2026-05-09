@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef } from "react";
+import { useEffect, useEffectEvent, useRef } from "react";
 import { SecondaryOutlineLink } from "./button-primitives";
 
 interface AuthPromptProps {
@@ -18,6 +18,10 @@ export function AuthPrompt({ isOpen, onClose, returnUrl, message }: AuthPromptPr
   const firstFocusRef = useRef<HTMLButtonElement>(null);
   const lastFocusRef = useRef<HTMLAnchorElement>(null);
 
+  const onEscapeClose = useEffectEvent(() => {
+    onClose();
+  });
+
   const loginHref = returnUrl ? `/auth/login?returnUrl=${encodeURIComponent(returnUrl)}` : "/auth/login";
   const registerHref = returnUrl ? `/auth/register?returnUrl=${encodeURIComponent(returnUrl)}` : "/auth/register";
 
@@ -30,7 +34,7 @@ export function AuthPrompt({ isOpen, onClose, returnUrl, message }: AuthPromptPr
     if (!isOpen) return;
     function handleKeyDown(e: KeyboardEvent) {
       if (e.key === "Escape") {
-        onClose();
+        onEscapeClose();
         return;
       }
       if (e.key !== "Tab") return;
@@ -50,7 +54,7 @@ export function AuthPrompt({ isOpen, onClose, returnUrl, message }: AuthPromptPr
     }
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
   if (!isOpen) return null;
 

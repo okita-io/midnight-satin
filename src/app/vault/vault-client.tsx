@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AuthPrompt } from "../_components/auth-prompt";
@@ -43,6 +43,26 @@ const CREDIT_PACKS = [
   },
 ] as const;
 
+type CelebrationState = { coinRainActive: boolean };
+
+type CelebrationAction =
+  | { type: "start_coin_rain" }
+  | { type: "end_coin_rain" };
+
+function celebrationReducer(
+  state: CelebrationState,
+  action: CelebrationAction
+): CelebrationState {
+  switch (action.type) {
+    case "start_coin_rain":
+      return { coinRainActive: true };
+    case "end_coin_rain":
+      return { coinRainActive: false };
+    default:
+      return state;
+  }
+}
+
 interface VaultClientProps {
   isAuthenticated: boolean;
   purchaseSuccess?: boolean;
@@ -55,19 +75,24 @@ export function VaultClient({
   const [authPromptOpen, setAuthPromptOpen] = useState(false);
   const [purchasingPackId, setPurchasingPackId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [showCoinRain, setShowCoinRain] = useState(false);
+  const [celebration, dispatchCelebration] = useReducer(celebrationReducer, {
+    coinRainActive: false,
+  });
   const pathname = usePathname();
+  const successEffectGenRef = useRef(0);
 
   useEffect(() => {
-    if (purchaseSuccess) {
-      setShowCoinRain(true);
-      // Clear URL params only after coin rain animation completes (Req 8.5)
-      const t = setTimeout(() => {
-        setShowCoinRain(false);
-        window.history.replaceState(window.history.state, "", pathname);
-      }, 3000);
-      return () => clearTimeout(t);
-    }
+    if (!purchaseSuccess) return;
+    const gen = ++successEffectGenRef.current;
+    dispatchCelebration({ type: "start_coin_rain" });
+    const t = window.setTimeout(() => {
+      if (gen !== successEffectGenRef.current) return;
+      window.history.replaceState(window.history.state, "", pathname);
+      dispatchCelebration({ type: "end_coin_rain" });
+    }, 3000);
+    return () => {
+      window.clearTimeout(t);
+    };
   }, [purchaseSuccess, pathname]);
 
   async function handlePurchaseClick(packId: string) {
@@ -93,7 +118,7 @@ export function VaultClient({
     <>
       <main className="relative z-10 flex-1 px-3 xs:px-4 pb-24 overflow-y-auto">
         {/* Coin rain overlay on successful purchase (Req 8.5) */}
-        <CoinRainAnimation isActive={showCoinRain} />
+        <CoinRainAnimation isActive={celebration.coinRainActive} />
 
         {error && (
           <div
