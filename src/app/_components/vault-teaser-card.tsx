@@ -8,25 +8,22 @@ export function VaultTeaserCard() {
   return (
     <Link
       href="/vault"
-      className="relative w-full bg-gradient-to-r from-[#1a1500] to-surface border border-primary/20 rounded-sm p-4 xs:p-5 flex items-center gap-3 overflow-hidden block"
+      className="relative w-full bg-gradient-to-b from-[#1a1500] to-surface border border-primary/20 rounded-sm p-5 flex items-center gap-3 overflow-hidden block"
       aria-label="Visit the Vault to purchase credits"
     >
       <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-black/20 to-transparent pointer-events-none" />
-      {/* Sparkle effects */}
-      <span className="absolute top-2 right-10 w-1 h-1 bg-primary rounded-full animate-pulse" aria-hidden />
-      <span
-        className="absolute bottom-4 right-20 w-1 h-1 bg-white rounded-full animate-pulse"
-        style={{ animationDelay: "0.5s" }}
-        aria-hidden
-      />
       <div className="relative z-10 flex-1 min-w-0">
-        <h4 className="font-display italic text-base xs:text-lg text-primary mb-1">Refill your purse</h4>
-        <p className="font-ui text-xs text-text-muted max-w-[180px]">
+        <h4 className="font-display italic text-lg font-bold text-primary mb-1">
+          Refill your purse
+        </h4>
+        <p className="font-ui text-[12px] leading-[1.4] text-text-muted max-w-[200px]">
           Unlock exclusive chapters and endorse your favorite suitors.
         </p>
       </div>
-      <div className="relative z-10 bg-primary/10 p-2 rounded-full border border-primary/30 text-primary">
-        <span className="material-symbols-outlined" aria-hidden>diamond</span>
+      <div className="relative z-10 w-11 h-11 bg-primary/10 rounded-full border border-primary/30 text-primary flex items-center justify-center">
+        <span className="material-symbols-outlined" style={{ fontSize: 24 }} aria-hidden>
+          diamond
+        </span>
       </div>
     </Link>
   );

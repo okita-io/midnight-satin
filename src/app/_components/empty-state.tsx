@@ -16,28 +16,30 @@ export function EmptyState({
   className = "",
 }: EmptyStateProps) {
   return (
-    <div className={`flex flex-col items-center gap-6 relative ${className}`}>
-      <div className="absolute w-64 h-64 bg-primary/5 rounded-full blur-3xl -z-10" />
-      <div className="w-24 h-24 rounded-full border border-primary/20 bg-primary/5 flex items-center justify-center">
+    <div className={`flex flex-col items-center gap-5 relative ${className}`}>
+      <div className="relative w-full h-[132px]">
+        <div className="absolute left-1/2 -translate-x-1/2 -top-9 w-[220px] h-[220px] bg-primary/[0.08] rounded-full blur-[40px] -z-10" />
+        <div className="absolute left-1/2 -translate-x-1/2 top-[18px] w-24 h-24 rounded-full border border-primary/20 bg-primary/5 flex items-center justify-center">
         <span
           className="material-symbols-outlined text-primary/40 text-4xl"
           aria-hidden
         >
           auto_stories
         </span>
+        </div>
       </div>
       <p className="font-script text-3xl text-primary text-center opacity-90">
         {message}
       </p>
       {subtitle && (
-        <p className="text-text-muted/60 text-sm max-w-[240px] leading-relaxed italic text-center">
+        <p className="font-body text-[#8A8A8A] text-sm max-w-[240px] leading-[1.45] italic text-center">
           {subtitle}
         </p>
       )}
       {showBrowse && (
         <Link
           href="/library"
-          className="mt-2 px-6 py-2.5 bg-primary text-void font-ui font-bold text-xs uppercase tracking-widest rounded-sm shadow-[0_0_20px_rgba(212,175,53,0.2)] hover:bg-white transition-colors"
+          className="mt-2 h-11 px-7 inline-flex items-center justify-center rounded-sm bg-primary text-void font-ui text-xs font-medium uppercase tracking-[0.25em] shadow-gold-glow transition-colors [@media(hover:hover)]:hover:bg-white active:scale-[0.98]"
         >
           Browse Catalog
         </Link>
