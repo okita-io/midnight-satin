@@ -1,10 +1,10 @@
 import type { InputHTMLAttributes } from "react";
 
 export const FORM_FIELD_LABEL_CLASSNAME =
-  "block font-ui text-[10px] uppercase tracking-[0.15em] text-text-muted ml-1";
+  "block font-ui text-[12px] font-normal uppercase tracking-[0.25em] text-text-muted";
 
 export const FORM_FIELD_INPUT_CLASSNAME =
-  "block w-full h-14 rounded-none border border-surface-highlight bg-surface-highlight px-4 font-ui text-text-main placeholder:text-text-muted/60 focus:border-primary focus:outline-none focus:ring-0 transition-colors duration-300 disabled:opacity-70";
+  "block w-full h-14 rounded-none border border-surface-highlight bg-surface-highlight px-4 font-ui text-[15px] text-text-main placeholder:text-text-muted/65 focus:border-primary focus:outline-none focus:ring-0 transition-colors duration-300 disabled:opacity-70";
 
 export type FormFieldProps = Omit<InputHTMLAttributes<HTMLInputElement>, "className"> & {
   id: string;
