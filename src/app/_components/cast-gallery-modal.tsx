@@ -34,7 +34,7 @@ function getStats(char: NovelCharacter): Partial<CharacterStats> {
 /** Trophy badge - animated pulsing gold glow when endorsements > 1000 (Req 5.5). */
 function TrophyBadge() {
   return (
-    <div className="absolute top-4 right-4 z-20 animate-trophy-pulse flex flex-col items-center gap-1">
+    <div className="absolute top-4 left-4 z-20 animate-trophy-pulse flex flex-col items-center gap-1">
       <div className="size-10 rounded-full bg-surface/80 backdrop-blur border border-primary flex items-center justify-center text-primary shadow-[0_0_15px_rgba(212,175,55,0.4)]">
         <span
           className="material-symbols-outlined text-[20px]"
@@ -50,15 +50,97 @@ function TrophyBadge() {
   );
 }
 
+/** Endorse button - compact rose icon, pinned on portrait hero (Req 6.1, 6.2, 6.4). */
+function EndorseRoseButton({
+  characterId,
+  endorsementCount,
+  onEndorse,
+  onAuthPrompt,
+}: {
+  characterId: string;
+  endorsementCount: number;
+  onEndorse?: (characterId: string) => void;
+  onAuthPrompt?: () => void;
+}) {
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [justEndorsed, setJustEndorsed] = useState(false);
+
+  const handleConfirm = () => {
+    onEndorse?.(characterId);
+    setShowConfirm(false);
+    setJustEndorsed(true);
+    setTimeout(() => setJustEndorsed(false), 600);
+  };
+
+  const handleRoseClick = () => {
+    if (onAuthPrompt) {
+      onAuthPrompt();
+      return;
+    }
+    setShowConfirm(true);
+  };
+
+  return (
+    <div className="relative">
+      {showConfirm && (
+        <div className="absolute -top-2 right-0 -translate-y-full bg-surface border border-primary/30 text-primary px-4 py-2 rounded shadow-lg text-xs font-ui tracking-wide flex flex-col gap-2 w-max max-w-[260px]">
+          <span>Send a Rose? (1 Credit)</span>
+          <div className="flex gap-2 justify-end">
+            <button
+              type="button"
+              onClick={handleConfirm}
+              className="px-3 py-1 bg-primary text-void rounded text-xs font-ui cursor-pointer active:scale-95"
+            >
+              Confirm
+            </button>
+            <button
+              type="button"
+              onClick={() => setShowConfirm(false)}
+              className="px-3 py-1 border border-white/30 rounded text-xs font-ui cursor-pointer active:scale-95"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
+
+      <button
+        type="button"
+        onClick={handleRoseClick}
+        className="group relative inline-flex items-center gap-2 rounded-full bg-accent/90 hover:bg-accent text-white shadow-[0_4px_20px_rgba(128,0,32,0.35)] hover:shadow-[0_4px_30px_rgba(128,0,32,0.55)] transition-all duration-300 border border-white/10 overflow-hidden cursor-pointer active:scale-95 pl-3 pr-3 py-2 backdrop-blur"
+        aria-label="Send endorsement (1 Credit)"
+      >
+        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+        <span
+          className={`material-symbols-outlined text-[18px] ${
+            justEndorsed ? "animate-rose-pulse" : ""
+          }`}
+          style={{ fontVariationSettings: "'FILL' 1" }}
+        >
+          local_florist
+        </span>
+        <span className="font-ui text-[10px] tracking-[0.22em] uppercase">
+          Endorse
+        </span>
+        <span className="ml-1 rounded-full bg-void/35 px-2 py-0.5 text-[10px] font-display font-bold text-primary">
+          {endorsementCount.toLocaleString()}
+        </span>
+      </button>
+    </div>
+  );
+}
+
 /** Character card front - portrait hero top, text content below center, endorsement inline. */
 function CharacterCard({
   char,
   onTapReveal,
-  endorsementSlot,
+  onEndorse,
+  onAuthPrompt,
 }: {
   char: NovelCharacter;
   onTapReveal: () => void;
-  endorsementSlot?: React.ReactNode;
+  onEndorse?: (characterId: string) => void;
+  onAuthPrompt?: () => void;
 }) {
   return (
     <div className="absolute inset-0 w-full h-full backface-hidden bg-surface rounded-lg overflow-hidden border border-white/5 cursor-pointer flex flex-col">
@@ -73,6 +155,14 @@ function CharacterCard({
         />
         <div className="absolute inset-0 bg-gradient-to-t from-void via-transparent to-transparent" />
         {char.hasTrophy && <TrophyBadge />}
+        <div className="absolute top-4 right-4 z-30">
+          <EndorseRoseButton
+            characterId={char.id}
+            endorsementCount={char.endorsementCount}
+            onEndorse={onEndorse}
+            onAuthPrompt={onAuthPrompt}
+          />
+        </div>
       </div>
 
       {/* Text content below portrait — flows naturally, no overlap */}
@@ -93,10 +183,6 @@ function CharacterCard({
           <p className="font-body text-sm italic text-text-main/60 leading-relaxed mb-4 max-w-[90%] line-clamp-3">
             {char.description}
           </p>
-        )}
-
-        {endorsementSlot && (
-          <div className="mb-3">{endorsementSlot}</div>
         )}
 
         <button
@@ -138,9 +224,25 @@ function DossierCard({
   return (
     <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 bg-surface bg-silk-noise rounded-lg border border-primary/20 p-8 flex flex-col shadow-[inset_0_0_20px_rgba(212,175,55,0.1)] overflow-y-auto">
       <div className="flex justify-between items-center border-b border-primary/20 pb-4 mb-6">
-        <h3 className="font-header text-primary text-lg tracking-widest">
-          Confidential
-        </h3>
+        <div className="flex items-center gap-3">
+          <h3 className="font-header text-primary text-lg tracking-widest">
+            Confidential
+          </h3>
+          <span className="inline-flex items-center gap-1 rounded-full bg-void/60 border border-primary/20 px-2.5 py-1">
+            <span
+              className="material-symbols-outlined text-primary text-[14px]"
+              style={{ fontVariationSettings: "'FILL' 1" }}
+            >
+              local_florist
+            </span>
+            <span className="font-ui text-[10px] tracking-[0.2em] uppercase text-text-main/70">
+              Rank
+            </span>
+            <span className="font-display text-[11px] font-bold text-primary">
+              {char.endorsementCount.toLocaleString()}
+            </span>
+          </span>
+        </div>
         <span className="text-white/20 font-mono text-xs">
           REF: {char.id.slice(0, 8).toUpperCase()}
         </span>
@@ -244,96 +346,6 @@ function DossierCard({
   );
 }
 
-/** Endorsement FAB - 64px burgundy circle, rose icon, endorsement count (Req 6.1, 6.2, 6.4). */
-function EndorsementFAB({
-  characterId,
-  endorsementCount,
-  onEndorse,
-  onAuthPrompt,
-  compact = false,
-}: {
-  characterId: string;
-  endorsementCount: number;
-  onEndorse?: (characterId: string) => void;
-  onAuthPrompt?: () => void;
-  /** When true, use smaller size for grid cards (THE-64). */
-  compact?: boolean;
-}) {
-  const [showConfirm, setShowConfirm] = useState(false);
-  const [justEndorsed, setJustEndorsed] = useState(false);
-
-  const handleConfirm = () => {
-    onEndorse?.(characterId);
-    setShowConfirm(false);
-    setJustEndorsed(true);
-    setTimeout(() => setJustEndorsed(false), 600);
-  };
-
-  const handleRoseClick = () => {
-    if (onAuthPrompt) {
-      onAuthPrompt();
-    } else {
-      setShowConfirm(true);
-    }
-  };
-
-  return (
-    <div className="flex flex-col items-center gap-3 shrink-0">
-      {showConfirm && (
-        <div className="absolute -top-20 left-1/2 -translate-x-1/2 bg-surface border border-primary/30 text-primary px-4 py-2 rounded shadow-lg text-xs font-ui tracking-wide flex flex-col gap-2">
-          <span>Send a Rose? (1 Credit)</span>
-          <div className="flex gap-2 justify-center">
-            <button
-              type="button"
-              onClick={handleConfirm}
-              className="px-3 py-1 bg-primary text-void rounded text-xs font-ui cursor-pointer active:scale-95"
-            >
-              Confirm
-            </button>
-            <button
-              type="button"
-              onClick={() => setShowConfirm(false)}
-              className="px-3 py-1 border border-white/30 rounded text-xs font-ui cursor-pointer active:scale-95"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      )}
-      <button
-        type="button"
-        onClick={handleRoseClick}
-        className={`relative group flex items-center justify-center shrink-0 rounded-full bg-accent text-white shadow-[0_4px_20px_rgba(128,0,32,0.4)] fab-hover-scale-lg hover:shadow-[0_4px_30px_rgba(128,0,32,0.6)] transition-all duration-300 border border-white/10 overflow-hidden cursor-pointer active:scale-95 ${
-          compact ? "size-12" : "size-16"
-        }`}
-        aria-label="Send endorsement (1 Credit)"
-      >
-        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-        <span
-          className={`material-symbols-outlined ${compact ? "text-2xl" : "text-3xl"} ${
-            justEndorsed ? "animate-rose-pulse" : ""
-          }`}
-          style={{ fontVariationSettings: "'FILL' 1" }}
-        >
-          local_florist
-        </span>
-      </button>
-      <div className="flex flex-col items-center">
-        <span
-          className={`font-display font-bold text-primary drop-shadow-md ${
-            compact ? "text-sm" : "text-lg"
-          }`}
-        >
-          {endorsementCount.toLocaleString()}
-        </span>
-        <span className="text-[10px] text-text-muted uppercase tracking-widest font-ui">
-          Endorsements
-        </span>
-      </div>
-    </div>
-  );
-}
-
 /**
  * Single character card for grid layout - flip interaction, taller portrait ratio.
  * Endorsement is inline within the card front, no overlap.
@@ -359,15 +371,8 @@ function CharacterGridCard({
         <CharacterCard
           char={char}
           onTapReveal={() => setFlipped(true)}
-          endorsementSlot={
-            <EndorsementFAB
-              characterId={char.id}
-              endorsementCount={char.endorsementCount}
-              onEndorse={onEndorse}
-              onAuthPrompt={onAuthPrompt}
-              compact
-            />
-          }
+          onEndorse={onEndorse}
+          onAuthPrompt={onAuthPrompt}
         />
         <DossierCard char={char} onTapReturn={() => setFlipped(false)} />
       </div>
@@ -407,7 +412,7 @@ function NavigationArrows({
 
 /**
  * Cast Gallery modal - full-screen character viewer with CharacterCard, DossierCard,
- * TrophyBadge, EndorsementFAB, and NavigationArrows.
+ * TrophyBadge, EndorseRoseButton, and NavigationArrows.
  * Matches reference/the_cast_gallery_1.html and the_cast_gallery_2.html.
  */
 export function CastGalleryModal({
@@ -516,19 +521,11 @@ export function CastGalleryModal({
               <CharacterCard
                 char={char}
                 onTapReveal={() => setFlipped(true)}
+                onEndorse={onEndorse}
+                onAuthPrompt={onAuthPrompt}
               />
               <DossierCard char={char} onTapReturn={() => setFlipped(false)} />
             </div>
-          </div>
-
-          {/* Endorsement FAB - below card, not overlapping */}
-          <div className="relative z-50 mt-8">
-            <EndorsementFAB
-              characterId={char.id}
-              endorsementCount={char.endorsementCount}
-              onEndorse={onEndorse}
-              onAuthPrompt={onAuthPrompt}
-            />
           </div>
 
           {characters.length > 1 && (

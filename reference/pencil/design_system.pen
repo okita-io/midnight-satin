@@ -2034,7 +2034,7 @@
             {
               "type": "frame",
               "id": "reuse-ms-character-portrait-trophy",
-              "x": 286,
+              "x": 16,
               "y": 16,
               "width": 56,
               "height": 72,
@@ -2214,6 +2214,93 @@
                   ]
                 }
               ]
+            },
+            {
+              "type": "frame",
+              "id": "h8FzHd",
+              "x": 188,
+              "y": 16,
+              "name": "Endorse button",
+              "width": 154,
+              "height": 32,
+              "fill": "#800020E6",
+              "cornerRadius": 999,
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "#FFFFFF1A"
+              },
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#80002059",
+                "offset": {
+                  "x": 0,
+                  "y": 8
+                },
+                "blur": 20
+              },
+              "gap": 8,
+              "padding": [
+                8,
+                12
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon_font",
+                  "id": "rzjre",
+                  "name": "Rose icon",
+                  "width": 18,
+                  "height": 18,
+                  "iconFontName": "local_florist",
+                  "iconFontFamily": "Material Symbols Outlined",
+                  "weight": 400,
+                  "fill": "#FFFFFF"
+                },
+                {
+                  "type": "text",
+                  "id": "NxC0a",
+                  "name": "Endorse label",
+                  "fill": "#FFFFFF",
+                  "content": "Endorse",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2.2
+                },
+                {
+                  "type": "frame",
+                  "id": "MKbrO",
+                  "name": "Count pill",
+                  "height": 20,
+                  "fill": "#05050559",
+                  "cornerRadius": 999,
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#FFFFFF14"
+                  },
+                  "padding": [
+                    2,
+                    8
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "t5ZKW",
+                      "name": "Count",
+                      "fill": "#D4AF37",
+                      "content": "12,384",
+                      "fontFamily": "Playfair Display",
+                      "fontSize": 10,
+                      "fontWeight": "700"
+                    }
+                  ]
+                }
+              ]
             }
           ]
         },
@@ -2255,14 +2342,76 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "text",
-                      "id": "reuse-ms-character-dossier-confidential",
-                      "fill": "$color.primary",
-                      "content": "Confidential",
-                      "fontFamily": "Cinzel",
-                      "fontSize": 18,
-                      "fontWeight": "500",
-                      "letterSpacing": 4
+                      "type": "frame",
+                      "id": "n7zhh",
+                      "name": "Confidential + Rank",
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "reuse-ms-character-dossier-confidential",
+                          "fill": "$color.primary",
+                          "content": "Confidential",
+                          "fontFamily": "Cinzel",
+                          "fontSize": 18,
+                          "fontWeight": "500",
+                          "letterSpacing": 4
+                        },
+                        {
+                          "type": "frame",
+                          "id": "A5KNzY",
+                          "name": "Rank pill",
+                          "height": 24,
+                          "fill": "#05050599",
+                          "cornerRadius": 999,
+                          "stroke": {
+                            "align": "inside",
+                            "thickness": 1,
+                            "fill": "#D4AF3733"
+                          },
+                          "gap": 6,
+                          "padding": [
+                            4,
+                            10
+                          ],
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon_font",
+                              "id": "Xsagf",
+                              "name": "Rank rose",
+                              "width": 14,
+                              "height": 14,
+                              "iconFontName": "local_florist",
+                              "iconFontFamily": "Material Symbols Outlined",
+                              "weight": 400,
+                              "fill": "#D4AF37"
+                            },
+                            {
+                              "type": "text",
+                              "id": "M249i",
+                              "name": "Rank label",
+                              "fill": "#EAEAEA99",
+                              "content": "Rank",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 10,
+                              "fontWeight": "normal",
+                              "letterSpacing": 2
+                            },
+                            {
+                              "type": "text",
+                              "id": "AnqUZ",
+                              "name": "Rank value",
+                              "fill": "#D4AF37",
+                              "content": "12,384",
+                              "fontFamily": "Playfair Display",
+                              "fontSize": 11,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        }
+                      ]
                     },
                     {
                       "type": "text",
