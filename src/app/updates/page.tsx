@@ -6,6 +6,7 @@ export const revalidate = 60;
 
 export default async function UpdatesArchivePage() {
   const { articles, nextCursor } = await getNewsArchive(undefined, 12);
+  const archiveBootstrapKey = `${nextCursor ?? ""}\0${articles.map((a) => a.id).join(",")}`;
 
   return (
     <>
@@ -20,6 +21,7 @@ export default async function UpdatesArchivePage() {
         {/* Articles grid + Load More */}
         <div className="responsive-container px-4 md:px-6">
           <NewsArchiveClient
+            key={archiveBootstrapKey}
             initialArticles={articles}
             initialCursor={nextCursor}
           />

@@ -8,22 +8,24 @@
  * No NavigationBar (Req 15.4).
  */
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef } from "react";
 import { saveReadingProgress } from "@/app/actions/reading-progress";
 import { unlockChapter } from "@/app/actions/unlock-chapter";
 import { ChapterContent } from "./chapter-content";
 import { TheVeil } from "@/app/_components/the-veil";
 import {
   ReadingHUD,
-  DEFAULT_READER_SETTINGS,
   getStoredReaderSettings,
   setStoredReaderSettings,
   type FontSize,
   type LineHeight,
-  type ReaderSettings,
 } from "./reading-hud";
 import { CommentsSection } from "./comments-section";
 import { CommentsSidebar } from "./comments-sidebar";
+import {
+  createReadingRoomInitialState,
+  readingRoomClientReducer,
+} from "./reading-room-client-reducer";
 
 const GUEST_PROGRESS_KEY = "reading-progress";
 const SAVE_DEBOUNCE_MS = 10_000;
@@ -88,43 +90,50 @@ export function ReadingRoomClient({
   initialCommentCount = 0,
 }: ReadingRoomClientProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const [hudVisible, setHudVisible] = useState(false);
-  const [commentsOpen, setCommentsOpen] = useState(false);
-  const [commentCount, setCommentCount] = useState(initialCommentCount);
-  const [progressPercent, setProgressPercent] = useState(0);
-  /** Same defaults as SSR so ChapterContent matches server HTML; localStorage applied after mount. */
-  const [settings, setSettings] = useState<ReaderSettings>(() => ({
-    ...DEFAULT_READER_SETTINGS,
-  }));
+  const [state, dispatch] = useReducer(
+    readingRoomClientReducer,
+    {
+      chapterId,
+      initialCommentCount,
+      isUnlocked,
+      initialCreditBalance,
+    },
+    (init) =>
+      createReadingRoomInitialState(init.chapterId, {
+        initialCommentCount: init.initialCommentCount,
+        isUnlocked: init.isUnlocked,
+        initialCreditBalance: init.initialCreditBalance,
+      })
+  );
 
-  useEffect(() => {
-    const id = requestAnimationFrame(() => {
-      setSettings(getStoredReaderSettings());
+  if (chapterId !== state.syncedChapterId) {
+    dispatch({
+      type: "sync_chapter_props",
+      chapterId,
+      initialCommentCount,
+      isUnlocked,
+      initialCreditBalance,
     });
-    return () => cancelAnimationFrame(id);
-  }, []);
-  const [unlocked, setUnlocked] = useState(isUnlocked);
-  const [creditBalance, setCreditBalance] = useState(initialCreditBalance);
-  const [unlockError, setUnlockError] = useState<string | null>(null);
-  const [isUnlocking, setIsUnlocking] = useState(false);
-  const [syncChapterId, setSyncChapterId] = useState(chapterId);
-  if (chapterId !== syncChapterId) {
-    setSyncChapterId(chapterId);
-    setCommentCount(initialCommentCount);
-    setUnlocked(isUnlocked);
-    setCreditBalance(initialCreditBalance);
   }
+
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isRestoringRef = useRef(false);
 
-  const showVeil = !isFree && !unlocked;
+  const showVeil = !isFree && !state.unlocked;
 
-
-  // Resolve initial scroll: server for auth, localStorage for guests (Req 16.2)
   const resolvedInitialPercent =
     isAuthenticated ? initialScrollPercent : getGuestScrollPercent(chapterId);
 
-  // Restore scroll position on mount (Req 16.2)
+  useEffect(() => {
+    const id = requestAnimationFrame(() => {
+      dispatch({
+        type: "set_settings",
+        settings: getStoredReaderSettings(),
+      });
+    });
+    return () => cancelAnimationFrame(id);
+  }, []);
+
   useEffect(() => {
     const el = scrollRef.current;
     if (!el || resolvedInitialPercent <= 0) return;
@@ -136,8 +145,10 @@ export function ReadingRoomClient({
       if (maxScroll <= 0) return;
       const scrollTop = (resolvedInitialPercent / 100) * maxScroll;
       el.scrollTop = scrollTop;
-      setProgressPercent(resolvedInitialPercent);
-      // Allow saves after restore completes
+      dispatch({
+        type: "set_progress_percent",
+        percent: resolvedInitialPercent,
+      });
       requestAnimationFrame(() => {
         isRestoringRef.current = false;
       });
@@ -148,7 +159,9 @@ export function ReadingRoomClient({
     return () => cancelAnimationFrame(raf);
   }, [chapterId, resolvedInitialPercent]);
 
-  // Debounced save: 10s after last scroll (Req 16.1)
+  const scheduleSaveRef = useRef<(percent: number) => void>(() => {});
+  const onScrollRef = useRef<() => void>(() => {});
+
   const scheduleSave = useCallback(
     (percent: number) => {
       if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
@@ -165,6 +178,19 @@ export function ReadingRoomClient({
   );
 
   useEffect(() => {
+    scheduleSaveRef.current = scheduleSave;
+    onScrollRef.current = () => {
+      const el = scrollRef.current;
+      if (!el) return;
+      const { scrollTop, scrollHeight, clientHeight } = el;
+      const maxScroll = scrollHeight - clientHeight;
+      const pct = maxScroll <= 0 ? 100 : (scrollTop / maxScroll) * 100;
+      dispatch({ type: "set_progress_percent", percent: pct });
+      if (!isRestoringRef.current) scheduleSaveRef.current(pct);
+    };
+  }, [scheduleSave]);
+
+  useEffect(() => {
     return () => {
       if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
     };
@@ -173,62 +199,49 @@ export function ReadingRoomClient({
   const handleFontSizeChange = useCallback((fontSize: FontSize) => {
     const next = { ...getStoredReaderSettings(), fontSize };
     setStoredReaderSettings(next);
-    setSettings(next);
+    dispatch({ type: "set_settings", settings: next });
   }, []);
 
   const handleLineHeightChange = useCallback((lineHeight: LineHeight) => {
     const next = { ...getStoredReaderSettings(), lineHeight };
     setStoredReaderSettings(next);
-    setSettings(next);
+    dispatch({ type: "set_settings", settings: next });
   }, []);
-
-  const handleScroll = useCallback(() => {
-    const el = scrollRef.current;
-    if (!el) return;
-    const { scrollTop, scrollHeight, clientHeight } = el;
-    const maxScroll = scrollHeight - clientHeight;
-    const pct = maxScroll <= 0 ? 100 : (scrollTop / maxScroll) * 100;
-    setProgressPercent(pct);
-    if (!isRestoringRef.current) scheduleSave(pct);
-  }, [scheduleSave]);
 
   useEffect(() => {
     const el = scrollRef.current;
     if (!el) return;
-    const raf = requestAnimationFrame(() => handleScroll());
-    el.addEventListener("scroll", handleScroll, { passive: true });
+    const listener = () => onScrollRef.current();
+    const raf = requestAnimationFrame(() => listener());
+    el.addEventListener("scroll", listener, { passive: true });
     return () => {
       cancelAnimationFrame(raf);
-      el.removeEventListener("scroll", handleScroll);
+      el.removeEventListener("scroll", listener);
     };
-  }, [handleScroll, content]);
+  }, [content]);
 
-  const handleTap = useCallback(
-    (e: React.MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (target.closest("a") || target.closest("button")) return;
-      setHudVisible((v) => !v);
-    },
-    []
-  );
+  const handleTap = useCallback((e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.closest("a") || target.closest("button")) return;
+    dispatch({ type: "toggle_hud" });
+  }, []);
 
   const handleUnlock = useCallback(async () => {
-    if (!isAuthenticated || creditBalance < 5 || isUnlocking) return;
-    setUnlockError(null);
-    setIsUnlocking(true);
+    if (!isAuthenticated || state.creditBalance < 5 || state.isUnlocking) return;
+    dispatch({ type: "unlock_start" });
     const result = await unlockChapter(chapterId);
-    setIsUnlocking(false);
     if (result.success) {
-      setUnlocked(true);
-      setCreditBalance(result.newBalance);
+      dispatch({ type: "unlock_success", newBalance: result.newBalance });
     } else {
-      setUnlockError(result.error ?? "Failed to unlock.");
+      dispatch({
+        type: "unlock_fail",
+        error: result.error ?? "Failed to unlock.",
+      });
     }
-  }, [chapterId, isAuthenticated, creditBalance, isUnlocking]);
+  }, [chapterId, isAuthenticated, state.creditBalance, state.isUnlocking]);
 
   return (
     <div className="reading-room-root h-screen flex min-h-0 flex-col bg-void bg-silk-noise overflow-hidden text-text-main font-body antialiased selection:bg-primary/30 selection:text-white">
-      {/* Main: lg:mr-80 shrinks the scrollport so the scrollbar sits on the comments edge (not under pr padding). */}
       <main
         ref={scrollRef}
         className="reading-room-main-scroll flex-1 min-h-0 overflow-y-auto relative w-full scroll-smooth bg-silk-noise lg:mr-80"
@@ -241,17 +254,17 @@ export function ReadingRoomClient({
             content={content}
             chapterTitle={chapterTitle}
             novelTitle={novelTitle}
-            fontSize={settings.fontSize}
-            lineHeight={settings.lineHeight}
+            fontSize={state.settings.fontSize}
+            lineHeight={state.settings.lineHeight}
             veilMode={showVeil}
             veilSlot={
               showVeil ? (
                 <TheVeil
-                  creditBalance={creditBalance}
+                  creditBalance={state.creditBalance}
                   isAuthenticated={isAuthenticated}
                   onUnlock={handleUnlock}
-                  isUnlocking={isUnlocking}
-                  error={unlockError}
+                  isUnlocking={state.isUnlocking}
+                  error={state.unlockError}
                 />
               ) : null
             }
@@ -261,47 +274,50 @@ export function ReadingRoomClient({
 
       <ReadingHUD
         key={chapterId}
-        visible={hudVisible}
+        visible={state.hudVisible}
         novelId={novelId}
         chapterId={chapterId}
         chapterNumber={chapterNumber}
         chapterTitle={chapterTitle}
-        progressPercent={progressPercent}
+        progressPercent={state.progressPercent}
         prevChapterId={prevChapterId}
         nextChapterId={nextChapterId}
         isAuthenticated={isAuthenticated}
         initialBookmarked={initialBookmarked}
-        commentCount={commentCount}
-        commentsActive={commentsOpen}
-        onCommentsClick={() => setCommentsOpen((o) => !o)}
-        fontSize={settings.fontSize}
-        lineHeight={settings.lineHeight}
+        commentCount={state.commentCount}
+        commentsActive={state.commentsOpen}
+        onCommentsClick={() =>
+          dispatch({ type: "set_comments_open", open: !state.commentsOpen })
+        }
+        fontSize={state.settings.fontSize}
+        lineHeight={state.settings.lineHeight}
         onFontSizeChange={handleFontSizeChange}
         onLineHeightChange={handleLineHeightChange}
       />
 
-      {/* Mobile/tablet: bottom sheet when comments tapped */}
       <CommentsSection
-        isOpen={commentsOpen}
-        onClose={() => setCommentsOpen(false)}
+        isOpen={state.commentsOpen}
+        onClose={() => dispatch({ type: "set_comments_open", open: false })}
         chapterId={chapterId}
         isAuthenticated={isAuthenticated}
-        commentCount={commentCount}
-        onCommentCountChange={setCommentCount}
+        commentCount={state.commentCount}
+        onCommentCountChange={(count) =>
+          dispatch({ type: "set_comment_count", count })
+        }
         returnUrl={`/novel/${encodeURIComponent(novelId)}/read/${encodeURIComponent(chapterId)}`}
       />
 
-      {/* Desktop (lg:): fixed sidebar always visible */}
       <CommentsSidebar
         chapterId={chapterId}
         isAuthenticated={isAuthenticated}
-        commentCount={commentCount}
-        readingHudVisible={hudVisible}
-        onCommentCountChange={setCommentCount}
+        commentCount={state.commentCount}
+        readingHudVisible={state.hudVisible}
+        onCommentCountChange={(count) =>
+          dispatch({ type: "set_comment_count", count })
+        }
         returnUrl={`/novel/${encodeURIComponent(novelId)}/read/${encodeURIComponent(chapterId)}`}
       />
 
-      {/* Texture overlay */}
       <div
         className="fixed inset-0 pointer-events-none opacity-[0.03] z-[60] mix-blend-overlay"
         style={{

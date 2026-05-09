@@ -12,7 +12,7 @@ export function AdminUsersClient({
   initialEmail?: string;
   readers: Reader[];
 }) {
-  const router = useRouter();
+  const { push, refresh } = useRouter();
   const [email, setEmail] = useState(() => initialEmail ?? "");
   const [adjustingId, setAdjustingId] = useState<string | null>(null);
   const [adjustAmount, setAdjustAmount] = useState("");
@@ -23,7 +23,7 @@ export function AdminUsersClient({
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
     const q = email.trim() ? `?email=${encodeURIComponent(email.trim())}` : "";
-    router.push(`/admin/users${q}`);
+    push(`/admin/users${q}`);
   }
 
   async function handleAdjust(e: React.FormEvent, readerId: string) {
@@ -41,7 +41,7 @@ export function AdminUsersClient({
       setAdjustingId(null);
       setAdjustAmount("");
       setAdjustReason("");
-      router.refresh();
+      refresh();
     } else {
       setError(result.error ?? "Failed to adjust");
     }
@@ -99,7 +99,10 @@ export function AdminUsersClient({
                 <td className="px-4 py-3 text-text-muted">{r.displayName ?? "—"}</td>
                 <td className="px-4 py-3 text-primary font-ui">{r.creditBalance}</td>
                 <td className="px-4 py-3 text-text-muted">{r.role}</td>
-                <td className="px-4 py-3 text-text-muted text-sm">
+                <td
+                  className="px-4 py-3 text-text-muted text-sm"
+                  suppressHydrationWarning
+                >
                   {new Date(r.createdAt).toLocaleDateString()}
                 </td>
                 <td className="px-4 py-3">

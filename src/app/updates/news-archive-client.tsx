@@ -1,9 +1,10 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useReducer, useTransition } from "react";
 import { NewsArticleCard } from "@/app/_components/news-article-card";
 import { loadMoreArticles } from "./actions";
 import type { NewsArticleSummary } from "@/lib/db/types";
+import { newsArchiveReducer } from "./news-archive-reducer";
 
 interface NewsArchiveClientProps {
   initialArticles: NewsArticleSummary[];
@@ -14,28 +15,22 @@ export function NewsArchiveClient({
   initialArticles,
   initialCursor,
 }: NewsArchiveClientProps) {
-  const serverBootstrapKey = `${initialCursor ?? ""}\0${initialArticles.map((a) => a.id).join(",")}`;
-  const [prevBootstrapKey, setPrevBootstrapKey] = useState(serverBootstrapKey);
-  const [articles, setArticles] = useState(initialArticles);
-  const [cursor, setCursor] = useState(initialCursor);
+  const [state, dispatch] = useReducer(newsArchiveReducer, {
+    articles: initialArticles,
+    cursor: initialCursor,
+  });
   const [isPending, startTransition] = useTransition();
 
-  if (serverBootstrapKey !== prevBootstrapKey) {
-    setPrevBootstrapKey(serverBootstrapKey);
-    setArticles(initialArticles);
-    setCursor(initialCursor);
-  }
-
   function handleLoadMore() {
+    const cursor = state.cursor;
     if (!cursor) return;
     startTransition(async () => {
       const { articles: more, nextCursor } = await loadMoreArticles(cursor);
-      setArticles((prev) => [...prev, ...more]);
-      setCursor(nextCursor);
+      dispatch({ type: "append", articles: more, cursor: nextCursor });
     });
   }
 
-  if (articles.length === 0) {
+  if (state.articles.length === 0) {
     return (
       <p className="text-center text-text-muted font-ui text-sm tracking-wider py-16">
         No articles yet. Check back soon.
@@ -46,7 +41,7 @@ export function NewsArchiveClient({
   return (
     <>
       <div className="responsive-grid-1-2-3">
-        {articles.map((article) => (
+        {state.articles.map((article) => (
           <NewsArticleCard
             key={article.id}
             article={article}
@@ -55,7 +50,7 @@ export function NewsArchiveClient({
         ))}
       </div>
 
-      {cursor && (
+      {state.cursor && (
         <div className="flex justify-center mt-10">
           <button
             onClick={handleLoadMore}

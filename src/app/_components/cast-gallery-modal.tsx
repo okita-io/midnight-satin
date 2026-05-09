@@ -279,7 +279,7 @@ function DossierCard({
                 </p>
                 <ul className="font-body text-sm text-text-main/90 italic list-disc list-inside space-y-0.5">
                   {stats.favorites!.map((f, i) => (
-                    <li key={i}>{f}</li>
+                    <li key={`fav:${i}:${f}`}>{f}</li>
                   ))}
                 </ul>
               </div>
@@ -291,7 +291,7 @@ function DossierCard({
                 </p>
                 <ul className="font-body text-sm text-text-main/90 italic list-disc list-inside space-y-0.5">
                   {stats.dislikes!.map((d, i) => (
-                    <li key={i}>{d}</li>
+                    <li key={`dis:${i}:${d}`}>{d}</li>
                   ))}
                 </ul>
               </div>

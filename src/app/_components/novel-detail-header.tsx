@@ -20,13 +20,13 @@ export function NovelDetailHeader({
   initialBookmarked,
   isAuthenticated,
 }: NovelDetailHeaderProps) {
-  const router = useRouter();
+  const { back } = useRouter();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
   const [bookmarked, setBookmarked] = React.useState(() => initialBookmarked);
   const [authPromptOpen, setAuthPromptOpen] = useState(false);
 
-  const handleBack = () => router.back();
+  const handleBack = () => back();
 
   const handleBookmark = () => {
     if (!isAuthenticated) {
