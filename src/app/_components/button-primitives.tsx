@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { forwardRef } from "react";
 import type { ComponentPropsWithoutRef } from "react";
 
 export const BUTTON_SECONDARY_OUTLINE_CLASSNAME =
@@ -14,14 +15,21 @@ type SecondaryOutlineLinkProps = Omit<
   className?: string;
 };
 
-export function SecondaryOutlineLink({ className = "", ...props }: SecondaryOutlineLinkProps) {
-  return (
-    <Link
-      {...props}
-      className={`${BUTTON_SECONDARY_OUTLINE_CLASSNAME} hover:bg-primary hover:text-void ${className}`.trim()}
-    />
-  );
-}
+export const SecondaryOutlineLink = forwardRef<HTMLAnchorElement, SecondaryOutlineLinkProps>(
+  ({ className = "", children, ...props }, ref) => {
+    return (
+      <Link {...props} legacyBehavior>
+        <a
+          ref={ref}
+          className={`${BUTTON_SECONDARY_OUTLINE_CLASSNAME} [@media(hover:hover)]:hover:bg-primary [@media(hover:hover)]:hover:text-void ${className}`.trim()}
+        >
+          {children}
+        </a>
+      </Link>
+    );
+  }
+);
+SecondaryOutlineLink.displayName = "SecondaryOutlineLink";
 
 type IconGhostButtonProps = Omit<
   ComponentPropsWithoutRef<"button">,
@@ -35,7 +43,7 @@ export function IconGhostButton({ className = "", ...props }: IconGhostButtonPro
     <button
       {...props}
       type={props.type ?? "button"}
-      className={`${BUTTON_ICON_GHOST_CLASSNAME} hover:bg-surface/50 ${className}`.trim()}
+      className={`${BUTTON_ICON_GHOST_CLASSNAME} [@media(hover:hover)]:hover:bg-surface/50 ${className}`.trim()}
     />
   );
 }
