@@ -42,7 +42,7 @@ export default async function PaperbackPurchasePage({
           )}
 
           <div className="relative z-10 flex flex-col items-center gap-2 text-center">
-            <h2 className="font-playfair italic font-bold text-2xl text-white gold-text-shadow">
+            <h2 className="font-playfair italic font-semibold text-2xl text-white gold-text-shadow">
               {novel.title}
             </h2>
             <p className="font-marcellus text-white/60 text-sm tracking-wide">

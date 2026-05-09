@@ -21,7 +21,7 @@ export function PaperbackPageShell({
       >
         <Link
           href={`/novel/${novelId}`}
-          className="pointer-events-auto flex items-center justify-center w-10 h-10 rounded-full bg-surface/30 backdrop-blur-md text-white border border-white/10 hover:bg-surface/50 transition-colors active:scale-95"
+          className="pointer-events-auto flex items-center justify-center size-10 rounded-full bg-surface/30 backdrop-blur-md text-white border border-white/10 hover:bg-surface/50 transition-colors active:scale-95"
           aria-label="Go back"
         >
           <span className="material-symbols-outlined text-shadow-sm">

@@ -18,8 +18,8 @@ export function EmptyState({
   return (
     <div className={`flex flex-col items-center gap-5 relative ${className}`}>
       <div className="relative w-full h-[132px]">
-        <div className="absolute left-1/2 -translate-x-1/2 -top-9 w-[220px] h-[220px] bg-primary/[0.08] rounded-full blur-[40px] -z-10" />
-        <div className="absolute left-1/2 -translate-x-1/2 top-[18px] w-24 h-24 rounded-full border border-primary/20 bg-primary/5 flex items-center justify-center">
+        <div className="absolute left-1/2 -translate-x-1/2 -top-9 size-[220px] bg-primary/[0.08] rounded-full blur-[40px] -z-10" />
+        <div className="absolute left-1/2 -translate-x-1/2 top-[18px] size-24 rounded-full border border-primary/20 bg-primary/5 flex items-center justify-center">
         <span
           className="material-symbols-outlined text-primary/40 text-4xl"
           aria-hidden

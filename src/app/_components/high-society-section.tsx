@@ -75,7 +75,7 @@ export function HighSocietySection({ novels, loading }: HighSocietySectionProps)
               auto_stories
             </span>
           </div>
-          <h3 className="font-display font-bold italic text-base text-white leading-tight mb-1 truncate">
+          <h3 className="font-display font-semibold italic text-base text-white leading-tight mb-1 truncate">
             Coming Soon
           </h3>
           <p className="font-ui text-[11px] text-text-muted truncate">Unknown Author</p>

@@ -65,7 +65,7 @@ export function ProfileHeader({
           />
         ) : (
           <span
-            className="font-display font-bold italic text-xl text-primary"
+            className="font-display font-semibold italic text-xl text-primary"
             style={{ fontFamily: "var(--font-display)" }}
           >
             {initials}
@@ -76,7 +76,7 @@ export function ProfileHeader({
       {/* Name, email, credit */}
       <div className="flex-1 min-w-0">
         <h1
-          className="font-display font-bold italic text-xl xs:text-2xl text-text-main truncate"
+          className="font-display font-semibold italic text-xl xs:text-2xl text-text-main truncate"
           style={{ fontFamily: "var(--font-display)" }}
         >
           {displayName || email.split("@")[0]}

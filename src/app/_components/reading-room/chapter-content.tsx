@@ -80,7 +80,7 @@ export function ChapterContent({
       <div className="text-center mb-12">
         <div className="flex items-center justify-center gap-4 mb-4 opacity-50">
           <div className="h-[1px] w-8 bg-gradient-to-r from-transparent to-primary" />
-          <span className="w-2 h-2 rotate-45 border border-primary bg-void" />
+          <span className="size-2 rotate-45 border border-primary bg-void" />
           <div className="h-[1px] w-8 bg-gradient-to-l from-transparent to-primary" />
         </div>
         <h1 className="font-display italic text-4xl text-primary mb-2 drop-shadow-md">

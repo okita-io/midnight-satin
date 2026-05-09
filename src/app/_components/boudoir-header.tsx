@@ -67,7 +67,7 @@ export function BoudoirHeader({
           >
             <span className="material-symbols-outlined" aria-hidden>notifications</span>
             <span
-              className="absolute top-0 right-0 w-2 h-2 bg-accent rounded-full border border-void"
+              className="absolute top-0 right-0 size-2 bg-accent rounded-full border border-void"
               aria-hidden
             />
           </button>

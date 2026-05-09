@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { FeaturedNovel } from "@/lib/content";
 import { novelDetailPath } from "@/lib/navigation";
 import { readingRoomPath } from "@/lib/navigation";
-import { StarIcon } from "./star-primitives";
+import { StarRowDisplay } from "./star-row-display";
 
 /** Responsive items-per-view configuration (THE-49). */
 export interface ItemsPerView {
@@ -130,7 +130,6 @@ function HeroCarouselSingle({
         </span>
         <h1
           className="font-display italic font-semibold text-[32px] leading-[1.15] text-white mb-1 gold-text-shadow max-w-[310px]"
-          style={{ fontWeight: 700 }}
         >
           {item.title}
         </h1>
@@ -139,21 +138,7 @@ function HeroCarouselSingle({
         </p>
         {item.rating != null && item.ratingCount != null && (
           <div className="flex items-center justify-center gap-1 mb-4">
-            {Array.from({ length: 5 }, (_, i) => {
-              const full = Math.floor(item.rating!);
-              const hasHalf = item.rating! - full >= 0.3;
-              const isFull = i < full;
-              const isHalf = i === full && hasHalf;
-              return (
-                <StarIcon
-                  key={i}
-                  size={18}
-                  tone={isFull ? "active" : isHalf ? "half" : "inactive"}
-                  variant={isHalf ? "half" : "full"}
-                  aria-hidden
-                />
-              );
-            })}
+            <StarRowDisplay value={item.rating} size={18} allowHalf />
             <span className="text-xs text-white/80 ml-2 hero-text-shadow">
               ({item.ratingCount >= 1000 ? `${(item.ratingCount / 1000).toFixed(1)}k` : item.ratingCount} reviews)
             </span>
@@ -223,7 +208,6 @@ function HeroCarouselCard({
         </span>
         <h2
           className="font-display italic font-semibold text-[26px] leading-[1.1] text-white mb-1 gold-text-shadow line-clamp-2 max-w-[310px]"
-          style={{ fontWeight: 700 }}
         >
           {item.title}
         </h2>

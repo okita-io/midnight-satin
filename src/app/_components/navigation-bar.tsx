@@ -51,7 +51,7 @@ function NavTabLink({
         </span>
         {isActive && (
           <span
-            className="absolute -bottom-2 w-1 h-1 bg-primary rounded-full"
+            className="absolute -bottom-2 size-1 bg-primary rounded-full"
             style={{ boxShadow: "0 0 5px var(--color-primary)" }}
             aria-hidden
           />

@@ -59,7 +59,7 @@ export default async function ArticleDetailPage({
 
         {/* Title overlay */}
         <div className="absolute bottom-0 left-0 right-0 w-full px-6 pb-10 flex flex-col items-center text-center z-10">
-          <h1 className="text-3xl md:text-4xl font-display italic font-bold text-white leading-tight gold-text-shadow">
+          <h1 className="text-3xl md:text-4xl font-display italic font-semibold text-white leading-tight gold-text-shadow">
             {article.title}
           </h1>
 

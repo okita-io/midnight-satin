@@ -71,7 +71,7 @@ export default async function AuthorStudyPage({
       <main className="flex-1 pb-24">
         <section className="relative px-4 xs:px-6 pt-6 xs:pt-8 pb-8 xs:pb-10 flex flex-col items-center text-center">
           <div
-            className="absolute top-20 left-1/2 -translate-x-1/2 w-48 h-48 bg-primary/10 blur-[60px] rounded-full pointer-events-none"
+            className="absolute top-20 left-1/2 -translate-x-1/2 size-48 bg-primary/10 blur-[60px] rounded-full pointer-events-none"
             aria-hidden
           />
           <HexagonAvatar

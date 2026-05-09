@@ -58,7 +58,7 @@ export function LibraryNovelCard({ item }: LibraryNovelCardProps) {
         <span className="text-[10px] text-primary/80 font-ui uppercase tracking-wider mb-0.5">
           {isFinished ? "Completed" : `Ch. ${chapterNumber}`}
         </span>
-        <h3 className="font-display font-bold italic text-base text-white truncate pr-2 mb-0.5">
+        <h3 className="font-display font-semibold italic text-base text-white truncate pr-2 mb-0.5">
           {title}
         </h3>
         <p className="font-ui text-xs text-text-muted truncate mb-3">

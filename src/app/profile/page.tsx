@@ -24,7 +24,7 @@ export default async function ProfilePage() {
         <main className="min-h-screen flex flex-col items-center justify-center p-4 xs:p-6 pb-safe-bottom pt-safe-top">
           <div className="text-center">
             <h1
-              className="font-display font-bold italic text-2xl text-primary mb-4"
+              className="font-display font-semibold italic text-2xl text-primary mb-4"
               style={{ fontFamily: "var(--font-display)" }}
             >
               Your Profile
