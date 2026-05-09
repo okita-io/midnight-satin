@@ -5,6 +5,16 @@
 
 import { OrnamentalDivider } from "./ornamental-divider";
 
+/** Stable list keys: index + content fingerprint (avoids index-only keys when paragraphs shift). */
+function paragraphStableKey(scope: string, index: number, text: string): string {
+  let h = 2166136261;
+  for (let i = 0; i < text.length; i++) {
+    h ^= text.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  return `${scope}-${index}-${(h >>> 0).toString(36)}`;
+}
+
 const ORNAMENTAL_EVERY_N_PARAGRAPHS = 4;
 /** Free preview paragraphs before the Veil (Req 4.1). Exported for Property 17 tests. */
 export const FREE_PREVIEW_PARAGRAPHS = 5;
@@ -97,7 +107,7 @@ export function ChapterContent({
         const showDivider =
           i > 0 && i % ORNAMENTAL_EVERY_N_PARAGRAPHS === 0;
         return (
-          <div key={i}>
+          <div key={paragraphStableKey("free", i, text)}>
             {showDivider && <OrnamentalDivider />}
             <p className={isFirst ? "drop-cap mb-6" : "mb-6"}>{text}</p>
           </div>
@@ -114,7 +124,9 @@ export function ChapterContent({
               (blurredStart + i) > 0 &&
               (blurredStart + i) % ORNAMENTAL_EVERY_N_PARAGRAPHS === 0;
             return (
-              <div key={blurredStart + i}>
+              <div
+                key={paragraphStableKey("veil", blurredStart + i, text)}
+              >
                 {showDivider && <OrnamentalDivider />}
                 <p
                   className={`mb-6 select-none ${level.blur} ${level.opacity}`}

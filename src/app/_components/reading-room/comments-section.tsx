@@ -5,7 +5,7 @@
  * List rendering, input form, like/unlike. Guests can view; auth prompt for post/like.
  */
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef } from "react";
 import {
   getChapterComments,
   postComment,
@@ -23,6 +23,10 @@ import {
   COMMENT_LIKE_CLASSES,
 } from "@/lib/comments-ui-constants";
 import { AuthPrompt } from "@/app/_components/auth-prompt";
+import {
+  commentsThreadReducer,
+  initialCommentsThreadState,
+} from "./comments-thread-reducer";
 
 function formatRelativeTime(date: Date): string {
   const now = new Date();
@@ -58,102 +62,127 @@ export function CommentsSection({
   onCommentCountChange,
   returnUrl,
 }: CommentsSectionProps) {
-  const [comments, setComments] = useState<CommentWithAuthorAndLike[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [inputValue, setInputValue] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const [inputError, setInputError] = useState<string | null>(null);
-  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
-  const [authPromptMessage, setAuthPromptMessage] = useState<string | undefined>();
+  const [state, dispatch] = useReducer(
+    commentsThreadReducer,
+    initialCommentsThreadState
+  );
+  const loadGenRef = useRef(0);
+  const onCloseRef = useRef(onClose);
   const listRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
-  const fetchComments = useCallback(async () => {
-    if (!chapterId) return;
-    setLoading(true);
-    setError(null);
-    const result: GetChapterCommentsResult = await getChapterComments(chapterId);
-    setLoading(false);
-    if (result.success) {
-      setComments(result.data.commentsWithAuthor);
-    } else {
-      setError(result.error ?? "Failed to load comments.");
-    }
-  }, [chapterId]);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
+  const fetchCommentsForChapter = useCallback((id: string) => {
+    if (!id) return;
+    const gen = ++loadGenRef.current;
+    dispatch({ type: "load_start" });
+    void (async () => {
+      const result: GetChapterCommentsResult = await getChapterComments(id);
+      if (gen !== loadGenRef.current) return;
+      if (result.success) {
+        dispatch({
+          type: "load_success",
+          comments: result.data.commentsWithAuthor,
+        });
+      } else {
+        dispatch({
+          type: "load_error",
+          error: result.error ?? "Failed to load comments.",
+        });
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     if (!isOpen || !chapterId) return;
-    void fetchComments();
-  }, [isOpen, chapterId, fetchComments]);
+    fetchCommentsForChapter(chapterId);
+  }, [isOpen, chapterId, fetchCommentsForChapter]);
 
   useEffect(() => {
     if (!isOpen) return;
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") onCloseRef.current();
     }
     document.addEventListener("keydown", handleKeyDown);
     return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
+  }, [isOpen]);
 
   const handleSubmit = useCallback(async () => {
     if (!isAuthenticated) {
-      setAuthPromptMessage("Sign in to add a thought.");
-      setShowAuthPrompt(true);
+      dispatch({
+        type: "auth_open",
+        message: "Sign in to add a thought.",
+      });
       return;
     }
-    const trimmed = inputValue.trim();
-    const validation = validateCommentContent(inputValue);
+    const trimmed = state.inputValue.trim();
+    const validation = validateCommentContent(state.inputValue);
     if (!validation.valid) {
-      setInputError(validation.error);
+      dispatch({ type: "set_input_error", error: validation.error });
       return;
     }
-    setInputError(null);
-    setSubmitting(true);
+    if (!chapterId || !trimmed) {
+      return;
+    }
+    dispatch({ type: "submit_start" });
     const result = await postComment(chapterId, trimmed);
-    setSubmitting(false);
+    dispatch({ type: "submit_end" });
     if (result.success) {
-      setInputValue("");
-      fetchComments();
+      dispatch({ type: "post_success" });
+      fetchCommentsForChapter(chapterId);
       onCommentCountChange?.(commentCount + 1);
     } else {
-      setInputError(result.error ?? "Failed to post.");
+      dispatch({
+        type: "set_input_error",
+        error: result.error ?? "Failed to post.",
+      });
     }
   }, [
     isAuthenticated,
-    inputValue,
+    state.inputValue,
     chapterId,
     commentCount,
     onCommentCountChange,
-    fetchComments,
+    fetchCommentsForChapter,
   ]);
 
   const handleLike = useCallback(
     async (commentId: string, currentlyLiked: boolean) => {
       if (!isAuthenticated) {
-        setAuthPromptMessage("Sign in to like comments.");
-        setShowAuthPrompt(true);
+        dispatch({
+          type: "auth_open",
+          message: "Sign in to like comments.",
+        });
         return;
       }
       const result = currentlyLiked
         ? await unlikeComment(commentId)
         : await likeComment(commentId);
       if (result.success) {
-        setComments((prev) =>
-          prev.map((c) =>
-            c.id === commentId
-              ? {
-                  ...c,
-                  likeCount: result.newLikeCount,
-                  likedByCurrentReader: !currentlyLiked,
-                }
-              : c
-          )
-        );
+        dispatch({
+          type: "update_comment_like",
+          commentId,
+          newLikeCount: result.newLikeCount,
+          likedByCurrentReader: !currentlyLiked,
+        });
       }
     },
     [isAuthenticated]
   );
+
+  const {
+    comments,
+    loading,
+    error,
+    inputValue,
+    submitting,
+    inputError,
+    showAuthPrompt,
+    authPromptMessage,
+  } = state;
 
   if (!isOpen) return null;
 
@@ -162,7 +191,7 @@ export function CommentsSection({
       {/* Backdrop */}
       <div
         className="fixed inset-0 z-[55] bg-black/50"
-        onClick={onClose}
+        onClick={() => onCloseRef.current()}
         aria-hidden
       />
 
@@ -221,8 +250,10 @@ export function CommentsSection({
                 onLike={() => handleLike(c.id, c.likedByCurrentReader)}
                 isAuthenticated={isAuthenticated}
                 onAuthRequired={() => {
-                  setAuthPromptMessage("Sign in to like comments.");
-                  setShowAuthPrompt(true);
+                  dispatch({
+                    type: "auth_open",
+                    message: "Sign in to like comments.",
+                  });
                 }}
               />
             ))}
@@ -235,13 +266,12 @@ export function CommentsSection({
               ref={inputRef}
               value={inputValue}
               onChange={(e) => {
-                setInputValue(e.target.value);
-                setInputError(null);
+                dispatch({ type: "set_input", value: e.target.value });
               }}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
-                  handleSubmit();
+                  void handleSubmit();
                 }
               }}
               placeholder={isAuthenticated ? "Add a thought…" : "Sign in to add a thought"}
@@ -262,7 +292,7 @@ export function CommentsSection({
               </span>
               <button
                 type="button"
-                onClick={handleSubmit}
+                onClick={() => void handleSubmit()}
                 disabled={!isAuthenticated || submitting || !inputValue.trim()}
                 className="text-primary hover:text-primary/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer active:scale-95"
                 aria-label="Post comment"
@@ -281,7 +311,7 @@ export function CommentsSection({
 
       <AuthPrompt
         isOpen={showAuthPrompt}
-        onClose={() => setShowAuthPrompt(false)}
+        onClose={() => dispatch({ type: "auth_close" })}
         returnUrl={returnUrl}
         message={authPromptMessage}
       />
@@ -323,7 +353,10 @@ function CommentItem({
           <span className={COMMENT_AUTHOR_CLASSES}>
             {displayName}
           </span>
-          <span className="text-[10px] font-ui text-text-muted">
+          <span
+            className="text-[10px] font-ui text-text-muted"
+            suppressHydrationWarning
+          >
             {formatRelativeTime(new Date(comment.createdAt))}
           </span>
         </div>

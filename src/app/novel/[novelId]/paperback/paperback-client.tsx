@@ -2,6 +2,7 @@
 
 import type { ReactNode } from "react";
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { createPaperbackCheckout } from "@/app/actions/paperback";
 
@@ -87,11 +88,16 @@ export function PaperbackClient({
         <div className="overlay-sheen" aria-hidden />
 
         {coverImageUrl && (
-          <img
-            src={coverImageUrl}
-            alt={novelTitle}
-            className="relative z-10 w-44 xs:w-52 h-auto rounded-sm shadow-lg border border-white/10"
-          />
+          <div className="relative z-10 w-44 xs:w-52 aspect-[2/3] rounded-sm shadow-lg border border-white/10 overflow-hidden">
+            <Image
+              src={coverImageUrl}
+              alt={novelTitle}
+              fill
+              className="object-contain"
+              sizes="(max-width: 480px) 11rem, 13rem"
+              unoptimized
+            />
+          </div>
         )}
 
         <div className="relative z-10 flex flex-col items-center gap-2 text-center">

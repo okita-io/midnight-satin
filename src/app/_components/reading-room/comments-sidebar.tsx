@@ -25,6 +25,10 @@ import {
   READING_ROOM_SIDEBAR_BOTTOM_OFFSET_WHEN_HUD_VISIBLE,
 } from "@/lib/comments-ui-constants";
 import { AuthPrompt } from "@/app/_components/auth-prompt";
+import {
+  commentsThreadReducer,
+  initialCommentsThreadState,
+} from "./comments-thread-reducer";
 
 function formatRelativeTime(date: Date): string {
   const now = new Date();
@@ -39,90 +43,6 @@ function formatRelativeTime(date: Date): string {
   if (diffDays === 1) return "Yesterday";
   if (diffDays < 7) return `${diffDays}d ago`;
   return date.toLocaleDateString();
-}
-
-type SidebarState = {
-  comments: CommentWithAuthorAndLike[];
-  loading: boolean;
-  error: string | null;
-  inputValue: string;
-  submitting: boolean;
-  inputError: string | null;
-  showAuthPrompt: boolean;
-  authPromptMessage: string | undefined;
-};
-
-const initialSidebarState: SidebarState = {
-  comments: [],
-  loading: false,
-  error: null,
-  inputValue: "",
-  submitting: false,
-  inputError: null,
-  showAuthPrompt: false,
-  authPromptMessage: undefined,
-};
-
-type SidebarAction =
-  | { type: "load_start" }
-  | { type: "load_success"; comments: CommentWithAuthorAndLike[] }
-  | { type: "load_error"; error: string }
-  | { type: "set_input"; value: string }
-  | { type: "set_input_error"; error: string | null }
-  | { type: "submit_start" }
-  | { type: "submit_end" }
-  | { type: "post_success" }
-  | { type: "auth_open"; message?: string }
-  | { type: "auth_close" }
-  | {
-      type: "update_comment_like";
-      commentId: string;
-      newLikeCount: number;
-      likedByCurrentReader: boolean;
-    };
-
-function sidebarReducer(state: SidebarState, action: SidebarAction): SidebarState {
-  switch (action.type) {
-    case "load_start":
-      return { ...state, loading: true, error: null };
-    case "load_success":
-      return { ...state, loading: false, comments: action.comments };
-    case "load_error":
-      return { ...state, loading: false, error: action.error };
-    case "set_input":
-      return { ...state, inputValue: action.value, inputError: null };
-    case "set_input_error":
-      return { ...state, inputError: action.error };
-    case "submit_start":
-      return { ...state, submitting: true };
-    case "submit_end":
-      return { ...state, submitting: false };
-    case "post_success":
-      return { ...state, inputValue: "", inputError: null };
-    case "auth_open":
-      return {
-        ...state,
-        showAuthPrompt: true,
-        authPromptMessage: action.message,
-      };
-    case "auth_close":
-      return { ...state, showAuthPrompt: false };
-    case "update_comment_like":
-      return {
-        ...state,
-        comments: state.comments.map((c) =>
-          c.id === action.commentId
-            ? {
-                ...c,
-                likeCount: action.newLikeCount,
-                likedByCurrentReader: action.likedByCurrentReader,
-              }
-            : c
-        ),
-      };
-    default:
-      return state;
-  }
 }
 
 export interface CommentsSidebarProps {
@@ -143,7 +63,10 @@ export function CommentsSidebar({
   onCommentCountChange,
   returnUrl,
 }: CommentsSidebarProps) {
-  const [state, dispatch] = useReducer(sidebarReducer, initialSidebarState);
+  const [state, dispatch] = useReducer(
+    commentsThreadReducer,
+    initialCommentsThreadState
+  );
   const loadGenRef = useRef(0);
 
   const fetchCommentsForChapter = useCallback((id: string) => {
