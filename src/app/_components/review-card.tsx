@@ -1,4 +1,5 @@
 import { formatShortAgo } from "@/lib/format";
+import { StarIcon } from "./star-primitives";
 
 export interface ReviewCardData {
   id: string;
@@ -40,16 +41,12 @@ export function ReviewCard({ review, variant = "compact" }: ReviewCardProps) {
           const n = i + 1;
           const on = n <= review.starRating;
           return (
-            <span
+            <StarIcon
               key={n}
-              className={`material-symbols-outlined text-sm ${
-                on ? "text-primary" : "text-primary/20"
-              }`}
-              style={{ fontVariationSettings: on ? "'FILL' 1" : "'FILL' 0" }}
+              size={16}
+              tone={on ? "active" : "inactive"}
               aria-hidden
-            >
-              star
-            </span>
+            />
           );
         })}
       </div>

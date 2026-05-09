@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { FeaturedNovel } from "@/lib/content";
 import { novelDetailPath } from "@/lib/navigation";
 import { readingRoomPath } from "@/lib/navigation";
+import { StarIcon } from "./star-primitives";
 
 /** Responsive items-per-view configuration (THE-49). */
 export interface ItemsPerView {
@@ -131,16 +132,16 @@ function HeroCarouselSingle({
             {Array.from({ length: 5 }, (_, i) => {
               const full = Math.floor(item.rating!);
               const hasHalf = item.rating! - full >= 0.3;
+              const isFull = i < full;
+              const isHalf = i === full && hasHalf;
               return (
-                <span
+                <StarIcon
                   key={i}
-                  className={`material-symbols-outlined text-[18px] ${
-                    i < full ? "text-primary" : i === full && hasHalf ? "text-primary/40" : "text-white/20"
-                  }`}
-                  style={{ fontVariationSettings: "'FILL' 1" }}
-                >
-                  {i < full ? "star" : i === full && hasHalf ? "star_half" : "star"}
-                </span>
+                  size={18}
+                  tone={isFull ? "active" : isHalf ? "half" : "inactive"}
+                  variant={isHalf ? "half" : "full"}
+                  aria-hidden
+                />
               );
             })}
             <span className="text-xs text-white/80 ml-2 hero-text-shadow">

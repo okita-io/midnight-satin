@@ -1,5 +1,7 @@
 "use client";
 
+import { StarIcon } from "./star-primitives";
+
 interface StarRatingInputProps {
   value: number;
   onChange: (stars: number) => void;
@@ -32,16 +34,9 @@ export function StarRatingInput({
             onClick={() => onChange(n)}
             aria-label={`${n} out of 5 stars`}
             aria-pressed={active}
-            className="p-1 rounded-sm touch-manipulation disabled:opacity-40 disabled:cursor-not-allowed hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 transition-colors"
+            className="p-1 rounded-sm touch-manipulation disabled:opacity-40 disabled:cursor-not-allowed [@media(hover:hover)]:hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 transition-colors"
           >
-            <span
-              className={`material-symbols-outlined text-[26px] xs:text-[28px] ${
-                active ? "text-primary" : "text-primary/25"
-              }`}
-              style={{ fontVariationSettings: active ? "'FILL' 1" : "'FILL' 0" }}
-            >
-              star
-            </span>
+            <StarIcon size={28} tone={active ? "active" : "inactive"} />
           </button>
         );
       })}

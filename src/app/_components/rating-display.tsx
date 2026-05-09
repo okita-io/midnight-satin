@@ -1,3 +1,5 @@
+import { StarIcon } from "./star-primitives";
+
 interface RatingDisplayProps {
   rating: number;
   ratingCount?: number;
@@ -19,33 +21,28 @@ export function RatingDisplay({ rating, ratingCount = 0 }: RatingDisplayProps) {
   return (
     <div className="flex items-center gap-1 mt-1">
       {Array.from({ length: fullStars }).map((_, i) => (
-        <span
+        <StarIcon
           key={`full-${i}`}
-          className="material-symbols-outlined text-primary text-[18px]"
-          style={{ fontVariationSettings: "'FILL' 1" }}
+          size={18}
+          tone="active"
           aria-hidden
-        >
-          star
-        </span>
+        />
       ))}
       {hasHalf && (
-        <span
-          className="material-symbols-outlined text-primary/40 text-[18px]"
-          style={{ fontVariationSettings: "'FILL' 1" }}
+        <StarIcon
+          size={18}
+          tone="half"
+          variant="half"
           aria-hidden
-        >
-          star_half
-        </span>
+        />
       )}
       {Array.from({ length: emptyStars }).map((_, i) => (
-        <span
+        <StarIcon
           key={`empty-${i}`}
-          className="material-symbols-outlined text-primary/20 text-[18px]"
-          style={{ fontVariationSettings: "'FILL' 0" }}
+          size={18}
+          tone="inactive"
           aria-hidden
-        >
-          star
-        </span>
+        />
       ))}
       {ratingCount > 0 && (
         <span className="text-xs text-text-muted ml-2">
