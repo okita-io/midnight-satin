@@ -36,7 +36,6 @@ export default async function LoginPage({
         <div className="text-center mb-10">
           <h1
             className="font-display font-semibold italic text-4xl text-primary"
-            style={{ fontWeight: 700 }}
           >
             Welcome back
           </h1>

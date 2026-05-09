@@ -71,7 +71,7 @@ export function AuthPrompt({ isOpen, onClose, returnUrl, message }: AuthPromptPr
           <h2
             id="auth-prompt-title"
             className="font-display font-semibold italic text-xl text-[var(--primary)]"
-            style={{ fontFamily: "var(--font-display)", fontWeight: 700 }}
+            style={{ fontFamily: "var(--font-display)" }}
           >
             Sign in to continue
           </h2>

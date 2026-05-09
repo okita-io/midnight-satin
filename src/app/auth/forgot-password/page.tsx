@@ -28,7 +28,7 @@ export default async function ForgotPasswordPage() {
         </div>
 
         <div className="text-center mb-10">
-          <h1 className="font-display font-semibold italic text-4xl text-primary" style={{ fontWeight: 700 }}>
+          <h1 className="font-display font-semibold italic text-4xl text-primary">
             Forgot password
           </h1>
           <p className="font-ui text-text-muted mt-2 text-sm tracking-widest uppercase">
