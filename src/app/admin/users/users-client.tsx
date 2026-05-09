@@ -4,6 +4,7 @@ import { useReducer } from "react";
 import { useRouter } from "next/navigation";
 import { adjustCreditsAction } from "@/app/actions/admin";
 import type { Reader } from "@/lib/db/types";
+import { formatDateUtcYmd } from "@/lib/format-date-stable";
 
 type UsersAdjustState = {
   email: string;
@@ -166,11 +167,8 @@ export function AdminUsersClient({
                 <td className="px-4 py-3 text-text-muted">{r.displayName ?? "—"}</td>
                 <td className="px-4 py-3 text-primary font-ui">{r.creditBalance}</td>
                 <td className="px-4 py-3 text-text-muted">{r.role}</td>
-                <td
-                  className="px-4 py-3 text-text-muted text-sm"
-                  suppressHydrationWarning
-                >
-                  {new Date(r.createdAt).toLocaleDateString()}
+                <td className="px-4 py-3 text-text-muted text-sm">
+                  {formatDateUtcYmd(r.createdAt)}
                 </td>
                 <td className="px-4 py-3">
                   {adjustingId === r.id ? (

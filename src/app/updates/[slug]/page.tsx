@@ -29,6 +29,16 @@ export async function generateMetadata({
 }
 
 /** Platform display labels and Material Symbols icon names */
+/** Stable hash for list keys (no index-only keys). */
+function fnv1a32Base36(str: string): string {
+  let h = 2166136261 >>> 0;
+  for (let k = 0; k < str.length; k++) {
+    h ^= str.charCodeAt(k);
+    h = Math.imul(h, 16777619) >>> 0;
+  }
+  return h.toString(36);
+}
+
 const PLATFORM_META: Record<string, { label: string; icon: string }> = {
   tiktok: { label: "TikTok", icon: "play_circle" },
   instagram: { label: "Instagram", icon: "photo_camera" },
@@ -52,10 +62,18 @@ export default async function ArticleDetailPage({
     ? PLATFORM_META[article.sourcePlatform]
     : null;
 
-  const paragraphs = article.bodyContent.split(/\n\n+/).flatMap((p) => {
-    const t = p.trim();
-    return t ? [t] : [];
-  });
+  const paragraphItems = article.bodyContent
+    .split(/\n\n+/)
+    .flatMap((block, blockIndex) => {
+      const text = block.trim();
+      if (!text) return [];
+      return [
+        {
+          key: `${slug}-p${blockIndex}-${fnv1a32Base36(text)}`,
+          text,
+        },
+      ];
+    });
 
   return (
     <>
@@ -117,17 +135,17 @@ export default async function ArticleDetailPage({
         </div>
 
         {/* Body content — Reading Room typography */}
-        {paragraphs.length > 0 && (
+        {paragraphItems.length > 0 && (
           <article
             className="reading-max-width px-6"
             style={{ fontSize: "18px", lineHeight: 1.6 }}
           >
-            {paragraphs.map((text, i) => (
+            {paragraphItems.map((item, paragraphOrdinal) => (
               <p
-                key={i}
-                className={`font-body text-text-main/90 text-justify mb-6 ${i === 0 ? "drop-cap" : ""}`}
+                key={item.key}
+                className={`font-body text-text-main/90 text-justify mb-6 ${paragraphOrdinal === 0 ? "drop-cap" : ""}`}
               >
-                {text}
+                {item.text}
               </p>
             ))}
           </article>

@@ -1,4 +1,5 @@
 import { listContent } from "@/lib/admin/admin-data";
+import { formatDateUtcYmd } from "@/lib/format-date-stable";
 import { sitePageMetadata } from "@/lib/site-metadata";
 import Link from "next/link";
 import { AdminAuthorsClient } from "./authors-client";
@@ -52,7 +53,7 @@ export default async function AdminAuthorsPage() {
                   <td className="px-4 py-3 font-ui">{author.name}</td>
                   <td className="px-4 py-3 text-text-muted">{author.followerCount}</td>
                   <td className="px-4 py-3 text-text-muted text-sm">
-                    {new Date(author.createdAt).toLocaleDateString()}
+                    {formatDateUtcYmd(author.createdAt)}
                   </td>
                   <td className="px-4 py-3">
                     <Link

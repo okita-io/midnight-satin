@@ -278,8 +278,8 @@ function DossierCard({
                   Favorites
                 </p>
                 <ul className="font-body text-sm text-text-main/90 italic list-disc list-inside space-y-0.5">
-                  {stats.favorites!.map((f, i) => (
-                    <li key={`fav:${i}:${f}`}>{f}</li>
+                  {stats.favorites!.map((f) => (
+                    <li key={`fav:${f}`}>{f}</li>
                   ))}
                 </ul>
               </div>
@@ -290,8 +290,8 @@ function DossierCard({
                   Dislikes
                 </p>
                 <ul className="font-body text-sm text-text-main/90 italic list-disc list-inside space-y-0.5">
-                  {stats.dislikes!.map((d, i) => (
-                    <li key={`dis:${i}:${d}`}>{d}</li>
+                  {stats.dislikes!.map((d) => (
+                    <li key={`dis:${d}`}>{d}</li>
                   ))}
                 </ul>
               </div>
@@ -531,9 +531,9 @@ export function CastGalleryModal({
 
           {characters.length > 1 && (
             <div className="flex gap-2 mt-6">
-              {characters.map((_, i) => (
+              {characters.map((c, i) => (
                 <button
-                  key={i}
+                  key={c.id}
                   type="button"
                   onClick={() => {
                     setIndex(i);

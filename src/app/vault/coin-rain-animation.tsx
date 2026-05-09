@@ -8,7 +8,20 @@ interface CoinRainAnimationProps {
   isActive: boolean;
 }
 
-const COIN_COUNT = 12;
+const COIN_SLOT_KEYS = [
+  "coin-slot-a",
+  "coin-slot-b",
+  "coin-slot-c",
+  "coin-slot-d",
+  "coin-slot-e",
+  "coin-slot-f",
+  "coin-slot-g",
+  "coin-slot-h",
+  "coin-slot-i",
+  "coin-slot-j",
+  "coin-slot-k",
+  "coin-slot-l",
+] as const;
 
 export function CoinRainAnimation({ isActive }: CoinRainAnimationProps) {
   if (!isActive) return null;
@@ -18,13 +31,13 @@ export function CoinRainAnimation({ isActive }: CoinRainAnimationProps) {
       className="fixed inset-0 z-[200] pointer-events-none overflow-hidden"
       aria-hidden
     >
-      {Array.from({ length: COIN_COUNT }, (_, i) => (
+      {COIN_SLOT_KEYS.map((coinKey, slot) => (
         <div
-          key={i}
+          key={coinKey}
           className="absolute animate-coin-fall text-primary"
           style={{
-            left: `${8 + (i * 7) % 84}%`,
-            animationDelay: `${i * 0.15}s`,
+            left: `${8 + (slot * 7) % 84}%`,
+            animationDelay: `${slot * 0.15}s`,
           }}
         >
           <span

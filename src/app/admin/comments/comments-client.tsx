@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { hideCommentAction, restoreCommentAction } from "@/app/actions/admin";
 import type { CommentWithReader } from "@/lib/admin/admin-data";
+import { formatDateTimeUtc } from "@/lib/format-date-stable";
 import Link from "next/link";
 
 export function AdminCommentsClient({
@@ -50,7 +51,7 @@ export function AdminCommentsClient({
               <span>•</span>
               <span>{c.chapterTitle ?? "Chapter"}</span>
               <span>•</span>
-              <span>{new Date(c.createdAt).toLocaleString()}</span>
+              <span>{formatDateTimeUtc(c.createdAt)}</span>
               {c.isDeleted && (
                 <span className="text-accent font-ui">(hidden)</span>
               )}
