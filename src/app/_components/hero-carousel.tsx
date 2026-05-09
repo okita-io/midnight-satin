@@ -87,6 +87,13 @@ export function HeroCarousel(props: Props) {
   );
 }
 
+const HERO_OVERLAY_GRADIENT_BOTTOM =
+  "bg-[linear-gradient(180deg,rgba(5,5,5,0)_0%,rgba(5,5,5,0.40)_45%,#050505_100%)]";
+const HERO_OVERLAY_GRADIENT_TOP =
+  "bg-[linear-gradient(0deg,rgba(5,5,5,0.60)_0%,rgba(5,5,5,0)_50%)]";
+const HERO_OVERLAY_SHEEN =
+  "bg-[linear-gradient(45deg,rgba(212,175,55,0.15)_0%,rgba(212,175,55,0)_55%)] opacity-25 mix-blend-overlay";
+
 function HeroCarouselSingle({
   item,
   firstChapterId,
@@ -113,18 +120,21 @@ function HeroCarouselSingle({
           <div className="h-full w-full bg-surface-highlight" />
         )}
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-void via-void/40 to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-b from-void/60 via-transparent to-transparent" />
-      <div className="absolute inset-0 bg-gold-sheen opacity-30 mix-blend-overlay" />
+      <div className={`absolute inset-0 ${HERO_OVERLAY_GRADIENT_BOTTOM}`} />
+      <div className={`absolute inset-0 ${HERO_OVERLAY_GRADIENT_TOP}`} />
+      <div className={`absolute inset-0 ${HERO_OVERLAY_SHEEN}`} />
 
-      <div className="absolute bottom-0 left-0 right-0 p-4 xs:p-6 flex flex-col items-center text-center z-10 pb-8 xs:pb-12">
-        <span className="font-header text-[10px] tracking-[0.3em] text-white mb-2 xs:mb-3 uppercase border-b border-white/40 pb-1 hero-text-shadow">
+      <div className="absolute bottom-0 left-0 right-0 px-6 pb-9 flex flex-col items-center text-center z-10">
+        <span className="font-header text-[10px] tracking-[0.4em] text-white mb-2 uppercase hero-text-shadow">
           Editor&apos;s Choice
         </span>
-        <h1 className="font-display italic font-bold text-3xl xs:text-4xl leading-tight text-white mb-2 gold-text-shadow">
+        <h1
+          className="font-display italic font-semibold text-[32px] leading-[1.15] text-white mb-1 gold-text-shadow max-w-[310px]"
+          style={{ fontWeight: 700 }}
+        >
           {item.title}
         </h1>
-        <p className="font-ui text-white text-sm mb-2 tracking-wide hero-text-shadow">
+        <p className="font-ui text-white text-sm mb-2 hero-text-shadow">
           By {item.authorName}
         </p>
         {item.rating != null && item.ratingCount != null && (
@@ -151,7 +161,7 @@ function HeroCarouselSingle({
         )}
         <Link
           href={ctaHref}
-          className="bg-primary text-void font-ui font-bold text-sm px-6 xs:px-8 py-2.5 xs:py-3 rounded-sm hover:bg-white transition-colors duration-300 shadow-gold-glow uppercase tracking-wider"
+          className="btn-gold h-11 px-7 inline-flex items-center justify-center text-xs font-medium tracking-[0.25em] active:scale-[0.98]"
         >
           Start Reading
         </Link>
@@ -194,7 +204,7 @@ function HeroCarouselCard({
         {item.coverImageUrl ? (
           <img
             alt=""
-            className="h-full w-full object-cover opacity-60 group-hover:opacity-70 transition-opacity"
+            className="h-full w-full object-cover opacity-60 [@media(hover:hover)]:group-hover:opacity-70 transition-opacity"
             src={item.coverImageUrl}
             loading={loading}
             decoding="async"
@@ -203,21 +213,24 @@ function HeroCarouselCard({
           <div className="h-full w-full bg-surface-highlight" />
         )}
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-void via-void/40 to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-b from-void/60 via-transparent to-transparent" />
-      <div className="absolute inset-0 bg-gold-sheen opacity-30 mix-blend-overlay" />
+      <div className={`absolute inset-0 ${HERO_OVERLAY_GRADIENT_BOTTOM}`} />
+      <div className={`absolute inset-0 ${HERO_OVERLAY_GRADIENT_TOP}`} />
+      <div className={`absolute inset-0 ${HERO_OVERLAY_SHEEN}`} />
 
-      <div className="absolute bottom-0 left-0 right-0 p-4 flex flex-col items-center text-center z-10 pb-6">
-        <span className="font-header text-[10px] tracking-[0.3em] text-primary mb-2 uppercase border-b border-primary/30 pb-1">
+      <div className="absolute bottom-0 left-0 right-0 px-6 pb-8 flex flex-col items-center text-center z-10">
+        <span className="font-header text-[10px] tracking-[0.4em] text-white mb-2 uppercase">
           Editor&apos;s Choice
         </span>
-        <h2 className="font-display italic font-bold text-xl md:text-2xl leading-tight text-white mb-1 gold-text-shadow line-clamp-2">
+        <h2
+          className="font-display italic font-semibold text-[26px] leading-[1.1] text-white mb-1 gold-text-shadow line-clamp-2 max-w-[310px]"
+          style={{ fontWeight: 700 }}
+        >
           {item.title}
         </h2>
-        <p className="font-ui text-text-muted text-xs mb-3 tracking-wide">
+        <p className="font-ui text-white/80 text-xs mb-4">
           By {item.authorName}
         </p>
-        <span className="bg-primary/90 text-void font-ui font-bold text-xs px-4 py-2 rounded-sm group-hover:bg-primary transition-colors uppercase tracking-wider">
+        <span className="btn-gold h-10 px-6 inline-flex items-center justify-center text-[11px] font-medium tracking-[0.25em] active:scale-[0.98]">
           Start Reading
         </span>
       </div>
