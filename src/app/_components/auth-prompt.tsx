@@ -58,6 +58,18 @@ export function AuthPrompt({ isOpen, onClose, returnUrl, message }: AuthPromptPr
 
   if (!isOpen) return null;
 
+  function backdropMouseClose(e: React.MouseEvent<HTMLDivElement>) {
+    if (e.target === e.currentTarget) onClose();
+  }
+
+  function backdropKeyClose(e: React.KeyboardEvent<HTMLDivElement>) {
+    if (e.target !== e.currentTarget) return;
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onClose();
+    }
+  }
+
   return (
     <div
       ref={overlayRef}
@@ -65,11 +77,12 @@ export function AuthPrompt({ isOpen, onClose, returnUrl, message }: AuthPromptPr
       aria-modal="true"
       aria-labelledby="auth-prompt-title"
       className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80"
-      onClick={(e) => e.target === e.currentTarget && onClose()}
+      onClick={backdropMouseClose}
+      onKeyDown={backdropKeyClose}
     >
       <div
+        role="document"
         className="w-full max-w-md rounded border border-primary/20 bg-surface p-6 shadow-gold-glow"
-        onClick={(e) => e.stopPropagation()}
       >
         <div className="flex justify-between items-start gap-4 mb-4">
           <h2

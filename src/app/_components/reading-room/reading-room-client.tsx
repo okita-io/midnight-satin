@@ -220,11 +220,27 @@ export function ReadingRoomClient({
     };
   }, [content]);
 
+  const shouldIgnoreToggleTarget = useCallback((el: HTMLElement | null) => {
+    if (!el) return true;
+    return !!(el.closest("a") || el.closest("button"));
+  }, []);
+
   const handleTap = useCallback((e: React.MouseEvent) => {
     const target = e.target as HTMLElement;
-    if (target.closest("a") || target.closest("button")) return;
+    if (shouldIgnoreToggleTarget(target)) return;
     dispatch({ type: "toggle_hud" });
-  }, []);
+  }, [shouldIgnoreToggleTarget]);
+
+  const handleTapKeyDown = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key !== "Enter" && e.key !== " ") return;
+      const target = e.target as HTMLElement;
+      if (shouldIgnoreToggleTarget(target)) return;
+      e.preventDefault();
+      dispatch({ type: "toggle_hud" });
+    },
+    [shouldIgnoreToggleTarget]
+  );
 
   const handleUnlock = useCallback(async () => {
     if (!isAuthenticated || state.creditBalance < 5 || state.isUnlocking) return;
@@ -246,6 +262,7 @@ export function ReadingRoomClient({
         ref={scrollRef}
         className="reading-room-main-scroll flex-1 min-h-0 overflow-y-auto relative w-full scroll-smooth bg-silk-noise lg:mr-80"
         onClick={handleTap}
+        onKeyDown={handleTapKeyDown}
         role="main"
         aria-label="Chapter content"
       >
