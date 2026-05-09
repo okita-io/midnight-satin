@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import {
   postNovelReview,
@@ -37,13 +37,13 @@ export function NovelReviewComposer({
   const serverKey = myReview
     ? `${myReview.id}\0${myReview.content}\0${myReview.starRating}`
     : "";
-  const [prevServerKey, setPrevServerKey] = useState(serverKey);
+  const prevServerKeyRef = useRef(serverKey);
   const [draft, setDraft] = useState(myReview?.content ?? "");
   const [stars, setStars] = useState(myReview?.starRating ?? 5);
   const [error, setError] = useState<string | null>(null);
 
-  if (serverKey !== prevServerKey) {
-    setPrevServerKey(serverKey);
+  if (serverKey !== prevServerKeyRef.current) {
+    prevServerKeyRef.current = serverKey;
     setDraft(myReview?.content ?? "");
     setStars(myReview?.starRating ?? 5);
     setError(null);

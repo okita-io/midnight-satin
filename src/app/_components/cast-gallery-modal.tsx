@@ -439,22 +439,21 @@ export function CastGalleryModal({
     setFlipped(false);
   }, [characters.length]);
 
-  const handleKeyDown = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        if (flipped) setFlipped(false);
-        else onClose();
-      }
-      if (e.key === "ArrowLeft") goPrev();
-      if (e.key === "ArrowRight") goNext();
-    },
-    [onClose, goPrev, goNext, flipped]
-  );
+  const keyDownHandlerRef = useRef<(e: KeyboardEvent) => void>(() => {});
+  keyDownHandlerRef.current = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      if (flipped) setFlipped(false);
+      else onClose();
+    }
+    if (e.key === "ArrowLeft") goPrev();
+    if (e.key === "ArrowRight") goNext();
+  };
 
   useEffect(() => {
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [handleKeyDown]);
+    const listener = (e: KeyboardEvent) => keyDownHandlerRef.current(e);
+    window.addEventListener("keydown", listener);
+    return () => window.removeEventListener("keydown", listener);
+  }, []);
 
   useEffect(() => {
     const prev = document.body.style.overflow;
