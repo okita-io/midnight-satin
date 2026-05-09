@@ -13,7 +13,7 @@ export function AdminUsersClient({
   readers: Reader[];
 }) {
   const router = useRouter();
-  const [email, setEmail] = useState(initialEmail ?? "");
+  const [email, setEmail] = useState(() => initialEmail ?? "");
   const [adjustingId, setAdjustingId] = useState<string | null>(null);
   const [adjustAmount, setAdjustAmount] = useState("");
   const [adjustReason, setAdjustReason] = useState("");

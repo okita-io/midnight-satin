@@ -121,7 +121,7 @@ export function ReadingHUD({
   onFontSizeChange,
   onLineHeightChange,
 }: ReadingHUDProps) {
-  const [bookmarked, setBookmarked] = useState(initialBookmarked);
+  const [bookmarked, setBookmarked] = useState(() => initialBookmarked);
   const [showFontPanel, setShowFontPanel] = useState(false);
   const [showLinePanel, setShowLinePanel] = useState(false);
 
@@ -140,6 +140,7 @@ export function ReadingHUD({
     <>
       {/* Header HUD */}
       <header
+        data-chapter-id={chapterId}
         className="fixed top-0 left-0 w-full z-50 transition-transform duration-300 pt-[var(--safe-area-inset-top)] pb-8 pointer-events-none"
         style={{ paddingTop: "calc(var(--safe-area-inset-top) + 0.5rem)" }}
       >

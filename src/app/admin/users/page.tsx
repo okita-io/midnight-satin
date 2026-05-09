@@ -17,7 +17,11 @@ export default async function AdminUsersPage({
         Users
       </h1>
 
-      <AdminUsersClient initialEmail={email} readers={readers} />
+      <AdminUsersClient
+        key={email ?? ""}
+        initialEmail={email}
+        readers={readers}
+      />
     </div>
   );
 }

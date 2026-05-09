@@ -22,7 +22,7 @@ export default async function AdminNovelEditPage({
       <h1 className="font-display italic text-2xl text-primary mb-6">
         Edit Novel
       </h1>
-      <AdminNovelEditForm novel={item} />
+      <AdminNovelEditForm key={item.id} novel={item} />
     </div>
   );
 }

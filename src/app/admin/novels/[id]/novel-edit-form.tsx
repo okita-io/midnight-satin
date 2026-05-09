@@ -10,12 +10,14 @@ export function AdminNovelEditForm({
 }: {
   novel: Novel & { type: "novel" };
 }) {
-  const [title, setTitle] = useState(novel.title);
-  const [coverImageUrl, setCoverImageUrl] = useState(novel.coverImageUrl ?? "");
-  const [synopsis, setSynopsis] = useState(novel.synopsis ?? "");
-  const [genreTags, setGenreTags] = useState(novel.genreTags.join(", "));
-  const [isFeatured, setIsFeatured] = useState(novel.isFeatured ?? false);
-  const [featuredOrder, setFeaturedOrder] = useState(
+  const [title, setTitle] = useState(() => novel.title);
+  const [coverImageUrl, setCoverImageUrl] = useState(
+    () => novel.coverImageUrl ?? ""
+  );
+  const [synopsis, setSynopsis] = useState(() => novel.synopsis ?? "");
+  const [genreTags, setGenreTags] = useState(() => novel.genreTags.join(", "));
+  const [isFeatured, setIsFeatured] = useState(() => novel.isFeatured ?? false);
+  const [featuredOrder, setFeaturedOrder] = useState(() =>
     novel.featuredOrder != null ? String(novel.featuredOrder) : ""
   );
   const [loading, setLoading] = useState(false);
@@ -25,7 +27,10 @@ export function AdminNovelEditForm({
     e.preventDefault();
     setLoading(true);
     setError(null);
-    const tags = genreTags.split(",").map((t) => t.trim()).filter(Boolean);
+    const tags = genreTags.split(",").flatMap((t) => {
+      const x = t.trim();
+      return x ? [x] : [];
+    });
     const updates: Record<string, unknown> = {
       title: title.trim(),
       cover_image_url: coverImageUrl.trim() || null,

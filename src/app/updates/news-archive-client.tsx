@@ -14,9 +14,17 @@ export function NewsArchiveClient({
   initialArticles,
   initialCursor,
 }: NewsArchiveClientProps) {
+  const serverBootstrapKey = `${initialCursor ?? ""}\0${initialArticles.map((a) => a.id).join(",")}`;
+  const [prevBootstrapKey, setPrevBootstrapKey] = useState(serverBootstrapKey);
   const [articles, setArticles] = useState(initialArticles);
   const [cursor, setCursor] = useState(initialCursor);
   const [isPending, startTransition] = useTransition();
+
+  if (serverBootstrapKey !== prevBootstrapKey) {
+    setPrevBootstrapKey(serverBootstrapKey);
+    setArticles(initialArticles);
+    setCursor(initialCursor);
+  }
 
   function handleLoadMore() {
     if (!cursor) return;

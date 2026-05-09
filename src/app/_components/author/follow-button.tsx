@@ -20,7 +20,7 @@ export function FollowButton({
   const router = useRouter();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
-  const [followed, setFollowed] = useState(initialFollowed);
+  const [followed, setFollowed] = useState(() => initialFollowed);
   const [authPromptOpen, setAuthPromptOpen] = useState(false);
 
   const handleFollow = () => {

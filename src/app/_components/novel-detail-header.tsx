@@ -23,7 +23,7 @@ export function NovelDetailHeader({
   const router = useRouter();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
-  const [bookmarked, setBookmarked] = React.useState(initialBookmarked);
+  const [bookmarked, setBookmarked] = React.useState(() => initialBookmarked);
   const [authPromptOpen, setAuthPromptOpen] = useState(false);
 
   const handleBack = () => router.back();

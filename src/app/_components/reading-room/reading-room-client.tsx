@@ -98,12 +98,22 @@ export function ReadingRoomClient({
   }));
 
   useEffect(() => {
-    setSettings(getStoredReaderSettings());
+    const id = requestAnimationFrame(() => {
+      setSettings(getStoredReaderSettings());
+    });
+    return () => cancelAnimationFrame(id);
   }, []);
   const [unlocked, setUnlocked] = useState(isUnlocked);
   const [creditBalance, setCreditBalance] = useState(initialCreditBalance);
   const [unlockError, setUnlockError] = useState<string | null>(null);
   const [isUnlocking, setIsUnlocking] = useState(false);
+  const [syncChapterId, setSyncChapterId] = useState(chapterId);
+  if (chapterId !== syncChapterId) {
+    setSyncChapterId(chapterId);
+    setCommentCount(initialCommentCount);
+    setUnlocked(isUnlocked);
+    setCreditBalance(initialCreditBalance);
+  }
   const saveTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isRestoringRef = useRef(false);
 
@@ -250,6 +260,7 @@ export function ReadingRoomClient({
       </main>
 
       <ReadingHUD
+        key={chapterId}
         visible={hudVisible}
         novelId={novelId}
         chapterId={chapterId}

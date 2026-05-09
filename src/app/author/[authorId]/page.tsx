@@ -113,6 +113,7 @@ export default async function AuthorStudyPage({
             </div>
           </div>
           <FollowButton
+            key={authorId}
             authorId={authorId}
             initialFollowed={followed}
             isAuthenticated={isAuthenticated}

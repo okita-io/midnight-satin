@@ -10,9 +10,9 @@ export function AdminChapterEditForm({
 }: {
   chapter: Chapter & { type: "chapter" };
 }) {
-  const [title, setTitle] = useState(chapter.title);
-  const [content, setContent] = useState(chapter.content);
-  const [isFree, setIsFree] = useState(chapter.isFree);
+  const [title, setTitle] = useState(() => chapter.title);
+  const [content, setContent] = useState(() => chapter.content);
+  const [isFree, setIsFree] = useState(() => chapter.isFree);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 

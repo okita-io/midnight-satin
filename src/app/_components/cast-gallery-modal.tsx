@@ -422,8 +422,9 @@ export function CastGalleryModal({
   onEndorse,
   onAuthPrompt,
 }: CastGalleryModalProps) {
-  const safeIndex = Math.min(initialIndex, Math.max(0, characters.length - 1));
-  const [index, setIndex] = useState(safeIndex);
+  const [index, setIndex] = useState(() =>
+    Math.min(initialIndex, Math.max(0, characters.length - 1))
+  );
   const [flipped, setFlipped] = useState(false);
   const closeRef = useRef<HTMLButtonElement>(null);
   const char = characters[index];

@@ -22,7 +22,7 @@ export default async function AdminChapterEditPage({
       <h1 className="font-display italic text-2xl text-primary mb-6">
         Edit Chapter
       </h1>
-      <AdminChapterEditForm chapter={item} />
+      <AdminChapterEditForm key={item.id} chapter={item} />
     </div>
   );
 }

@@ -10,10 +10,12 @@ export function AdminAuthorEditForm({
 }: {
   author: AuthorProfile & { type: "author" };
 }) {
-  const [name, setName] = useState(author.name);
-  const [biography, setBiography] = useState(author.biography ?? "");
-  const [avatarUrl, setAvatarUrl] = useState(author.avatarUrl ?? "");
-  const [styleTags, setStyleTags] = useState(author.styleTags.join(", "));
+  const [name, setName] = useState(() => author.name);
+  const [biography, setBiography] = useState(() => author.biography ?? "");
+  const [avatarUrl, setAvatarUrl] = useState(() => author.avatarUrl ?? "");
+  const [styleTags, setStyleTags] = useState(() =>
+    author.styleTags.join(", ")
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,10 +23,10 @@ export function AdminAuthorEditForm({
     e.preventDefault();
     setLoading(true);
     setError(null);
-    const tags = styleTags
-      .split(",")
-      .map((t) => t.trim())
-      .filter(Boolean);
+    const tags = styleTags.split(",").flatMap((t) => {
+      const x = t.trim();
+      return x ? [x] : [];
+    });
     const result = await updateContentAction({
       type: "authors",
       id: author.id,

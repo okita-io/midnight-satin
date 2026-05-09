@@ -45,6 +45,7 @@ export default async function NovelReviewsPage({
   return (
     <>
       <NovelDetailHeader
+        key={novelId}
         novelId={novelId}
         novelTitle={novel.title}
         initialBookmarked={bookmarked}
