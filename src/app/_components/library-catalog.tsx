@@ -134,7 +134,7 @@ export function LibraryCatalog({
           ))}
         </div>
       ) : (
-        <ul className="space-y-3 md:grid md:grid-cols-2 md:gap-x-4 md:gap-y-3 md:space-y-0 md:items-start lg:grid-cols-3 lg:gap-x-5 lg:gap-y-3">
+        <ul className="flex flex-col gap-y-3 md:grid md:grid-cols-2 md:gap-x-4 md:gap-y-3 md:items-start lg:grid-cols-3 lg:gap-x-5 lg:gap-y-3">
           {filtered.map((novel) => (
             <li key={novel.id}>
               <NovelCard
