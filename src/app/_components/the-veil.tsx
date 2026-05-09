@@ -31,6 +31,9 @@ export function TheVeil({
   const canUnlock = isAuthenticated && creditBalance >= 5;
   const showVaultPrompt = isAuthenticated && creditBalance < 5;
 
+  const ctaShellClassName =
+    "group relative w-full overflow-hidden rounded-sm bg-[#1a170e] border border-primary/30 p-[1px] transition-all [@media(hover:hover)]:hover:border-primary [@media(hover:hover)]:hover:shadow-[0px_4px_20px_rgba(212,175,55,0.15)] active:scale-[0.98]";
+
   return (
     <div
       className="absolute inset-0 -top-12 bottom-0 z-10 flex flex-col items-center justify-end pb-0"
@@ -65,10 +68,10 @@ export function TheVeil({
         {!isAuthenticated ? (
           <Link
             href={`/auth/login?returnUrl=${encodeURIComponent(typeof window !== "undefined" ? window.location.pathname : "/")}`}
-            className="group relative w-full overflow-hidden rounded-sm bg-[#1a170e] border border-primary/30 p-[1px] transition-all hover:border-primary hover:shadow-[0px_4px_20px_rgba(212,175,55,0.15)] active:scale-[0.98]"
+            className={ctaShellClassName}
           >
             <div className="relative bg-[#1a170e] px-4 py-3 flex items-center justify-center">
-              <span className="font-display font-bold italic text-lg text-primary">
+              <span className="font-display font-semibold italic text-lg text-primary">
                 Sign in to unlock
               </span>
             </div>
@@ -79,7 +82,7 @@ export function TheVeil({
               type="button"
               onClick={canUnlock ? onUnlock : undefined}
               disabled={isUnlocking || !canUnlock}
-              className="group relative w-full overflow-hidden rounded-sm bg-[#1a170e] border border-primary/30 p-[1px] transition-all hover:border-primary hover:shadow-[0px_4px_20px_rgba(212,175,55,0.15)] active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:border-primary/30 disabled:hover:shadow-none"
+              className={`${ctaShellClassName} disabled:opacity-60 disabled:cursor-not-allowed disabled:[@media(hover:hover)]:hover:border-primary/30 disabled:[@media(hover:hover)]:hover:shadow-none`.trim()}
               aria-label="Lift Veil — 5 Credits"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
@@ -94,13 +97,13 @@ export function TheVeil({
                     </span>
                   </div>
                   <div className="flex flex-col items-start">
-                    <span className="font-display font-bold italic text-lg text-primary leading-none group-hover:text-white transition-colors">
+                    <span className="font-display font-semibold italic text-lg text-primary leading-none group-hover:text-white transition-colors">
                       {isUnlocking ? "Unlocking…" : "Lift Veil"}
                     </span>
                   </div>
                 </div>
                 <div className="flex items-center gap-1.5 bg-void/50 px-2 py-1 rounded border border-white/5">
-                  <span className="font-heading font-bold text-sm text-white">
+                  <span className="font-heading font-semibold text-sm text-white">
                     5
                   </span>
                   <span

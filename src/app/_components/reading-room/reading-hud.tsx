@@ -11,6 +11,7 @@ import { useCallback, useState } from "react";
 import { toggleBookmark } from "@/app/actions/bookmarks";
 import { novelDetailPath } from "@/lib/navigation";
 import { READING_HUD_FOOTER_ICON_ROW_CLASSES } from "@/lib/responsive/constants";
+import { SegmentedChips } from "@/app/_components/segmented-chips";
 
 function toRoman(num: number): string {
   const map: [number, string][] = [
@@ -239,24 +240,16 @@ export function ReadingHUD({
               </span>
             </button>
             {showFontPanel && (
-              <div className="absolute bottom-full left-0 mb-2 p-3 rounded bg-surface border border-[#1F1F1F] shadow-lg flex gap-2">
-                {FONT_SIZES.map((s) => (
-                  <button
-                    key={s}
-                    type="button"
-                    onClick={() => {
-                      onFontSizeChange(s);
-                      setShowFontPanel(false);
-                    }}
-                    className={`px-3 py-1 rounded text-sm font-ui cursor-pointer active:scale-95 ${
-                      fontSize === s
-                        ? "bg-primary text-void"
-                        : "bg-white/5 text-text-main hover:bg-white/10"
-                    }`}
-                  >
-                    {s}px
-                  </button>
-                ))}
+              <div className="absolute bottom-full left-0 mb-2 p-3 rounded bg-surface border border-[#1F1F1F] shadow-lg">
+                <SegmentedChips
+                  label="Font size"
+                  value={fontSize}
+                  options={FONT_SIZES.map((s) => ({ value: s, label: `${s}px` }))}
+                  onChange={(s) => {
+                    onFontSizeChange(s);
+                    setShowFontPanel(false);
+                  }}
+                />
               </div>
             )}
           </div>
@@ -431,24 +424,16 @@ export function ReadingHUD({
               </span>
             </button>
             {showLinePanel && (
-              <div className="absolute bottom-full right-0 mb-2 p-3 rounded bg-surface border border-[#1F1F1F] shadow-lg flex gap-2">
-                {LINE_HEIGHTS.map((lh) => (
-                  <button
-                    key={lh}
-                    type="button"
-                    onClick={() => {
-                      onLineHeightChange(lh);
-                      setShowLinePanel(false);
-                    }}
-                    className={`px-3 py-1 rounded text-sm font-ui cursor-pointer active:scale-95 ${
-                      lineHeight === lh
-                        ? "bg-primary text-void"
-                        : "bg-white/5 text-text-main hover:bg-white/10"
-                    }`}
-                  >
-                    {lh}
-                  </button>
-                ))}
+              <div className="absolute bottom-full right-0 mb-2 p-3 rounded bg-surface border border-[#1F1F1F] shadow-lg">
+                <SegmentedChips
+                  label="Line spacing"
+                  value={lineHeight}
+                  options={LINE_HEIGHTS.map((lh) => ({ value: lh, label: `${lh}×` }))}
+                  onChange={(lh) => {
+                    onLineHeightChange(lh);
+                    setShowLinePanel(false);
+                  }}
+                />
               </div>
             )}
           </div>
