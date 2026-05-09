@@ -2218,17 +2218,17 @@
             {
               "type": "frame",
               "id": "h8FzHd",
-              "x": 188,
-              "y": 16,
+              "x": 290,
+              "y": 13,
               "name": "Endorse button",
-              "width": 154,
-              "height": 32,
+              "width": 58,
+              "height": 75,
               "fill": "#800020E6",
-              "cornerRadius": 999,
+              "cornerRadius": 17,
               "stroke": {
                 "align": "inside",
-                "thickness": 1,
-                "fill": "#FFFFFF1A"
+                "thickness": 2.5,
+                "fill": "#ffffff17"
               },
               "effect": {
                 "type": "shadow",
@@ -2240,11 +2240,13 @@
                 },
                 "blur": 20
               },
-              "gap": 8,
+              "layout": "vertical",
+              "gap": 4,
               "padding": [
                 8,
                 12
               ],
+              "justifyContent": "center",
               "alignItems": "center",
               "children": [
                 {
