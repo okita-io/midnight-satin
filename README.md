@@ -1,6 +1,5 @@
 # Midnight Satin 
 
-
 A premium romance reading web application — **Tactile Noir Luxury** experience. Readers discover and read AI-generated stories, unlock chapters with credits, and endorse characters. Built for agentic development: specs, design references, and agent skill requirements are documented so AI agents and subagents can contribute effectively.
 
 ## Tech stack
