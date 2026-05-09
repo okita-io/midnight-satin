@@ -16,7 +16,7 @@ export type RegisterResult =
   | { success: true; readerId: string }
   | { success: false; error: string };
 
-export type LoginResult =
+type LoginResult =
   | { success: true }
   | { success: false; error: string };
 
@@ -61,7 +61,7 @@ export async function registerReader(
 }
 
 /** Log in with email and password. */
-export async function loginReader(email: string, password: string): Promise<LoginResult> {
+async function loginReader(email: string, password: string): Promise<LoginResult> {
   const existingSession = await getSession();
   if (existingSession) {
     return { success: false, error: "You are already signed in." };

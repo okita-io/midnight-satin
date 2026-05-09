@@ -6,7 +6,7 @@
  * Reuses comment styling from CommentsSection (dark background, gold accents).
  */
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef } from "react";
 import {
   getChapterComments,
   postComment,
@@ -41,6 +41,90 @@ function formatRelativeTime(date: Date): string {
   return date.toLocaleDateString();
 }
 
+type SidebarState = {
+  comments: CommentWithAuthorAndLike[];
+  loading: boolean;
+  error: string | null;
+  inputValue: string;
+  submitting: boolean;
+  inputError: string | null;
+  showAuthPrompt: boolean;
+  authPromptMessage: string | undefined;
+};
+
+const initialSidebarState: SidebarState = {
+  comments: [],
+  loading: false,
+  error: null,
+  inputValue: "",
+  submitting: false,
+  inputError: null,
+  showAuthPrompt: false,
+  authPromptMessage: undefined,
+};
+
+type SidebarAction =
+  | { type: "load_start" }
+  | { type: "load_success"; comments: CommentWithAuthorAndLike[] }
+  | { type: "load_error"; error: string }
+  | { type: "set_input"; value: string }
+  | { type: "set_input_error"; error: string | null }
+  | { type: "submit_start" }
+  | { type: "submit_end" }
+  | { type: "post_success" }
+  | { type: "auth_open"; message?: string }
+  | { type: "auth_close" }
+  | {
+      type: "update_comment_like";
+      commentId: string;
+      newLikeCount: number;
+      likedByCurrentReader: boolean;
+    };
+
+function sidebarReducer(state: SidebarState, action: SidebarAction): SidebarState {
+  switch (action.type) {
+    case "load_start":
+      return { ...state, loading: true, error: null };
+    case "load_success":
+      return { ...state, loading: false, comments: action.comments };
+    case "load_error":
+      return { ...state, loading: false, error: action.error };
+    case "set_input":
+      return { ...state, inputValue: action.value, inputError: null };
+    case "set_input_error":
+      return { ...state, inputError: action.error };
+    case "submit_start":
+      return { ...state, submitting: true };
+    case "submit_end":
+      return { ...state, submitting: false };
+    case "post_success":
+      return { ...state, inputValue: "", inputError: null };
+    case "auth_open":
+      return {
+        ...state,
+        showAuthPrompt: true,
+        authPromptMessage: action.message,
+      };
+    case "auth_close":
+      return { ...state, showAuthPrompt: false };
+    case "update_comment_like":
+      return {
+        ...state,
+        comments: state.comments.map((c) =>
+          c.id === action.commentId
+            ? {
+                ...c,
+                likeCount: action.newLikeCount,
+                likedByCurrentReader: action.likedByCurrentReader,
+              }
+            : c
+        ),
+      };
+    default:
+      return state;
+  }
+}
+
 export interface CommentsSidebarProps {
   chapterId: string;
   isAuthenticated: boolean;
@@ -59,92 +143,108 @@ export function CommentsSidebar({
   onCommentCountChange,
   returnUrl,
 }: CommentsSidebarProps) {
-  const [comments, setComments] = useState<CommentWithAuthorAndLike[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [inputValue, setInputValue] = useState("");
-  const [submitting, setSubmitting] = useState(false);
-  const [inputError, setInputError] = useState<string | null>(null);
-  const [showAuthPrompt, setShowAuthPrompt] = useState(false);
-  const [authPromptMessage, setAuthPromptMessage] = useState<string | undefined>();
+  const [state, dispatch] = useReducer(sidebarReducer, initialSidebarState);
+  const loadGenRef = useRef(0);
 
-  const fetchComments = useCallback(async () => {
-    if (!chapterId) return;
-    setLoading(true);
-    setError(null);
-    const result: GetChapterCommentsResult = await getChapterComments(chapterId);
-    setLoading(false);
-    if (result.success) {
-      setComments(result.data.commentsWithAuthor);
-    } else {
-      setError(result.error ?? "Failed to load comments.");
-    }
-  }, [chapterId]);
+  const fetchCommentsForChapter = useCallback((id: string) => {
+    if (!id) return;
+    const gen = ++loadGenRef.current;
+    dispatch({ type: "load_start" });
+    void (async () => {
+      const result: GetChapterCommentsResult = await getChapterComments(id);
+      if (gen !== loadGenRef.current) return;
+      if (result.success) {
+        dispatch({
+          type: "load_success",
+          comments: result.data.commentsWithAuthor,
+        });
+      } else {
+        dispatch({
+          type: "load_error",
+          error: result.error ?? "Failed to load comments.",
+        });
+      }
+    })();
+  }, []);
 
   useEffect(() => {
-    if (chapterId) {
-      queueMicrotask(() => fetchComments());
-    }
-  }, [chapterId, fetchComments]);
+    if (!chapterId) return;
+    fetchCommentsForChapter(chapterId);
+  }, [chapterId, fetchCommentsForChapter]);
 
   const handleSubmit = useCallback(async () => {
     if (!isAuthenticated) {
-      setAuthPromptMessage("Sign in to add a thought.");
-      setShowAuthPrompt(true);
+      dispatch({
+        type: "auth_open",
+        message: "Sign in to add a thought.",
+      });
       return;
     }
-    const trimmed = inputValue.trim();
-    const validation = validateCommentContent(inputValue);
+    const trimmed = state.inputValue.trim();
+    const validation = validateCommentContent(state.inputValue);
     if (!validation.valid) {
-      setInputError(validation.error);
+      dispatch({ type: "set_input_error", error: validation.error });
       return;
     }
-    setInputError(null);
-    setSubmitting(true);
+    if (!chapterId || !trimmed) {
+      return;
+    }
+    dispatch({ type: "submit_start" });
     const result = await postComment(chapterId, trimmed);
-    setSubmitting(false);
+    dispatch({ type: "submit_end" });
     if (result.success) {
-      setInputValue("");
-      fetchComments();
+      dispatch({ type: "post_success" });
+      fetchCommentsForChapter(chapterId);
       onCommentCountChange?.(commentCount + 1);
     } else {
-      setInputError(result.error ?? "Failed to post.");
+      dispatch({
+        type: "set_input_error",
+        error: result.error ?? "Failed to post.",
+      });
     }
   }, [
     isAuthenticated,
-    inputValue,
+    state.inputValue,
     chapterId,
     commentCount,
     onCommentCountChange,
-    fetchComments,
+    fetchCommentsForChapter,
   ]);
 
   const handleLike = useCallback(
     async (commentId: string, currentlyLiked: boolean) => {
       if (!isAuthenticated) {
-        setAuthPromptMessage("Sign in to like comments.");
-        setShowAuthPrompt(true);
+        dispatch({
+          type: "auth_open",
+          message: "Sign in to like comments.",
+        });
         return;
       }
       const result = currentlyLiked
         ? await unlikeComment(commentId)
         : await likeComment(commentId);
       if (result.success) {
-        setComments((prev) =>
-          prev.map((c) =>
-            c.id === commentId
-              ? {
-                  ...c,
-                  likeCount: result.newLikeCount,
-                  likedByCurrentReader: !currentlyLiked,
-                }
-              : c
-          )
-        );
+        dispatch({
+          type: "update_comment_like",
+          commentId,
+          newLikeCount: result.newLikeCount,
+          likedByCurrentReader: !currentlyLiked,
+        });
       }
     },
     [isAuthenticated]
   );
+
+  const {
+    comments,
+    loading,
+    error,
+    inputValue,
+    submitting,
+    inputError,
+    showAuthPrompt,
+    authPromptMessage,
+  } = state;
 
   return (
     <>
@@ -173,7 +273,7 @@ export function CommentsSidebar({
         <div className="flex-1 overflow-y-auto px-6 py-4 space-y-8 min-h-0">
           {loading && (
             <p className="font-ui text-sm text-text-muted italic">
-              Loading thoughts...
+              Loading thoughts…
             </p>
           )}
           {error && (
@@ -193,29 +293,30 @@ export function CommentsSidebar({
                 onLike={() => handleLike(c.id, c.likedByCurrentReader)}
                 isAuthenticated={isAuthenticated}
                 onAuthRequired={() => {
-                  setAuthPromptMessage("Sign in to like comments.");
-                  setShowAuthPrompt(true);
+                  dispatch({
+                    type: "auth_open",
+                    message: "Sign in to like comments.",
+                  });
                 }}
               />
             ))}
         </div>
 
         {/* Input form */}
-        <div className="px-6 py-6 border-t border-white/5 bg-void/50 shrink-0">
+        <div className="p-6 border-t border-white/5 bg-void/50 shrink-0">
           <div className="relative">
             <textarea
               value={inputValue}
               onChange={(e) => {
-                setInputValue(e.target.value);
-                setInputError(null);
+                dispatch({ type: "set_input", value: e.target.value });
               }}
               onKeyDown={(e) => {
                 if (e.key === "Enter" && !e.shiftKey) {
                   e.preventDefault();
-                  handleSubmit();
+                  void handleSubmit();
                 }
               }}
-              placeholder={isAuthenticated ? "Add a thought..." : "Sign in to add a thought"}
+              placeholder={isAuthenticated ? "Add a thought…" : "Sign in to add a thought"}
               maxLength={MAX_COMMENT_LENGTH}
               rows={2}
               className="w-full bg-transparent border-0 border-b border-primary/30 py-2 px-0 text-sm font-body italic focus:ring-0 focus:border-primary placeholder:text-text-muted text-text-main transition-colors resize-none"
@@ -233,7 +334,7 @@ export function CommentsSidebar({
               </span>
               <button
                 type="button"
-                onClick={handleSubmit}
+                onClick={() => void handleSubmit()}
                 disabled={!isAuthenticated || submitting || !inputValue.trim()}
                 className="text-primary hover:text-primary/80 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer active:scale-95"
                 aria-label="Post comment"
@@ -252,7 +353,7 @@ export function CommentsSidebar({
 
       <AuthPrompt
         isOpen={showAuthPrompt}
-        onClose={() => setShowAuthPrompt(false)}
+        onClose={() => dispatch({ type: "auth_close" })}
         returnUrl={returnUrl}
         message={authPromptMessage}
       />
@@ -294,7 +395,10 @@ function CommentItem({
           <span className={COMMENT_AUTHOR_CLASSES}>
             {displayName}
           </span>
-          <span className="text-[10px] font-ui text-text-muted">
+          <span
+            className="text-[10px] font-ui text-text-muted"
+            suppressHydrationWarning
+          >
             {formatRelativeTime(new Date(comment.createdAt))}
           </span>
         </div>

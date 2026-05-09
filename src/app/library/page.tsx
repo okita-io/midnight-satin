@@ -2,6 +2,11 @@ import { getAllNovels } from "@/lib/content";
 import { NavigationBar } from "../_components/navigation-bar";
 import { LibraryClient } from "../_components/library-client";
 
+export const metadata = {
+  title: "Library | Midnight Satin",
+  description: "Browse the complete Midnight Satin catalog of novels.",
+};
+
 export const revalidate = 60; // ISR: 60s revalidation per design doc
 
 export default async function LibraryPage() {

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { FeaturedNovel } from "@/lib/content";
 import { novelDetailPath } from "@/lib/navigation";
@@ -109,13 +110,17 @@ function HeroCarouselSingle({
     <section className="relative h-[380px] xs:h-[420px] sm:h-[480px] md:h-[480px] lg:h-[520px] w-full overflow-hidden group">
       <div className="absolute inset-0 bg-void">
         {item.coverImageUrl ? (
-          <img
-            alt=""
-            className="h-full w-full object-cover opacity-60"
-            src={item.coverImageUrl}
-            loading="eager"
-            decoding="async"
-          />
+          <div className="relative h-full w-full">
+            <Image
+              src={item.coverImageUrl}
+              alt=""
+              fill
+              className="object-cover opacity-60"
+              sizes="100vw"
+              priority
+              unoptimized
+            />
+          </div>
         ) : (
           <div className="h-full w-full bg-surface-highlight" />
         )}
@@ -187,13 +192,17 @@ function HeroCarouselCard({
     >
       <div className="absolute inset-0 bg-void">
         {item.coverImageUrl ? (
-          <img
-            alt=""
-            className="h-full w-full object-cover opacity-60 [@media(hover:hover)]:group-hover:opacity-70 transition-opacity"
-            src={item.coverImageUrl}
-            loading={loading}
-            decoding="async"
-          />
+          <div className="relative h-full w-full">
+            <Image
+              src={item.coverImageUrl}
+              alt=""
+              fill
+              className="object-cover opacity-60 [@media(hover:hover)]:group-hover:opacity-70 transition-opacity"
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              priority={loading === "eager"}
+              unoptimized
+            />
+          </div>
         ) : (
           <div className="h-full w-full bg-surface-highlight" />
         )}

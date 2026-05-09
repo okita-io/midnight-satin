@@ -15,6 +15,12 @@ import {
 } from "@/lib/content";
 import type { NewsArticleSummary } from "@/lib/db/types";
 
+export const metadata = {
+  title: "The Boudoir | Midnight Satin",
+  description:
+    "Your private library of romance—featured novels, trending reads, and the latest from Midnight Satin.",
+};
+
 export const revalidate = 60; // ISR: 60s revalidation per design doc
 
 export default async function BoudoirPage() {
