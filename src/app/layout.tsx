@@ -7,6 +7,7 @@ import {
   Pinyon_Script,
 } from "next/font/google";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import "@fontsource-variable/material-symbols-outlined";
 import "./globals.css";
 import { MainLayoutContainer } from "./_components/main-layout-container";
 
@@ -54,9 +55,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-      </head>
       <body
         className={`${playfair.variable} ${cinzel.variable} ${literata.variable} ${marcellus.variable} ${pinyon.variable} bg-void text-text-main font-body antialiased`}
       >

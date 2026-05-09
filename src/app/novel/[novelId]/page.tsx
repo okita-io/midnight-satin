@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getCurrentSession } from "@/app/actions/auth";
 import { isNovelBookmarked } from "@/app/actions/bookmarks";
@@ -14,6 +15,7 @@ import {
   getNovelReviewAggregateDb,
 } from "@/lib/db/novel-reviews";
 import { formatUpdatedAgo } from "@/lib/format";
+import { sitePageMetadata } from "@/lib/site-metadata";
 import { readingRoomPath } from "@/lib/navigation";
 import { NavigationBar } from "../../_components/navigation-bar";
 import { NovelDetailHeader } from "../../_components/novel-detail-header";
@@ -24,6 +26,23 @@ import { ChapterList } from "../../_components/chapter-list";
 import { ReviewsSection } from "../../_components/reviews-section";
 
 export const revalidate = 60;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ novelId: string }>;
+}): Promise<Metadata> {
+  const { novelId } = await params;
+  const novel = await getNovel(novelId);
+  if (!novel) {
+    return sitePageMetadata("Novel");
+  }
+  const desc =
+    novel.synopsis && novel.synopsis.length > 0
+      ? `${novel.synopsis.slice(0, 155)}${novel.synopsis.length > 155 ? "…" : ""}`
+      : `Read ${novel.title} by ${novel.authorName} on Midnight Satin.`;
+  return sitePageMetadata(novel.title, desc);
+}
 
 export default async function NovelDetailPage({
   params,

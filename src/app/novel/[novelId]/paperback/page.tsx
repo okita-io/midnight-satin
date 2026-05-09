@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getCurrentSession } from "@/app/actions/auth";
@@ -6,6 +8,21 @@ import { getNovelWordCount } from "@/lib/paperback/word-count";
 import { calculatePaperbackPrice } from "@/lib/paperback/pricing";
 import { PaperbackClient } from "./paperback-client";
 import { PaperbackPageShell } from "./paperback-page-shell";
+import { sitePageMetadata } from "@/lib/site-metadata";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ novelId: string }>;
+}): Promise<Metadata> {
+  const { novelId } = await params;
+  const novel = await getNovel(novelId);
+  if (!novel) return sitePageMetadata("Paperback");
+  return sitePageMetadata(
+    `Paperback — ${novel.title}`,
+    `Order a physical paperback of ${novel.title} by ${novel.authorName}.`
+  );
+}
 
 export default async function PaperbackPurchasePage({
   params,
@@ -34,11 +51,16 @@ export default async function PaperbackPurchasePage({
         <div className="card w-full p-6 xs:p-8 flex flex-col items-center gap-6">
           <div className="overlay-sheen" aria-hidden />
           {novel.coverImageUrl && (
-            <img
-              src={novel.coverImageUrl}
-              alt={novel.title}
-              className="relative z-10 w-48 h-auto rounded-sm shadow-lg border border-white/10"
-            />
+            <div className="relative z-10 w-48 aspect-[2/3] rounded-sm shadow-lg border border-white/10 overflow-hidden">
+              <Image
+                src={novel.coverImageUrl}
+                alt={novel.title}
+                fill
+                className="object-contain"
+                sizes="12rem"
+                unoptimized
+              />
+            </div>
           )}
 
           <div className="relative z-10 flex flex-col items-center gap-2 text-center">

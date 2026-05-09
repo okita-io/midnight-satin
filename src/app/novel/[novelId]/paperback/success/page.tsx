@@ -1,6 +1,12 @@
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import Stripe from "stripe";
+import { sitePageMetadata } from "@/lib/site-metadata";
+
+export const metadata = sitePageMetadata(
+  "Order confirmed",
+  "Your Midnight Satin paperback order was received."
+);
 
 export default async function PaperbackSuccessPage({
   params,

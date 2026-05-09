@@ -1,5 +1,7 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getAuthor, getAuthorBibliography } from "@/lib/content";
+import { sitePageMetadata } from "@/lib/site-metadata";
 import { getCurrentSession } from "@/app/actions/auth";
 import { isAuthorFollowed } from "@/app/actions/follow";
 import { NavigationBar } from "../../_components/navigation-bar";
@@ -11,6 +13,24 @@ import { BibliographySection } from "../../_components/author/bibliography-secti
 import { FollowButton } from "../../_components/author/follow-button";
 
 export const revalidate = 60;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ authorId: string }>;
+}): Promise<Metadata> {
+  const { authorId } = await params;
+  const author = await getAuthor(authorId);
+  if (!author) {
+    return sitePageMetadata("Author");
+  }
+  return sitePageMetadata(
+    author.name,
+    author.biography
+      ? `${author.biography.slice(0, 155)}${author.biography.length > 155 ? "…" : ""}`
+      : `Read novels and biography by ${author.name} on Midnight Satin.`
+  );
+}
 
 function formatFollowerCount(n: number): string {
   if (n >= 1000) return `${(n / 1000).toFixed(1)}k`;

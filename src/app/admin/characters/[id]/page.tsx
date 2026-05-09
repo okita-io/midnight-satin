@@ -1,8 +1,14 @@
 import { listContent } from "@/lib/admin/admin-data";
+import { sitePageMetadata } from "@/lib/site-metadata";
 import { notFound } from "next/navigation";
 import { AdminCharacterEditForm } from "./character-edit-form";
 
 export const dynamic = "force-dynamic";
+
+export const metadata = sitePageMetadata(
+  "Admin — Edit character",
+  "Edit a character in the Midnight Satin admin console."
+);
 
 export default async function AdminCharacterEditPage({
   params,

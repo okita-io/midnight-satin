@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { AuthPrompt } from "./auth-prompt";
@@ -89,12 +90,13 @@ function CurrentAffairsCard({ currentReading }: { currentReading: CurrentReading
       {/* Cover */}
       <div className="w-[80px] h-[120px] shrink-0 rounded-sm overflow-hidden shadow-lg shadow-black/50 relative">
         {novel.coverImageUrl ? (
-          <img
-            alt=""
-            className="w-full h-full object-cover"
+          <Image
             src={novel.coverImageUrl}
-            loading="lazy"
-            decoding="async"
+            alt=""
+            fill
+            className="object-cover"
+            sizes="80px"
+            unoptimized
           />
         ) : (
           <div className="w-full h-full bg-surface-highlight flex items-center justify-center">

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { authorStudyPath } from "@/lib/navigation";
 import { MetadataPills } from "./metadata-pills";
@@ -38,8 +39,7 @@ export function ParallaxHero({
       }`}
       aria-label="Buy the paperback edition"
     >
-      {/* eslint-disable-next-line @next/next/no-img-element -- local SVG asset */}
-      <img
+      <Image
         src="/images/buythebook.svg"
         alt=""
         width={73}
@@ -89,10 +89,13 @@ export function ParallaxHero({
         <div className="aspect-[2/3] w-full max-w-[320px] mx-auto md:max-w-none rounded-lg border border-primary/20 shadow-2xl relative overflow-visible">
           <div className="absolute inset-0 overflow-hidden rounded-lg">
             {coverImageUrl ? (
-              <img
+              <Image
                 src={coverImageUrl}
                 alt={`${title} cover`}
-                className="w-full h-full object-cover"
+                fill
+                className="object-cover"
+                sizes="(min-width: 768px) 320px, 90vw"
+                unoptimized
               />
             ) : (
               <div className="w-full h-full bg-surface" />

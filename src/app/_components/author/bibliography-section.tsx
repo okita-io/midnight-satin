@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import type { BibliographyGroup } from "@/lib/content";
 
@@ -38,12 +39,13 @@ export function BibliographySection({ groups }: BibliographySectionProps) {
               >
                 <div className="relative w-20 h-28 shrink-0 rounded-sm overflow-hidden shadow-lg border border-[#393528] group-hover:border-primary transition-colors">
                   {novel.coverImageUrl ? (
-                    <img
+                    <Image
                       src={novel.coverImageUrl}
                       alt=""
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                      decoding="async"
+                      fill
+                      className="object-cover"
+                      sizes="80px"
+                      unoptimized
                     />
                   ) : (
                     <div className="w-full h-full bg-surface flex items-center justify-center">

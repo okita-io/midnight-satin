@@ -1,8 +1,14 @@
 import { listContent } from "@/lib/admin/admin-data";
+import { sitePageMetadata } from "@/lib/site-metadata";
 import Link from "next/link";
 import { AdminSeriesClient } from "./series-client";
 
 export const dynamic = "force-dynamic";
+
+export const metadata = sitePageMetadata(
+  "Admin — Series",
+  "Manage series in the Midnight Satin admin console."
+);
 
 export default async function AdminSeriesPage() {
   const result = await listContent({ type: "series" });

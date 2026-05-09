@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { novelDetailPath } from "@/lib/navigation";
 import { usePointerDevice } from "@/lib/responsive/hooks";
@@ -48,12 +49,13 @@ export function NovelCard({ novel, variant = "default", fill = false, className 
         <div className="overlay-sheen" aria-hidden />
         <div className={`catalog-item-cover w-16 xs:w-20 h-[100px] xs:h-[120px] shrink-0 rounded-sm overflow-hidden shadow-lg bg-surface-highlight relative`}>
           {novel.coverImageUrl ? (
-            <img
+            <Image
               src={novel.coverImageUrl}
               alt=""
-              className="w-full h-full object-cover"
-              loading="lazy"
-              decoding="async"
+              fill
+              className="object-cover"
+              sizes="80px"
+              unoptimized
             />
           ) : (
             <span className="material-symbols-outlined absolute inset-0 flex items-center justify-center text-text-muted text-3xl">
@@ -105,12 +107,13 @@ export function NovelCard({ novel, variant = "default", fill = false, className 
         <div className="overlay-sheen" aria-hidden />
         <div className="catalog-item-cover w-[160px] h-[240px] shrink-0 rounded-sm overflow-hidden shadow-lg bg-surface-highlight relative">
           {novel.coverImageUrl ? (
-            <img
+            <Image
               src={novel.coverImageUrl}
               alt=""
-              className="w-full h-full object-cover"
-              loading="lazy"
-              decoding="async"
+              fill
+              className="object-cover"
+              sizes="160px"
+              unoptimized
             />
           ) : (
             <span className="material-symbols-outlined absolute inset-0 flex items-center justify-center text-text-muted text-4xl">
@@ -173,12 +176,13 @@ export function NovelCard({ novel, variant = "default", fill = false, className 
     >
       <div className="catalog-item-cover relative w-full aspect-[2/3] rounded-sm overflow-hidden mb-3 shadow-lg border border-white/5">
         {novel.coverImageUrl ? (
-          <img
+          <Image
             src={novel.coverImageUrl}
             alt=""
-            className="w-full h-full object-cover"
-            loading="lazy"
-            decoding="async"
+            fill
+            className="object-cover"
+            sizes="(max-width: 480px) 110px, 130px"
+            unoptimized
           />
         ) : (
           <div className="absolute inset-0 bg-surface-highlight flex items-center justify-center">

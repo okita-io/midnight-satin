@@ -1,8 +1,14 @@
 import { listContent } from "@/lib/admin/admin-data";
+import { sitePageMetadata } from "@/lib/site-metadata";
 import Link from "next/link";
 import { AdminCharactersClient } from "./characters-client";
 
 export const dynamic = "force-dynamic";
+
+export const metadata = sitePageMetadata(
+  "Admin — Characters",
+  "Manage characters in the Midnight Satin admin console."
+);
 
 export default async function AdminCharactersPage() {
   const result = await listContent({ type: "characters" });

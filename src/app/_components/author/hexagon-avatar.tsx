@@ -1,5 +1,7 @@
 "use client";
 
+import Image from "next/image";
+
 interface HexagonAvatarProps {
   src: string | null;
   alt: string;
@@ -28,12 +30,13 @@ export function HexagonAvatar({ src, alt, size = "lg" }: HexagonAvatarProps) {
         }}
       >
         {src ? (
-          <img
+          <Image
             src={src}
             alt={alt}
-            className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
-            loading="lazy"
-            decoding="async"
+            fill
+            className="object-cover opacity-90 group-hover:scale-105 transition-transform duration-700"
+            sizes={size === "lg" ? "(min-width: 1024px) 220px, (min-width: 768px) 180px, 128px" : "96px"}
+            unoptimized
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center bg-surface">

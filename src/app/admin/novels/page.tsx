@@ -1,8 +1,14 @@
 import { listContent } from "@/lib/admin/admin-data";
+import { sitePageMetadata } from "@/lib/site-metadata";
 import Link from "next/link";
 import { AdminNovelsClient } from "./novels-client";
 
 export const dynamic = "force-dynamic";
+
+export const metadata = sitePageMetadata(
+  "Admin — Novels",
+  "Manage novels in the Midnight Satin admin console."
+);
 
 export default async function AdminNovelsPage() {
   const result = await listContent({ type: "novels" });

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import type { LibraryNovelItem } from "@/app/actions/profile";
 import { novelDetailPath, readingRoomPath } from "@/lib/navigation";
@@ -31,12 +32,13 @@ export function LibraryNovelCard({ item }: LibraryNovelCardProps) {
       {/* Cover */}
       <div className="w-[64px] h-[96px] shrink-0 rounded-sm overflow-hidden shadow-lg shadow-black/50 relative bg-surface-highlight">
         {coverImageUrl ? (
-          <img
+          <Image
             src={coverImageUrl}
             alt=""
-            className="w-full h-full object-cover"
-            loading="lazy"
-            decoding="async"
+            fill
+            className="object-cover"
+            sizes="64px"
+            unoptimized
           />
         ) : (
           <span className="material-symbols-outlined absolute inset-0 flex items-center justify-center text-text-muted opacity-50 text-2xl">

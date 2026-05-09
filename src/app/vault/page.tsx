@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { sitePageMetadata } from "@/lib/site-metadata";
 import { getCurrentReader } from "@/app/actions/auth";
 import { NavigationBar } from "../_components/navigation-bar";
 import { VaultClient } from "./vault-client";
@@ -10,6 +11,11 @@ import { VaultClient } from "./vault-client";
  * Req 8.1-8.3, 8.8, 11.1, 14.1-14.6
  */
 export const dynamic = "force-dynamic";
+
+export const metadata = sitePageMetadata(
+  "The Vault",
+  "Purchase credits to unlock chapters and support authors on Midnight Satin."
+);
 
 export default async function VaultPage({
   searchParams,

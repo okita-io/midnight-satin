@@ -1,8 +1,14 @@
 import { listContent } from "@/lib/admin/admin-data";
+import { sitePageMetadata } from "@/lib/site-metadata";
 import Link from "next/link";
 import { AdminChaptersClient } from "./chapters-client";
 
 export const dynamic = "force-dynamic";
+
+export const metadata = sitePageMetadata(
+  "Admin — Chapters",
+  "Manage chapters in the Midnight Satin admin console."
+);
 
 export default async function AdminChaptersPage() {
   const result = await listContent({ type: "chapters" });

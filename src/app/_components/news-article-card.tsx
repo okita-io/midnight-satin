@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { newsArticlePath } from "@/lib/navigation";
 import { getNewsAttribution } from "@/lib/content";
@@ -29,12 +30,13 @@ export function NewsArticleCard({ article, className = "" }: NewsArticleCardProp
       {/* Hero image — 16:9 */}
       <div className="relative w-full aspect-video bg-surface-highlight overflow-hidden">
         {article.heroImageUrl ? (
-          <img
+          <Image
             src={article.heroImageUrl}
             alt=""
-            className="w-full h-full object-cover"
-            loading="lazy"
-            decoding="async"
+            fill
+            className="object-cover"
+            sizes="(max-width: 768px) 280px, 33vw"
+            unoptimized
           />
         ) : (
           <div className="absolute inset-0 flex items-center justify-center">

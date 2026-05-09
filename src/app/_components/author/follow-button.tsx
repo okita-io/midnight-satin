@@ -17,7 +17,7 @@ export function FollowButton({
   initialFollowed,
   isAuthenticated,
 }: FollowButtonProps) {
-  const router = useRouter();
+  const { refresh } = useRouter();
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
   const [followed, setFollowed] = useState(() => initialFollowed);
@@ -32,7 +32,7 @@ export function FollowButton({
       const result = await followAuthor(authorId);
       if (result.success) {
         setFollowed(result.followed);
-        router.refresh();
+        refresh();
       }
     });
   };

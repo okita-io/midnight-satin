@@ -1,8 +1,14 @@
 import { getNewsArchive } from "@/lib/content";
+import { sitePageMetadata } from "@/lib/site-metadata";
 import { NavigationBar } from "@/app/_components/navigation-bar";
 import { NewsArchiveClient } from "./news-archive-client";
 
 export const revalidate = 60;
+
+export const metadata = sitePageMetadata(
+  "The Gazette",
+  "News, updates, and announcements from Midnight Satin."
+);
 
 export default async function UpdatesArchivePage() {
   const { articles, nextCursor } = await getNewsArchive(undefined, 12);

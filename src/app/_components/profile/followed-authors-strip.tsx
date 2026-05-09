@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { authorStudyPath } from "@/lib/navigation";
 import { PROFILE_HEXAGON_CLIP } from "@/lib/responsive/constants";
@@ -40,12 +41,13 @@ export function FollowedAuthorsStrip({ authors }: FollowedAuthorsStripProps) {
                 style={{ clipPath: PROFILE_HEXAGON_CLIP }}
               >
                 {author.avatarUrl ? (
-                  <img
+                  <Image
                     src={author.avatarUrl}
                     alt=""
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    decoding="async"
+                    fill
+                    className="object-cover"
+                    sizes="(min-width: 1024px) 12vw, 56px"
+                    unoptimized
                   />
                 ) : (
                   <span

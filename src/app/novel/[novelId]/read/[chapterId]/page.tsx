@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getCurrentSession } from "@/app/actions/auth";
 import { isNovelBookmarked } from "@/app/actions/bookmarks";
@@ -11,11 +12,31 @@ import {
 } from "@/lib/content";
 import { getCurrentReader } from "@/app/actions/auth";
 import { ReadingRoomClient } from "@/app/_components/reading-room/reading-room-client";
+import { sitePageMetadata } from "@/lib/site-metadata";
 
 /**
  * The Reading Room — distraction-free chapter reading (Req 3.1-3.10, 15.4).
  * The Veil paywall for locked chapters (Req 4.1-4.6).
  */
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ novelId: string; chapterId: string }>;
+}): Promise<Metadata> {
+  const { novelId, chapterId } = await params;
+  const [chapter, novel] = await Promise.all([
+    getChapter(chapterId),
+    getNovel(novelId),
+  ]);
+  if (!chapter || !novel || chapter.novelId !== novelId) {
+    return sitePageMetadata("Reading");
+  }
+  return sitePageMetadata(
+    `${chapter.title} — ${novel.title}`,
+    `Read ${chapter.title} of ${novel.title} in the Midnight Satin reading room.`
+  );
+}
+
 export default async function ReadingRoomPage({
   params,
 }: {

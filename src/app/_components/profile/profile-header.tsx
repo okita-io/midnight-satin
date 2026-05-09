@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { CreditBalance } from "../credit-balance";
 
 interface ProfileHeaderProps {
@@ -54,14 +55,15 @@ export function ProfileHeader({
   return (
     <header className="flex items-center gap-3 xs:gap-4 p-4 xs:p-6 pb-4">
       {/* Avatar */}
-      <div className="w-14 h-14 xs:w-16 xs:h-16 shrink-0 rounded-full overflow-hidden border-2 border-primary/40 bg-surface-highlight flex items-center justify-center">
+      <div className="relative w-14 h-14 xs:w-16 xs:h-16 shrink-0 rounded-full overflow-hidden border-2 border-primary/40 bg-surface-highlight flex items-center justify-center">
         {avatarUrl ? (
-          <img
+          <Image
             src={avatarUrl}
             alt=""
-            className="w-full h-full object-cover"
-            loading="lazy"
-            decoding="async"
+            fill
+            className="object-cover"
+            sizes="64px"
+            unoptimized
           />
         ) : (
           <span

@@ -24,6 +24,7 @@
     "preview:reference": "npx serve reference -p 3333"
   },
   "dependencies": {
+    "@fontsource-variable/material-symbols-outlined": "^5.2.43",
     "@vercel/analytics": "^1.6.1",
     "@vercel/blob": "^2.3.0",
     "@vercel/kv": "^3.0.0",

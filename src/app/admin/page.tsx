@@ -1,7 +1,13 @@
 import { getContentOverview, getUserAnalytics } from "@/lib/admin/admin-data";
+import { sitePageMetadata } from "@/lib/site-metadata";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
+
+export const metadata = sitePageMetadata(
+  "Admin — Dashboard",
+  "Content and user overview for Midnight Satin administrators."
+);
 
 export default async function AdminDashboardPage() {
   const [contentStats, userAnalytics] = await Promise.all([

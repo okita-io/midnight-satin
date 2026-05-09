@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getCurrentSession } from "@/app/actions/auth";
@@ -11,8 +12,23 @@ import { NavigationBar } from "@/app/_components/navigation-bar";
 import { NovelDetailHeader } from "@/app/_components/novel-detail-header";
 import { ReviewCard } from "@/app/_components/review-card";
 import { NovelReviewComposer } from "@/app/_components/novel-review-composer";
+import { sitePageMetadata } from "@/lib/site-metadata";
 
 export const revalidate = 60;
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ novelId: string }>;
+}): Promise<Metadata> {
+  const { novelId } = await params;
+  const novel = await getNovel(novelId);
+  if (!novel) return sitePageMetadata("Reviews");
+  return sitePageMetadata(
+    `Reviews — ${novel.title}`,
+    `Reader reviews and ratings for ${novel.title} by ${novel.authorName}.`
+  );
+}
 
 export default async function NovelReviewsPage({
   params,

@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { sitePageMetadata } from "@/lib/site-metadata";
 import { getCurrentReader } from "@/app/actions/auth";
 import { getProfileData } from "@/app/actions/profile";
 import { NavigationBar } from "@/app/_components/navigation-bar";
@@ -15,6 +16,11 @@ import {
  * Reader Profile & Library page. Req 15.1-15.3, 16.3, 18.1-18.9.
  * When a Guest_Reader navigates to /profile, show auth prompt (Req 18.9).
  */
+export const metadata = sitePageMetadata(
+  "Profile",
+  "Your library, reading progress, followed authors, and account on Midnight Satin."
+);
+
 export default async function ProfilePage() {
   const reader = await getCurrentReader();
 
