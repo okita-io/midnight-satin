@@ -27,11 +27,12 @@ export async function generateMetadata({
   if (!novelId?.trim() || !chapterId?.trim()) {
     return sitePageMetadata("Reading");
   }
-  const [chapter, novel] = await Promise.all([
-    getChapter(chapterId),
-    getNovel(novelId),
-  ]);
-  if (!chapter || !novel || chapter.novelId !== novelId) {
+  const chapter = await getChapter(chapterId);
+  if (!chapter || chapter.novelId !== novelId) {
+    return sitePageMetadata("Reading");
+  }
+  const novel = await getNovel(novelId);
+  if (!novel) {
     return sitePageMetadata("Reading");
   }
   return sitePageMetadata(
@@ -46,6 +47,9 @@ export default async function ReadingRoomPage({
   params: Promise<{ novelId: string; chapterId: string }>;
 }) {
   const { novelId, chapterId } = await params;
+  if (!novelId?.trim() || !chapterId?.trim()) {
+    notFound();
+  }
 
   const [chapter, novel, chapters, session, commentCount] = await Promise.all([
     getChapter(chapterId),
