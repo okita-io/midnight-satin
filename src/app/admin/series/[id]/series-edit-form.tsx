@@ -10,10 +10,10 @@ export function AdminSeriesEditForm({
 }: {
   series: Series & { type: "series" };
 }) {
-  const [title, setTitle] = useState(series.title);
-  const [description, setDescription] = useState(series.description ?? "");
-  const [genreTags, setGenreTags] = useState(series.genreTags.join(", "));
-  const [isComplete, setIsComplete] = useState(series.isComplete);
+  const [title, setTitle] = useState(() => series.title);
+  const [description, setDescription] = useState(() => series.description ?? "");
+  const [genreTags, setGenreTags] = useState(() => series.genreTags.join(", "));
+  const [isComplete, setIsComplete] = useState(() => series.isComplete);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -21,7 +21,10 @@ export function AdminSeriesEditForm({
     e.preventDefault();
     setLoading(true);
     setError(null);
-    const tags = genreTags.split(",").map((t) => t.trim()).filter(Boolean);
+    const tags = genreTags.split(",").flatMap((t) => {
+      const x = t.trim();
+      return x ? [x] : [];
+    });
     const result = await updateContentAction({
       type: "series",
       id: series.id,

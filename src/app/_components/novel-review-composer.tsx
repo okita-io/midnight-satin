@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import {
   postNovelReview,
@@ -33,15 +33,21 @@ export function NovelReviewComposer({
 }: NovelReviewComposerProps) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
+  /** Sync local fields when server `myReview` changes (e.g. after refresh) without an effect. */
+  const serverKey = myReview
+    ? `${myReview.id}\0${myReview.content}\0${myReview.starRating}`
+    : "";
+  const [prevServerKey, setPrevServerKey] = useState(serverKey);
   const [draft, setDraft] = useState(myReview?.content ?? "");
   const [stars, setStars] = useState(myReview?.starRating ?? 5);
   const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
+  if (serverKey !== prevServerKey) {
+    setPrevServerKey(serverKey);
     setDraft(myReview?.content ?? "");
     setStars(myReview?.starRating ?? 5);
     setError(null);
-  }, [myReview?.id, myReview?.content, myReview?.starRating]);
+  }
 
   if (!isAuthenticated) {
     const loginHref = `/auth/login?returnUrl=${encodeURIComponent(returnPath)}`;

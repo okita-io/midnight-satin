@@ -22,7 +22,7 @@ export default async function AdminSeriesEditPage({
       <h1 className="font-display italic text-2xl text-primary mb-6">
         Edit Series
       </h1>
-      <AdminSeriesEditForm series={item} />
+      <AdminSeriesEditForm key={item.id} series={item} />
     </div>
   );
 }

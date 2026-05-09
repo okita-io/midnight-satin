@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { getCurrentReader } from "@/app/actions/auth";
 import { NavigationBar } from "../_components/navigation-bar";
 import { VaultClient } from "./vault-client";
@@ -15,12 +16,15 @@ export default async function VaultPage({
 }: {
   searchParams: Promise<{ success?: string; canceled?: string }>;
 }) {
+  const params = await searchParams;
+  if (params.canceled === "1") {
+    redirect("/vault");
+  }
+
   const reader = await getCurrentReader();
   const creditBalance = reader?.creditBalance ?? 0;
   const isAuthenticated = !!reader;
-  const params = await searchParams;
   const purchaseSuccess = params.success === "1";
-  const purchaseCanceled = params.canceled === "1";
 
   // Web-only Stripe does not support restore; hide RestoreButton per Req 8.8
   const supportsRestore = false;
@@ -91,7 +95,6 @@ export default async function VaultPage({
       <VaultClient
         isAuthenticated={isAuthenticated}
         purchaseSuccess={purchaseSuccess}
-        purchaseCanceled={purchaseCanceled}
       />
 
       <NavigationBar activeTab="vault" />

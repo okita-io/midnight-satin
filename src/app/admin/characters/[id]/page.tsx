@@ -22,7 +22,7 @@ export default async function AdminCharacterEditPage({
       <h1 className="font-display italic text-2xl text-primary mb-6">
         Edit Character
       </h1>
-      <AdminCharacterEditForm character={item} />
+      <AdminCharacterEditForm key={item.id} character={item} />
     </div>
   );
 }

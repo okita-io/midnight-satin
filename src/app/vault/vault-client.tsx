@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { AuthPrompt } from "../_components/auth-prompt";
 import { CoinRainAnimation } from "./coin-rain-animation";
 import { purchaseCredits } from "../actions/purchase-credits";
@@ -46,19 +46,17 @@ const CREDIT_PACKS = [
 interface VaultClientProps {
   isAuthenticated: boolean;
   purchaseSuccess?: boolean;
-  purchaseCanceled?: boolean;
 }
 
 export function VaultClient({
   isAuthenticated,
   purchaseSuccess = false,
-  purchaseCanceled = false,
 }: VaultClientProps) {
   const [authPromptOpen, setAuthPromptOpen] = useState(false);
   const [purchasingPackId, setPurchasingPackId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showCoinRain, setShowCoinRain] = useState(false);
-  const router = useRouter();
+  const pathname = usePathname();
 
   useEffect(() => {
     if (purchaseSuccess) {
@@ -66,17 +64,11 @@ export function VaultClient({
       // Clear URL params only after coin rain animation completes (Req 8.5)
       const t = setTimeout(() => {
         setShowCoinRain(false);
-        router.replace("/vault", { scroll: false });
+        window.history.replaceState(window.history.state, "", pathname);
       }, 3000);
       return () => clearTimeout(t);
     }
-  }, [purchaseSuccess, router]);
-
-  useEffect(() => {
-    if (purchaseCanceled) {
-      router.replace("/vault", { scroll: false });
-    }
-  }, [purchaseCanceled, router]);
+  }, [purchaseSuccess, pathname]);
 
   async function handlePurchaseClick(packId: string) {
     if (!isAuthenticated) {

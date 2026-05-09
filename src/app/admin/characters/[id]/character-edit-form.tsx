@@ -10,11 +10,19 @@ export function AdminCharacterEditForm({
 }: {
   character: Character & { type: "character" };
 }) {
-  const [name, setName] = useState(character.name);
-  const [roleSubtitle, setRoleSubtitle] = useState(character.roleSubtitle ?? "");
-  const [portraitUrl, setPortraitUrl] = useState(character.portraitUrl ?? "");
-  const [description, setDescription] = useState(character.description ?? "");
-  const [backstory, setBackstory] = useState(character.backstory ?? "");
+  const [name, setName] = useState(() => character.name);
+  const [roleSubtitle, setRoleSubtitle] = useState(
+    () => character.roleSubtitle ?? ""
+  );
+  const [portraitUrl, setPortraitUrl] = useState(
+    () => character.portraitUrl ?? ""
+  );
+  const [description, setDescription] = useState(
+    () => character.description ?? ""
+  );
+  const [backstory, setBackstory] = useState(
+    () => character.backstory ?? ""
+  );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
