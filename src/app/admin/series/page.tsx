@@ -42,30 +42,32 @@ export default async function AdminSeriesPage() {
             </tr>
           </thead>
           <tbody>
-            {series
-              .filter((s): s is typeof s & { type: "series" } => s.type === "series")
-              .map((s) => (
-                <tr
-                  key={s.id}
-                  className="border-b border-primary/10 hover:bg-surface-highlight/50"
-                >
-                  <td className="px-4 py-3 font-ui">{s.title}</td>
-                  <td className="px-4 py-3 text-text-muted text-sm font-mono">
-                    {s.authorId.slice(0, 8)}…
-                  </td>
-                  <td className="px-4 py-3 text-text-muted">
-                    {s.isComplete ? "Yes" : "No"}
-                  </td>
-                  <td className="px-4 py-3">
-                    <Link
-                      href={`/admin/series/${s.id}`}
-                      className="text-primary hover:underline font-ui text-sm"
+            {series.flatMap((s) =>
+              s.type === "series"
+                ? [
+                    <tr
+                      key={s.id}
+                      className="border-b border-primary/10 hover:bg-surface-highlight/50"
                     >
-                      Edit
-                    </Link>
-                  </td>
-                </tr>
-              ))}
+                      <td className="px-4 py-3 font-ui">{s.title}</td>
+                      <td className="px-4 py-3 text-text-muted text-sm font-mono">
+                        {s.authorId.slice(0, 8)}…
+                      </td>
+                      <td className="px-4 py-3 text-text-muted">
+                        {s.isComplete ? "Yes" : "No"}
+                      </td>
+                      <td className="px-4 py-3">
+                        <Link
+                          href={`/admin/series/${s.id}`}
+                          className="text-primary hover:underline font-ui text-sm"
+                        >
+                          Edit
+                        </Link>
+                      </td>
+                    </tr>,
+                  ]
+                : []
+            )}
           </tbody>
         </table>
         {series.length === 0 && (

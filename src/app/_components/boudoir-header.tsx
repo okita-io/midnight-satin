@@ -5,6 +5,9 @@ import { SearchOverlay } from "./search-overlay";
 import type { SearchNovelHit, SearchAuthorHit } from "./search-overlay";
 import { GradientHeaderStrip } from "./chrome-primitives";
 
+const EMPTY_SEARCH_NOVELS: SearchNovelHit[] = [];
+const EMPTY_SEARCH_AUTHORS: SearchAuthorHit[] = [];
+
 interface BoudoirHeaderProps {
   /** Novels for search results (by title). Until content layer: empty or mock. */
   searchNovels?: SearchNovelHit[];
@@ -18,8 +21,8 @@ interface BoudoirHeaderProps {
  * Matches reference/midnight_satin_home.html and Requirement 15.5.
  */
 export function BoudoirHeader({
-  searchNovels = [],
-  searchAuthors = [],
+  searchNovels = EMPTY_SEARCH_NOVELS,
+  searchAuthors = EMPTY_SEARCH_AUTHORS,
 }: BoudoirHeaderProps) {
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");

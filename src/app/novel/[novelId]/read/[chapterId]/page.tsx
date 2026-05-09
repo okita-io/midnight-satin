@@ -24,6 +24,9 @@ export async function generateMetadata({
   params: Promise<{ novelId: string; chapterId: string }>;
 }): Promise<Metadata> {
   const { novelId, chapterId } = await params;
+  if (!novelId?.trim() || !chapterId?.trim()) {
+    return sitePageMetadata("Reading");
+  }
   const [chapter, novel] = await Promise.all([
     getChapter(chapterId),
     getNovel(novelId),
@@ -52,11 +55,11 @@ export default async function ReadingRoomPage({
     getChapterCommentCount(chapterId),
   ]);
 
-  const initialScrollPercent =
-    session ? (await getReadingProgressForChapter(chapterId)) ?? 0 : 0;
-
   if (!chapter || !novel) notFound();
   if (chapter.novelId !== novelId) notFound();
+
+  const initialScrollPercent =
+    session ? (await getReadingProgressForChapter(chapterId)) ?? 0 : 0;
 
   const chapterIndex = chapters.findIndex((c) => c.id === chapterId);
   const prevChapter = chapterIndex > 0 ? chapters[chapterIndex - 1] : null;

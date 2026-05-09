@@ -43,28 +43,30 @@ export default async function AdminAuthorsPage() {
             </tr>
           </thead>
           <tbody>
-            {authors
-              .filter((a): a is typeof a & { type: "author" } => a.type === "author")
-              .map((author) => (
-                <tr
-                  key={author.id}
-                  className="border-b border-primary/10 hover:bg-surface-highlight/50"
-                >
-                  <td className="px-4 py-3 font-ui">{author.name}</td>
-                  <td className="px-4 py-3 text-text-muted">{author.followerCount}</td>
-                  <td className="px-4 py-3 text-text-muted text-sm">
-                    {formatDateUtcYmd(author.createdAt)}
-                  </td>
-                  <td className="px-4 py-3">
-                    <Link
-                      href={`/admin/authors/${author.id}`}
-                      className="text-primary hover:underline font-ui text-sm"
+            {authors.flatMap((author) =>
+              author.type === "author"
+                ? [
+                    <tr
+                      key={author.id}
+                      className="border-b border-primary/10 hover:bg-surface-highlight/50"
                     >
-                      Edit
-                    </Link>
-                  </td>
-                </tr>
-              ))}
+                      <td className="px-4 py-3 font-ui">{author.name}</td>
+                      <td className="px-4 py-3 text-text-muted">{author.followerCount}</td>
+                      <td className="px-4 py-3 text-text-muted text-sm">
+                        {formatDateUtcYmd(author.createdAt)}
+                      </td>
+                      <td className="px-4 py-3">
+                        <Link
+                          href={`/admin/authors/${author.id}`}
+                          className="text-primary hover:underline font-ui text-sm"
+                        >
+                          Edit
+                        </Link>
+                      </td>
+                    </tr>,
+                  ]
+                : []
+            )}
           </tbody>
         </table>
         {authors.length === 0 && (

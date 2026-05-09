@@ -42,28 +42,30 @@ export default async function AdminNovelsPage() {
             </tr>
           </thead>
           <tbody>
-            {novels
-              .filter((n): n is typeof n & { type: "novel" } => n.type === "novel")
-              .map((n) => (
-                <tr
-                  key={n.id}
-                  className="border-b border-primary/10 hover:bg-surface-highlight/50"
-                >
-                  <td className="px-4 py-3 font-ui">{n.title}</td>
-                  <td className="px-4 py-3 text-text-muted text-sm font-mono">
-                    {n.authorId.slice(0, 8)}…
-                  </td>
-                  <td className="px-4 py-3 text-text-muted">{n.rating}</td>
-                  <td className="px-4 py-3">
-                    <Link
-                      href={`/admin/novels/${n.id}`}
-                      className="text-primary hover:underline font-ui text-sm"
+            {novels.flatMap((n) =>
+              n.type === "novel"
+                ? [
+                    <tr
+                      key={n.id}
+                      className="border-b border-primary/10 hover:bg-surface-highlight/50"
                     >
-                      Edit
-                    </Link>
-                  </td>
-                </tr>
-              ))}
+                      <td className="px-4 py-3 font-ui">{n.title}</td>
+                      <td className="px-4 py-3 text-text-muted text-sm font-mono">
+                        {n.authorId.slice(0, 8)}…
+                      </td>
+                      <td className="px-4 py-3 text-text-muted">{n.rating}</td>
+                      <td className="px-4 py-3">
+                        <Link
+                          href={`/admin/novels/${n.id}`}
+                          className="text-primary hover:underline font-ui text-sm"
+                        >
+                          Edit
+                        </Link>
+                      </td>
+                    </tr>,
+                  ]
+                : []
+            )}
           </tbody>
         </table>
         {novels.length === 0 && (

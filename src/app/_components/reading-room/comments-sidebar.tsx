@@ -73,8 +73,7 @@ export function CommentsSidebar({
     if (!id) return;
     const gen = ++loadGenRef.current;
     dispatch({ type: "load_start" });
-    void (async () => {
-      const result: GetChapterCommentsResult = await getChapterComments(id);
+    void getChapterComments(id).then((result: GetChapterCommentsResult) => {
       if (gen !== loadGenRef.current) return;
       if (result.success) {
         dispatch({
@@ -87,7 +86,7 @@ export function CommentsSidebar({
           error: result.error ?? "Failed to load comments.",
         });
       }
-    })();
+    });
   }, []);
 
   useEffect(() => {

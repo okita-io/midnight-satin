@@ -45,29 +45,31 @@ export default async function AdminCharactersPage() {
             </tr>
           </thead>
           <tbody>
-            {characters
-              .filter((c): c is typeof c & { type: "character" } => c.type === "character")
-              .map((c) => (
-                <tr
-                  key={c.id}
-                  className="border-b border-primary/10 hover:bg-surface-highlight/50"
-                >
-                  <td className="px-4 py-3 font-ui">{c.name}</td>
-                  <td className="px-4 py-3 text-text-muted text-sm font-mono">
-                    {c.novelId.slice(0, 8)}…
-                  </td>
-                  <td className="px-4 py-3 text-text-muted">{c.roleSubtitle ?? "—"}</td>
-                  <td className="px-4 py-3 text-text-muted">{c.endorsementCount}</td>
-                  <td className="px-4 py-3">
-                    <Link
-                      href={`/admin/characters/${c.id}`}
-                      className="text-primary hover:underline font-ui text-sm"
+            {characters.flatMap((c) =>
+              c.type === "character"
+                ? [
+                    <tr
+                      key={c.id}
+                      className="border-b border-primary/10 hover:bg-surface-highlight/50"
                     >
-                      Edit
-                    </Link>
-                  </td>
-                </tr>
-              ))}
+                      <td className="px-4 py-3 font-ui">{c.name}</td>
+                      <td className="px-4 py-3 text-text-muted text-sm font-mono">
+                        {c.novelId.slice(0, 8)}…
+                      </td>
+                      <td className="px-4 py-3 text-text-muted">{c.roleSubtitle ?? "—"}</td>
+                      <td className="px-4 py-3 text-text-muted">{c.endorsementCount}</td>
+                      <td className="px-4 py-3">
+                        <Link
+                          href={`/admin/characters/${c.id}`}
+                          className="text-primary hover:underline font-ui text-sm"
+                        >
+                          Edit
+                        </Link>
+                      </td>
+                    </tr>,
+                  ]
+                : []
+            )}
           </tbody>
         </table>
         {characters.length === 0 && (
