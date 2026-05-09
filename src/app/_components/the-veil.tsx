@@ -88,7 +88,7 @@ export function TheVeil({
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
               <div className="relative bg-[#1a170e] px-4 py-3 flex items-center justify-between">
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 rounded-full border border-primary/20 bg-primary/5 flex items-center justify-center text-primary group-hover:text-white group-hover:bg-primary transition-colors">
+                  <div className="size-8 rounded-full border border-primary/20 bg-primary/5 flex items-center justify-center text-primary group-hover:text-white group-hover:bg-primary transition-colors">
                     <span
                       className="material-symbols-outlined"
                       style={{ fontSize: 18 }}

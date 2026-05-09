@@ -20,7 +20,7 @@ export function StarRatingInput({
 }: StarRatingInputProps) {
   return (
     <div
-      className="flex justify-center items-center gap-0.5 xs:gap-1 py-1"
+      className="flex justify-center items-center gap-1 py-1"
       role="group"
       aria-label={label}
     >
@@ -34,7 +34,7 @@ export function StarRatingInput({
             onClick={() => onChange(n)}
             aria-label={`${n} out of 5 stars`}
             aria-pressed={active}
-            className="p-1 rounded-sm touch-manipulation disabled:opacity-40 disabled:cursor-not-allowed [@media(hover:hover)]:hover:bg-white/5 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 transition-colors"
+            className="p-1.5 rounded-full touch-manipulation disabled:opacity-40 disabled:cursor-not-allowed [@media(hover:hover)]:hover:bg-primary/10 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50 transition-colors"
           >
             <StarIcon size={28} tone={active ? "active" : "inactive"} />
           </button>

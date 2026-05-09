@@ -147,7 +147,7 @@ export function ReadingHUD({
         <div className="flex items-center justify-between px-4 md:px-8 h-16 pointer-events-auto max-w-md md:max-w-2xl mx-auto">
           <Link
             href={novelDetailPath(novelId)}
-            className="w-10 h-10 flex items-center justify-center text-primary/80 hover:text-primary transition-colors active:scale-95 cursor-pointer"
+            className="size-10 flex items-center justify-center text-primary/80 hover:text-primary transition-colors active:scale-95 cursor-pointer"
             aria-label="Back to novel"
           >
             <span
@@ -168,7 +168,7 @@ export function ReadingHUD({
           <button
             type="button"
             onClick={handleBookmark}
-            className="w-10 h-10 flex items-center justify-center text-primary/80 hover:text-primary transition-colors active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+            className="size-10 flex items-center justify-center text-primary/80 hover:text-primary transition-colors active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
             aria-label={bookmarked ? "Remove bookmark" : "Add bookmark"}
             disabled={!isAuthenticated}
           >
