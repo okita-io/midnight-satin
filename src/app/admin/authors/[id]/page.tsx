@@ -15,8 +15,10 @@ export default async function AdminAuthorEditPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { id } = await params;
-  const result = await listContent({ type: "authors" });
+  const [{ id }, result] = await Promise.all([
+    params,
+    listContent({ type: "authors" }),
+  ]);
   const authors = Array.isArray(result) ? result : [];
   const author = authors.find(
     (a): a is typeof a & { type: "author" } => a.type === "author" && a.id === id

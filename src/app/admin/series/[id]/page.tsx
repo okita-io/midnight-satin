@@ -15,8 +15,10 @@ export default async function AdminSeriesEditPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { id } = await params;
-  const result = await listContent({ type: "series" });
+  const [{ id }, result] = await Promise.all([
+    params,
+    listContent({ type: "series" }),
+  ]);
   const series = Array.isArray(result) ? result : [];
   const item = series.find(
     (s): s is typeof s & { type: "series" } => s.type === "series" && s.id === id

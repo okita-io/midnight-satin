@@ -15,8 +15,10 @@ export default async function AdminCharacterEditPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { id } = await params;
-  const result = await listContent({ type: "characters" });
+  const [{ id }, result] = await Promise.all([
+    params,
+    listContent({ type: "characters" }),
+  ]);
   const characters = Array.isArray(result) ? result : [];
   const item = characters.find(
     (c): c is typeof c & { type: "character" } => c.type === "character" && c.id === id

@@ -15,8 +15,10 @@ export default async function AdminChapterEditPage({
 }: {
   params: Promise<{ id: string }>;
 }) {
-  const { id } = await params;
-  const result = await listContent({ type: "chapters" });
+  const [{ id }, result] = await Promise.all([
+    params,
+    listContent({ type: "chapters" }),
+  ]);
   const chapters = Array.isArray(result) ? result : [];
   const item = chapters.find(
     (c): c is typeof c & { type: "chapter" } => c.type === "chapter" && c.id === id
