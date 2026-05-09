@@ -5,6 +5,7 @@ import { useRouter, usePathname } from "next/navigation";
 import { toggleBookmark } from "@/app/actions/bookmarks";
 import { AuthPrompt } from "./auth-prompt";
 import { IconGhostButton } from "./button-primitives";
+import { GradientHeaderStrip } from "./chrome-primitives";
 
 interface NovelDetailHeaderProps {
   novelId: string;
@@ -59,9 +60,10 @@ export function NovelDetailHeader({
 
   return (
     <div
-      className="fixed top-0 left-0 right-0 z-50 p-3 xs:p-4 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent w-full pointer-events-none"
+      className="fixed top-0 left-0 right-0 z-50 p-3 xs:p-4 flex justify-between items-center w-full pointer-events-none"
       style={{ paddingTop: "calc(1rem + env(safe-area-inset-top, 0px))" }}
     >
+      <GradientHeaderStrip className="absolute inset-0" />
       <div className="pointer-events-auto">
         <IconGhostButton onClick={handleBack} aria-label="Go back">
           <span className="material-symbols-outlined text-shadow-sm">arrow_back</span>

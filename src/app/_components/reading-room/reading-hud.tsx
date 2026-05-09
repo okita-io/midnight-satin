@@ -12,6 +12,7 @@ import { toggleBookmark } from "@/app/actions/bookmarks";
 import { novelDetailPath } from "@/lib/navigation";
 import { READING_HUD_FOOTER_ICON_ROW_CLASSES } from "@/lib/responsive/constants";
 import { SegmentedChips } from "@/app/_components/segmented-chips";
+import { FixedBottomBar, ProgressBar, GradientHeaderStrip } from "@/app/_components/chrome-primitives";
 
 function toRoman(num: number): string {
   const map: [number, string][] = [
@@ -139,9 +140,10 @@ export function ReadingHUD({
     <>
       {/* Header HUD */}
       <header
-        className="fixed top-0 left-0 w-full z-50 transition-transform duration-300 bg-gradient-to-b from-void via-void/90 to-transparent pt-[var(--safe-area-inset-top)] pb-8 pointer-events-none"
+        className="fixed top-0 left-0 w-full z-50 transition-transform duration-300 pt-[var(--safe-area-inset-top)] pb-8 pointer-events-none"
         style={{ paddingTop: "calc(var(--safe-area-inset-top) + 0.5rem)" }}
       >
+        <GradientHeaderStrip className="absolute inset-0" />
         <div className="flex items-center justify-between px-4 md:px-8 h-16 pointer-events-auto max-w-md md:max-w-2xl mx-auto">
           <Link
             href={novelDetailPath(novelId)}
@@ -184,23 +186,12 @@ export function ReadingHUD({
       </header>
 
       {/* Bottom bar: same shell as main NavigationBar (full-bleed drawer) */}
-      <nav
-        className="fixed bottom-0 left-0 right-0 z-50 flex w-full min-w-0 flex-col bg-[#080808] border-t border-[#1F1F1F] shadow-[0_-10px_40px_rgba(0,0,0,0.8)] transition-all duration-300 ease-in-out"
-        style={{
-          paddingBottom: "calc(1.5rem + env(safe-area-inset-bottom, 0px))",
-        }}
+      <FixedBottomBar
+        className="flex min-w-0 flex-col"
         aria-label="Reading tools"
       >
         {/* Progress Bar */}
-        <div className="w-full h-1 shrink-0 bg-white/10 relative">
-          <div
-            className="absolute left-0 top-0 h-full bg-primary transition-all duration-300"
-            style={{
-              width: `${Math.min(100, Math.max(0, progressPercent))}%`,
-              boxShadow: "0 0 10px rgba(212,175,55,0.5)",
-            }}
-          />
-        </div>
+        <ProgressBar valuePercent={progressPercent} />
 
         <div className={READING_HUD_FOOTER_ICON_ROW_CLASSES}>
           {/* Font panel toggle — column 1 (match NavTabLink: icon over label) */}
@@ -438,7 +429,7 @@ export function ReadingHUD({
             )}
           </div>
         </div>
-      </nav>
+      </FixedBottomBar>
     </>
   );
 }

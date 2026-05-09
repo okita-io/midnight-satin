@@ -3,6 +3,7 @@
 import { useState, useMemo } from "react";
 import { SearchOverlay } from "./search-overlay";
 import type { SearchNovelHit, SearchAuthorHit } from "./search-overlay";
+import { GradientHeaderStrip } from "./chrome-primitives";
 
 interface BoudoirHeaderProps {
   /** Novels for search results (by title). Until content layer: empty or mock. */
@@ -38,9 +39,10 @@ export function BoudoirHeader({
   return (
     <>
       <div
-        className="absolute top-0 left-0 right-0 z-20 flex justify-between items-center p-4 xs:p-6 bg-gradient-to-b from-black/80 to-transparent"
+        className="absolute top-0 left-0 right-0 z-20 flex justify-between items-center p-4 xs:p-6"
         style={{ paddingTop: "calc(1.5rem + env(safe-area-inset-top, 0px))" }}
       >
+        <GradientHeaderStrip className="absolute inset-0" />
         <div className="flex items-center gap-2">
           <span className="material-symbols-outlined text-primary text-xl" aria-hidden>
             menu_book
