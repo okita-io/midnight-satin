@@ -12,16 +12,16 @@ export function AdminCommentsClient({
   comments: CommentWithReader[];
   includeDeleted: boolean;
 }) {
-  const router = useRouter();
+  const { refresh } = useRouter();
 
   async function handleHide(commentId: string) {
     const result = await hideCommentAction(commentId);
-    if (result.success) router.refresh();
+    if (result.success) refresh();
   }
 
   async function handleRestore(commentId: string) {
     const result = await restoreCommentAction(commentId);
-    if (result.success) router.refresh();
+    if (result.success) refresh();
   }
 
   return (

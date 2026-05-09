@@ -1,9 +1,75 @@
 "use client";
 
-import { useState } from "react";
+import { useReducer } from "react";
 import { useRouter } from "next/navigation";
 import { adjustCreditsAction } from "@/app/actions/admin";
 import type { Reader } from "@/lib/db/types";
+
+type UsersAdjustState = {
+  email: string;
+  adjustingId: string | null;
+  adjustAmount: string;
+  adjustReason: string;
+  loading: boolean;
+  error: string | null;
+};
+
+type UsersAdjustAction =
+  | { type: "set_email"; value: string }
+  | { type: "open_adjust"; id: string }
+  | { type: "cancel_adjust" }
+  | {
+      type: "patch_adjust";
+      patch: Partial<Pick<UsersAdjustState, "adjustAmount" | "adjustReason">>;
+    }
+  | { type: "submit_start" }
+  | { type: "submit_end" }
+  | { type: "set_error"; error: string | null }
+  | { type: "adjust_success" };
+
+function usersAdjustReducer(
+  state: UsersAdjustState,
+  action: UsersAdjustAction
+): UsersAdjustState {
+  switch (action.type) {
+    case "set_email":
+      return { ...state, email: action.value };
+    case "open_adjust":
+      return { ...state, adjustingId: action.id, error: null };
+    case "cancel_adjust":
+      return { ...state, adjustingId: null, error: null };
+    case "patch_adjust":
+      return { ...state, ...action.patch };
+    case "submit_start":
+      return { ...state, loading: true, error: null };
+    case "submit_end":
+      return { ...state, loading: false };
+    case "set_error":
+      return { ...state, error: action.error };
+    case "adjust_success":
+      return {
+        ...state,
+        adjustingId: null,
+        adjustAmount: "",
+        adjustReason: "",
+        loading: false,
+        error: null,
+      };
+    default:
+      return state;
+  }
+}
+
+function initialUsersState(initialEmail?: string): UsersAdjustState {
+  return {
+    email: initialEmail ?? "",
+    adjustingId: null,
+    adjustAmount: "",
+    adjustReason: "",
+    loading: false,
+    error: null,
+  };
+}
 
 export function AdminUsersClient({
   initialEmail,
@@ -13,12 +79,14 @@ export function AdminUsersClient({
   readers: Reader[];
 }) {
   const { push, refresh } = useRouter();
-  const [email, setEmail] = useState(() => initialEmail ?? "");
-  const [adjustingId, setAdjustingId] = useState<string | null>(null);
-  const [adjustAmount, setAdjustAmount] = useState("");
-  const [adjustReason, setAdjustReason] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [state, dispatch] = useReducer(
+    usersAdjustReducer,
+    initialEmail,
+    initialUsersState
+  );
+
+  const { email, adjustingId, adjustAmount, adjustReason, loading, error } =
+    state;
 
   function handleSearch(e: React.FormEvent) {
     e.preventDefault();
@@ -30,20 +98,17 @@ export function AdminUsersClient({
     e.preventDefault();
     const amount = parseInt(adjustAmount, 10);
     if (isNaN(amount) || amount === 0) {
-      setError("Amount must be non-zero");
+      dispatch({ type: "set_error", error: "Amount must be non-zero" });
       return;
     }
-    setLoading(true);
-    setError(null);
+    dispatch({ type: "submit_start" });
     const result = await adjustCreditsAction(readerId, amount, adjustReason);
-    setLoading(false);
     if (result.success) {
-      setAdjustingId(null);
-      setAdjustAmount("");
-      setAdjustReason("");
+      dispatch({ type: "adjust_success" });
       refresh();
     } else {
-      setError(result.error ?? "Failed to adjust");
+      dispatch({ type: "set_error", error: result.error ?? "Failed to adjust" });
+      dispatch({ type: "submit_end" });
     }
   }
 
@@ -53,7 +118,9 @@ export function AdminUsersClient({
         <input
           type="search"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={(e) =>
+            dispatch({ type: "set_email", value: e.target.value })
+          }
           placeholder="Search by email"
           className="flex-1 px-3 py-2 bg-void border border-primary/30 rounded-sm text-text-main"
         />
@@ -114,14 +181,24 @@ export function AdminUsersClient({
                       <input
                         type="number"
                         value={adjustAmount}
-                        onChange={(e) => setAdjustAmount(e.target.value)}
+                        onChange={(e) =>
+                          dispatch({
+                            type: "patch_adjust",
+                            patch: { adjustAmount: e.target.value },
+                          })
+                        }
                         placeholder="+/- amount"
                         className="w-24 px-2 py-1 bg-void border border-primary/30 rounded-sm text-text-main text-sm"
                       />
                       <input
                         type="text"
                         value={adjustReason}
-                        onChange={(e) => setAdjustReason(e.target.value)}
+                        onChange={(e) =>
+                          dispatch({
+                            type: "patch_adjust",
+                            patch: { adjustReason: e.target.value },
+                          })
+                        }
                         placeholder="Reason"
                         className="w-32 px-2 py-1 bg-void border border-primary/30 rounded-sm text-text-main text-sm"
                       />
@@ -136,10 +213,7 @@ export function AdminUsersClient({
                         </button>
                         <button
                           type="button"
-                          onClick={() => {
-                            setAdjustingId(null);
-                            setError(null);
-                          }}
+                          onClick={() => dispatch({ type: "cancel_adjust" })}
                           className="px-2 py-1 text-text-muted text-xs"
                         >
                           Cancel
@@ -149,7 +223,7 @@ export function AdminUsersClient({
                   ) : (
                     <button
                       type="button"
-                      onClick={() => setAdjustingId(r.id)}
+                      onClick={() => dispatch({ type: "open_adjust", id: r.id })}
                       className="text-primary hover:underline font-ui text-sm"
                     >
                       Adjust credits

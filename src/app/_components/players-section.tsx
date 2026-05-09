@@ -20,7 +20,7 @@ export function PlayersSection({
   novelId,
   isAuthenticated,
 }: PlayersSectionProps) {
-  const router = useRouter();
+  const { refresh } = useRouter();
   const [castGalleryOpen, setCastGalleryOpen] = useState(false);
   const [initialIndex, setInitialIndex] = useState(0);
   const [authPromptOpen, setAuthPromptOpen] = useState(false);
@@ -37,13 +37,13 @@ export function PlayersSection({
       if (result.success) {
         setToast("-1 Credit");
         setTimeout(() => setToast(null), 2000);
-        router.refresh();
+        refresh();
       } else {
         setToast(result.error);
         setTimeout(() => setToast(null), 3000);
       }
     },
-    [router]
+    [refresh]
   );
 
   if (characters.length === 0) return null;

@@ -1,41 +1,40 @@
 "use client";
 
-import { useState } from "react";
+import { useReducer } from "react";
 import { createAuthorAction } from "@/app/actions/admin";
+import {
+  authorsCreateReducer,
+  initialAuthorsCreateState,
+} from "@/app/admin/admin-create-modals-reducers";
 
 export function AdminAuthorsClient() {
-  const [open, setOpen] = useState(false);
-  const [name, setName] = useState("");
-  const [biography, setBiography] = useState("");
-  const [avatarUrl, setAvatarUrl] = useState("");
-  const [styleTags, setStyleTags] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [state, dispatch] = useReducer(
+    authorsCreateReducer,
+    initialAuthorsCreateState
+  );
+
+  const { open, name, biography, avatarUrl, styleTags, loading, error } =
+    state;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
-    const tags = styleTags
-      .split(",")
-      .map((t) => t.trim())
-      .filter(Boolean);
+    dispatch({ type: "submit_start" });
+    const tags = styleTags.split(",").flatMap((t) => {
+      const x = t.trim();
+      return x ? [x] : [];
+    });
     const result = await createAuthorAction({
       name: name.trim(),
       biography: biography.trim() || undefined,
       avatar_url: avatarUrl.trim() || undefined,
       style_tags: tags.length ? tags : undefined,
     });
-    setLoading(false);
     if (result.success) {
-      setOpen(false);
-      setName("");
-      setBiography("");
-      setAvatarUrl("");
-      setStyleTags("");
+      dispatch({ type: "success_reset" });
       window.location.reload();
     } else {
-      setError(result.error ?? "Failed to create author");
+      dispatch({ type: "set_error", error: result.error ?? "Failed to create author" });
+      dispatch({ type: "submit_end" });
     }
   }
 
@@ -43,7 +42,7 @@ export function AdminAuthorsClient() {
     <>
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={() => dispatch({ type: "open" })}
         className="px-4 py-2 bg-primary text-void font-ui text-sm rounded-sm hover:opacity-90 transition-opacity"
       >
         Create Author
@@ -68,7 +67,9 @@ export function AdminAuthorsClient() {
                   id="author-name"
                   type="text"
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) =>
+                    dispatch({ type: "patch", patch: { name: e.target.value } })
+                  }
                   required
                   className="w-full px-3 py-2 bg-void border border-primary/30 rounded-sm text-text-main"
                 />
@@ -80,7 +81,9 @@ export function AdminAuthorsClient() {
                 <textarea
                   id="author-bio"
                   value={biography}
-                  onChange={(e) => setBiography(e.target.value)}
+                  onChange={(e) =>
+                    dispatch({ type: "patch", patch: { biography: e.target.value } })
+                  }
                   rows={3}
                   className="w-full px-3 py-2 bg-void border border-primary/30 rounded-sm text-text-main"
                 />
@@ -93,7 +96,9 @@ export function AdminAuthorsClient() {
                   id="author-avatar"
                   type="url"
                   value={avatarUrl}
-                  onChange={(e) => setAvatarUrl(e.target.value)}
+                  onChange={(e) =>
+                    dispatch({ type: "patch", patch: { avatarUrl: e.target.value } })
+                  }
                   className="w-full px-3 py-2 bg-void border border-primary/30 rounded-sm text-text-main"
                 />
               </div>
@@ -105,7 +110,9 @@ export function AdminAuthorsClient() {
                   id="author-tags"
                   type="text"
                   value={styleTags}
-                  onChange={(e) => setStyleTags(e.target.value)}
+                  onChange={(e) =>
+                    dispatch({ type: "patch", patch: { styleTags: e.target.value } })
+                  }
                   placeholder="romance, historical, spicy"
                   className="w-full px-3 py-2 bg-void border border-primary/30 rounded-sm text-text-main"
                 />
@@ -116,7 +123,7 @@ export function AdminAuthorsClient() {
               <div className="flex gap-2 justify-end">
                 <button
                   type="button"
-                  onClick={() => setOpen(false)}
+                  onClick={() => dispatch({ type: "close" })}
                   className="px-4 py-2 font-ui text-sm text-text-muted hover:text-text-main"
                 >
                   Cancel

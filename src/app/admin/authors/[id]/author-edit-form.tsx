@@ -1,28 +1,77 @@
 "use client";
 
-import { useState } from "react";
+import { useReducer } from "react";
 import { updateContentAction } from "@/app/actions/admin";
 import type { AuthorProfile } from "@/lib/db/types";
 import Link from "next/link";
+
+type AuthorEditState = {
+  name: string;
+  biography: string;
+  avatarUrl: string;
+  styleTags: string;
+  loading: boolean;
+  error: string | null;
+};
+
+type AuthorEditAction =
+  | {
+      type: "patch";
+      patch: Partial<
+        Pick<AuthorEditState, "name" | "biography" | "avatarUrl" | "styleTags">
+      >;
+    }
+  | { type: "submit_start" }
+  | { type: "submit_end" }
+  | { type: "set_error"; error: string | null };
+
+function authorEditReducer(
+  state: AuthorEditState,
+  action: AuthorEditAction
+): AuthorEditState {
+  switch (action.type) {
+    case "patch":
+      return { ...state, ...action.patch };
+    case "submit_start":
+      return { ...state, loading: true, error: null };
+    case "submit_end":
+      return { ...state, loading: false };
+    case "set_error":
+      return { ...state, error: action.error };
+    default:
+      return state;
+  }
+}
+
+function initialAuthorEditState(
+  author: AuthorProfile & { type: "author" }
+): AuthorEditState {
+  return {
+    name: author.name,
+    biography: author.biography ?? "",
+    avatarUrl: author.avatarUrl ?? "",
+    styleTags: author.styleTags.join(", "),
+    loading: false,
+    error: null,
+  };
+}
 
 export function AdminAuthorEditForm({
   author,
 }: {
   author: AuthorProfile & { type: "author" };
 }) {
-  const [name, setName] = useState(() => author.name);
-  const [biography, setBiography] = useState(() => author.biography ?? "");
-  const [avatarUrl, setAvatarUrl] = useState(() => author.avatarUrl ?? "");
-  const [styleTags, setStyleTags] = useState(() =>
-    author.styleTags.join(", ")
+  const [state, dispatch] = useReducer(
+    authorEditReducer,
+    author,
+    initialAuthorEditState
   );
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+
+  const { name, biography, avatarUrl, styleTags, loading, error } = state;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
-    setError(null);
+    dispatch({ type: "submit_start" });
     const tags = styleTags.split(",").flatMap((t) => {
       const x = t.trim();
       return x ? [x] : [];
@@ -37,11 +86,11 @@ export function AdminAuthorEditForm({
         style_tags: tags,
       },
     });
-    setLoading(false);
     if (result.success) {
       window.location.href = "/admin/authors";
     } else {
-      setError(result.error ?? "Failed to update");
+      dispatch({ type: "set_error", error: result.error ?? "Failed to update" });
+      dispatch({ type: "submit_end" });
     }
   }
 
@@ -55,7 +104,7 @@ export function AdminAuthorEditForm({
           id="author-name"
           type="text"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => dispatch({ type: "patch", patch: { name: e.target.value } })}
           required
           className="w-full px-3 py-2 bg-void border border-primary/30 rounded-sm text-text-main"
         />
@@ -67,7 +116,9 @@ export function AdminAuthorEditForm({
         <textarea
           id="author-bio"
           value={biography}
-          onChange={(e) => setBiography(e.target.value)}
+          onChange={(e) =>
+            dispatch({ type: "patch", patch: { biography: e.target.value } })
+          }
           rows={3}
           className="w-full px-3 py-2 bg-void border border-primary/30 rounded-sm text-text-main"
         />
@@ -80,7 +131,9 @@ export function AdminAuthorEditForm({
           id="author-avatar"
           type="url"
           value={avatarUrl}
-          onChange={(e) => setAvatarUrl(e.target.value)}
+          onChange={(e) =>
+            dispatch({ type: "patch", patch: { avatarUrl: e.target.value } })
+          }
           className="w-full px-3 py-2 bg-void border border-primary/30 rounded-sm text-text-main"
         />
       </div>
@@ -92,7 +145,9 @@ export function AdminAuthorEditForm({
           id="author-tags"
           type="text"
           value={styleTags}
-          onChange={(e) => setStyleTags(e.target.value)}
+          onChange={(e) =>
+            dispatch({ type: "patch", patch: { styleTags: e.target.value } })
+          }
           className="w-full px-3 py-2 bg-void border border-primary/30 rounded-sm text-text-main"
         />
       </div>

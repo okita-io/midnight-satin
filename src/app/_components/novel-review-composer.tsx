@@ -31,7 +31,7 @@ export function NovelReviewComposer({
   returnPath,
   myReview,
 }: NovelReviewComposerProps) {
-  const router = useRouter();
+  const { refresh } = useRouter();
   const [pending, startTransition] = useTransition();
   /** Sync local fields when server `myReview` changes (e.g. after refresh) without an effect. */
   const serverKey = myReview
@@ -97,7 +97,7 @@ export function NovelReviewComposer({
           return;
         }
       }
-      router.refresh();
+      refresh();
     });
   }
 
@@ -119,7 +119,7 @@ export function NovelReviewComposer({
       }
       setDraft("");
       setStars(5);
-      router.refresh();
+      refresh();
     });
   }
 
