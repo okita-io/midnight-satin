@@ -20,13 +20,42 @@ export type PaperbackCheckoutResult =
 /**
  * Allowed shipping countries: US, CA, GB, AU + EU member states.
  */
-const ALLOWED_SHIPPING_COUNTRIES: Stripe.Checkout.SessionCreateParams.ShippingAddressCollection.AllowedCountry[] = [
-  "US", "CA", "GB", "AU",
-  // EU member states
-  "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR",
-  "DE", "GR", "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL",
-  "PL", "PT", "RO", "SK", "SI", "ES", "SE",
-];
+function getAllowedShippingCountries(): Stripe.Checkout.SessionCreateParams.ShippingAddressCollection.AllowedCountry[] {
+  return [
+    "US",
+    "CA",
+    "GB",
+    "AU",
+    // EU member states
+    "AT",
+    "BE",
+    "BG",
+    "HR",
+    "CY",
+    "CZ",
+    "DK",
+    "EE",
+    "FI",
+    "FR",
+    "DE",
+    "GR",
+    "HU",
+    "IE",
+    "IT",
+    "LV",
+    "LT",
+    "LU",
+    "MT",
+    "NL",
+    "PL",
+    "PT",
+    "RO",
+    "SK",
+    "SI",
+    "ES",
+    "SE",
+  ];
+}
 
 /**
  * Create a Stripe Checkout session for a paperback purchase.
@@ -84,7 +113,7 @@ export async function createPaperbackCheckout(
         },
       ],
       shipping_address_collection: {
-        allowed_countries: ALLOWED_SHIPPING_COUNTRIES,
+        allowed_countries: getAllowedShippingCountries(),
       },
       success_url: `${baseUrl}/novel/${novelId}/paperback/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl}/novel/${novelId}/paperback`,
