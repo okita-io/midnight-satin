@@ -4,6 +4,7 @@ import React, { useTransition, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { toggleBookmark } from "@/app/actions/bookmarks";
 import { AuthPrompt } from "./auth-prompt";
+import { IconGhostButton } from "./button-primitives";
 
 interface NovelDetailHeaderProps {
   novelId: string;
@@ -62,22 +63,16 @@ export function NovelDetailHeader({
       style={{ paddingTop: "calc(1rem + env(safe-area-inset-top, 0px))" }}
     >
       <div className="pointer-events-auto">
-        <button
-          type="button"
-          onClick={handleBack}
-          className="flex items-center justify-center w-10 h-10 rounded-full bg-surface/30 backdrop-blur-md text-white border border-white/10 hover:bg-surface/50 transition-colors cursor-pointer active:scale-95"
-          aria-label="Go back"
-        >
+        <IconGhostButton onClick={handleBack} aria-label="Go back">
           <span className="material-symbols-outlined text-shadow-sm">arrow_back</span>
-        </button>
+        </IconGhostButton>
       </div>
       <div className="flex gap-3 pointer-events-auto">
-        <button
-          type="button"
+        <IconGhostButton
           onClick={handleBookmark}
           disabled={isPending}
-          className="flex items-center justify-center w-10 h-10 rounded-full bg-surface/30 backdrop-blur-md text-white border border-white/10 hover:bg-surface/50 transition-colors disabled:opacity-50 cursor-pointer active:scale-95 disabled:active:scale-100"
           aria-label={bookmarked ? "Remove bookmark" : "Add bookmark"}
+          className="disabled:opacity-50 disabled:active:scale-100"
         >
           <span
             className="material-symbols-outlined text-shadow-sm"
@@ -85,15 +80,10 @@ export function NovelDetailHeader({
           >
             bookmark
           </span>
-        </button>
-        <button
-          type="button"
-          onClick={handleShare}
-          className="flex items-center justify-center w-10 h-10 rounded-full bg-surface/30 backdrop-blur-md text-white border border-white/10 hover:bg-surface/50 transition-colors cursor-pointer active:scale-95"
-          aria-label="Share"
-        >
+        </IconGhostButton>
+        <IconGhostButton onClick={handleShare} aria-label="Share">
           <span className="material-symbols-outlined text-shadow-sm">share</span>
-        </button>
+        </IconGhostButton>
       </div>
       <AuthPrompt
         isOpen={authPromptOpen}

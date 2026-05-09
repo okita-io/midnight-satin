@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useRef } from "react";
+import { SecondaryOutlineLink } from "./button-primitives";
 
 interface AuthPromptProps {
   isOpen: boolean;
@@ -99,13 +100,13 @@ export function AuthPrompt({ isOpen, onClose, returnUrl, message }: AuthPromptPr
           >
             Sign in
           </Link>
-          <Link
+          <SecondaryOutlineLink
             ref={lastFocusRef}
             href={registerHref}
-            className="flex-1 text-center rounded border border-[var(--primary)] py-2.5 font-ui text-sm font-bold text-[var(--primary)] hover:bg-[var(--primary)] hover:text-[var(--void)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)] cursor-pointer active:scale-[0.98] transition-transform"
+            className="flex-1 transition-transform"
           >
             Register
-          </Link>
+          </SecondaryOutlineLink>
         </div>
       </div>
     </div>

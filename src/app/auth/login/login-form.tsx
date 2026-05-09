@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useActionState } from "react";
 import { loginFormAction } from "@/app/actions/auth";
+import { FormField } from "@/app/_components/form-field";
 
 export function LoginForm({
   redirectTo,
@@ -35,32 +36,26 @@ export function LoginForm({
         </div>
       )}
       <div className="flex flex-col gap-2">
-        <label htmlFor="login-email" className="font-ui text-xs uppercase tracking-widest text-text-muted ml-1">
-          Email
-        </label>
-        <input
+        <FormField
           id="login-email"
           name="email"
           type="email"
           autoComplete="email"
           required
           disabled={isPending}
-          className="block w-full h-14 rounded-none border border-surface-highlight bg-surface-highlight px-4 font-ui text-text-main placeholder:text-text-muted/60 focus:border-primary focus:outline-none focus:ring-0 transition-colors duration-300"
+          label="Email"
           placeholder="you@example.com"
         />
       </div>
       <div className="flex flex-col gap-2">
-        <label htmlFor="login-password" className="font-ui text-xs uppercase tracking-widest text-text-muted ml-1">
-          Password
-        </label>
-        <input
+        <FormField
           id="login-password"
           name="password"
           type="password"
           autoComplete="current-password"
           required
           disabled={isPending}
-          className="block w-full h-14 rounded-none border border-surface-highlight bg-surface-highlight px-4 font-ui text-text-main placeholder:text-text-muted/60 focus:border-primary focus:outline-none focus:ring-0 transition-colors duration-300"
+          label="Password"
         />
       </div>
       <div className="flex justify-end pt-1">
