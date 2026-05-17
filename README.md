@@ -53,6 +53,83 @@ node scripts/import-romance-factory-story.mjs --story-path ./stories/my-story --
 | `--max-characters <n>` | Cap character imports (default: 12) |
 | `--reuse-author-id` / `--author-id` | Attach the novel to an existing author id |
 
+### Seeding production content
+
+Use these commands to populate the **production** Neon database so first-time visitors see stories, news, and developer posts on The Boudoir and `/updates`. All scripts read `POSTGRES_URL` from `.env.local` by default; point that variable at the **production** connection string from **Vercel → Storage → Neon** (or pass a dedicated env file).
+
+**Environment**
+
+- `POSTGRES_URL` — required (Neon connection string)
+- `ENV_FILE` or `DOTENV_CONFIG_PATH` — optional path to an env file (e.g. production-only credentials)
+- `BLOB_READ_WRITE_TOKEN` — required only for `npm run db:blobs` (upload seed images to Vercel Blob)
+
+**Target production explicitly**
+
+```bash
+# Example: production credentials in a separate file (not committed)
+ENV_FILE=.env.production.local npm run db:seed:devblog
+```
+
+Confirm the masked host in script output matches your production Neon instance before relying on the result.
+
+**Placeholder story (featured novel + chapters)**
+
+Inserts one author, series, featured novel (*Whispers in the Velvet Dark*), three chapters, and two characters. Images reference `/seed/images/...` under `public/`.
+
+```bash
+npm run db:seed
+# Optional: upload seed PNGs to Blob and rewrite URLs in the DB
+npm run db:blobs
+```
+
+**News articles (THE LATEST / `/updates`)**
+
+Five placeholder articles covering all article types (see `src/lib/db/seed-news.sql`).
+
+```bash
+npm run db:seed:news
+```
+
+**Developer blog posts**
+
+Long-form editorial posts (markdown body, rendered on the article detail page). The Romance Factory post-mortem lives in `src/lib/db/seed-devblog.sql` and uses `ON CONFLICT (slug) DO UPDATE` so re-runs are safe.
+
+```bash
+npm run db:seed:devblog
+```
+
+**Arbitrary SQL seed file**
+
+```bash
+node scripts/seed-sql.mjs --file src/lib/db/seed-devblog.sql
+node scripts/seed-sql.mjs --file src/lib/db/seed-news.sql
+```
+
+**Full Romance Factory novels**
+
+For completed story bundles (not the small built-in placeholder), use [Romance Factory story import](#romance-factory-story-import) (`npm run import:romance-story`).
+
+**Suggested first-time production checklist**
+
+1. Ensure `news_articles` (and other tables) exist — apply `src/lib/db/schema.sql` or migrations on production if this is a fresh DB.
+2. `ENV_FILE=... npm run db:seed` — placeholder featured novel.
+3. `ENV_FILE=... npm run db:blobs` — optional, if you want Blob URLs instead of `/seed/images/...`.
+4. `ENV_FILE=... npm run db:seed:news` — THE LATEST section content.
+5. `ENV_FILE=... npm run db:seed:devblog` — developer editorial posts.
+6. Import real novels via Romance Factory import as they are ready.
+
+**Verify**
+
+- Home: featured novel and **THE LATEST** (ISR revalidates ~60s).
+- `/updates` — news archive.
+- `/updates/building-romance-factory-503-commits` — devblog article (after devblog seed).
+
+**Safety**
+
+- **Do not** run `npm run db:setup` against production — it drops all public tables and reapplies the schema.
+- `db:seed` and `db:seed:news` use plain `INSERT`s; a second run may fail on duplicate titles/slugs unless the SQL uses `ON CONFLICT` (devblog seed already does).
+- Romance Factory import creates **new** rows each run unless you reuse author IDs via `--reuse-author-id`.
+
 ### Payment (Stripe)
 
 For credit purchases, set:
@@ -69,7 +146,8 @@ Configure the webhook endpoint `https://your-domain/api/webhooks/payment` in Str
 - **`.cursor/rules/`** — Cursor rules (e.g. `midnight-satin-design.mdc`, always applied)
 - **`.kiro/specs/midnight-satin-platform/`** — Requirements, design doc, tasks, correctness properties
 - **`src/app/`** — Next.js App Router pages and layout
-- **`scripts/`** — Utilities: `import-romance-factory-story.mjs` (publish Romance Factory bundles; see [Romance Factory story import](#romance-factory-story-import)), `fetchStitchDesigns` for Stitch designs
+- **`scripts/`** — Utilities: `seed-db.mjs`, `seed-sql.mjs` (production content; see [Seeding production content](#seeding-production-content)), `import-romance-factory-story.mjs` ([Romance Factory story import](#romance-factory-story-import)), `fetchStitchDesigns` for Stitch designs
+- **`src/lib/db/`** — `schema.sql`, seed SQL (`seed-news.sql`, `seed-devblog.sql`)
 - **`.agents/`** — Subagent directories; place agent-specific skills and scope here (see [Subagents and parallel task division](#subagents-and-parallel-task-division))
 
 ---

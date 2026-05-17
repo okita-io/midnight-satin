@@ -5,6 +5,7 @@ import { MetadataPills } from "@/app/_components/metadata-pills";
 import { OrnamentalDivider } from "@/app/_components/reading-room/ornamental-divider";
 import { NavigationBar } from "@/app/_components/navigation-bar";
 import { BackButton } from "./back-button";
+import ReactMarkdown from "react-markdown";
 
 export const revalidate = 60;
 
@@ -29,16 +30,6 @@ export async function generateMetadata({
 }
 
 /** Platform display labels and Material Symbols icon names */
-/** Stable hash for list keys (no index-only keys). */
-function fnv1a32Base36(str: string): string {
-  let h = 2166136261 >>> 0;
-  for (let k = 0; k < str.length; k++) {
-    h ^= str.charCodeAt(k);
-    h = Math.imul(h, 16777619) >>> 0;
-  }
-  return h.toString(36);
-}
-
 const PLATFORM_META: Record<string, { label: string; icon: string }> = {
   tiktok: { label: "TikTok", icon: "play_circle" },
   instagram: { label: "Instagram", icon: "photo_camera" },
@@ -62,18 +53,7 @@ export default async function ArticleDetailPage({
     ? PLATFORM_META[article.sourcePlatform]
     : null;
 
-  const paragraphItems = article.bodyContent
-    .split(/\n\n+/)
-    .flatMap((block, blockIndex) => {
-      const text = block.trim();
-      if (!text) return [];
-      return [
-        {
-          key: `${slug}-p${blockIndex}-${fnv1a32Base36(text)}`,
-          text,
-        },
-      ];
-    });
+  const isMarkdown = /^#{1,6} |^\*\*|^```|^\- |\*\*.*\*\*/.test(article.bodyContent);
 
   return (
     <>
@@ -135,19 +115,45 @@ export default async function ArticleDetailPage({
         </div>
 
         {/* Body content — Reading Room typography */}
-        {paragraphItems.length > 0 && (
+        {article.bodyContent && (
           <article
-            className="reading-max-width px-6"
+            className="reading-max-width px-6 article-body"
             style={{ fontSize: "18px", lineHeight: 1.6 }}
           >
-            {paragraphItems.map((item, paragraphOrdinal) => (
-              <p
-                key={item.key}
-                className={`font-body text-text-main/90 text-justify mb-6 ${paragraphOrdinal === 0 ? "drop-cap" : ""}`}
+            {isMarkdown ? (
+              <ReactMarkdown
+                components={{
+                  h1: ({ children }) => <h1 className="font-display text-2xl md:text-3xl text-primary mt-10 mb-4 italic">{children}</h1>,
+                  h2: ({ children }) => <h2 className="font-display text-xl md:text-2xl text-primary mt-8 mb-3 italic">{children}</h2>,
+                  h3: ({ children }) => <h3 className="font-ui text-lg text-text-main font-semibold mt-6 mb-2 uppercase tracking-wider">{children}</h3>,
+                  p: ({ children }) => <p className="font-body text-text-main/90 mb-6">{children}</p>,
+                  strong: ({ children }) => <strong className="text-text-main font-semibold">{children}</strong>,
+                  em: ({ children }) => <em className="italic">{children}</em>,
+                  ul: ({ children }) => <ul className="list-disc list-inside mb-6 space-y-1 font-body text-text-main/90">{children}</ul>,
+                  ol: ({ children }) => <ol className="list-decimal list-inside mb-6 space-y-1 font-body text-text-main/90">{children}</ol>,
+                  li: ({ children }) => <li className="ml-2">{children}</li>,
+                  code: ({ children, className }) => className ? (
+                    <code className="block bg-surface/60 border border-primary/20 rounded px-4 py-3 text-sm font-mono text-text-muted overflow-x-auto">{children}</code>
+                  ) : (
+                    <code className="bg-surface/60 px-1 rounded text-sm font-mono text-primary">{children}</code>
+                  ),
+                  pre: ({ children }) => <pre className="bg-surface/60 border border-primary/20 rounded mb-6 overflow-x-auto px-4 py-3 text-sm font-mono text-text-muted">{children}</pre>,
+                  hr: () => <hr className="border-primary/20 my-8" />,
+                  blockquote: ({ children }) => <blockquote className="border-l-2 border-primary/40 pl-4 italic text-text-muted mb-6">{children}</blockquote>,
+                }}
               >
-                {item.text}
-              </p>
-            ))}
+                {article.bodyContent}
+              </ReactMarkdown>
+            ) : (
+              article.bodyContent.split(/\n\n+/).filter(Boolean).map((text, i) => (
+                <p
+                  key={`${slug}-p${i}`}
+                  className={`font-body text-text-main/90 text-justify mb-6 ${i === 0 ? "drop-cap" : ""}`}
+                >
+                  {text.trim()}
+                </p>
+              ))
+            )}
           </article>
         )}
 
