@@ -1,13 +1,12 @@
 "use client";
 
-import Link from "next/link";
 import { useEffect, useEffectEvent, useRef } from "react";
-import { SecondaryOutlineLink } from "./button-primitives";
+import { SignInButton, SignUpButton } from "@clerk/nextjs";
 
 interface AuthPromptProps {
   isOpen: boolean;
   onClose: () => void;
-  /** Optional return URL to pass to login/register (e.g. current path) */
+  /** Optional return URL after sign-in (e.g. current path) */
   returnUrl?: string;
   /** Optional short message (e.g. "Unlock this chapter" / "Send a rose") */
   message?: string;
@@ -16,14 +15,10 @@ interface AuthPromptProps {
 export function AuthPrompt({ isOpen, onClose, returnUrl, message }: AuthPromptProps) {
   const overlayRef = useRef<HTMLDivElement>(null);
   const firstFocusRef = useRef<HTMLButtonElement>(null);
-  const lastFocusRef = useRef<HTMLAnchorElement>(null);
 
   const onEscapeClose = useEffectEvent(() => {
     onClose();
   });
-
-  const loginHref = returnUrl ? `/auth/login?returnUrl=${encodeURIComponent(returnUrl)}` : "/auth/login";
-  const registerHref = returnUrl ? `/auth/register?returnUrl=${encodeURIComponent(returnUrl)}` : "/auth/register";
 
   useEffect(() => {
     if (!isOpen) return;
@@ -70,6 +65,8 @@ export function AuthPrompt({ isOpen, onClose, returnUrl, message }: AuthPromptPr
     }
   }
 
+  const forceRedirectUrl = returnUrl && returnUrl.startsWith("/") ? returnUrl : undefined;
+
   return (
     <div
       ref={overlayRef}
@@ -111,19 +108,19 @@ export function AuthPrompt({ isOpen, onClose, returnUrl, message }: AuthPromptPr
           Create an account or sign in to unlock chapters, endorse characters, and visit the Vault.
         </p>
         <div className="flex flex-col sm:flex-row gap-3">
-          <Link
-            href={loginHref}
-            className="btn-gold flex-1 text-center"
-          >
-            Sign in
-          </Link>
-          <SecondaryOutlineLink
-            ref={lastFocusRef}
-            href={registerHref}
-            className="flex-1 transition-transform"
-          >
-            Register
-          </SecondaryOutlineLink>
+          <SignInButton mode="modal" forceRedirectUrl={forceRedirectUrl}>
+            <button type="button" className="btn-gold flex-1 text-center cursor-pointer">
+              Sign in
+            </button>
+          </SignInButton>
+          <SignUpButton mode="modal" forceRedirectUrl={forceRedirectUrl}>
+            <button
+              type="button"
+              className="flex-1 text-center rounded-sm border border-primary py-2.5 font-ui text-sm font-semibold text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary cursor-pointer active:scale-[0.98] [@media(hover:hover)]:hover:bg-primary [@media(hover:hover)]:hover:text-void"
+            >
+              Register
+            </button>
+          </SignUpButton>
         </div>
       </div>
     </div>

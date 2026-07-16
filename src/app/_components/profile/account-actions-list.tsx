@@ -1,7 +1,7 @@
 "use client";
 
+import { SignOutButton } from "@clerk/nextjs";
 import Link from "next/link";
-import { logoutReader } from "@/app/actions/auth";
 
 interface AccountActionsListProps {
   /** If true, show full actions; if false, only logout. */
@@ -10,10 +10,9 @@ interface AccountActionsListProps {
 
 /**
  * AccountActionsList: Edit Display Name, Manage Email (stub), View Transactions, Logout.
- * Req 18.8. Logout clears session and redirects to Boudoir.
+ * Req out via Clerk.
  */
 export function AccountActionsList({ showAll = true }: AccountActionsListProps) {
-
   const regularActions = showAll
     ? [
         { label: "Edit Display Name", icon: "badge" as const, href: "/profile/edit", disabled: true },
@@ -53,17 +52,17 @@ export function AccountActionsList({ showAll = true }: AccountActionsListProps) 
             </Link>
           )
         )}
-        <form action={logoutReader}>
+        <SignOutButton redirectUrl="/">
           <button
-            type="submit"
-            className="w-full flex items-center gap-3 px-4 py-3 text-left font-ui text-sm text-text-main hover:bg-white/5 transition-colors border-t border-white/5"
+            type="button"
+            className="w-full flex items-center gap-3 px-4 py-3 text-left font-ui text-sm text-text-main hover:bg-white/5 transition-colors border-t border-white/5 cursor-pointer"
           >
             <span className="material-symbols-outlined text-text-muted text-xl" aria-hidden>
               logout
             </span>
             Log out
           </button>
-        </form>
+        </SignOutButton>
       </div>
     </section>
   );

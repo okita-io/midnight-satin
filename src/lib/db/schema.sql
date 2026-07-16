@@ -67,10 +67,11 @@ CREATE TABLE characters (
 CREATE TABLE readers (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   email TEXT UNIQUE NOT NULL,
-  password_hash TEXT NOT NULL,
+  password_hash TEXT,
   display_name TEXT,
   credit_balance INT DEFAULT 0,
   role TEXT DEFAULT 'reader',
+  clerk_user_id TEXT UNIQUE,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   last_login_at TIMESTAMPTZ
 );

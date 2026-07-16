@@ -1,6 +1,7 @@
 "use client";
 
 import { SignInButton, SignUpButton, Show, UserButton } from "@clerk/nextjs";
+import { clerkAppearance } from "@/lib/auth/clerk-appearance";
 
 /**
  * Header auth controls: Sign in / Sign up when signed out, UserButton when signed in.
@@ -31,7 +32,9 @@ export function ClerkAuthControls() {
       <Show when="signed-in">
         <UserButton
           appearance={{
+            ...clerkAppearance,
             elements: {
+              ...clerkAppearance.elements,
               avatarBox: "size-7 ring-1 ring-primary/40",
             },
           }}

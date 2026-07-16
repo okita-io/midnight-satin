@@ -91,12 +91,13 @@ export interface Reader {
 export interface ReaderDbRow {
   id: string;
   email: string;
-  password_hash: string;
+  password_hash: string | null;
   display_name: string | null;
   credit_balance: number;
   role: string;
   created_at: Date;
   last_login_at: Date | null;
+  clerk_user_id?: string | null;
 }
 
 export function readerDbRowToReader(row: ReaderDbRow): Reader {

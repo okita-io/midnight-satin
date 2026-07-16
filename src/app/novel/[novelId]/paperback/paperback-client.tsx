@@ -213,7 +213,7 @@ export function PaperbackClient({
             ) : (
               <p className="font-literata text-white/45 text-xs text-center max-w-sm">
                 <Link
-                  href={`/auth/login?returnUrl=${encodeURIComponent(`/novel/${novelId}/paperback`)}`}
+                  href={`/sign-in?redirect_url=${encodeURIComponent(`/novel/${novelId}/paperback`)}`}
                   className="text-primary border-b border-primary/50 pb-0.5 hover:opacity-90"
                 >
                   Sign in
@@ -234,7 +234,7 @@ export function PaperbackClient({
         ) : (
           <p className="font-literata text-white/50 text-sm text-center max-w-sm">
             <Link
-              href={`/auth/login?returnUrl=${encodeURIComponent(`/novel/${novelId}/paperback`)}`}
+              href={`/sign-in?redirect_url=${encodeURIComponent(`/novel/${novelId}/paperback`)}`}
               className="text-primary border-b border-primary/50 pb-0.5 hover:opacity-90"
             >
               Sign in

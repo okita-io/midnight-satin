@@ -50,7 +50,7 @@ export function NovelReviewComposer({
   }
 
   if (!isAuthenticated) {
-    const loginHref = `/auth/login?returnUrl=${encodeURIComponent(returnPath)}`;
+    const loginHref = `/sign-in?redirect_url=${encodeURIComponent(returnPath)}`;
     return (
       <div className="rounded-sm border border-primary/15 bg-white/[0.02] p-4 xs:p-5">
         <p className="font-body text-sm text-text-muted mb-4">
