@@ -1,0 +1,2318 @@
+{
+  "version": "2.14",
+  "children": [
+    {
+      "type": "frame",
+      "id": "artboard-novel-mobile",
+      "x": 0,
+      "y": 0,
+      "name": "Novel Detail — the_novel_detail.html",
+      "clip": true,
+      "width": 390,
+      "height": 1300,
+      "fill": "$color.void",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "nm-hero",
+          "clip": true,
+          "width": "fill_container",
+          "height": 520,
+          "layout": "none",
+          "children": [
+            {
+              "type": "rectangle",
+              "id": "nm-hero-img",
+              "x": 0,
+              "y": 0,
+              "fill": {
+                "type": "image",
+                "enabled": true,
+                "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuAZLFshGrt-9VzdgoLr_YSD6LQIfC_hDjB67E_sBkvBMI3pHTwDpEPLyT-gJoBP_rtfgk_xnkxuuUPMnJ9FGzqaYKK3NgWowdAT1a32kz7B1ybc7db9pioswAapIFGhoqAk7pjaty9sAZZFSSpemNDh2VLzQpTGwXS8ggo6SLEzFXl0dht6ZWedDKltKmdD4flMhDqk_8CjXcoKESu7UpaXEdRgZV2kgPPO31O1yVVpkPverUUwaE0AaU91rUaemKSx7-6f26NKe8",
+                "mode": "fill"
+              },
+              "width": 390,
+              "height": 520
+            },
+            {
+              "type": "rectangle",
+              "id": "nm-hero-grad-b",
+              "x": 0,
+              "y": 0,
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 180,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#05050500",
+                    "position": 0.2
+                  },
+                  {
+                    "color": "#05050599",
+                    "position": 0.55
+                  },
+                  {
+                    "color": "#050505",
+                    "position": 1
+                  }
+                ]
+              },
+              "width": 390,
+              "height": 520
+            },
+            {
+              "type": "rectangle",
+              "id": "nm-hero-grad-t",
+              "x": 0,
+              "y": 0,
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 0,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#05050599",
+                    "position": 0
+                  },
+                  {
+                    "color": "#05050500",
+                    "position": 1
+                  }
+                ]
+              },
+              "width": 390,
+              "height": 120
+            },
+            {
+              "type": "frame",
+              "id": "nm-top",
+              "x": 0,
+              "y": 0,
+              "width": 390,
+              "height": 56,
+              "padding": [
+                8,
+                16
+              ],
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nm-back",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nm-back-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "arrow_back",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "nm-top-right",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nm-bm",
+                      "width": 22,
+                      "height": 22,
+                      "icon": "bookmark",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF"
+                    },
+                    {
+                      "type": "icon",
+                      "id": "nm-share",
+                      "width": 22,
+                      "height": 22,
+                      "icon": "share",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nm-hero-copy",
+              "x": 0,
+              "y": 200,
+              "width": 390,
+              "layout": "vertical",
+              "gap": 10,
+              "padding": [
+                0,
+                24,
+                28,
+                24
+              ],
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "nm-kicker",
+                  "fill": "#FFFFFF",
+                  "content": "Editor's Pick",
+                  "fontFamily": "Cinzel",
+                  "fontSize": 10,
+                  "fontWeight": "normal",
+                  "letterSpacing": 3
+                },
+                {
+                  "type": "text",
+                  "id": "nm-title",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": 340,
+                  "content": "The Duke's Secret",
+                  "textAlign": "center",
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 34,
+                  "fontWeight": "700",
+                  "fontStyle": "italic"
+                },
+                {
+                  "type": "text",
+                  "id": "nm-author",
+                  "fill": "#FFFFFF",
+                  "content": "By Elena Vane",
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 15,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "nm-stars",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nm-s1",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "star",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "$color.primary"
+                    },
+                    {
+                      "type": "icon",
+                      "id": "nm-s2",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "star",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "$color.primary"
+                    },
+                    {
+                      "type": "icon",
+                      "id": "nm-s3",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "star",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "$color.primary"
+                    },
+                    {
+                      "type": "icon",
+                      "id": "nm-s4",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "star",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "$color.primary"
+                    },
+                    {
+                      "type": "icon",
+                      "id": "nm-s5",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "star_half",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "$color.primary"
+                    },
+                    {
+                      "type": "text",
+                      "id": "nm-reviews",
+                      "fill": "#FFFFFFCC",
+                      "content": "(4.8k reviews)",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "nm-cta",
+                  "height": 44,
+                  "fill": "$color.primary",
+                  "cornerRadius": 2,
+                  "padding": [
+                    12,
+                    28
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nm-cta-label",
+                      "fill": "$color.void",
+                      "content": "START READING",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 13,
+                      "fontWeight": "700",
+                      "letterSpacing": 2
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "nm-tags",
+                  "gap": 8,
+                  "justifyContent": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "nm-tag-0",
+                      "fill": "#05050580",
+                      "cornerRadius": 2,
+                      "padding": [
+                        4,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nm-tag-0-t",
+                          "fill": "$color.primary",
+                          "content": "Historical",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 10,
+                          "fontWeight": "normal",
+                          "letterSpacing": 1.5
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nm-tag-1",
+                      "fill": "#05050580",
+                      "cornerRadius": 2,
+                      "padding": [
+                        4,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nm-tag-1-t",
+                          "fill": "$color.primary",
+                          "content": "Spicy",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 10,
+                          "fontWeight": "normal",
+                          "letterSpacing": 1.5
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nm-tag-2",
+                      "fill": "#05050580",
+                      "cornerRadius": 2,
+                      "padding": [
+                        4,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nm-tag-2-t",
+                          "fill": "$color.primary",
+                          "content": "Slow Burn",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 10,
+                          "fontWeight": "normal",
+                          "letterSpacing": 1.5
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "nm-synopsis",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 8,
+          "padding": [
+            8,
+            24,
+            16,
+            24
+          ],
+          "children": [
+            {
+              "type": "text",
+              "id": "nm-syn-b",
+              "fill": "#EAEAEAE6",
+              "textGrowth": "fixed-width",
+              "width": 342,
+              "content": "In the heart of London's foggy streets, a scandal brews that threatens to tear the aristocracy apart. Lady Rose never intended to fall for the one man she was forbidden to touch, but destiny has a cruel sense of humor.",
+              "lineHeight": 1.55,
+              "fontFamily": "Literata",
+              "fontSize": 15,
+              "fontWeight": "normal"
+            },
+            {
+              "type": "frame",
+              "id": "nm-read-more",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "nm-read-more-t",
+                  "fill": "$color.primary",
+                  "content": "Read More",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 12,
+                  "fontWeight": "700",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "icon",
+                  "id": "nm-read-more-i",
+                  "width": 16,
+                  "height": 16,
+                  "icon": "expand_more",
+                  "library": "Material Symbols Outlined",
+                  "weight": 400,
+                  "fill": "$color.primary"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "nm-players",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 16,
+          "padding": [
+            8,
+            24
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "nm-players-h",
+              "width": "fill_container",
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "nm-players-h-title",
+                  "fill": "#FFFFFFE6",
+                  "content": "The Players",
+                  "fontFamily": "Cinzel",
+                  "fontSize": 13,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "nm-players-h-view-all",
+                  "fill": "$color.primary",
+                  "content": "View All",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "normal",
+                  "letterSpacing": 3
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nm-players-row",
+              "width": "fill_container",
+              "gap": 16,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nm-player-Alistair",
+                  "width": 72,
+                  "layout": "vertical",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "nm-player-Alistair-av",
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuB34Y59SvzxA3ZGoahQD_NH_QOje2VSfafbDZx6H5tFhGUMRnto93NRMqRDeIWkFqzedvCgAdk3gsyL1ilzhrGLLK2mmo723bjDyVN8fkuB4VGNyyQP725iqLPlmP_WjsByw3JOHovoyLVtN9JMmypRQHpc55w3Fnin4_mvox6RsUUZN7QNf_O05K5SXlyUJUHSqMYnD0-hxxlK49IcU6pFp4XB7alVtNmRImMFF-jpRcq0aOmjKnAmJNqkI3YlHXafufIi8QiTnZQ",
+                        "mode": "fill"
+                      },
+                      "width": 64,
+                      "height": 64
+                    },
+                    {
+                      "type": "text",
+                      "id": "nm-player-Alistair-n",
+                      "fill": "$color.textMain",
+                      "textGrowth": "fixed-width",
+                      "width": 72,
+                      "content": "Alistair",
+                      "textAlign": "center",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "nm-player-Rose",
+                  "width": 72,
+                  "layout": "vertical",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "nm-player-Rose-av",
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuB34Y59SvzxA3ZGoahQD_NH_QOje2VSfafbDZx6H5tFhGUMRnto93NRMqRDeIWkFqzedvCgAdk3gsyL1ilzhrGLLK2mmo723bjDyVN8fkuB4VGNyyQP725iqLPlmP_WjsByw3JOHovoyLVtN9JMmypRQHpc55w3Fnin4_mvox6RsUUZN7QNf_O05K5SXlyUJUHSqMYnD0-hxxlK49IcU6pFp4XB7alVtNmRImMFF-jpRcq0aOmjKnAmJNqkI3YlHXafufIi8QiTnZQ",
+                        "mode": "fill"
+                      },
+                      "width": 64,
+                      "height": 64
+                    },
+                    {
+                      "type": "text",
+                      "id": "nm-player-Rose-n",
+                      "fill": "$color.textMain",
+                      "textGrowth": "fixed-width",
+                      "width": 72,
+                      "content": "Rose",
+                      "textAlign": "center",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "nm-player-Henry",
+                  "width": 72,
+                  "layout": "vertical",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "nm-player-Henry-av",
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuB34Y59SvzxA3ZGoahQD_NH_QOje2VSfafbDZx6H5tFhGUMRnto93NRMqRDeIWkFqzedvCgAdk3gsyL1ilzhrGLLK2mmo723bjDyVN8fkuB4VGNyyQP725iqLPlmP_WjsByw3JOHovoyLVtN9JMmypRQHpc55w3Fnin4_mvox6RsUUZN7QNf_O05K5SXlyUJUHSqMYnD0-hxxlK49IcU6pFp4XB7alVtNmRImMFF-jpRcq0aOmjKnAmJNqkI3YlHXafufIi8QiTnZQ",
+                        "mode": "fill"
+                      },
+                      "width": 64,
+                      "height": 64
+                    },
+                    {
+                      "type": "text",
+                      "id": "nm-player-Henry-n",
+                      "fill": "$color.textMain",
+                      "textGrowth": "fixed-width",
+                      "width": 72,
+                      "content": "Henry",
+                      "textAlign": "center",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "nm-player-Dowager",
+                  "width": 72,
+                  "layout": "vertical",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "ellipse",
+                      "id": "nm-player-Dowager-av",
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuB34Y59SvzxA3ZGoahQD_NH_QOje2VSfafbDZx6H5tFhGUMRnto93NRMqRDeIWkFqzedvCgAdk3gsyL1ilzhrGLLK2mmo723bjDyVN8fkuB4VGNyyQP725iqLPlmP_WjsByw3JOHovoyLVtN9JMmypRQHpc55w3Fnin4_mvox6RsUUZN7QNf_O05K5SXlyUJUHSqMYnD0-hxxlK49IcU6pFp4XB7alVtNmRImMFF-jpRcq0aOmjKnAmJNqkI3YlHXafufIi8QiTnZQ",
+                        "mode": "fill"
+                      },
+                      "width": 64,
+                      "height": 64
+                    },
+                    {
+                      "type": "text",
+                      "id": "nm-player-Dowager-n",
+                      "fill": "$color.textMain",
+                      "textGrowth": "fixed-width",
+                      "width": 72,
+                      "content": "Dowager",
+                      "textAlign": "center",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "nm-chapters",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 4,
+          "padding": [
+            8,
+            24,
+            16,
+            24
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "nm-ch-head",
+              "width": "fill_container",
+              "padding": [
+                0,
+                0,
+                8,
+                0
+              ],
+              "justifyContent": "space_between",
+              "alignItems": "end",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nm-ch-h",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nm-ch-h-text",
+                      "fill": "$color.textMuted",
+                      "content": "Contents",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 11,
+                      "fontWeight": "normal",
+                      "letterSpacing": 3
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "nm-ch-h-rule",
+                      "fill": "#FFFFFF14",
+                      "width": "fill_container",
+                      "height": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "nm-ch-counts",
+                  "gap": 12,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nm-ch-free",
+                      "fill": "#D4AF3799",
+                      "content": "5 Free Chapters",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 10,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1.5
+                    },
+                    {
+                      "type": "text",
+                      "id": "nm-ch-locked",
+                      "fill": "#D4AF3799",
+                      "content": "20 Locked",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 10,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1.5
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nm-ch-1",
+              "width": "fill_container",
+              "padding": [
+                16,
+                0
+              ],
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nm-ch-1-copy",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nm-ch-1-roman",
+                      "fill": "$color.primary",
+                      "content": "Chapter I",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 10,
+                      "fontWeight": "700",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "nm-ch-1-title",
+                      "fill": "$color.textMain",
+                      "textGrowth": "fixed-width",
+                      "width": 240,
+                      "content": "The Midnight Ball",
+                      "fontFamily": "Playfair Display",
+                      "fontSize": 16,
+                      "fontWeight": "normal",
+                      "fontStyle": "italic"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "nm-ch-1-meta",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nm-ch-1-b",
+                      "fill": "$color.textMuted",
+                      "content": "Free",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "icon",
+                      "id": "nm-ch-1-chev",
+                      "width": 20,
+                      "height": 20,
+                      "icon": "chevron_right",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF55"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nm-ch-2",
+              "width": "fill_container",
+              "padding": [
+                16,
+                0
+              ],
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nm-ch-2-copy",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nm-ch-2-roman",
+                      "fill": "$color.primary",
+                      "content": "Chapter II",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 10,
+                      "fontWeight": "700",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "nm-ch-2-title",
+                      "fill": "$color.textMain",
+                      "textGrowth": "fixed-width",
+                      "width": 240,
+                      "content": "A Stolen Glance",
+                      "fontFamily": "Playfair Display",
+                      "fontSize": 16,
+                      "fontWeight": "normal",
+                      "fontStyle": "italic"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "nm-ch-2-meta",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nm-ch-2-b",
+                      "fill": "$color.textMuted",
+                      "content": "Free",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 11,
+                      "fontWeight": "normal"
+                    },
+                    {
+                      "type": "icon",
+                      "id": "nm-ch-2-chev",
+                      "width": 20,
+                      "height": 20,
+                      "icon": "chevron_right",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF55"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nm-ch-3",
+              "width": "fill_container",
+              "padding": [
+                16,
+                0
+              ],
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nm-ch-3-copy",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nm-ch-3-roman",
+                      "fill": "$color.textMuted",
+                      "content": "Chapter III",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 10,
+                      "fontWeight": "700",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "nm-ch-3-title",
+                      "fill": "$color.textMuted",
+                      "textGrowth": "fixed-width",
+                      "width": 240,
+                      "content": "Whispers in the Dark",
+                      "fontFamily": "Playfair Display",
+                      "fontSize": 16,
+                      "fontWeight": "normal",
+                      "fontStyle": "italic"
+                    }
+                  ]
+                },
+                {
+                  "type": "icon",
+                  "id": "nm-ch-3-lock",
+                  "width": 18,
+                  "height": 18,
+                  "icon": "lock",
+                  "library": "Material Symbols Outlined",
+                  "weight": 400,
+                  "fill": "$color.primary"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nm-ch-4",
+              "width": "fill_container",
+              "padding": [
+                16,
+                0
+              ],
+              "justifyContent": "space_between",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nm-ch-4-copy",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nm-ch-4-roman",
+                      "fill": "$color.textMuted",
+                      "content": "Chapter IV",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 10,
+                      "fontWeight": "700",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "text",
+                      "id": "nm-ch-4-title",
+                      "fill": "$color.textMuted",
+                      "textGrowth": "fixed-width",
+                      "width": 240,
+                      "content": "The Letter",
+                      "fontFamily": "Playfair Display",
+                      "fontSize": 16,
+                      "fontWeight": "normal",
+                      "fontStyle": "italic"
+                    }
+                  ]
+                },
+                {
+                  "type": "icon",
+                  "id": "nm-ch-4-lock",
+                  "width": 18,
+                  "height": 18,
+                  "icon": "lock",
+                  "library": "Material Symbols Outlined",
+                  "weight": 400,
+                  "fill": "$color.primary"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "nm-bottom-nav",
+          "width": "fill_container",
+          "height": 96,
+          "fill": "$color.navBg",
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#000000CC",
+            "offset": {
+              "x": 0,
+              "y": -10
+            },
+            "blur": 40
+          },
+          "padding": [
+            16,
+            24,
+            28,
+            24
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "end",
+          "children": [
+            {
+              "type": "frame",
+              "id": "nm-tab-home",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nm-tab-home-icon-wrap",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nm-tab-home-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "history_edu",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nm-tab-home-label",
+                  "fill": "$color.textMuted",
+                  "content": "Boudoir",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nm-tab-library",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nm-tab-library-icon-wrap",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nm-tab-library-icon",
+                      "width": 28,
+                      "height": 28,
+                      "icon": "local_library",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "$color.primary"
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "nm-tab-library-dot",
+                      "fill": "$color.primary",
+                      "width": 4,
+                      "height": 4
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nm-tab-library-label",
+                  "fill": "$color.primary",
+                  "content": "Library",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nm-tab-vault",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nm-tab-vault-icon-wrap",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nm-tab-vault-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "storefront",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nm-tab-vault-label",
+                  "fill": "$color.textMuted",
+                  "content": "Vault",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nm-tab-profile",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nm-tab-profile-icon-wrap",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nm-tab-profile-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "person_3",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nm-tab-profile-label",
+                  "fill": "$color.textMuted",
+                  "content": "Profile",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "artboard-novel-tablet",
+      "x": 470,
+      "y": 0,
+      "name": "Novel Detail — the_novel_detail_tablet.html",
+      "context": "Two-column: cover+cta | synopsis+players+contents. Width 834.",
+      "clip": true,
+      "width": 834,
+      "height": 1100,
+      "fill": "$color.void",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "nt-top",
+          "width": "fill_container",
+          "height": 56,
+          "padding": [
+            8,
+            16
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "nt-back",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "nt-back-icon",
+                  "width": 24,
+                  "height": 24,
+                  "icon": "arrow_back",
+                  "library": "Material Symbols Outlined",
+                  "weight": 400,
+                  "fill": "#FFFFFF"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nt-top-right",
+              "gap": 12,
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "nt-bm",
+                  "width": 22,
+                  "height": 22,
+                  "icon": "bookmark",
+                  "library": "Material Symbols Outlined",
+                  "weight": 400,
+                  "fill": "#FFFFFF"
+                },
+                {
+                  "type": "icon",
+                  "id": "nt-share",
+                  "width": 22,
+                  "height": 22,
+                  "icon": "share",
+                  "library": "Material Symbols Outlined",
+                  "weight": 400,
+                  "fill": "#FFFFFF"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "nt-grid",
+          "width": "fill_container",
+          "gap": 32,
+          "padding": [
+            16,
+            32,
+            24,
+            32
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "nt-left",
+              "width": 360,
+              "layout": "vertical",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nt-cover-wrap",
+                  "clip": true,
+                  "width": "fill_container",
+                  "height": 480,
+                  "cornerRadius": 4,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "id": "nt-cover",
+                      "x": 0,
+                      "y": 0,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuD3OsDyhnFqXzSJHKxU3VZLgnIZx6jvMhqJ2FHlA43Mgn74OXo5m5VKtoHeCvGEkRzvuhfunKedZMPeUb6AAwq0H-pCxJX1Z0uS14BwJD9oB-WfI5MIRb7nQUcrogEYUvoiuXBfC4hwKnM5OrbxSnYNmzlIZY51QtT0oGQMDntm7E1PLGh2POZV4wSwUwKmdCaBBAPnqjWQrFAU0W7KijPd0W5mDAj14bwUkG-E8HVPn6gpy0K1FdFBwzv8nUXLJVdQhRwB_ZfcIa0",
+                        "mode": "fill"
+                      },
+                      "width": 360,
+                      "height": 480
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "nt-cover-grad",
+                      "x": 0,
+                      "y": 240,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 0,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#05050500",
+                            "position": 0
+                          },
+                          {
+                            "color": "#050505F5",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "width": 360,
+                      "height": 240
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nt-cover-meta",
+                      "x": 24,
+                      "y": 280,
+                      "width": 312,
+                      "layout": "vertical",
+                      "gap": 8,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nt-kicker",
+                          "fill": "#FFFFFF",
+                          "content": "Editor's Pick",
+                          "fontFamily": "Cinzel",
+                          "fontSize": 10,
+                          "fontWeight": "normal",
+                          "letterSpacing": 3
+                        },
+                        {
+                          "type": "text",
+                          "id": "nt-title",
+                          "fill": "#FFFFFF",
+                          "textGrowth": "fixed-width",
+                          "width": 312,
+                          "content": "The Duke's Secret",
+                          "textAlign": "center",
+                          "fontFamily": "Playfair Display",
+                          "fontSize": 28,
+                          "fontWeight": "700",
+                          "fontStyle": "italic"
+                        },
+                        {
+                          "type": "text",
+                          "id": "nt-author",
+                          "fill": "#FFFFFF",
+                          "content": "By Elena Vane",
+                          "fontFamily": "Playfair Display",
+                          "fontSize": 14,
+                          "fontWeight": "normal"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "nt-stars",
+                          "gap": 4,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "nt-s1",
+                              "width": 18,
+                              "height": 18,
+                              "icon": "star",
+                              "library": "Material Symbols Outlined",
+                              "weight": 400,
+                              "fill": "$color.primary"
+                            },
+                            {
+                              "type": "icon",
+                              "id": "nt-s2",
+                              "width": 18,
+                              "height": 18,
+                              "icon": "star",
+                              "library": "Material Symbols Outlined",
+                              "weight": 400,
+                              "fill": "$color.primary"
+                            },
+                            {
+                              "type": "icon",
+                              "id": "nt-s3",
+                              "width": 18,
+                              "height": 18,
+                              "icon": "star",
+                              "library": "Material Symbols Outlined",
+                              "weight": 400,
+                              "fill": "$color.primary"
+                            },
+                            {
+                              "type": "icon",
+                              "id": "nt-s4",
+                              "width": 18,
+                              "height": 18,
+                              "icon": "star",
+                              "library": "Material Symbols Outlined",
+                              "weight": 400,
+                              "fill": "$color.primary"
+                            },
+                            {
+                              "type": "icon",
+                              "id": "nt-s5",
+                              "width": 18,
+                              "height": 18,
+                              "icon": "star_half",
+                              "library": "Material Symbols Outlined",
+                              "weight": 400,
+                              "fill": "$color.primary"
+                            },
+                            {
+                              "type": "text",
+                              "id": "nt-reviews",
+                              "fill": "#FFFFFFCC",
+                              "content": "(4.8k reviews)",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "nt-cta",
+                          "height": 44,
+                          "fill": "$color.primary",
+                          "cornerRadius": 2,
+                          "padding": [
+                            12,
+                            28
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "nt-cta-label",
+                              "fill": "$color.void",
+                              "content": "START READING",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 13,
+                              "fontWeight": "700",
+                              "letterSpacing": 2
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "nt-tags",
+                  "gap": 8,
+                  "justifyContent": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "nt-tag-0",
+                      "fill": "#05050580",
+                      "cornerRadius": 2,
+                      "padding": [
+                        4,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nt-tag-0-t",
+                          "fill": "$color.primary",
+                          "content": "Historical",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 10,
+                          "fontWeight": "normal",
+                          "letterSpacing": 1.5
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nt-tag-1",
+                      "fill": "#05050580",
+                      "cornerRadius": 2,
+                      "padding": [
+                        4,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nt-tag-1-t",
+                          "fill": "$color.primary",
+                          "content": "Spicy",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 10,
+                          "fontWeight": "normal",
+                          "letterSpacing": 1.5
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nt-tag-2",
+                      "fill": "#05050580",
+                      "cornerRadius": 2,
+                      "padding": [
+                        4,
+                        12
+                      ],
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nt-tag-2-t",
+                          "fill": "$color.primary",
+                          "content": "Slow Burn",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 10,
+                          "fontWeight": "normal",
+                          "letterSpacing": 1.5
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nt-right",
+              "width": "fill_container",
+              "layout": "vertical",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "text",
+                  "id": "nt-syn-b",
+                  "fill": "$color.textMain",
+                  "textGrowth": "fixed-width",
+                  "width": 312,
+                  "content": "In the heart of London's foggy streets, a scandal brews that threatens to tear the aristocracy apart. Lady Rose never intended to fall for the one man she was forbidden to touch, but destiny has a cruel sense of humor.",
+                  "lineHeight": 1.55,
+                  "fontFamily": "Literata",
+                  "fontSize": 15,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "nt-players",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 16,
+                  "padding": [
+                    8,
+                    24
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "nt-players-h",
+                      "width": "fill_container",
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nt-players-h-title",
+                          "fill": "#FFFFFFE6",
+                          "content": "The Players",
+                          "fontFamily": "Cinzel",
+                          "fontSize": 13,
+                          "fontWeight": "500",
+                          "letterSpacing": 2
+                        },
+                        {
+                          "type": "text",
+                          "id": "nt-players-h-view-all",
+                          "fill": "$color.primary",
+                          "content": "View All",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 10,
+                          "fontWeight": "normal",
+                          "letterSpacing": 3
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nt-players-row",
+                      "width": "fill_container",
+                      "gap": 16,
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "nt-player-Alistair",
+                          "width": 72,
+                          "layout": "vertical",
+                          "gap": 8,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "ellipse",
+                              "id": "nt-player-Alistair-av",
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuB34Y59SvzxA3ZGoahQD_NH_QOje2VSfafbDZx6H5tFhGUMRnto93NRMqRDeIWkFqzedvCgAdk3gsyL1ilzhrGLLK2mmo723bjDyVN8fkuB4VGNyyQP725iqLPlmP_WjsByw3JOHovoyLVtN9JMmypRQHpc55w3Fnin4_mvox6RsUUZN7QNf_O05K5SXlyUJUHSqMYnD0-hxxlK49IcU6pFp4XB7alVtNmRImMFF-jpRcq0aOmjKnAmJNqkI3YlHXafufIi8QiTnZQ",
+                                "mode": "fill"
+                              },
+                              "width": 64,
+                              "height": 64
+                            },
+                            {
+                              "type": "text",
+                              "id": "nt-player-Alistair-n",
+                              "fill": "$color.textMain",
+                              "textGrowth": "fixed-width",
+                              "width": 72,
+                              "content": "Alistair",
+                              "textAlign": "center",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "nt-player-Rose",
+                          "width": 72,
+                          "layout": "vertical",
+                          "gap": 8,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "ellipse",
+                              "id": "nt-player-Rose-av",
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuB34Y59SvzxA3ZGoahQD_NH_QOje2VSfafbDZx6H5tFhGUMRnto93NRMqRDeIWkFqzedvCgAdk3gsyL1ilzhrGLLK2mmo723bjDyVN8fkuB4VGNyyQP725iqLPlmP_WjsByw3JOHovoyLVtN9JMmypRQHpc55w3Fnin4_mvox6RsUUZN7QNf_O05K5SXlyUJUHSqMYnD0-hxxlK49IcU6pFp4XB7alVtNmRImMFF-jpRcq0aOmjKnAmJNqkI3YlHXafufIi8QiTnZQ",
+                                "mode": "fill"
+                              },
+                              "width": 64,
+                              "height": 64
+                            },
+                            {
+                              "type": "text",
+                              "id": "nt-player-Rose-n",
+                              "fill": "$color.textMain",
+                              "textGrowth": "fixed-width",
+                              "width": 72,
+                              "content": "Rose",
+                              "textAlign": "center",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "nt-player-Henry",
+                          "width": 72,
+                          "layout": "vertical",
+                          "gap": 8,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "ellipse",
+                              "id": "nt-player-Henry-av",
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuB34Y59SvzxA3ZGoahQD_NH_QOje2VSfafbDZx6H5tFhGUMRnto93NRMqRDeIWkFqzedvCgAdk3gsyL1ilzhrGLLK2mmo723bjDyVN8fkuB4VGNyyQP725iqLPlmP_WjsByw3JOHovoyLVtN9JMmypRQHpc55w3Fnin4_mvox6RsUUZN7QNf_O05K5SXlyUJUHSqMYnD0-hxxlK49IcU6pFp4XB7alVtNmRImMFF-jpRcq0aOmjKnAmJNqkI3YlHXafufIi8QiTnZQ",
+                                "mode": "fill"
+                              },
+                              "width": 64,
+                              "height": 64
+                            },
+                            {
+                              "type": "text",
+                              "id": "nt-player-Henry-n",
+                              "fill": "$color.textMain",
+                              "textGrowth": "fixed-width",
+                              "width": 72,
+                              "content": "Henry",
+                              "textAlign": "center",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "nt-player-Dowager",
+                          "width": 72,
+                          "layout": "vertical",
+                          "gap": 8,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "ellipse",
+                              "id": "nt-player-Dowager-av",
+                              "fill": {
+                                "type": "image",
+                                "enabled": true,
+                                "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuB34Y59SvzxA3ZGoahQD_NH_QOje2VSfafbDZx6H5tFhGUMRnto93NRMqRDeIWkFqzedvCgAdk3gsyL1ilzhrGLLK2mmo723bjDyVN8fkuB4VGNyyQP725iqLPlmP_WjsByw3JOHovoyLVtN9JMmypRQHpc55w3Fnin4_mvox6RsUUZN7QNf_O05K5SXlyUJUHSqMYnD0-hxxlK49IcU6pFp4XB7alVtNmRImMFF-jpRcq0aOmjKnAmJNqkI3YlHXafufIi8QiTnZQ",
+                                "mode": "fill"
+                              },
+                              "width": 64,
+                              "height": 64
+                            },
+                            {
+                              "type": "text",
+                              "id": "nt-player-Dowager-n",
+                              "fill": "$color.textMain",
+                              "textGrowth": "fixed-width",
+                              "width": 72,
+                              "content": "Dowager",
+                              "textAlign": "center",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "nt-chapters",
+                  "width": "fill_container",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    8,
+                    24,
+                    16,
+                    24
+                  ],
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "nt-ch-head",
+                      "width": "fill_container",
+                      "padding": [
+                        0,
+                        0,
+                        8,
+                        0
+                      ],
+                      "justifyContent": "space_between",
+                      "alignItems": "end",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "nt-ch-h",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 8,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "nt-ch-h-text",
+                              "fill": "$color.textMuted",
+                              "content": "Contents",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 11,
+                              "fontWeight": "normal",
+                              "letterSpacing": 3
+                            },
+                            {
+                              "type": "rectangle",
+                              "id": "nt-ch-h-rule",
+                              "fill": "#FFFFFF14",
+                              "width": "fill_container",
+                              "height": 1
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "nt-ch-counts",
+                          "gap": 12,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "nt-ch-free",
+                              "fill": "#D4AF3799",
+                              "content": "5 Free Chapters",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 10,
+                              "fontWeight": "normal",
+                              "letterSpacing": 1.5
+                            },
+                            {
+                              "type": "text",
+                              "id": "nt-ch-locked",
+                              "fill": "#D4AF3799",
+                              "content": "20 Locked",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 10,
+                              "fontWeight": "normal",
+                              "letterSpacing": 1.5
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nt-ch-1",
+                      "width": "fill_container",
+                      "padding": [
+                        16,
+                        0
+                      ],
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "nt-ch-1-copy",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "nt-ch-1-roman",
+                              "fill": "$color.primary",
+                              "content": "Chapter I",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 10,
+                              "fontWeight": "700",
+                              "letterSpacing": 2
+                            },
+                            {
+                              "type": "text",
+                              "id": "nt-ch-1-title",
+                              "fill": "$color.textMain",
+                              "textGrowth": "fixed-width",
+                              "width": 240,
+                              "content": "The Midnight Ball",
+                              "fontFamily": "Playfair Display",
+                              "fontSize": 16,
+                              "fontWeight": "normal",
+                              "fontStyle": "italic"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "nt-ch-1-meta",
+                          "gap": 8,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "nt-ch-1-b",
+                              "fill": "$color.textMuted",
+                              "content": "Free",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "icon",
+                              "id": "nt-ch-1-chev",
+                              "width": 20,
+                              "height": 20,
+                              "icon": "chevron_right",
+                              "library": "Material Symbols Outlined",
+                              "weight": 400,
+                              "fill": "#FFFFFF55"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nt-ch-2",
+                      "width": "fill_container",
+                      "padding": [
+                        16,
+                        0
+                      ],
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "nt-ch-2-copy",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "nt-ch-2-roman",
+                              "fill": "$color.primary",
+                              "content": "Chapter II",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 10,
+                              "fontWeight": "700",
+                              "letterSpacing": 2
+                            },
+                            {
+                              "type": "text",
+                              "id": "nt-ch-2-title",
+                              "fill": "$color.textMain",
+                              "textGrowth": "fixed-width",
+                              "width": 240,
+                              "content": "A Stolen Glance",
+                              "fontFamily": "Playfair Display",
+                              "fontSize": 16,
+                              "fontWeight": "normal",
+                              "fontStyle": "italic"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "frame",
+                          "id": "nt-ch-2-meta",
+                          "gap": 8,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "nt-ch-2-b",
+                              "fill": "$color.textMuted",
+                              "content": "Free",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 11,
+                              "fontWeight": "normal"
+                            },
+                            {
+                              "type": "icon",
+                              "id": "nt-ch-2-chev",
+                              "width": 20,
+                              "height": 20,
+                              "icon": "chevron_right",
+                              "library": "Material Symbols Outlined",
+                              "weight": 400,
+                              "fill": "#FFFFFF55"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nt-ch-3",
+                      "width": "fill_container",
+                      "padding": [
+                        16,
+                        0
+                      ],
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "nt-ch-3-copy",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "nt-ch-3-roman",
+                              "fill": "$color.textMuted",
+                              "content": "Chapter III",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 10,
+                              "fontWeight": "700",
+                              "letterSpacing": 2
+                            },
+                            {
+                              "type": "text",
+                              "id": "nt-ch-3-title",
+                              "fill": "$color.textMuted",
+                              "textGrowth": "fixed-width",
+                              "width": 240,
+                              "content": "Whispers in the Dark",
+                              "fontFamily": "Playfair Display",
+                              "fontSize": 16,
+                              "fontWeight": "normal",
+                              "fontStyle": "italic"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "icon",
+                          "id": "nt-ch-3-lock",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "lock",
+                          "library": "Material Symbols Outlined",
+                          "weight": 400,
+                          "fill": "$color.primary"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nt-ch-4",
+                      "width": "fill_container",
+                      "padding": [
+                        16,
+                        0
+                      ],
+                      "justifyContent": "space_between",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "nt-ch-4-copy",
+                          "width": "fill_container",
+                          "layout": "vertical",
+                          "gap": 4,
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "nt-ch-4-roman",
+                              "fill": "$color.textMuted",
+                              "content": "Chapter IV",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 10,
+                              "fontWeight": "700",
+                              "letterSpacing": 2
+                            },
+                            {
+                              "type": "text",
+                              "id": "nt-ch-4-title",
+                              "fill": "$color.textMuted",
+                              "textGrowth": "fixed-width",
+                              "width": 240,
+                              "content": "The Letter",
+                              "fontFamily": "Playfair Display",
+                              "fontSize": 16,
+                              "fontWeight": "normal",
+                              "fontStyle": "italic"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "icon",
+                          "id": "nt-ch-4-lock",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "lock",
+                          "library": "Material Symbols Outlined",
+                          "weight": 400,
+                          "fill": "$color.primary"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "nt-bottom-nav",
+          "width": "fill_container",
+          "height": 96,
+          "fill": "$color.navBg",
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#000000CC",
+            "offset": {
+              "x": 0,
+              "y": -10
+            },
+            "blur": 40
+          },
+          "padding": [
+            16,
+            24,
+            28,
+            24
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "end",
+          "children": [
+            {
+              "type": "frame",
+              "id": "nt-tab-home",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nt-tab-home-icon-wrap",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nt-tab-home-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "history_edu",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nt-tab-home-label",
+                  "fill": "$color.textMuted",
+                  "content": "Boudoir",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nt-tab-library",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nt-tab-library-icon-wrap",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nt-tab-library-icon",
+                      "width": 28,
+                      "height": 28,
+                      "icon": "local_library",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "$color.primary"
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "nt-tab-library-dot",
+                      "fill": "$color.primary",
+                      "width": 4,
+                      "height": 4
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nt-tab-library-label",
+                  "fill": "$color.primary",
+                  "content": "Library",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nt-tab-vault",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nt-tab-vault-icon-wrap",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nt-tab-vault-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "storefront",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nt-tab-vault-label",
+                  "fill": "$color.textMuted",
+                  "content": "Vault",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nt-tab-profile",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nt-tab-profile-icon-wrap",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nt-tab-profile-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "person_3",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nt-tab-profile-label",
+                  "fill": "$color.textMuted",
+                  "content": "Profile",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "color.primary": {
+      "type": "color",
+      "value": "#D4AF37"
+    },
+    "color.void": {
+      "type": "color",
+      "value": "#050505"
+    },
+    "color.surface": {
+      "type": "color",
+      "value": "#121212"
+    },
+    "color.surfaceHighlight": {
+      "type": "color",
+      "value": "#1A1A1A"
+    },
+    "color.textMain": {
+      "type": "color",
+      "value": "#EAEAEA"
+    },
+    "color.textMuted": {
+      "type": "color",
+      "value": "#8A8A8A"
+    },
+    "color.accent": {
+      "type": "color",
+      "value": "#800020"
+    },
+    "color.navBg": {
+      "type": "color",
+      "value": "#080808"
+    },
+    "font.display": {
+      "type": "string",
+      "value": "Playfair Display"
+    },
+    "font.header": {
+      "type": "string",
+      "value": "Cinzel"
+    },
+    "font.heading": {
+      "type": "string",
+      "value": "Cinzel"
+    },
+    "font.body": {
+      "type": "string",
+      "value": "Literata"
+    },
+    "font.ui": {
+      "type": "string",
+      "value": "Marcellus"
+    },
+    "font.script": {
+      "type": "string",
+      "value": "Pinyon Script"
+    },
+    "radius.card": {
+      "type": "number",
+      "value": 2
+    },
+    "radius.input": {
+      "type": "number",
+      "value": 0
+    },
+    "radius.modal": {
+      "type": "number",
+      "value": 4
+    },
+    "shadow.card.offsetY": {
+      "type": "number",
+      "value": 10
+    },
+    "shadow.card.blur": {
+      "type": "number",
+      "value": 30
+    },
+    "shadow.modalGlow.blur": {
+      "type": "number",
+      "value": 20
+    },
+    "shadow.goldGlow.blur": {
+      "type": "number",
+      "value": 24
+    },
+    "space.screenPad": {
+      "type": "number",
+      "value": 24
+    },
+    "space.sectionGap": {
+      "type": "number",
+      "value": 16
+    }
+  },
+  "fileToken": "bd7ceb45-5d9f-442c-97ab-4b6b8d8ae464"
+}

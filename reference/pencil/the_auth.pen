@@ -1,0 +1,1181 @@
+{
+  "version": "2.14",
+  "variables": {
+    "color.primary": {
+      "type": "color",
+      "value": "#D4AF37"
+    },
+    "color.void": {
+      "type": "color",
+      "value": "#050505"
+    },
+    "color.surface": {
+      "type": "color",
+      "value": "#121212"
+    },
+    "color.surfaceHighlight": {
+      "type": "color",
+      "value": "#1A1A1A"
+    },
+    "color.textMain": {
+      "type": "color",
+      "value": "#EAEAEA"
+    },
+    "color.textMuted": {
+      "type": "color",
+      "value": "#8A8A8A"
+    },
+    "color.accent": {
+      "type": "color",
+      "value": "#800020"
+    },
+    "color.navBg": {
+      "type": "color",
+      "value": "#080808"
+    },
+    "font.display": {
+      "type": "string",
+      "value": "Playfair Display"
+    },
+    "font.header": {
+      "type": "string",
+      "value": "Cinzel"
+    },
+    "font.heading": {
+      "type": "string",
+      "value": "Cinzel"
+    },
+    "font.body": {
+      "type": "string",
+      "value": "Literata"
+    },
+    "font.ui": {
+      "type": "string",
+      "value": "Marcellus"
+    },
+    "font.script": {
+      "type": "string",
+      "value": "Pinyon Script"
+    },
+    "radius.card": {
+      "type": "number",
+      "value": 2
+    },
+    "radius.input": {
+      "type": "number",
+      "value": 0
+    },
+    "radius.modal": {
+      "type": "number",
+      "value": 4
+    },
+    "shadow.card.offsetY": {
+      "type": "number",
+      "value": 10
+    },
+    "shadow.card.blur": {
+      "type": "number",
+      "value": 30
+    },
+    "shadow.modalGlow.blur": {
+      "type": "number",
+      "value": 20
+    },
+    "shadow.goldGlow.blur": {
+      "type": "number",
+      "value": 24
+    },
+    "space.screenPad": {
+      "type": "number",
+      "value": 24
+    },
+    "space.sectionGap": {
+      "type": "number",
+      "value": 16
+    }
+  },
+  "children": [
+    {
+      "id": "artboard-signin-mobile",
+      "name": "Sign in — Clerk shell (mobile)",
+      "type": "frame",
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 900,
+      "fill": "$color.void",
+      "layout": "vertical",
+      "justifyContent": "center",
+      "alignItems": "center",
+      "clip": true,
+      "stroke": {
+        "align": "inside",
+        "thickness": {
+          "left": 1,
+          "right": 1,
+          "top": 0,
+          "bottom": 0
+        },
+        "fill": "#1A1A1A"
+      },
+      "padding": 24,
+      "children": [
+        {
+          "type": "frame",
+          "id": "artboard-signin-mobile-card",
+          "width": 342,
+          "layout": "vertical",
+          "gap": 20,
+          "padding": 28,
+          "cornerRadius": 2,
+          "fill": "$color.surface",
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "#D4AF3733"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "id": "artboard-signin-mobile-brand",
+              "layout": "vertical",
+              "gap": 8,
+              "alignItems": "center",
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "artboard-signin-mobile-book",
+                  "library": "Material Symbols Outlined",
+                  "icon": "menu_book",
+                  "width": 36,
+                  "height": 36,
+                  "fill": "$color.primary",
+                  "weight": 400
+                },
+                {
+                  "type": "text",
+                  "id": "artboard-signin-mobile-h",
+                  "content": "Welcome back",
+                  "fill": "$color.primary",
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 26,
+                  "fontWeight": "normal",
+                  "fontStyle": "italic",
+                  "textAlign": "center",
+                  "width": 286,
+                  "textGrowth": "fixed-width"
+                },
+                {
+                  "type": "text",
+                  "id": "artboard-signin-mobile-sub",
+                  "content": "Sign in to continue reading",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 12,
+                  "fontWeight": "normal",
+                  "letterSpacing": 1,
+                  "textAlign": "center",
+                  "width": 286,
+                  "textGrowth": "fixed-width"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-signin-mobile-field-email",
+              "layout": "vertical",
+              "gap": 8,
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "artboard-signin-mobile-lab-email",
+                  "content": "EMAIL",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 11,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-signin-mobile-input-email",
+                  "width": "fill_container",
+                  "height": 56,
+                  "fill": "$color.surfaceHighlight",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#D4AF3733"
+                  },
+                  "cornerRadius": 0,
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "artboard-signin-mobile-ph-email",
+                      "content": "you@example.com",
+                      "fill": "$color.textMuted",
+                      "fontFamily": "Literata",
+                      "fontSize": 14,
+                      "fontWeight": "normal",
+                      "textGrowth": "auto"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-signin-mobile-field-password",
+              "layout": "vertical",
+              "gap": 8,
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "artboard-signin-mobile-lab-password",
+                  "content": "PASSWORD",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 11,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-signin-mobile-input-password",
+                  "width": "fill_container",
+                  "height": 56,
+                  "fill": "$color.surfaceHighlight",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#D4AF3733"
+                  },
+                  "cornerRadius": 0,
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "artboard-signin-mobile-ph-password",
+                      "content": "••••••••",
+                      "fill": "$color.textMuted",
+                      "fontFamily": "Literata",
+                      "fontSize": 14,
+                      "fontWeight": "normal",
+                      "textGrowth": "auto"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-signin-mobile-cta",
+              "layout": "horizontal",
+              "alignItems": "center",
+              "justifyContent": "center",
+              "height": 44,
+              "padding": [
+                12,
+                28
+              ],
+              "cornerRadius": 2,
+              "fill": "$color.primary",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "artboard-signin-mobile-cta-label",
+                  "content": "SIGN IN",
+                  "fill": "$color.void",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 13,
+                  "fontWeight": "700",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                }
+              ],
+              "width": "fill_container"
+            },
+            {
+              "type": "text",
+              "id": "artboard-signin-mobile-swap",
+              "content": "Need an account? Sign up",
+              "fill": "$color.primary",
+              "fontFamily": "Literata",
+              "fontSize": 13,
+              "fontWeight": "normal",
+              "textAlign": "center",
+              "width": 286,
+              "textGrowth": "fixed-width"
+            },
+            {
+              "type": "text",
+              "id": "artboard-signin-mobile-clerk",
+              "content": "Powered by Clerk",
+              "fill": "$color.textMuted",
+              "fontFamily": "Marcellus",
+              "fontSize": 10,
+              "fontWeight": "normal",
+              "letterSpacing": 1,
+              "textAlign": "center",
+              "width": 286,
+              "textGrowth": "fixed-width"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "artboard-signup-tablet",
+      "name": "Sign up — Clerk shell (tablet)",
+      "type": "frame",
+      "x": 470,
+      "y": 0,
+      "width": 834,
+      "height": 900,
+      "fill": "$color.void",
+      "layout": "vertical",
+      "justifyContent": "center",
+      "alignItems": "center",
+      "clip": true,
+      "stroke": {
+        "align": "inside",
+        "thickness": {
+          "left": 1,
+          "right": 1,
+          "top": 0,
+          "bottom": 0
+        },
+        "fill": "#1A1A1A"
+      },
+      "padding": 24,
+      "children": [
+        {
+          "type": "frame",
+          "id": "artboard-signup-tablet-card",
+          "width": 400,
+          "layout": "vertical",
+          "gap": 20,
+          "padding": 28,
+          "cornerRadius": 2,
+          "fill": "$color.surface",
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "#D4AF3733"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "id": "artboard-signup-tablet-brand",
+              "layout": "vertical",
+              "gap": 8,
+              "alignItems": "center",
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "artboard-signup-tablet-book",
+                  "library": "Material Symbols Outlined",
+                  "icon": "menu_book",
+                  "width": 36,
+                  "height": 36,
+                  "fill": "$color.primary",
+                  "weight": 400
+                },
+                {
+                  "type": "text",
+                  "id": "artboard-signup-tablet-h",
+                  "content": "Join Midnight Satin",
+                  "fill": "$color.primary",
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 26,
+                  "fontWeight": "normal",
+                  "fontStyle": "italic",
+                  "textAlign": "center",
+                  "width": 344,
+                  "textGrowth": "fixed-width"
+                },
+                {
+                  "type": "text",
+                  "id": "artboard-signup-tablet-sub",
+                  "content": "Create an account — 200 welcome credits",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 12,
+                  "fontWeight": "normal",
+                  "letterSpacing": 1,
+                  "textAlign": "center",
+                  "width": 344,
+                  "textGrowth": "fixed-width"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-signup-tablet-field-email",
+              "layout": "vertical",
+              "gap": 8,
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "artboard-signup-tablet-lab-email",
+                  "content": "EMAIL",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 11,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-signup-tablet-input-email",
+                  "width": "fill_container",
+                  "height": 56,
+                  "fill": "$color.surfaceHighlight",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#D4AF3733"
+                  },
+                  "cornerRadius": 0,
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "artboard-signup-tablet-ph-email",
+                      "content": "you@example.com",
+                      "fill": "$color.textMuted",
+                      "fontFamily": "Literata",
+                      "fontSize": 14,
+                      "fontWeight": "normal",
+                      "textGrowth": "auto"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-signup-tablet-field-password",
+              "layout": "vertical",
+              "gap": 8,
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "artboard-signup-tablet-lab-password",
+                  "content": "PASSWORD",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 11,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-signup-tablet-input-password",
+                  "width": "fill_container",
+                  "height": 56,
+                  "fill": "$color.surfaceHighlight",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#D4AF3733"
+                  },
+                  "cornerRadius": 0,
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "artboard-signup-tablet-ph-password",
+                      "content": "••••••••",
+                      "fill": "$color.textMuted",
+                      "fontFamily": "Literata",
+                      "fontSize": 14,
+                      "fontWeight": "normal",
+                      "textGrowth": "auto"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-signup-tablet-field-display name",
+              "layout": "vertical",
+              "gap": 8,
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "artboard-signup-tablet-lab-display name",
+                  "content": "DISPLAY NAME",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 11,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-signup-tablet-input-display name",
+                  "width": "fill_container",
+                  "height": 56,
+                  "fill": "$color.surfaceHighlight",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#D4AF3733"
+                  },
+                  "cornerRadius": 0,
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "artboard-signup-tablet-ph-display name",
+                      "content": "Your reading name",
+                      "fill": "$color.textMuted",
+                      "fontFamily": "Literata",
+                      "fontSize": 14,
+                      "fontWeight": "normal",
+                      "textGrowth": "auto"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-signup-tablet-cta",
+              "layout": "horizontal",
+              "alignItems": "center",
+              "justifyContent": "center",
+              "height": 44,
+              "padding": [
+                12,
+                28
+              ],
+              "cornerRadius": 2,
+              "fill": "$color.primary",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "artboard-signup-tablet-cta-label",
+                  "content": "CREATE ACCOUNT",
+                  "fill": "$color.void",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 13,
+                  "fontWeight": "700",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                }
+              ],
+              "width": "fill_container"
+            },
+            {
+              "type": "text",
+              "id": "artboard-signup-tablet-swap",
+              "content": "Already have an account? Sign in",
+              "fill": "$color.primary",
+              "fontFamily": "Literata",
+              "fontSize": 13,
+              "fontWeight": "normal",
+              "textAlign": "center",
+              "width": 344,
+              "textGrowth": "fixed-width"
+            },
+            {
+              "type": "text",
+              "id": "artboard-signup-tablet-clerk",
+              "content": "Powered by Clerk",
+              "fill": "$color.textMuted",
+              "fontFamily": "Marcellus",
+              "fontSize": 10,
+              "fontWeight": "normal",
+              "letterSpacing": 1,
+              "textAlign": "center",
+              "width": 344,
+              "textGrowth": "fixed-width"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "artboard-signin-tablet",
+      "name": "Sign in — Clerk shell (tablet)",
+      "type": "frame",
+      "x": 470,
+      "y": 980,
+      "width": 834,
+      "height": 900,
+      "fill": "$color.void",
+      "layout": "vertical",
+      "justifyContent": "center",
+      "alignItems": "center",
+      "clip": true,
+      "stroke": {
+        "align": "inside",
+        "thickness": {
+          "left": 1,
+          "right": 1,
+          "top": 0,
+          "bottom": 0
+        },
+        "fill": "#1A1A1A"
+      },
+      "padding": 24,
+      "children": [
+        {
+          "type": "frame",
+          "id": "artboard-signin-tablet-card",
+          "width": 400,
+          "layout": "vertical",
+          "gap": 20,
+          "padding": 28,
+          "cornerRadius": 2,
+          "fill": "$color.surface",
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "#D4AF3733"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "id": "artboard-signin-tablet-brand",
+              "layout": "vertical",
+              "gap": 8,
+              "alignItems": "center",
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "artboard-signin-tablet-book",
+                  "library": "Material Symbols Outlined",
+                  "icon": "menu_book",
+                  "width": 36,
+                  "height": 36,
+                  "fill": "$color.primary",
+                  "weight": 400
+                },
+                {
+                  "type": "text",
+                  "id": "artboard-signin-tablet-h",
+                  "content": "Welcome back",
+                  "fill": "$color.primary",
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 26,
+                  "fontWeight": "normal",
+                  "fontStyle": "italic",
+                  "textAlign": "center",
+                  "width": 344,
+                  "textGrowth": "fixed-width"
+                },
+                {
+                  "type": "text",
+                  "id": "artboard-signin-tablet-sub",
+                  "content": "Sign in to continue reading",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 12,
+                  "fontWeight": "normal",
+                  "letterSpacing": 1,
+                  "textAlign": "center",
+                  "width": 344,
+                  "textGrowth": "fixed-width"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-signin-tablet-field-email",
+              "layout": "vertical",
+              "gap": 8,
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "artboard-signin-tablet-lab-email",
+                  "content": "EMAIL",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 11,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-signin-tablet-input-email",
+                  "width": "fill_container",
+                  "height": 56,
+                  "fill": "$color.surfaceHighlight",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#D4AF3733"
+                  },
+                  "cornerRadius": 0,
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "artboard-signin-tablet-ph-email",
+                      "content": "you@example.com",
+                      "fill": "$color.textMuted",
+                      "fontFamily": "Literata",
+                      "fontSize": 14,
+                      "fontWeight": "normal",
+                      "textGrowth": "auto"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-signin-tablet-field-password",
+              "layout": "vertical",
+              "gap": 8,
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "artboard-signin-tablet-lab-password",
+                  "content": "PASSWORD",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 11,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-signin-tablet-input-password",
+                  "width": "fill_container",
+                  "height": 56,
+                  "fill": "$color.surfaceHighlight",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#D4AF3733"
+                  },
+                  "cornerRadius": 0,
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "artboard-signin-tablet-ph-password",
+                      "content": "••••••••",
+                      "fill": "$color.textMuted",
+                      "fontFamily": "Literata",
+                      "fontSize": 14,
+                      "fontWeight": "normal",
+                      "textGrowth": "auto"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-signin-tablet-cta",
+              "layout": "horizontal",
+              "alignItems": "center",
+              "justifyContent": "center",
+              "height": 44,
+              "padding": [
+                12,
+                28
+              ],
+              "cornerRadius": 2,
+              "fill": "$color.primary",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "artboard-signin-tablet-cta-label",
+                  "content": "SIGN IN",
+                  "fill": "$color.void",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 13,
+                  "fontWeight": "700",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                }
+              ],
+              "width": "fill_container"
+            },
+            {
+              "type": "text",
+              "id": "artboard-signin-tablet-swap",
+              "content": "Need an account? Sign up",
+              "fill": "$color.primary",
+              "fontFamily": "Literata",
+              "fontSize": 13,
+              "fontWeight": "normal",
+              "textAlign": "center",
+              "width": 344,
+              "textGrowth": "fixed-width"
+            },
+            {
+              "type": "text",
+              "id": "artboard-signin-tablet-clerk",
+              "content": "Powered by Clerk",
+              "fill": "$color.textMuted",
+              "fontFamily": "Marcellus",
+              "fontSize": 10,
+              "fontWeight": "normal",
+              "letterSpacing": 1,
+              "textAlign": "center",
+              "width": 344,
+              "textGrowth": "fixed-width"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "artboard-signup-mobile",
+      "name": "Sign up — Clerk shell (mobile)",
+      "type": "frame",
+      "x": 0,
+      "y": 980,
+      "width": 390,
+      "height": 900,
+      "fill": "$color.void",
+      "layout": "vertical",
+      "justifyContent": "center",
+      "alignItems": "center",
+      "clip": true,
+      "stroke": {
+        "align": "inside",
+        "thickness": {
+          "left": 1,
+          "right": 1,
+          "top": 0,
+          "bottom": 0
+        },
+        "fill": "#1A1A1A"
+      },
+      "padding": 24,
+      "children": [
+        {
+          "type": "frame",
+          "id": "artboard-signup-mobile-card",
+          "width": 342,
+          "layout": "vertical",
+          "gap": 20,
+          "padding": 28,
+          "cornerRadius": 2,
+          "fill": "$color.surface",
+          "stroke": {
+            "align": "inside",
+            "thickness": 1,
+            "fill": "#D4AF3733"
+          },
+          "children": [
+            {
+              "type": "frame",
+              "id": "artboard-signup-mobile-brand",
+              "layout": "vertical",
+              "gap": 8,
+              "alignItems": "center",
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "artboard-signup-mobile-book",
+                  "library": "Material Symbols Outlined",
+                  "icon": "menu_book",
+                  "width": 36,
+                  "height": 36,
+                  "fill": "$color.primary",
+                  "weight": 400
+                },
+                {
+                  "type": "text",
+                  "id": "artboard-signup-mobile-h",
+                  "content": "Join Midnight Satin",
+                  "fill": "$color.primary",
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 26,
+                  "fontWeight": "normal",
+                  "fontStyle": "italic",
+                  "textAlign": "center",
+                  "width": 286,
+                  "textGrowth": "fixed-width"
+                },
+                {
+                  "type": "text",
+                  "id": "artboard-signup-mobile-sub",
+                  "content": "Create an account — 200 welcome credits",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 12,
+                  "fontWeight": "normal",
+                  "letterSpacing": 1,
+                  "textAlign": "center",
+                  "width": 286,
+                  "textGrowth": "fixed-width"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-signup-mobile-field-email",
+              "layout": "vertical",
+              "gap": 8,
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "artboard-signup-mobile-lab-email",
+                  "content": "EMAIL",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 11,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-signup-mobile-input-email",
+                  "width": "fill_container",
+                  "height": 56,
+                  "fill": "$color.surfaceHighlight",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#D4AF3733"
+                  },
+                  "cornerRadius": 0,
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "artboard-signup-mobile-ph-email",
+                      "content": "you@example.com",
+                      "fill": "$color.textMuted",
+                      "fontFamily": "Literata",
+                      "fontSize": 14,
+                      "fontWeight": "normal",
+                      "textGrowth": "auto"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-signup-mobile-field-password",
+              "layout": "vertical",
+              "gap": 8,
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "artboard-signup-mobile-lab-password",
+                  "content": "PASSWORD",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 11,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-signup-mobile-input-password",
+                  "width": "fill_container",
+                  "height": 56,
+                  "fill": "$color.surfaceHighlight",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#D4AF3733"
+                  },
+                  "cornerRadius": 0,
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "artboard-signup-mobile-ph-password",
+                      "content": "••••••••",
+                      "fill": "$color.textMuted",
+                      "fontFamily": "Literata",
+                      "fontSize": 14,
+                      "fontWeight": "normal",
+                      "textGrowth": "auto"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-signup-mobile-field-display name",
+              "layout": "vertical",
+              "gap": 8,
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "artboard-signup-mobile-lab-display name",
+                  "content": "DISPLAY NAME",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 11,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-signup-mobile-input-display name",
+                  "width": "fill_container",
+                  "height": 56,
+                  "fill": "$color.surfaceHighlight",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#D4AF3733"
+                  },
+                  "cornerRadius": 0,
+                  "layout": "horizontal",
+                  "alignItems": "center",
+                  "padding": [
+                    0,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "artboard-signup-mobile-ph-display name",
+                      "content": "Your reading name",
+                      "fill": "$color.textMuted",
+                      "fontFamily": "Literata",
+                      "fontSize": 14,
+                      "fontWeight": "normal",
+                      "textGrowth": "auto"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-signup-mobile-cta",
+              "layout": "horizontal",
+              "alignItems": "center",
+              "justifyContent": "center",
+              "height": 44,
+              "padding": [
+                12,
+                28
+              ],
+              "cornerRadius": 2,
+              "fill": "$color.primary",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "artboard-signup-mobile-cta-label",
+                  "content": "CREATE ACCOUNT",
+                  "fill": "$color.void",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 13,
+                  "fontWeight": "700",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                }
+              ],
+              "width": "fill_container"
+            },
+            {
+              "type": "text",
+              "id": "artboard-signup-mobile-swap",
+              "content": "Already have an account? Sign in",
+              "fill": "$color.primary",
+              "fontFamily": "Literata",
+              "fontSize": 13,
+              "fontWeight": "normal",
+              "textAlign": "center",
+              "width": 286,
+              "textGrowth": "fixed-width"
+            },
+            {
+              "type": "text",
+              "id": "artboard-signup-mobile-clerk",
+              "content": "Powered by Clerk",
+              "fill": "$color.textMuted",
+              "fontFamily": "Marcellus",
+              "fontSize": 10,
+              "fontWeight": "normal",
+              "letterSpacing": 1,
+              "textAlign": "center",
+              "width": 286,
+              "textGrowth": "fixed-width"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

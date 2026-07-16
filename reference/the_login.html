@@ -1,11 +1,11 @@
 <!DOCTYPE html>
+<!-- Pencil source of truth: reference/pencil/the_auth.pen (Clerk shells). This HTML is a legacy mock. -->
 
 <html class="dark" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,wght@0,400;0,700;1,400;1,700&amp;family=Playfair+Display:ital,wght@0,700;1,700&amp;family=Marcellus&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Literata:opsz,wght@7..72,200..900&family=Marcellus&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Pinyon+Script&display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script id="tailwind-config">
         tailwind.config = {
@@ -13,16 +13,19 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#d4af35",
+                        "primary": "#D4AF37",
                         "background-light": "#f8f7f6",
                         "background-dark": "#050505",
                         "neutral-dark": "#1A1A1A",
                         "muted-gold": "#8A8A8A",
                     },
                     fontFamily: {
-                        "display": ["Newsreader", "serif"],
+                        "display": ["Playfair Display", "serif"],
                         "playfair": ["Playfair Display", "serif"],
-                        "marcellus": ["Marcellus", "serif"]
+                        "header": ["Cinzel", "serif"],
+                        "body": ["Literata", "serif"],
+                        "marcellus": ["Marcellus", "serif"],
+                        "ui": ["Marcellus", "serif"]
                     },
                     borderRadius: {
                         "DEFAULT": "0.125rem",

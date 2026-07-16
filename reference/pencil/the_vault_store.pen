@@ -1,0 +1,1417 @@
+{
+  "version": "2.14",
+  "variables": {
+    "color.primary": {
+      "type": "color",
+      "value": "#D4AF37"
+    },
+    "color.void": {
+      "type": "color",
+      "value": "#050505"
+    },
+    "color.surface": {
+      "type": "color",
+      "value": "#121212"
+    },
+    "color.surfaceHighlight": {
+      "type": "color",
+      "value": "#1A1A1A"
+    },
+    "color.textMain": {
+      "type": "color",
+      "value": "#EAEAEA"
+    },
+    "color.textMuted": {
+      "type": "color",
+      "value": "#8A8A8A"
+    },
+    "color.accent": {
+      "type": "color",
+      "value": "#800020"
+    },
+    "color.navBg": {
+      "type": "color",
+      "value": "#080808"
+    },
+    "font.display": {
+      "type": "string",
+      "value": "Playfair Display"
+    },
+    "font.header": {
+      "type": "string",
+      "value": "Cinzel"
+    },
+    "font.heading": {
+      "type": "string",
+      "value": "Cinzel"
+    },
+    "font.body": {
+      "type": "string",
+      "value": "Literata"
+    },
+    "font.ui": {
+      "type": "string",
+      "value": "Marcellus"
+    },
+    "font.script": {
+      "type": "string",
+      "value": "Pinyon Script"
+    },
+    "radius.card": {
+      "type": "number",
+      "value": 2
+    },
+    "radius.input": {
+      "type": "number",
+      "value": 0
+    },
+    "radius.modal": {
+      "type": "number",
+      "value": 4
+    },
+    "shadow.card.offsetY": {
+      "type": "number",
+      "value": 10
+    },
+    "shadow.card.blur": {
+      "type": "number",
+      "value": 30
+    },
+    "shadow.modalGlow.blur": {
+      "type": "number",
+      "value": 20
+    },
+    "shadow.goldGlow.blur": {
+      "type": "number",
+      "value": 24
+    },
+    "space.screenPad": {
+      "type": "number",
+      "value": 24
+    },
+    "space.sectionGap": {
+      "type": "number",
+      "value": 16
+    }
+  },
+  "children": [
+    {
+      "id": "artboard-vault-mobile",
+      "name": "Vault — the_vault_store.html (mobile)",
+      "type": "frame",
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 844,
+      "fill": "$color.void",
+      "layout": "vertical",
+      "clip": true,
+      "stroke": {
+        "align": "inside",
+        "thickness": {
+          "left": 1,
+          "right": 1,
+          "top": 0,
+          "bottom": 0
+        },
+        "fill": "#1A1A1A"
+      },
+      "children": [
+        {
+          "type": "frame",
+          "id": "artboard-vault-mobile-head",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 12,
+          "padding": [
+            32,
+            24,
+            16,
+            24
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "artboard-vault-mobile-rule",
+              "library": "Material Symbols Outlined",
+              "icon": "diamond",
+              "width": 28,
+              "height": 28,
+              "fill": "$color.primary",
+              "weight": 400
+            },
+            {
+              "type": "text",
+              "id": "artboard-vault-mobile-title",
+              "content": "The Vault",
+              "fill": "$color.primary",
+              "fontFamily": "Cinzel",
+              "fontSize": 18,
+              "fontWeight": "normal",
+              "letterSpacing": 4,
+              "textGrowth": "auto"
+            },
+            {
+              "type": "text",
+              "id": "artboard-vault-mobile-sub",
+              "content": "Credits for chapters, roses, and more.",
+              "fill": "$color.textMuted",
+              "fontFamily": "Literata",
+              "fontSize": 13,
+              "fontWeight": "normal",
+              "textAlign": "center",
+              "width": 342,
+              "textGrowth": "fixed-width"
+            },
+            {
+              "type": "frame",
+              "id": "artboard-vault-mobile-balance",
+              "layout": "horizontal",
+              "gap": 8,
+              "padding": [
+                10,
+                16
+              ],
+              "fill": "#1A1500",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "#D4AF3733"
+              },
+              "cornerRadius": 2,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "artboard-vault-mobile-bal-i",
+                  "library": "Material Symbols Outlined",
+                  "icon": "payments",
+                  "width": 16,
+                  "height": 16,
+                  "fill": "$color.primary",
+                  "weight": 400
+                },
+                {
+                  "type": "text",
+                  "id": "artboard-vault-mobile-bal-t",
+                  "content": "Balance: 1,250",
+                  "fill": "$color.textMain",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 12,
+                  "fontWeight": "normal",
+                  "letterSpacing": 1,
+                  "textGrowth": "auto"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "artboard-vault-mobile-body",
+          "width": "fill_container",
+          "height": "fill_container",
+          "padding": [
+            8,
+            24,
+            24,
+            24
+          ],
+          "layout": "vertical",
+          "gap": 20,
+          "children": [
+            {
+              "type": "frame",
+              "id": "artboard-vault-mobile-packs",
+              "layout": "vertical",
+              "gap": 16,
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "artboard-vault-mobile-r1",
+                  "layout": "horizontal",
+                  "gap": 16,
+                  "width": "fill_container",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "artboard-vault-mobile-pack-200",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": [
+                        16,
+                        16
+                      ],
+                      "width": "fill_container",
+                      "height": 180,
+                      "cornerRadius": 2,
+                      "fill": "$color.surface",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "#FFFFFF0D"
+                      },
+                      "alignItems": "center",
+                      "justifyContent": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "artboard-vault-mobile-pack-200-gem",
+                          "library": "Material Symbols Outlined",
+                          "icon": "diamond",
+                          "width": 24,
+                          "height": 24,
+                          "fill": "$color.primary",
+                          "weight": 400
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-vault-mobile-pack-200-n",
+                          "content": "200",
+                          "fill": "$color.primary",
+                          "fontFamily": "Playfair Display",
+                          "fontSize": 22,
+                          "fontWeight": "700",
+                          "textGrowth": "auto"
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-vault-mobile-pack-200-l",
+                          "content": "CREDITS",
+                          "fill": "$color.textMuted",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 10,
+                          "fontWeight": "normal",
+                          "letterSpacing": 2,
+                          "textGrowth": "auto"
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-vault-mobile-pack-200-p",
+                          "content": "$1.99",
+                          "fill": "$color.textMain",
+                          "fontFamily": "Literata",
+                          "fontSize": 14,
+                          "fontWeight": "normal",
+                          "textGrowth": "auto"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-vault-mobile-pack-550",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": [
+                        20,
+                        16,
+                        16,
+                        16
+                      ],
+                      "width": "fill_container",
+                      "height": 180,
+                      "cornerRadius": 2,
+                      "fill": "#1A1500",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 2,
+                        "fill": "$color.primary"
+                      },
+                      "alignItems": "center",
+                      "justifyContent": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "artboard-vault-mobile-pack-550-badge",
+                          "height": 20,
+                          "padding": [
+                            2,
+                            10
+                          ],
+                          "cornerRadius": 2,
+                          "fill": "$color.accent",
+                          "layout": "horizontal",
+                          "alignItems": "center",
+                          "justifyContent": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "artboard-vault-mobile-pack-550-badge-t",
+                              "content": "MOST POPULAR",
+                              "fill": "#FFFFFF",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 9,
+                              "fontWeight": "700",
+                              "letterSpacing": 1.5,
+                              "textGrowth": "auto"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "icon",
+                          "id": "artboard-vault-mobile-pack-550-gem",
+                          "library": "Material Symbols Outlined",
+                          "icon": "diamond",
+                          "width": 32,
+                          "height": 32,
+                          "fill": "$color.primary",
+                          "weight": 400
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-vault-mobile-pack-550-n",
+                          "content": "550",
+                          "fill": "$color.primary",
+                          "fontFamily": "Playfair Display",
+                          "fontSize": 28,
+                          "fontWeight": "700",
+                          "textGrowth": "auto"
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-vault-mobile-pack-550-l",
+                          "content": "CREDITS",
+                          "fill": "$color.textMuted",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 10,
+                          "fontWeight": "normal",
+                          "letterSpacing": 2,
+                          "textGrowth": "auto"
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-vault-mobile-pack-550-p",
+                          "content": "$4.99",
+                          "fill": "$color.textMain",
+                          "fontFamily": "Literata",
+                          "fontSize": 14,
+                          "fontWeight": "normal",
+                          "textGrowth": "auto"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-vault-mobile-r2",
+                  "layout": "horizontal",
+                  "gap": 16,
+                  "width": "fill_container",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "artboard-vault-mobile-pack-1200",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": [
+                        16,
+                        16
+                      ],
+                      "width": "fill_container",
+                      "height": 180,
+                      "cornerRadius": 2,
+                      "fill": "$color.surface",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "#FFFFFF0D"
+                      },
+                      "alignItems": "center",
+                      "justifyContent": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "artboard-vault-mobile-pack-1200-gem",
+                          "library": "Material Symbols Outlined",
+                          "icon": "diamond",
+                          "width": 24,
+                          "height": 24,
+                          "fill": "$color.primary",
+                          "weight": 400
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-vault-mobile-pack-1200-n",
+                          "content": "1200",
+                          "fill": "$color.primary",
+                          "fontFamily": "Playfair Display",
+                          "fontSize": 22,
+                          "fontWeight": "700",
+                          "textGrowth": "auto"
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-vault-mobile-pack-1200-l",
+                          "content": "CREDITS",
+                          "fill": "$color.textMuted",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 10,
+                          "fontWeight": "normal",
+                          "letterSpacing": 2,
+                          "textGrowth": "auto"
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-vault-mobile-pack-1200-p",
+                          "content": "$9.99",
+                          "fill": "$color.textMain",
+                          "fontFamily": "Literata",
+                          "fontSize": 14,
+                          "fontWeight": "normal",
+                          "textGrowth": "auto"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-vault-mobile-pack-2500",
+                      "layout": "vertical",
+                      "gap": 8,
+                      "padding": [
+                        16,
+                        16
+                      ],
+                      "width": "fill_container",
+                      "height": 180,
+                      "cornerRadius": 2,
+                      "fill": "$color.surface",
+                      "stroke": {
+                        "align": "inside",
+                        "thickness": 1,
+                        "fill": "#FFFFFF0D"
+                      },
+                      "alignItems": "center",
+                      "justifyContent": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "artboard-vault-mobile-pack-2500-gem",
+                          "library": "Material Symbols Outlined",
+                          "icon": "diamond",
+                          "width": 24,
+                          "height": 24,
+                          "fill": "$color.primary",
+                          "weight": 400
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-vault-mobile-pack-2500-n",
+                          "content": "2500",
+                          "fill": "$color.primary",
+                          "fontFamily": "Playfair Display",
+                          "fontSize": 22,
+                          "fontWeight": "700",
+                          "textGrowth": "auto"
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-vault-mobile-pack-2500-l",
+                          "content": "CREDITS",
+                          "fill": "$color.textMuted",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 10,
+                          "fontWeight": "normal",
+                          "letterSpacing": 2,
+                          "textGrowth": "auto"
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-vault-mobile-pack-2500-p",
+                          "content": "$19.99",
+                          "fill": "$color.textMain",
+                          "fontFamily": "Literata",
+                          "fontSize": 14,
+                          "fontWeight": "normal",
+                          "textGrowth": "auto"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-vault-mobile-cta",
+              "layout": "horizontal",
+              "alignItems": "center",
+              "justifyContent": "center",
+              "height": 44,
+              "padding": [
+                12,
+                28
+              ],
+              "cornerRadius": 2,
+              "fill": "$color.primary",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "artboard-vault-mobile-cta-label",
+                  "content": "RESTORE PURCHASES",
+                  "fill": "$color.void",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 13,
+                  "fontWeight": "700",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                }
+              ],
+              "width": "fill_container"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "artboard-vault-mobile-bottom-nav",
+          "width": "fill_container",
+          "height": 96,
+          "fill": "$color.navBg",
+          "layout": "horizontal",
+          "justifyContent": "space_between",
+          "alignItems": "end",
+          "padding": [
+            16,
+            24,
+            28,
+            24
+          ],
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "top": 1
+            },
+            "fill": "#1F1F1F"
+          },
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#000000CC",
+            "offset": {
+              "x": 0,
+              "y": -10
+            },
+            "blur": 40
+          },
+          "children": [
+            {
+              "type": "frame",
+              "id": "artboard-vault-mobile-tab-home",
+              "layout": "vertical",
+              "alignItems": "center",
+              "gap": 4,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "artboard-vault-mobile-tab-home-icon-wrap",
+                  "layout": "vertical",
+                  "alignItems": "center",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "artboard-vault-mobile-tab-home-icon",
+                      "library": "Material Symbols Outlined",
+                      "icon": "history_edu",
+                      "width": 24,
+                      "height": 24,
+                      "fill": "#FFFFFF99",
+                      "weight": 400
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "artboard-vault-mobile-tab-home-label",
+                  "content": "Boudoir",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-vault-mobile-tab-library",
+              "layout": "vertical",
+              "alignItems": "center",
+              "gap": 4,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "artboard-vault-mobile-tab-library-icon-wrap",
+                  "layout": "vertical",
+                  "alignItems": "center",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "artboard-vault-mobile-tab-library-icon",
+                      "library": "Material Symbols Outlined",
+                      "icon": "local_library",
+                      "width": 24,
+                      "height": 24,
+                      "fill": "#FFFFFF99",
+                      "weight": 400
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "artboard-vault-mobile-tab-library-label",
+                  "content": "Library",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-vault-mobile-tab-vault",
+              "layout": "vertical",
+              "alignItems": "center",
+              "gap": 4,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "artboard-vault-mobile-tab-vault-icon-wrap",
+                  "layout": "vertical",
+                  "alignItems": "center",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "artboard-vault-mobile-tab-vault-icon",
+                      "library": "Material Symbols Outlined",
+                      "icon": "storefront",
+                      "width": 28,
+                      "height": 28,
+                      "fill": "$color.primary",
+                      "weight": 400
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "artboard-vault-mobile-tab-vault-dot",
+                      "width": 4,
+                      "height": 4,
+                      "fill": "$color.primary"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "artboard-vault-mobile-tab-vault-label",
+                  "content": "Vault",
+                  "fill": "$color.primary",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-vault-mobile-tab-profile",
+              "layout": "vertical",
+              "alignItems": "center",
+              "gap": 4,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "artboard-vault-mobile-tab-profile-icon-wrap",
+                  "layout": "vertical",
+                  "alignItems": "center",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "artboard-vault-mobile-tab-profile-icon",
+                      "library": "Material Symbols Outlined",
+                      "icon": "person_3",
+                      "width": 24,
+                      "height": 24,
+                      "fill": "#FFFFFF99",
+                      "weight": 400
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "artboard-vault-mobile-tab-profile-label",
+                  "content": "Profile",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "artboard-vault-tablet",
+      "name": "Vault — tablet packs row",
+      "type": "frame",
+      "x": 470,
+      "y": 0,
+      "width": 834,
+      "height": 600,
+      "fill": "$color.void",
+      "layout": "vertical",
+      "clip": true,
+      "stroke": {
+        "align": "inside",
+        "thickness": {
+          "left": 1,
+          "right": 1,
+          "top": 0,
+          "bottom": 0
+        },
+        "fill": "#1A1A1A"
+      },
+      "children": [
+        {
+          "type": "frame",
+          "id": "artboard-vault-tablet-head",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 12,
+          "padding": [
+            32,
+            40,
+            16,
+            40
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "artboard-vault-tablet-rule",
+              "library": "Material Symbols Outlined",
+              "icon": "diamond",
+              "width": 28,
+              "height": 28,
+              "fill": "$color.primary",
+              "weight": 400
+            },
+            {
+              "type": "text",
+              "id": "artboard-vault-tablet-title",
+              "content": "The Vault",
+              "fill": "$color.primary",
+              "fontFamily": "Cinzel",
+              "fontSize": 18,
+              "fontWeight": "normal",
+              "letterSpacing": 4,
+              "textGrowth": "auto"
+            },
+            {
+              "type": "text",
+              "id": "artboard-vault-tablet-sub",
+              "content": "Credits for chapters, roses, and more.",
+              "fill": "$color.textMuted",
+              "fontFamily": "Literata",
+              "fontSize": 13,
+              "fontWeight": "normal",
+              "textAlign": "center",
+              "width": 754,
+              "textGrowth": "fixed-width"
+            },
+            {
+              "type": "frame",
+              "id": "artboard-vault-tablet-balance",
+              "layout": "horizontal",
+              "gap": 8,
+              "padding": [
+                10,
+                16
+              ],
+              "fill": "#1A1500",
+              "stroke": {
+                "align": "inside",
+                "thickness": 1,
+                "fill": "#D4AF3733"
+              },
+              "cornerRadius": 2,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "artboard-vault-tablet-bal-i",
+                  "library": "Material Symbols Outlined",
+                  "icon": "payments",
+                  "width": 16,
+                  "height": 16,
+                  "fill": "$color.primary",
+                  "weight": 400
+                },
+                {
+                  "type": "text",
+                  "id": "artboard-vault-tablet-bal-t",
+                  "content": "Balance: 1,250",
+                  "fill": "$color.textMain",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 12,
+                  "fontWeight": "normal",
+                  "letterSpacing": 1,
+                  "textGrowth": "auto"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "artboard-vault-tablet-body",
+          "width": "fill_container",
+          "height": "fill_container",
+          "padding": [
+            8,
+            40,
+            24,
+            40
+          ],
+          "layout": "vertical",
+          "gap": 20,
+          "children": [
+            {
+              "type": "frame",
+              "id": "artboard-vault-tablet-packs",
+              "layout": "horizontal",
+              "gap": 16,
+              "width": "fill_container",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "artboard-vault-tablet-pack-200",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": [
+                    16,
+                    16
+                  ],
+                  "width": "fill_container",
+                  "height": 180,
+                  "cornerRadius": 2,
+                  "fill": "$color.surface",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#FFFFFF0D"
+                  },
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "artboard-vault-tablet-pack-200-gem",
+                      "library": "Material Symbols Outlined",
+                      "icon": "diamond",
+                      "width": 24,
+                      "height": 24,
+                      "fill": "$color.primary",
+                      "weight": 400
+                    },
+                    {
+                      "type": "text",
+                      "id": "artboard-vault-tablet-pack-200-n",
+                      "content": "200",
+                      "fill": "$color.primary",
+                      "fontFamily": "Playfair Display",
+                      "fontSize": 22,
+                      "fontWeight": "700",
+                      "textGrowth": "auto"
+                    },
+                    {
+                      "type": "text",
+                      "id": "artboard-vault-tablet-pack-200-l",
+                      "content": "CREDITS",
+                      "fill": "$color.textMuted",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 10,
+                      "fontWeight": "normal",
+                      "letterSpacing": 2,
+                      "textGrowth": "auto"
+                    },
+                    {
+                      "type": "text",
+                      "id": "artboard-vault-tablet-pack-200-p",
+                      "content": "$1.99",
+                      "fill": "$color.textMain",
+                      "fontFamily": "Literata",
+                      "fontSize": 14,
+                      "fontWeight": "normal",
+                      "textGrowth": "auto"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-vault-tablet-pack-550",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": [
+                    20,
+                    16,
+                    16,
+                    16
+                  ],
+                  "width": "fill_container",
+                  "height": 180,
+                  "cornerRadius": 2,
+                  "fill": "#1A1500",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 2,
+                    "fill": "$color.primary"
+                  },
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "artboard-vault-tablet-pack-550-badge",
+                      "height": 20,
+                      "padding": [
+                        2,
+                        10
+                      ],
+                      "cornerRadius": 2,
+                      "fill": "$color.accent",
+                      "layout": "horizontal",
+                      "alignItems": "center",
+                      "justifyContent": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "artboard-vault-tablet-pack-550-badge-t",
+                          "content": "MOST POPULAR",
+                          "fill": "#FFFFFF",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 9,
+                          "fontWeight": "700",
+                          "letterSpacing": 1.5,
+                          "textGrowth": "auto"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "icon",
+                      "id": "artboard-vault-tablet-pack-550-gem",
+                      "library": "Material Symbols Outlined",
+                      "icon": "diamond",
+                      "width": 32,
+                      "height": 32,
+                      "fill": "$color.primary",
+                      "weight": 400
+                    },
+                    {
+                      "type": "text",
+                      "id": "artboard-vault-tablet-pack-550-n",
+                      "content": "550",
+                      "fill": "$color.primary",
+                      "fontFamily": "Playfair Display",
+                      "fontSize": 28,
+                      "fontWeight": "700",
+                      "textGrowth": "auto"
+                    },
+                    {
+                      "type": "text",
+                      "id": "artboard-vault-tablet-pack-550-l",
+                      "content": "CREDITS",
+                      "fill": "$color.textMuted",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 10,
+                      "fontWeight": "normal",
+                      "letterSpacing": 2,
+                      "textGrowth": "auto"
+                    },
+                    {
+                      "type": "text",
+                      "id": "artboard-vault-tablet-pack-550-p",
+                      "content": "$4.99",
+                      "fill": "$color.textMain",
+                      "fontFamily": "Literata",
+                      "fontSize": 14,
+                      "fontWeight": "normal",
+                      "textGrowth": "auto"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-vault-tablet-pack-1200",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": [
+                    16,
+                    16
+                  ],
+                  "width": "fill_container",
+                  "height": 180,
+                  "cornerRadius": 2,
+                  "fill": "$color.surface",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#FFFFFF0D"
+                  },
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "artboard-vault-tablet-pack-1200-gem",
+                      "library": "Material Symbols Outlined",
+                      "icon": "diamond",
+                      "width": 24,
+                      "height": 24,
+                      "fill": "$color.primary",
+                      "weight": 400
+                    },
+                    {
+                      "type": "text",
+                      "id": "artboard-vault-tablet-pack-1200-n",
+                      "content": "1200",
+                      "fill": "$color.primary",
+                      "fontFamily": "Playfair Display",
+                      "fontSize": 22,
+                      "fontWeight": "700",
+                      "textGrowth": "auto"
+                    },
+                    {
+                      "type": "text",
+                      "id": "artboard-vault-tablet-pack-1200-l",
+                      "content": "CREDITS",
+                      "fill": "$color.textMuted",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 10,
+                      "fontWeight": "normal",
+                      "letterSpacing": 2,
+                      "textGrowth": "auto"
+                    },
+                    {
+                      "type": "text",
+                      "id": "artboard-vault-tablet-pack-1200-p",
+                      "content": "$9.99",
+                      "fill": "$color.textMain",
+                      "fontFamily": "Literata",
+                      "fontSize": 14,
+                      "fontWeight": "normal",
+                      "textGrowth": "auto"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-vault-tablet-pack-2500",
+                  "layout": "vertical",
+                  "gap": 8,
+                  "padding": [
+                    16,
+                    16
+                  ],
+                  "width": "fill_container",
+                  "height": 180,
+                  "cornerRadius": 2,
+                  "fill": "$color.surface",
+                  "stroke": {
+                    "align": "inside",
+                    "thickness": 1,
+                    "fill": "#FFFFFF0D"
+                  },
+                  "alignItems": "center",
+                  "justifyContent": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "artboard-vault-tablet-pack-2500-gem",
+                      "library": "Material Symbols Outlined",
+                      "icon": "diamond",
+                      "width": 24,
+                      "height": 24,
+                      "fill": "$color.primary",
+                      "weight": 400
+                    },
+                    {
+                      "type": "text",
+                      "id": "artboard-vault-tablet-pack-2500-n",
+                      "content": "2500",
+                      "fill": "$color.primary",
+                      "fontFamily": "Playfair Display",
+                      "fontSize": 22,
+                      "fontWeight": "700",
+                      "textGrowth": "auto"
+                    },
+                    {
+                      "type": "text",
+                      "id": "artboard-vault-tablet-pack-2500-l",
+                      "content": "CREDITS",
+                      "fill": "$color.textMuted",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 10,
+                      "fontWeight": "normal",
+                      "letterSpacing": 2,
+                      "textGrowth": "auto"
+                    },
+                    {
+                      "type": "text",
+                      "id": "artboard-vault-tablet-pack-2500-p",
+                      "content": "$19.99",
+                      "fill": "$color.textMain",
+                      "fontFamily": "Literata",
+                      "fontSize": 14,
+                      "fontWeight": "normal",
+                      "textGrowth": "auto"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-vault-tablet-cta",
+              "layout": "horizontal",
+              "alignItems": "center",
+              "justifyContent": "center",
+              "height": 44,
+              "padding": [
+                12,
+                28
+              ],
+              "cornerRadius": 2,
+              "fill": "$color.primary",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "artboard-vault-tablet-cta-label",
+                  "content": "RESTORE PURCHASES",
+                  "fill": "$color.void",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 13,
+                  "fontWeight": "700",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                }
+              ],
+              "width": "fill_container"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "artboard-vault-tablet-bottom-nav",
+          "width": "fill_container",
+          "height": 96,
+          "fill": "$color.navBg",
+          "layout": "horizontal",
+          "justifyContent": "space_between",
+          "alignItems": "end",
+          "padding": [
+            16,
+            24,
+            28,
+            24
+          ],
+          "stroke": {
+            "align": "inside",
+            "thickness": {
+              "top": 1
+            },
+            "fill": "#1F1F1F"
+          },
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#000000CC",
+            "offset": {
+              "x": 0,
+              "y": -10
+            },
+            "blur": 40
+          },
+          "children": [
+            {
+              "type": "frame",
+              "id": "artboard-vault-tablet-tab-home",
+              "layout": "vertical",
+              "alignItems": "center",
+              "gap": 4,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "artboard-vault-tablet-tab-home-icon-wrap",
+                  "layout": "vertical",
+                  "alignItems": "center",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "artboard-vault-tablet-tab-home-icon",
+                      "library": "Material Symbols Outlined",
+                      "icon": "history_edu",
+                      "width": 24,
+                      "height": 24,
+                      "fill": "#FFFFFF99",
+                      "weight": 400
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "artboard-vault-tablet-tab-home-label",
+                  "content": "Boudoir",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-vault-tablet-tab-library",
+              "layout": "vertical",
+              "alignItems": "center",
+              "gap": 4,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "artboard-vault-tablet-tab-library-icon-wrap",
+                  "layout": "vertical",
+                  "alignItems": "center",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "artboard-vault-tablet-tab-library-icon",
+                      "library": "Material Symbols Outlined",
+                      "icon": "local_library",
+                      "width": 24,
+                      "height": 24,
+                      "fill": "#FFFFFF99",
+                      "weight": 400
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "artboard-vault-tablet-tab-library-label",
+                  "content": "Library",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-vault-tablet-tab-vault",
+              "layout": "vertical",
+              "alignItems": "center",
+              "gap": 4,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "artboard-vault-tablet-tab-vault-icon-wrap",
+                  "layout": "vertical",
+                  "alignItems": "center",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "artboard-vault-tablet-tab-vault-icon",
+                      "library": "Material Symbols Outlined",
+                      "icon": "storefront",
+                      "width": 28,
+                      "height": 28,
+                      "fill": "$color.primary",
+                      "weight": 400
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "artboard-vault-tablet-tab-vault-dot",
+                      "width": 4,
+                      "height": 4,
+                      "fill": "$color.primary"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "artboard-vault-tablet-tab-vault-label",
+                  "content": "Vault",
+                  "fill": "$color.primary",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-vault-tablet-tab-profile",
+              "layout": "vertical",
+              "alignItems": "center",
+              "gap": 4,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "artboard-vault-tablet-tab-profile-icon-wrap",
+                  "layout": "vertical",
+                  "alignItems": "center",
+                  "gap": 4,
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "artboard-vault-tablet-tab-profile-icon",
+                      "library": "Material Symbols Outlined",
+                      "icon": "person_3",
+                      "width": 24,
+                      "height": 24,
+                      "fill": "#FFFFFF99",
+                      "weight": 400
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "artboard-vault-tablet-tab-profile-label",
+                  "content": "Profile",
+                  "fill": "$color.textMuted",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2,
+                  "textGrowth": "auto"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
