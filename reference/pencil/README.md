@@ -26,6 +26,7 @@ Desktop (1024+) artboards are out of scope for this pass.
 | `the_authors_study.pen` | Author study mobile + tablet | `/author/[id]` |
 | `the_cast_gallery.pen` | Cast gallery mobile + tablet | cast modal / gallery |
 | `the_auth.pen` | Clerk sign-in / sign-up shells | `/sign-in`, `/sign-up` |
+| `the_news_article.pen` | News article detail mobile + tablet | `/updates/[slug]` |
 
 ## Regenerate
 
@@ -41,6 +42,7 @@ node reference/pencil/build-the-vault-store-pencil.mjs
 node reference/pencil/build-the-authors-study-pencil.mjs
 node reference/pencil/build-the-cast-gallery-pencil.mjs
 node reference/pencil/build-the-auth-pencil.mjs
+node reference/pencil/build-the-news-article-pencil.mjs
 ```
 
 Shared tokens/helpers: `pencil-tokens.mjs` (Pencil JSON **v2.14**, `type: "icon"`).

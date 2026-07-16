@@ -357,13 +357,14 @@ export function backControl(id, label = "Back", opts = {}) {
 
 /**
  * MS · Nav primary tab bar — matches design_system nav demo glyphs
- * (history_edu / local_library / storefront / person_3).
+ * (history_edu / local_library / storefront / newspaper / person_3).
  */
 export function bottomNav(idPrefix, active = "home") {
   const tabs = [
     { id: "home", label: "Boudoir", glyph: "history_edu" },
     { id: "library", label: "Library", glyph: "local_library" },
     { id: "vault", label: "Vault", glyph: "storefront" },
+    { id: "updates", label: "Updates", glyph: "newspaper" },
     { id: "profile", label: "Profile", glyph: "person_3" },
   ];
   return {

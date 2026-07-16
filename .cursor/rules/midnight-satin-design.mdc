@@ -24,6 +24,7 @@ This project is a premium romance reading app called **Midnight Satin**. All imp
 | `reference/pencil/the_authors_study.pen` | Author study |
 | `reference/pencil/the_cast_gallery.pen` | Cast gallery |
 | `reference/pencil/the_auth.pen` | Clerk sign-in / sign-up shells |
+| `reference/pencil/the_news_article.pen` | News article detail |
 
 Regenerate via `node reference/pencil/build-*.mjs` (commands listed in `reference/pencil/README.md`).
 
