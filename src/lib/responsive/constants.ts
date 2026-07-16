@@ -52,7 +52,7 @@ export const CHAPTER_LIST_COLUMNS = {
 export const CAST_GALLERY_GRID_COLUMNS = {
   mobile: 1,
   tablet: 2,
-  desktop: 2,
+  desktop: 3,
 } as const;
 
 /** Trophy Case grid columns (THE-69): mobile 2, tablet 3, desktop 4 */

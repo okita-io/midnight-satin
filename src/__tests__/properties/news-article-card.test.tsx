@@ -59,16 +59,22 @@ const arbNewsArticleSummary: fc.Arbitrary<NewsArticleSummary> = fc.record({
   isFeatured: fc.boolean(),
   featuredOrder: fc.option(fc.integer({ min: 0, max: 100 }), { nil: null }),
   publishedAt: fc.option(
-    fc.date({ min: new Date("2020-01-01"), max: new Date("2030-01-01") }),
+    fc.date({
+      min: new Date("2020-01-01"),
+      max: new Date("2030-01-01"),
+      noInvalidDate: true,
+    }),
     { nil: null }
   ),
   createdAt: fc.date({
     min: new Date("2020-01-01"),
     max: new Date("2030-01-01"),
+    noInvalidDate: true,
   }),
   updatedAt: fc.date({
     min: new Date("2020-01-01"),
     max: new Date("2030-01-01"),
+    noInvalidDate: true,
   }),
 });
 

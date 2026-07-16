@@ -5,8 +5,13 @@ import { config as loadEnv } from "dotenv";
 // Load local env so webServer / Clerk helpers see the same keys as `npm run dev`.
 loadEnv({ path: path.resolve(__dirname, ".env.local") });
 
-const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? "http://127.0.0.1:3000";
+const baseURL = process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000";
 const skipWebServer = Boolean(process.env.PLAYWRIGHT_BASE_URL);
+// Always reuse a healthy local server when present (CI may still start its own).
+const reuseExistingServer =
+  process.env.PLAYWRIGHT_REUSE_SERVER === "0"
+    ? false
+    : !process.env.CI || process.env.PLAYWRIGHT_REUSE_SERVER === "1";
 
 export default defineConfig({
   testDir: "./e2e",
@@ -60,9 +65,11 @@ export default defineConfig({
   webServer: skipWebServer
     ? undefined
     : {
-        command: "npm run dev -- --hostname 127.0.0.1 --port 3000",
+        // Prefer default localhost bind — Next's internal router proxies to
+        // localhost:3000; binding only 127.0.0.1 causes socket hang ups.
+        command: "npm run dev -- --port 3000",
         url: baseURL,
-        reuseExistingServer: !process.env.CI,
+        reuseExistingServer,
         timeout: 180_000,
       },
 });

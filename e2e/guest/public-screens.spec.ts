@@ -1,5 +1,6 @@
 import { expect, test } from "@playwright/test";
 import {
+  expectClickable,
   expectMainNav,
   expectVisibleInViewport,
   isEmptyShelf,
@@ -15,8 +16,9 @@ test.describe("Guest / public screens", () => {
         name: "This page has slipped into the shadows",
       })
     );
-    await expectVisibleInViewport(
-      page.getByRole("link", { name: "Return to home" })
+    await expectClickable(
+      page.getByRole("link", { name: "Return to home" }),
+      "Return to home"
     );
   });
 
