@@ -2,7 +2,7 @@
 
 ## Overview
 
-Post-build launch program for Midnight Satin. Core product features are largely implemented (see `.kiro/specs/midnight-satin-platform/tasks.md`). This list closes the gap between “works in development” and “safe to launch”: finish Clerk in production, remove legacy auth, harden security, cover edge cases, streamline the surface area, and run a go-live checklist.
+Post-build launch program for Midnight Satin. Core product features are largely implemented (see `.kiro/specs/midnight-satin-platform/tasks.md`). This list closes the gap between “works in development” and “safe to launch”: finish Clerk in production, remove legacy auth, harden security, cover edge cases, add Playwright UI visibility coverage, streamline the surface area, and run a go-live checklist.
 
 **Status legend:** `[ ]` not started · `[-]` in progress · `[x]` verified complete  
 **Related docs:** [`docs/AUTH.md`](../../../docs/AUTH.md), [`docs/INFRASTRUCTURE.md`](../../../docs/INFRASTRUCTURE.md), [`docs/ENVIRONMENT.md`](../../../docs/ENVIRONMENT.md)
@@ -146,8 +146,35 @@ Post-build launch program for Midnight Satin. Core product features are largely 
   - [ ] 5.5 Admin and MCP edge cases
     - Non-admin Clerk user cannot mutate admin resources
     - MCP with bad/missing key → 401; valid key can CRUD content without breaking schema constraints
-  - [ ] 5.6 Checkpoint — full automated suite green
-    - `npm run test` passes
+  - [ ] 5.6 Playwright setup and UI visibility suite
+    - Add Playwright (`@playwright/test`) with config for local `npm run dev` (and optional Preview base URL)
+    - Add npm scripts (e.g. `test:e2e`, `test:e2e:ui`); document how to run in `docs/` or README
+    - Prefer stable selectors (`getByRole`, `getByLabel`, `data-testid` where needed); avoid brittle CSS-only chains
+    - Assert critical UI is **present, visible, and in viewport** (not just in DOM): headings, primary CTAs, nav items, key imagery
+    - Cross-check against `reference/` screen specs for launch surfaces (structure/labels, not pixel-perfect)
+    - Mobile-first viewport (e.g. 390×844) plus one tablet/desktop breakpoint for responsive layouts
+  - [ ] 5.7 Playwright — guest / public screens
+    - **Boudoir (`/`):** brand/header, search (if shown), hero/featured, Current Affairs / High Society sections (or empty states), nav bar (Boudoir, Library, Vault, Profile)
+    - **Library (`/library`):** catalog grid/list chrome, novel cards with title + cover visible, empty state when no results
+    - **Novel Detail:** parallax/cover hero, title/author, synopsis, chapter list, cast/players entry, bookmark/share affordances, nav
+    - **Reading Room (free chapter):** chapter content readable, HUD/progress controls visible when expected; Veil **not** shown for free chapters
+    - **Author Study:** avatar, bio, bibliography/follow chrome
+    - **Updates (`/updates`):** article list/cards; article detail when seeded
+    - **404 / error:** themed not-found visible
+  - [ ] 5.8 Playwright — auth-gated and commerce UI
+    - Wire Clerk test helpers (`setupClerkTestingToken`, storageState / signed-in fixture); use **test** Clerk keys + `CLERK_TESTING_TOKEN` only
+    - Guest on protected route sees Clerk sign-in (or redirect), not a blank page
+    - Signed-in **Profile:** account chrome, bookmarks/progress sections (or empty states), sign-out control
+    - **Vault:** credit packs / purchase UI visible when enabled; Coming Soon / gated state when paperback/credits flags dictate
+    - **The Veil** on a locked chapter: blur/paywall chrome and unlock CTA visible; insufficient-credits messaging when applicable
+    - Auth prompts (e.g. endorse / unlock while signed out) render expected copy + sign-in/up CTAs
+    - Optional smoke: admin shell chrome for an admin-role test user (do not assert full CMS CRUD in launch suite)
+  - [ ] 5.9 Playwright — assets and visual smoke
+    - After Blob migration (4.3): covers/portraits/avatars on key pages load successfully (naturalWidth / response OK), no broken-image placeholders for seeded content
+    - Soft visual baselines optional (Playwright screenshots) for Boudoir + Novel Detail mobile — treat as non-blocking unless CI is ready
+  - [ ] 5.10 Checkpoint — full automated suite green
+    - `npm run test` (Vitest) passes
+    - `npm run test:e2e` (Playwright) passes against a seeded local or Preview environment
     - `npm run lint` reviewed (fix launch-blocking issues; track non-blocking separately)
     - `npm run build` succeeds with production env shape
 
@@ -169,6 +196,7 @@ Post-build launch program for Midnight Satin. Core product features are largely 
   - [ ] 6.4 Soft launch rehearsal
     - Deploy Preview with production-like env; run through: sign-up → read free chapter → unlock → buy credits (test mode) → review
     - Admin smoke: create/edit novel, upload cover to Blob
+    - Re-run Playwright smoke (`npm run test:e2e`) against Preview if base URL is configured
     - Fix P0/P1 issues before promoting to Production
   - [ ] 6.5 Production cutover
     - Promote deployment; verify env; send Clerk + Stripe test events
@@ -186,14 +214,15 @@ Post-build launch program for Midnight Satin. Core product features are largely 
 
 1. **1.x + 3.1–3.2** — production Clerk + authZ/webhooks (blocks safe traffic)
 2. **2.x** — strip legacy once prod Clerk + account-linking policy is solid
-3. **5.x** — rewrite tests while auth is fresh in mind
-4. **4.3** — migrate images into `midnight-blob` (can run in parallel with 4.x polish once tokens are in Vercel)
-5. **4.x + 6.x** — streamline content/flags and go live
-6. **3.3–3.6** — deepen hardening in parallel with soft launch if needed
+3. **5.1–5.5** — rewrite Vitest / edge cases while auth is fresh
+4. **4.3** — migrate images into `midnight-blob` (can run in parallel once tokens are in Vercel)
+5. **5.6–5.9** — Playwright UI visibility (after seed content; asset asserts after 4.3)
+6. **4.x + 6.x** — streamline content/flags and go live
+7. **3.3–3.6** — deepen hardening in parallel with soft launch if needed
 
 ## Out of scope (track separately)
 
 - New narrative features / Romance Factory pipeline improvements
-- Full E2E Playwright suite (nice-to-have after Vitest Clerk rewrite)
+- Pixel-perfect visual regression across every breakpoint (launch suite is visibility + structure)
 - Clerk Billing / Organizations (not required for reader credits model)
 - Mobile native apps
