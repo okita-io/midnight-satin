@@ -4,6 +4,7 @@ import { useState, useMemo } from "react";
 import { SearchOverlay } from "./search-overlay";
 import type { SearchNovelHit, SearchAuthorHit } from "./search-overlay";
 import { GradientHeaderStrip } from "./chrome-primitives";
+import { ClerkAuthControls } from "./clerk-auth-controls";
 
 const EMPTY_SEARCH_NOVELS: SearchNovelHit[] = [];
 const EMPTY_SEARCH_AUTHORS: SearchAuthorHit[] = [];
@@ -54,7 +55,8 @@ export function BoudoirHeader({
             Midnight Satin
           </span>
         </div>
-        <div className="flex gap-4">
+        <div className="flex items-center gap-3 xs:gap-4">
+          <ClerkAuthControls />
           <button
             type="button"
             onClick={() => setSearchOpen(true)}

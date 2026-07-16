@@ -1,3 +1,4 @@
+import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import {
   Playfair_Display,
@@ -58,10 +59,12 @@ export default function RootLayout({
       <body
         className={`${playfair.variable} ${cinzel.variable} ${literata.variable} ${marcellus.variable} ${pinyon.variable} bg-void text-text-main font-body antialiased`}
       >
-        <MainLayoutContainer className="mobile-container bg-silk-noise">
+        <ClerkProvider>
+          <MainLayoutContainer className="mobile-container bg-silk-noise">
           {children}
-        </MainLayoutContainer>
-        <SpeedInsights />
+          </MainLayoutContainer>
+          <SpeedInsights />
+        </ClerkProvider>
       </body>
     </html>
   );
