@@ -12,6 +12,7 @@ Post-build launch program for Midnight Satin. Core product features are largely 
 - `src/proxy.ts` uses `clerkMiddleware` + `auth.protect()` for `/profile`, `/admin`, `/vault`
 - Legacy `/auth/*` pages redirect to Clerk; bcrypt/jose/Resend code and deps still present
 - Production Clerk instance / webhook secret / Vercel env sync still incomplete per `docs/AUTH.md`
+- Vercel Blob store `midnight-blob` (`store_BA84nTw9y31mmhrL`, region `sfo1`) provisioned and linked to project `midnight-satin`; `BLOB_READ_WRITE_TOKEN` / `BLOB_STORE_ID` present locally — store is still empty (assets not migrated yet)
 
 ---
 
@@ -103,15 +104,23 @@ Post-build launch program for Midnight Satin. Core product features are largely 
     - Remove unused components, `.agents` Clerk skill noise if not needed in repo (or gitignore / document purpose)
     - Audit `my-replicate-app/` — keep as tooling or move out of production app tree
     - Run unused-export / lint cleanup on auth and payment paths after legacy strip
-  - [ ] 4.3 Performance and asset streamlining
+  - [ ] 4.3 Migrate relevant assets into `midnight-blob`
+    - Confirm Vercel Production/Preview have `BLOB_READ_WRITE_TOKEN` (and optionally `BLOB_STORE_ID`) for store `midnight-blob` / `store_BA84nTw9y31mmhrL`
+    - Inventory image URLs in Neon: `novels.cover_image_url`, `characters.portrait_url`, `author_profiles.avatar_url` (and any news/article images) — classify local `/seed/...`, `/images/generated/...`, old Blob hosts, vs already-on-target
+    - Upload seed + launch assets to the new store (prefixes `covers/`, `portraits/`, `avatars/`, or `seed/images/` via `npm run db:blobs` / extended scripts)
+    - Rewrite DB rows to the new public Blob URLs (`*.public.blob.vercel-storage.com` for this store)
+    - Re-point or re-run Romance Factory / Replicate import paths so new uploads land on `midnight-blob`, not local-only or a previous store
+    - Smoke-check Boudoir, Novel Detail, Cast Gallery, Author Study images load from the new store; remove or leave-as-fallback unused local copies only after verification
+    - Document the migration path in `docs/INFRASTRUCTURE.md` (store id, token env, upload scripts)
+  - [ ] 4.4 Performance and asset streamlining
     - Replace critical-path `<img>` with `next/image` where beneficial (covers, portraits)
     - Confirm Blob URLs and ISR/caching still correct after image changes
     - Quick Lighthouse / Speed Insights pass on Boudoir, Novel Detail, Reading Room
-  - [ ] 4.4 Content and empty-state readiness
+  - [ ] 4.5 Content and empty-state readiness
     - Seed production Neon with launch novels, news, and author profiles
     - Verify empty states are on-brand when a section has no data
     - Confirm `/updates` and Boudoir “latest” content are production-appropriate (no placeholder lorem)
-  - [ ] 4.5 Design fidelity spot-check vs `reference/`
+  - [ ] 4.6 Design fidelity spot-check vs `reference/`
     - Boudoir, Novel Detail, Reading Room, Vault, Login/Sign-in, Profile — mobile first
     - Fix only launch-blocking visual regressions (not a full redesign)
 
@@ -145,7 +154,8 @@ Post-build launch program for Midnight Satin. Core product features are largely 
 - [ ] 6. Launch operations and go-live
   - [ ] 6.1 Production infrastructure checklist
     - Neon production DB schema + migrations through `010` (and any new legacy-drop migrations)
-    - Blob + KV provisioned; tokens in Vercel Production
+    - Blob store `midnight-blob` linked; `BLOB_READ_WRITE_TOKEN` in Vercel Production/Preview; asset migration (4.3) complete or explicitly deferred with local fallbacks
+    - KV provisioned (or documented graceful no-cache); tokens in Vercel Production
     - Stripe live mode keys + webhooks pointed at production URLs
     - Domain DNS + HTTPS; Clerk production domain settings
   - [ ] 6.2 Observability and failure modes
@@ -177,8 +187,9 @@ Post-build launch program for Midnight Satin. Core product features are largely 
 1. **1.x + 3.1–3.2** — production Clerk + authZ/webhooks (blocks safe traffic)
 2. **2.x** — strip legacy once prod Clerk + account-linking policy is solid
 3. **5.x** — rewrite tests while auth is fresh in mind
-4. **4.x + 6.x** — streamline content/flags and go live
-5. **3.3–3.6** — deepen hardening in parallel with soft launch if needed
+4. **4.3** — migrate images into `midnight-blob` (can run in parallel with 4.x polish once tokens are in Vercel)
+5. **4.x + 6.x** — streamline content/flags and go live
+6. **3.3–3.6** — deepen hardening in parallel with soft launch if needed
 
 ## Out of scope (track separately)
 
