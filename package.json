@@ -26,6 +26,7 @@
     "preview:reference": "npx serve reference -p 3333"
   },
   "dependencies": {
+    "@clerk/nextjs": "^7.5.19",
     "@fontsource-variable/material-symbols-outlined": "^5.2.43",
     "@vercel/analytics": "^1.6.1",
     "@vercel/blob": "^2.3.0",
