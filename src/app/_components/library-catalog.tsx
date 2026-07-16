@@ -1,9 +1,9 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { Skeleton } from "@/components/ui";
 import { NovelCard } from "./novel-card";
 import { EmptyState } from "./empty-state";
-import { ShimmerPlaceholder } from "./shimmer-placeholder";
 export interface LibraryCatalogNovel {
   id: string;
   title: string;
@@ -55,7 +55,7 @@ export function LibraryCatalog({
       <div className="px-4 xs:px-6 py-8">
         <div className="grid grid-cols-2 gap-3 xs:gap-4 md:grid-cols-3 md:gap-6 lg:grid-cols-4 lg:gap-8">
           {Array.from({ length: 8 }).map((_, i) => (
-            <ShimmerPlaceholder key={i} className="aspect-[2/3] rounded-sm" />
+            <Skeleton key={i} className="aspect-[2/3] rounded-sm" />
           ))}
         </div>
       </div>

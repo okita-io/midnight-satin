@@ -4,6 +4,7 @@ import type { ReactNode } from "react";
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { Card } from "@/components/ui";
 import { createPaperbackCheckout } from "@/app/actions/paperback";
 
 interface PaperbackClientProps {
@@ -84,9 +85,7 @@ export function PaperbackClient({
   return (
     <div className="w-full flex flex-col gap-6 xs:gap-8">
       {/* Hero card: .card from globals (Tactile Noir) */}
-      <div className="card w-full p-6 xs:p-8 flex flex-col items-center gap-6">
-        <div className="overlay-sheen" aria-hidden />
-
+      <Card className="w-full p-6 xs:p-8 flex flex-col items-center gap-6">
         {coverImageUrl && (
           <div className="relative z-10 w-44 xs:w-52 aspect-[2/3] rounded-sm shadow-lg border border-white/10 overflow-hidden">
             <Image
@@ -121,7 +120,7 @@ export function PaperbackClient({
         <p className="relative z-10 font-literata text-white/60 text-sm text-center">
           Get an actual paperback copy of this novel shipped to you soon.
         </p>
-      </div>
+      </Card>
 
       <section
         className="w-full bg-surface/80 border border-primary/20 rounded-sm p-5 xs:p-6 space-y-4 shadow-[0px_2px_12px_rgba(212,175,55,0.08)]"

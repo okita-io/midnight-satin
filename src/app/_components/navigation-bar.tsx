@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { Icon } from "@/components/ui";
 import { FixedBottomBar } from "./chrome-primitives";
 
 type NavTab = "boudoir" | "library" | "vault" | "updates" | "profile";
@@ -36,19 +37,17 @@ function NavTabLink({
       aria-current={isActive ? "page" : undefined}
     >
       <div className="relative flex items-center justify-center">
-        <span
-          className="material-symbols-outlined transition-colors duration-300 ease-in-out"
-          style={{
-            fontSize: isActive ? 28 : 24,
-            color: isActive ? "var(--primary)" : "var(--text-muted)",
-            ...(isActive && {
-              filter: "drop-shadow(0 0 8px rgba(212,175,55,0.6))",
-            }),
-          }}
-          aria-hidden
-        >
-          {icon}
-        </span>
+        <Icon
+          name={icon}
+          size={isActive ? "xl" : "lg"}
+          tone={isActive ? "primary" : "muted"}
+          className="transition-colors duration-300 ease-in-out"
+          style={
+            isActive
+              ? { filter: "drop-shadow(0 0 8px rgba(212,175,55,0.6))" }
+              : undefined
+          }
+        />
         {isActive && (
           <span
             className="absolute -bottom-2 size-1 bg-primary rounded-full"

@@ -258,18 +258,18 @@ Track these as **`reusable: true`** components in `reference/pencil/design_syste
 
 ### Phase 1 — Catalog shell + highest-leverage chrome
 
-- [ ] Create `src/components/ui/` + **`README.md` catalog index**
-- [ ] `Icon` (Material Symbols wrapper) + migrate `navigation-bar`
-- [ ] `DetailSectionHeading`
-- [ ] `BackLink` / `BackButton` + migrate 2–3 critical routes (novel header, updates, reviews)
-- [ ] Add **typography matrix** to catalog README (and optionally `Text` primitive with 2–3 variants if it speeds adoption)
+- [x] Create `src/components/ui/` + **`README.md` catalog index**
+- [x] `Icon` (Material Symbols wrapper) + migrate `navigation-bar`
+- [x] `DetailSectionHeading`
+- [x] `BackLink` / `BackButton` + migrate 2–3 critical routes (novel header, updates, reviews)
+- [x] Add **typography matrix** to catalog README (and optionally `Text` primitive with 2–3 variants if it speeds adoption)
 
 ### Phase 2 — Actions, inputs, surfaces
 
-- [ ] `Button` variants
-- [ ] `TextInput` / search field alignment with `search-overlay`
-- [ ] `Card` variants tied to existing utilities
-- [ ] Promote `ShimmerPlaceholder` as catalog `Skeleton` (re-export or thin wrapper)
+- [x] `Button` variants
+- [x] `TextInput` / search field alignment with `search-overlay`
+- [x] `Card` variants tied to existing utilities
+- [x] Promote `ShimmerPlaceholder` as catalog `Skeleton` (re-export or thin wrapper)
 
 ### Phase 3 — Dialogs and empty states
 

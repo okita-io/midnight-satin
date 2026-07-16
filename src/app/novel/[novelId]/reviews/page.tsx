@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import { BackLink } from "@/components/ui";
 import { getCurrentSession } from "@/app/actions/auth";
 import { isNovelBookmarked } from "@/app/actions/bookmarks";
 import { getNovel } from "@/lib/content";
@@ -70,12 +70,12 @@ export default async function NovelReviewsPage({
 
       <main className="relative min-h-screen flex flex-col pb-28 px-6 pt-2">
         <nav className="mb-4" aria-label="Breadcrumb">
-          <Link
+          <BackLink
             href={`/novel/${novelId}`}
-            className="text-xs text-primary/70 hover:text-primary font-ui uppercase tracking-wider"
-          >
-            ← Back to novel
-          </Link>
+            label="Back to novel"
+            iconSize="md"
+            className="text-xs text-primary/70 hover:text-primary uppercase tracking-wider"
+          />
         </nav>
 
         <header className="mb-8 border-b border-primary/20 pb-4">

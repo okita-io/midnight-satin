@@ -2,9 +2,9 @@
 
 import React, { useTransition, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import { Icon, Button } from "@/components/ui";
 import { toggleBookmark } from "@/app/actions/bookmarks";
 import { AuthPrompt } from "./auth-prompt";
-import { IconGhostButton } from "./button-primitives";
 import { GradientHeaderStrip } from "./chrome-primitives";
 
 interface NovelDetailHeaderProps {
@@ -65,27 +65,23 @@ export function NovelDetailHeader({
     >
       <GradientHeaderStrip className="absolute inset-0" />
       <div className="pointer-events-auto">
-        <IconGhostButton onClick={handleBack} aria-label="Go back">
-          <span className="material-symbols-outlined text-shadow-sm">arrow_back</span>
-        </IconGhostButton>
+        <Button variant="iconGhost" onClick={handleBack} aria-label="Go back">
+          <Icon name="arrow_back" className="text-shadow-sm" />
+        </Button>
       </div>
       <div className="flex gap-3 pointer-events-auto">
-        <IconGhostButton
+        <Button
+          variant="iconGhost"
           onClick={handleBookmark}
           disabled={isPending}
           aria-label={bookmarked ? "Remove bookmark" : "Add bookmark"}
           className="disabled:opacity-50 disabled:active:scale-100"
         >
-          <span
-            className="material-symbols-outlined text-shadow-sm"
-            style={{ fontVariationSettings: bookmarked ? "'FILL' 1" : "'FILL' 0" }}
-          >
-            bookmark
-          </span>
-        </IconGhostButton>
-        <IconGhostButton onClick={handleShare} aria-label="Share">
-          <span className="material-symbols-outlined text-shadow-sm">share</span>
-        </IconGhostButton>
+          <Icon name="bookmark" filled={bookmarked} className="text-shadow-sm" />
+        </Button>
+        <Button variant="iconGhost" onClick={handleShare} aria-label="Share">
+          <Icon name="share" className="text-shadow-sm" />
+        </Button>
       </div>
       <AuthPrompt
         isOpen={authPromptOpen}
