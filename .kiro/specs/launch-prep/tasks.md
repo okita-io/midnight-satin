@@ -147,14 +147,14 @@ Post-build launch program for Midnight Satin. Core product features are largely 
   - [ ] 5.5 Admin and MCP edge cases
     - Non-admin Clerk user cannot mutate admin resources
     - MCP with bad/missing key → 401; valid key can CRUD content without breaking schema constraints
-  - [ ] 5.6 Playwright setup and UI visibility suite
+  - [x] 5.6 Playwright setup and UI visibility suite
     - Add Playwright (`@playwright/test`) with config for local `npm run dev` (and optional Preview base URL)
     - Add npm scripts (e.g. `test:e2e`, `test:e2e:ui`); document how to run in `docs/` or README
     - Prefer stable selectors (`getByRole`, `getByLabel`, `data-testid` where needed); avoid brittle CSS-only chains
     - Assert critical UI is **present, visible, and in viewport** (not just in DOM): headings, primary CTAs, nav items, key imagery
     - Cross-check against `reference/` screen specs for launch surfaces (structure/labels, not pixel-perfect)
     - Mobile-first viewport (e.g. 390×844) plus one tablet/desktop breakpoint for responsive layouts
-  - [ ] 5.7 Playwright — guest / public screens
+  - [-] 5.7 Playwright — guest / public screens
     - **Boudoir (`/`):** brand/header, search (if shown), hero/featured, Current Affairs / High Society sections (or empty states), nav bar (Boudoir, Library, Vault, Profile)
     - **Library (`/library`):** catalog grid/list chrome, novel cards with title + cover visible, empty state when no results
     - **Novel Detail:** parallax/cover hero, title/author, synopsis, chapter list, cast/players entry, bookmark/share affordances, nav
@@ -162,7 +162,7 @@ Post-build launch program for Midnight Satin. Core product features are largely 
     - **Author Study:** avatar, bio, bibliography/follow chrome
     - **Updates (`/updates`):** article list/cards; article detail when seeded
     - **404 / error:** themed not-found visible
-  - [ ] 5.8 Playwright — auth-gated and commerce UI
+  - [-] 5.8 Playwright — auth-gated and commerce UI
     - Wire Clerk test helpers (`setupClerkTestingToken`, storageState / signed-in fixture); use **test** Clerk keys + `CLERK_TESTING_TOKEN` only
     - Guest on protected route sees Clerk sign-in (or redirect), not a blank page
     - Signed-in **Profile:** account chrome, bookmarks/progress sections (or empty states), sign-out control

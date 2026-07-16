@@ -47,6 +47,7 @@ Without Postgres + Clerk, reader sessions and catalog data will not work as desi
 |----------|-------------|
 | `STRIPE_PRICE_POUCH` / `_HANDFUL` / `_CHEST` / `_ROYAL` | Prefer Dashboard price IDs over ad-hoc amounts |
 | `NEXT_PUBLIC_APP_URL` | Absolute app URL for webhooks / share links when needed |
+| `PLAYWRIGHT_BASE_URL` | Point e2e at Preview/prod instead of local `npm run dev` (see `docs/E2E.md`) |
 | `REPLICATE_API_TOKEN` | Romance Factory image generation scripts |
 | `ENV_FILE` / `DOTENV_CONFIG_PATH` | Point seed/import scripts at a non-default env file |
 

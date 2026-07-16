@@ -12,6 +12,8 @@ This is a single **Next.js 16** monolith (App Router, React 19, TypeScript, Tail
 | Dev server | `npm run dev` (port 3000) |
 | Lint | `npm run lint` |
 | Build | `npm run build` |
+| Unit tests | `npm run test` |
+| E2E (Playwright) | `npm run test:e2e` (see `docs/E2E.md`) |
 
 ### Notes
 
