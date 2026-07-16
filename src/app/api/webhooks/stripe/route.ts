@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
     );
     return NextResponse.json(
       { error: "Webhook not configured" },
-      { status: 500 }
+      { status: 400 }
     );
   }
 
@@ -52,9 +52,19 @@ export async function POST(request: NextRequest) {
   const session = event.data.object as Stripe.Checkout.Session;
   const novelId = session.metadata?.novel_id;
   const readerId = session.metadata?.reader_id;
+  const checkoutType = session.metadata?.type;
 
-  if (!novelId || !readerId) {
-    console.error("Stripe webhook: missing metadata", { novelId, readerId });
+  // Not a paperback checkout (e.g. credit pack) — ACK so Stripe does not retry.
+  if (
+    checkoutType === "credit_pack" ||
+    session.metadata?.pack_id ||
+    !novelId
+  ) {
+    return NextResponse.json({ received: true });
+  }
+
+  if (!readerId) {
+    console.error("Stripe webhook: missing reader_id", { novelId });
     return NextResponse.json(
       { error: "Missing session metadata" },
       { status: 400 }

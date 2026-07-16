@@ -36,6 +36,12 @@ PLAYWRIGHT_BASE_URL=https://your-preview.vercel.app npm run test:e2e:guest
 
 Auth e2e requires `pk_test_` / `sk_test_` keys. Production keys are skipped.
 
+Optional signed-in flows:
+
+```bash
+E2E_CLERK_USER_EMAIL=you@example.com E2E_CLERK_USER_PASSWORD='…' npm run test:e2e -- --project=auth-mobile
+```
+
 ## Layout
 
 ```

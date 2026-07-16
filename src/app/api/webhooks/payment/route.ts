@@ -2,18 +2,20 @@
  * Payment webhook handler (Req 8.4-8.6).
  * Processes Stripe checkout.session.completed with idempotent credit grant.
  * Uses processed_payment_events table to prevent duplicate credit grants.
+ * Credits are derived from pack_id server-side (never trust client metadata amounts).
  */
 
 import { sql } from "@vercel/postgres";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
+import { CREDIT_PACKS, type PackId } from "@/lib/stripe/config";
 
 export async function POST(request: NextRequest) {
   if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_WEBHOOK_SECRET) {
     console.error("Stripe webhook: missing STRIPE_SECRET_KEY or STRIPE_WEBHOOK_SECRET");
     return NextResponse.json(
       { error: "Webhook not configured" },
-      { status: 500 }
+      { status: 400 }
     );
   }
 
@@ -46,24 +48,31 @@ export async function POST(request: NextRequest) {
   const eventId = event.id;
   const readerId = session.metadata?.reader_id;
   const packId = session.metadata?.pack_id;
-  const creditsStr = session.metadata?.credits;
+  const checkoutType = session.metadata?.type;
 
-  if (!readerId || !packId || !creditsStr) {
-    console.error("Webhook: missing metadata", { readerId, packId, creditsStr });
+  // Not a credit-pack checkout (e.g. paperback) — ACK so Stripe does not retry.
+  if (
+    checkoutType === "paperback" ||
+    session.metadata?.novel_id ||
+    !packId
+  ) {
+    return NextResponse.json({ received: true });
+  }
+
+  if (!readerId) {
+    console.error("Webhook: missing reader_id metadata", { packId });
     return NextResponse.json(
       { error: "Missing session metadata" },
       { status: 400 }
     );
   }
 
-  const credits = parseInt(creditsStr, 10);
-  if (isNaN(credits) || credits <= 0) {
-    console.error("Webhook: invalid credits", creditsStr);
-    return NextResponse.json(
-      { error: "Invalid credits in metadata" },
-      { status: 400 }
-    );
+  if (!(packId in CREDIT_PACKS)) {
+    console.error("Webhook: unknown pack_id", packId);
+    return NextResponse.json({ error: "Unknown pack" }, { status: 400 });
   }
+
+  const credits = CREDIT_PACKS[packId as PackId].credits;
 
   const client = await sql.connect();
   try {

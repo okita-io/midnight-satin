@@ -69,16 +69,16 @@ Post-build launch program for Midnight Satin. Core product features are largely 
     - Refresh `docs/AUTH.md`, `docs/ENVIRONMENT.md`, README auth bullets
     - Update `.kiro/specs/midnight-satin-platform/tasks.md` note that Req 2 JWT auth is historically complete but superseded
 
-- [ ] 3. Security hardening
-  - [ ] 3.1 AuthZ audit of all server actions and API routes
+- [-] 3. Security hardening
+  - [x] 3.1 AuthZ audit of all server actions and API routes
     - Inventory every `"use server"` action and `/api/*` route; classify: public / signed-in / admin / webhook / MCP
     - Ensure mutating actions call `getSession()` / `requireSession()` and scope by `readerId` (no IDOR on bookmarks, unlocks, reviews, comments, follows)
     - Ensure admin actions all go through `checkAdminSession` (or equivalent) and fail closed
-  - [ ] 3.2 Webhook security
+  - [x] 3.2 Webhook security
     - Stripe: verify signature required; reject missing/invalid secrets with 400; confirm idempotency on `processed_payment_events` / `paperback_orders`
     - Clerk: same for signing secret; soft-delete behavior does not orphan credits unsafely without a documented policy
     - Confirm webhook routes are excluded from Clerk `auth.protect()` and do not rely on session cookies
-  - [ ] 3.3 MCP API hardening
+  - [x] 3.3 MCP API hardening
     - Require `MCP_API_KEY` in production (fail closed if unset)
     - Add basic rate limiting or abuse notes; rotate key procedure in docs
     - Ensure MCP cannot escalate to admin reader role or grant arbitrary credits without explicit ops design
@@ -126,7 +126,7 @@ Post-build launch program for Midnight Satin. Core product features are largely 
     - Fix only launch-blocking visual regressions (not a full redesign)
 
 - [ ] 5. Edge-case and regression testing
-  - [ ] 5.1 Update auth test suite for Clerk
+  - [x] 5.1 Update auth test suite for Clerk
     - Rewrite `auth-properties` / `access-control-properties` / `authentication-forms` for Clerk-backed sessions (mock `auth()` / bridge)
     - Remove or quarantine password-hash / Resend unit tests after legacy strip
     - Ensure all related Vitest suites pass

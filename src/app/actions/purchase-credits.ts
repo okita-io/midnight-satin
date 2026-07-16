@@ -84,9 +84,9 @@ export async function purchaseCredits(
       success_url: `${baseUrl}/vault?success=1&session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl}/vault?canceled=1`,
       metadata: {
+        type: "credit_pack",
         reader_id: session.readerId,
         pack_id: packId,
-        credits: String(pack.credits),
       },
       customer_email: session.email,
     });

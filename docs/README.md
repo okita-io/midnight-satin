@@ -9,6 +9,7 @@ Living reference for the Midnight Satin platform: stack, infrastructure, auth, a
 | [AUTH.md](./AUTH.md) | Clerk integration, route matrix, admin promotion, legacy cutover |
 | [ENVIRONMENT.md](./ENVIRONMENT.md) | Env var reference and deployment checklist |
 | [E2E.md](./E2E.md) | Playwright UI visibility suite (guest + auth-gated) |
+| [SECURITY.md](./SECURITY.md) | AuthZ audit notes, webhook hardening, MCP key policy |
 
 **Launch program:** [`.kiro/specs/launch-prep/tasks.md`](../.kiro/specs/launch-prep/tasks.md) — Clerk finish, legacy strip, security, Playwright, go-live.
 

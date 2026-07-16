@@ -20,6 +20,8 @@ Browser
 4. Else insert new reader (+ 200 welcome-bonus credits)
 5. Webhook upsert: `POST /api/webhooks/clerk` on `user.created` / `user.updated`; soft-unlink on `user.deleted`
 
+**Clerk `user.deleted` policy:** Soft-unlink only (`readers.clerk_user_id = NULL`). Reading history, credits, and purchases are retained so a later sign-in with the same email can re-link without wiping economy state. Credits are not drained on delete. Re-auth recreates the Clerk↔reader link via email match or a new row + welcome bonus if the email is new.
+
 **Session helpers:** `getSession()` / `requireSession()` / `getCurrentReader()` — all Clerk-backed.
 
 **Admin gate:** `src/lib/auth/admin.ts` — `readers.role === 'admin'` (not Clerk Organizations). Layout + mutations both enforce this.

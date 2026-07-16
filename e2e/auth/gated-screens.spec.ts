@@ -1,11 +1,11 @@
-import { setupClerkTestingToken } from "@clerk/testing/playwright";
+import { clerk, setupClerkTestingToken } from "@clerk/testing/playwright";
 import { expect, test } from "@playwright/test";
 import { expectVisibleInViewport } from "../helpers/visibility";
 
 /**
  * Auth-gated UI visibility (launch-prep 5.8).
- * Guest redirect tests always run. Signed-in flows need Clerk test keys +
- * optional E2E_CLERK_USER_EMAIL / E2E_CLERK_USER_PASSWORD for storageState later.
+ * Guest redirect tests always run. Signed-in flows need:
+ *   E2E_CLERK_USER_EMAIL + E2E_CLERK_USER_PASSWORD (Clerk test instance)
  */
 test.describe("Auth-gated and commerce UI", () => {
   test.beforeEach(async ({ page }) => {
@@ -22,7 +22,6 @@ test.describe("Auth-gated and commerce UI", () => {
   }) => {
     await page.goto("/profile");
     await expect(page).toHaveURL(/sign-in/);
-    // Clerk SignIn mounts inside our themed page
     await expect(
       page.locator("[data-clerk-component], .cl-signIn-root, .cl-rootBox").first()
     ).toBeVisible({ timeout: 20_000 });
@@ -61,7 +60,6 @@ test.describe("Auth-gated and commerce UI", () => {
       .first();
     await firstNovel.click();
 
-    // Bookmark while signed out may open auth prompt or navigate — either is OK
     const bookmark = page.getByRole("button", { name: /bookmark/i }).first();
     if (await bookmark.isVisible().catch(() => false)) {
       await bookmark.click();
@@ -77,5 +75,40 @@ test.describe("Auth-gated and commerce UI", () => {
         prompt.getByRole("button", { name: "Register" })
       );
     }
+  });
+
+  test("signed-in Profile and Vault chrome when E2E Clerk user is configured", async ({
+    page,
+  }) => {
+    const email = process.env.E2E_CLERK_USER_EMAIL;
+    const password = process.env.E2E_CLERK_USER_PASSWORD;
+    test.skip(
+      !email || !password,
+      "Set E2E_CLERK_USER_EMAIL and E2E_CLERK_USER_PASSWORD for signed-in e2e"
+    );
+
+    await page.goto("/");
+    await clerk.signIn({
+      page,
+      signInParams: {
+        strategy: "password",
+        identifier: email!,
+        password: password!,
+      },
+    });
+
+    await page.goto("/profile");
+    await expect(page).not.toHaveURL(/sign-in/);
+    await expectVisibleInViewport(
+      page.getByRole("heading", { name: /Account/i }).first()
+    );
+    await expectVisibleInViewport(page.getByRole("button", { name: /Log out/i }));
+
+    await page.goto("/vault");
+    await expect(page).not.toHaveURL(/sign-in/);
+    // Vault shows credit packs or coming-soon / balance chrome
+    await expect(
+      page.getByText(/Vault|credits|Dust|Gold|Riches|Treasury|Coming Soon/i).first()
+    ).toBeVisible({ timeout: 15_000 });
   });
 });
