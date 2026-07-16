@@ -1,7 +1,7 @@
 "use client";
 
-import { SignOutButton } from "@clerk/nextjs";
 import Link from "next/link";
+import { logoutReader } from "@/app/actions/auth";
 
 interface AccountActionsListProps {
   /** If true, show full actions; if false, only logout. */
@@ -10,7 +10,7 @@ interface AccountActionsListProps {
 
 /**
  * AccountActionsList: Edit Display Name, Manage Email (stub), View Transactions, Logout.
- * Req out via Clerk.
+ * Logout revokes Clerk session and clears legacy JWT cookie via logoutReader.
  */
 export function AccountActionsList({ showAll = true }: AccountActionsListProps) {
   const regularActions = showAll
@@ -52,9 +52,9 @@ export function AccountActionsList({ showAll = true }: AccountActionsListProps) 
             </Link>
           )
         )}
-        <SignOutButton redirectUrl="/">
+        <form action={logoutReader}>
           <button
-            type="button"
+            type="submit"
             className="w-full flex items-center gap-3 px-4 py-3 text-left font-ui text-sm text-text-main hover:bg-white/5 transition-colors border-t border-white/5 cursor-pointer"
           >
             <span className="material-symbols-outlined text-text-muted text-xl" aria-hidden>
@@ -62,7 +62,7 @@ export function AccountActionsList({ showAll = true }: AccountActionsListProps) 
             </span>
             Log out
           </button>
-        </SignOutButton>
+        </form>
       </div>
     </section>
   );

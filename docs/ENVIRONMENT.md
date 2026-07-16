@@ -46,8 +46,7 @@ Without Postgres + Clerk, reader sessions and catalog data will not work as desi
 | Variable | When needed |
 |----------|-------------|
 | `STRIPE_PRICE_POUCH` / `_HANDFUL` / `_CHEST` / `_ROYAL` | Prefer Dashboard price IDs over ad-hoc amounts |
-| `RESEND_API_KEY` / `RESEND_FROM_EMAIL` | Legacy password-reset emails |
-| `NEXT_PUBLIC_APP_URL` | Absolute links in reset emails |
+| `NEXT_PUBLIC_APP_URL` | Absolute app URL for webhooks / share links when needed |
 | `REPLICATE_API_TOKEN` | Romance Factory image generation scripts |
 | `ENV_FILE` / `DOTENV_CONFIG_PATH` | Point seed/import scripts at a non-default env file |
 

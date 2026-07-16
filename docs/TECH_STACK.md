@@ -47,15 +47,13 @@ Deep dives: [INFRASTRUCTURE.md](./INFRASTRUCTURE.md), [AUTH.md](./AUTH.md).
 
 | Package | Role |
 |---------|------|
-| `@clerk/nextjs` | Authentication (in progress; see AUTH.md) |
+| `@clerk/nextjs` | Authentication (Clerk → Neon `readers`) |
 | `@vercel/postgres` | Neon-backed SQL (`sql` tagged templates) |
 | `@vercel/blob` | Public image storage |
 | `@vercel/kv` | Short-TTL cache (optional locally) |
 | `@vercel/analytics` / `@vercel/speed-insights` | Product analytics / Web Vitals |
 | `stripe` | Credit packs + paperback checkout |
-| `resend` | Password-reset email (legacy auth) |
 | `replicate` | AI image generation (import scripts) |
-| `bcryptjs` / `jose` | Legacy password + JWT session (being replaced by Clerk) |
 | `react-markdown` | News / blog article bodies |
 
 ## Source layout
@@ -66,7 +64,7 @@ src/
   app/actions/         # Server actions (auth, unlock, reviews, admin, …)
   app/api/             # MCP + webhooks
   lib/
-    auth/              # Clerk bridge, session helpers, legacy password reset
+    auth/              # Clerk bridge, session helpers, admin gate
     db/                # schema.sql, types, query helpers
     blob.ts            # Vercel Blob wrapper
     cache.ts           # Vercel KV wrapper

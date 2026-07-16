@@ -1,5 +1,7 @@
 # Implementation Plan: Password Recovery & Resend
 
+> **SUPERSEDED (2026-07-15):** Midnight Satin uses **Clerk** for identity (including Clerk’s built-in password reset / email flows). Custom Resend + `password_reset_*` tables are retired. See `docs/AUTH.md` and `.kiro/specs/launch-prep/tasks.md` §2. Do not implement remaining checkboxes below.
+
 ## Overview
 
 This plan implements a two-phase password recovery flow for the Midnight Satin platform. The implementation follows the existing Next.js 16 App Router patterns, adds two Postgres tables for token storage and security logging, and integrates with Resend for email delivery. Tasks are ordered to build incrementally with early validation of core functionality.

@@ -200,58 +200,6 @@ export interface CommentThreadPage {
   nextCursor: string | null;
 }
 
-/** Password reset token for email password reset flow. Requirements: 2.3, 7.1 */
-export interface PasswordResetToken {
-  id: string;
-  readerId: string;
-  tokenHash: string;
-  expiresAt: Date;
-  usedAt: Date | null;
-  createdAt: Date;
-  ipAddress: string | null;
-}
-
-/** Event types for password reset security logging */
-export type PasswordResetEventType =
-  | "request_sent"
-  | "link_used"
-  | "link_expired"
-  | "invalid_token"
-  | "rate_limit"
-  | "password_changed"
-  | "email_failed"
-  | "reset_requested"
-  | "token_generated"
-  | "email_sent"
-  | "token_validated"
-  | "token_invalid"
-  | "token_expired"
-  | "token_used"
-  | "rate_limited";
-
-/**
- * Allowed reason codes for password reset log entries.
- * Whitelist ensures no sensitive data (email, token, password) is logged. Requirements: 7.4
- */
-export type PasswordResetReasonCode =
-  | "invalid"
-  | "expired"
-  | "used"
-  | "rate_limited"
-  | "email_failed"
-  | "resend_error"
-  | "token_not_found";
-
-/** Log entry for password reset security events */
-export interface PasswordResetLogEntry {
-  id: string;
-  eventType: PasswordResetEventType;
-  readerId: string | null;
-  ipAddress: string | null;
-  reasonCode: string | null;
-  createdAt: Date;
-}
-
 /** Entity types used in Property 1: Entity storage round-trip and Property 25, 26 */
 export type StorableEntity =
   | AuthorProfile

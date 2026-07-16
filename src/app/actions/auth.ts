@@ -37,19 +37,3 @@ export async function getCurrentReader() {
   }
   return null;
 }
-
-/** @deprecated Use Clerk `/sign-in`. Kept so old form imports fail closed. */
-export async function loginFormAction(
-  _prev: AuthFormState,
-  _formData: FormData
-): Promise<AuthFormState> {
-  redirect("/sign-in");
-}
-
-/** @deprecated Use Clerk `/sign-up`. Kept so old form imports fail closed. */
-export async function registerFormAction(
-  _prev: AuthFormState,
-  _formData: FormData
-): Promise<AuthFormState> {
-  redirect("/sign-up");
-}

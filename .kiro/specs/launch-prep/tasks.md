@@ -9,8 +9,9 @@ Post-build launch program for Midnight Satin. Core product features are largely 
 
 **Current baseline (as of this list):**
 - Clerk provider, `/sign-in` `/sign-up`, webhook route, and `clerk-reader` → Neon bridge exist
-- `src/proxy.ts` uses `clerkMiddleware` + `auth.protect()` for `/profile`, `/admin`, `/vault`
-- Legacy `/auth/*` pages redirect to Clerk; bcrypt/jose/Resend code and deps still present
+- `src/proxy.ts` uses `clerkMiddleware` + `auth.protect()` for `/profile`, `/admin`, `/vault`; webhooks explicitly excluded
+- `/admin` also requires Neon `readers.role === 'admin'` (layout + actions)
+- Legacy `/auth/*` pages still redirect to Clerk (stubs kept briefly); password/Resend/bcrypt/jose **removed from app code**
 - Production Clerk instance / webhook secret / Vercel env sync still incomplete per `docs/AUTH.md`
 - Vercel Blob store `midnight-blob` (`store_BA84nTw9y31mmhrL`, region `sfo1`) provisioned and linked to project `midnight-satin`; `BLOB_READ_WRITE_TOKEN` / `BLOB_STORE_ID` present locally — store is still empty (assets not migrated yet)
 
@@ -18,7 +19,7 @@ Post-build launch program for Midnight Satin. Core product features are largely 
 
 ## Tasks
 
-- [ ] 1. Finish Clerk for production
+- [-] 1. Finish Clerk for production
   - [ ] 1.1 Create and verify production Clerk application
     - Create a production Clerk instance (not development-only); run `npx clerk doctor` until prod warnings are cleared
     - Configure allowed origins / redirect URLs for the live domain and Vercel preview URLs
@@ -31,39 +32,39 @@ Post-build launch program for Midnight Satin. Core product features are largely 
     - Endpoint: `https://<production-domain>/api/webhooks/clerk`
     - Events: `user.created`, `user.updated`, `user.deleted`
     - Confirm signature verification with production `CLERK_WEBHOOK_SIGNING_SECRET`; smoke-test create/update/delete sync into Neon `readers`
-  - [ ] 1.4 Harden Clerk route protection in `src/proxy.ts`
+  - [x] 1.4 Harden Clerk route protection in `src/proxy.ts`
     - Review matcher: ensure webhook routes (`/api/webhooks(.*)`) are not blocked by `auth.protect()`
     - Decide whether unlock/purchase/comment/review flows need Edge protection in addition to server-action `getSession()` checks
     - Protect any remaining authenticated page surfaces (e.g. paperback success if session-required)
     - Document the public vs protected route matrix in `docs/AUTH.md`
-  - [ ] 1.5 Confirm admin authorization path
+  - [x] 1.5 Confirm admin authorization path
     - Verify `/admin` requires Clerk auth **and** `readers.role === 'admin'` (not Clerk-org-only)
     - Document how the first admin is promoted in Neon (SQL or seed script)
     - Add a regression test or property covering non-admin signed-in users cannot call admin actions
-  - [ ] 1.6 Clerk UX polish for launch brand
+  - [x] 1.6 Clerk UX polish for launch brand
     - Verify `clerk-appearance.ts` matches Tactile Noir Luxury on sign-in/up (mobile + desktop)
     - Confirm UserButton / SignOut paths clear Neon session cookie helpers and redirect cleanly
     - Ensure auth prompts deep-link back to intended content (`redirect_url` / return paths)
 
-- [ ] 2. Strip legacy authentication
-  - [ ] 2.1 Inventory and migrate remaining password-backed readers
+- [-] 2. Strip legacy authentication
+  - [-] 2.1 Inventory and migrate remaining password-backed readers
     - Query Neon for `readers` with `password_hash IS NOT NULL` and/or `clerk_user_id IS NULL`
     - Decide policy: force re-register via Clerk, email invite, or one-time link-by-email on first Clerk login (already partially implemented in `clerk-reader.ts`)
     - Produce a short runbook for linking legacy accounts before cutover
-  - [ ] 2.2 Remove legacy auth UI and routes
+  - [-] 2.2 Remove legacy auth UI and routes
     - Delete or permanently replace `/auth/login`, `/auth/register`, `/auth/forgot-password`, `/auth/reset-password` (redirect stubs OK only during a short deprecation window)
     - Remove dead form components that only served JWT login/register
     - Update nav/copy/links that still mention “password” or old auth URLs
-  - [ ] 2.3 Remove legacy auth server code
+  - [x] 2.3 Remove legacy auth server code
     - Delete `src/lib/auth/password.ts`, `password-reset.ts`, `resend.ts` (if unused), `src/app/actions/password-reset.ts`
     - Remove deprecated `loginFormAction` / `registerFormAction` once no imports remain
     - Simplify `session.ts` / `deleteSession()` — drop JWT cookie (`midnight-satin-session`) once confirmed unused
-  - [ ] 2.4 Remove legacy auth dependencies and schema
+  - [x] 2.4 Remove legacy auth dependencies and schema
     - Remove `bcryptjs`, `jose`, `@types/bcryptjs` from `package.json` when unused
     - Remove or archive Resend if only used for password reset; drop `RESEND_*` from `.env.example` if retired
     - Add migration to drop `password_reset_tokens`, `password_reset_log`, and eventually `readers.password_hash` (after cutover confirmed)
     - Delete or rewrite `.legacy` password-reset tests; remove password-hash property tests that no longer apply
-  - [ ] 2.5 Update platform docs and old specs
+  - [x] 2.5 Update platform docs and old specs
     - Mark password-recovery Resend spec as superseded by Clerk
     - Refresh `docs/AUTH.md`, `docs/ENVIRONMENT.md`, README auth bullets
     - Update `.kiro/specs/midnight-satin-platform/tasks.md` note that Req 2 JWT auth is historically complete but superseded

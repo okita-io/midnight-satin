@@ -6,7 +6,7 @@ How Midnight Satin uses Vercel platform services and third-party APIs. Connectio
 
 **What:** Primary application database. On Vercel, “Postgres” storage is Neon-backed; the app talks to it through `@vercel/postgres` using `POSTGRES_URL`.
 
-**Client:** `src/lib/db/index.ts` re-exports `sql` and small reader/password-reset helpers. Most features issue tagged-template SQL directly in server actions or lib modules.
+**Client:** `src/lib/db/index.ts` re-exports `sql` and small reader helpers. Most features issue tagged-template SQL directly in server actions or lib modules.
 
 **Schema:**
 
@@ -101,15 +101,9 @@ Both default to `false` in `.env.example`.
 
 ---
 
-## Resend (email)
+## Email
 
-**What:** Transactional email for the **legacy** password-reset flow.
-
-**Client:** `src/lib/auth/resend.ts` — branded HTML reset emails.
-
-**Env:** `RESEND_API_KEY`, `RESEND_FROM_EMAIL`, optional `NEXT_PUBLIC_APP_URL` for link base.
-
-Once Clerk fully owns auth (including “forgot password”), Resend may be removable. See [AUTH.md](./AUTH.md).
+Transactional email for “forgot password” is owned by **Clerk** (not Resend). Legacy Resend + `password_reset_*` tables are removed from the app; drop tables via `scripts/migrations/011_drop_password_reset_tables.sql` after cutover inventory. See [AUTH.md](./AUTH.md).
 
 ---
 

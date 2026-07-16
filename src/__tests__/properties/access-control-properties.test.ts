@@ -93,6 +93,19 @@ describe("Property 9: Access control enforcement", () => {
     expect(res?.status).toBe(307);
     expect(res?.headers.get("location") ?? "").toContain("/sign-in");
   });
+
+  it("unauthenticated webhook routes are not session-protected", async () => {
+    const { default: proxy } = await import("@/proxy");
+    for (const path of [
+      "/api/webhooks/clerk",
+      "/api/webhooks/stripe",
+      "/api/webhooks/payment",
+    ]) {
+      const req = new NextRequest(`http://localhost${path}`, { method: "POST" });
+      const res = await proxy(req, {} as never);
+      expect(res?.status ?? 200).toBe(200);
+    }
+  });
 });
 
 describe("Property 10: Session lifecycle (Clerk bridge)", () => {
