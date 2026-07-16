@@ -6,11 +6,13 @@ A premium romance reading web application — **Tactile Noir Luxury** experience
 
 - **Runtime:** Next.js 16 (App Router), React 19, TypeScript
 - **Styling:** Tailwind CSS, design tokens in `globals.css`
-- **Data:** Vercel Postgres, Vercel Blob (assets), Vercel KV (caching)
-- **Auth:** Session-based (cookies/JWT), Edge middleware for protected routes
-- **Payments:** Stripe (or configured Payment_Provider) for credit packs
+- **Data:** Neon via Vercel Postgres (`@vercel/postgres`), Vercel Blob (assets), Vercel KV (caching)
+- **Auth:** Clerk (`@clerk/nextjs`) linked to Neon `readers` — migration in progress; see [docs/AUTH.md](docs/AUTH.md)
+- **Payments:** Stripe for credit packs (and optional paperback)
 - **Content:** AI-generated via MCP interface; admin dashboard at `/admin`
 - **Testing:** Vitest, fast-check (property-based), React Testing Library
+
+Full stack and infrastructure notes: **[docs/](docs/)** ([tech stack](docs/TECH_STACK.md), [infrastructure](docs/INFRASTRUCTURE.md), [environment](docs/ENVIRONMENT.md)).
 
 ## Getting started
 
@@ -175,7 +177,7 @@ Agents and subagents should have access to — or be instructed to apply — the
 | **Tailwind CSS & design tokens** | Apply the Tactile Noir Luxury design system: colors, typography, spacing, shadows, safe-area insets. | Styling any UI, creating or editing components, matching reference mockups. | Use design tokens from `reference/midnight_satin_prd.html` and `src/app/globals.css`. Mobile-first, max content width 448px (max-w-md), gold accents (#D4AF37), void (#050505), surface (#121212), burgundy (#800020). Sharp radii (2px/4px), gold-tinted shadows. |
 | **TypeScript & domain types** | Keep types aligned with the data model and server contracts. | Defining or changing types, DB types, API/MCP request/response shapes. | Copy types from the design doc (`.kiro/specs/midnight-satin-platform/design.md`) for AuthorProfile, Novel, Chapter, Character, Reader, ReadingProgress, CreditTransaction, Comment, etc. Use consistent naming (e.g. `novelId`, `authorId`). |
 | **Vercel Postgres / Blob / KV** | Implement data layer: queries, migrations, blob uploads, KV caching. | DB schema changes, content CRUD, asset uploads, caching featured/trending data. | Schema and indexes are in the design doc. Use `@vercel/postgres`, `@vercel/blob`, `@vercel/kv`. Credit-changing operations must run in transactions with row-level locking on reader balance. Cache frequently accessed data in KV with TTL 300s where specified. |
-| **Authentication & session** | Implement login, registration, session lifecycle, and route protection. | Auth flows, protected routes, Edge middleware, welcome bonus (200 credits). | Email/password with secure hashing; HTTP-only session cookies. Redirect to intended page or Boudoir after login/register. Guest access: allow browse and free chapters; prompt to sign in for unlock, endorse, Vault. See requirements 9.x and design doc auth flow. |
+| **Authentication & session** | Clerk owns identity (sign-in/up, sessions, password recovery). Neon `readers` stores app profile + credits, linked via `clerk_user_id`. | Auth UI, protected routes, Server Actions, welcome bonus (200 credits). | Use `@clerk/nextjs` (`ClerkProvider`, `proxy.ts` with `clerkMiddleware`, `/sign-in` + `/sign-up`). Resolve the app user with `getCurrentSession` / `getCurrentReader` (Clerk → Neon). Guest browse is public; protect `/profile`, `/vault`, `/admin`. Sync users via `/api/webhooks/clerk`. Do not add new email/password or JWT cookie auth. |
 | **MCP (Model Context Protocol)** | Implement or call the content-agent MCP interface and use Stitch for design assets. | Adding/updating MCP tools, content agent workflows, or fetching designs from Stitch. | MCP server at `/api/mcp`; API key auth. Tools: create_author, create_series, create_novel, create_chapter, create_character, list_content, update_content. Stitch MCP (see `.kiro/settings/mcp.json`) for design screens; use when syncing or referencing Stitch designs. |
 | **Property-based testing (fast-check)** | Write and maintain property-based tests for correctness properties. | Adding or changing behavior that affects credits, auth, reading progress, unlocks, endorsements, comments, or admin. | Each correctness property in the design doc (Properties 1–26) should have a corresponding test. Use generators in `src/__tests__/generators/` for domain types. Tag tests: `Feature: midnight-satin-platform, Property N: <short description>`. Run property tests as part of CI. |
 | **Accessibility (a11y)** | Meet WCAG 2.1 AA baseline: focus order, labels, contrast, semantics, modals. | Implementing or updating UI components, modals, navigation, Reading Room, Cast Gallery. | Requirement 21: focusable controls, visible focus, aria-label (or hidden text) for icon-only controls, semantic HTML (nav, main, header, footer, article). Focus trap in modals; restore focus on close. Contrast: text #EAEAEA on void #050505; gold on dark. |
