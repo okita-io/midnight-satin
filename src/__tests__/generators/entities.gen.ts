@@ -75,6 +75,12 @@ export const chapterArb: fc.Arbitrary<Chapter> = fc.record({
 });
 
 export const characterStatsArb: fc.Arbitrary<CharacterStats> = fc.record({
+  consciousWant: fc.option(fc.string({ maxLength: 200 }), { nil: undefined }),
+  unconsciousNeed: fc.option(fc.string({ maxLength: 200 }), { nil: undefined }),
+  wound: fc.option(fc.string({ maxLength: 200 }), { nil: undefined }),
+  fear: fc.option(fc.string({ maxLength: 200 }), { nil: undefined }),
+  lieTheyBelieve: fc.option(fc.string({ maxLength: 200 }), { nil: undefined }),
+  role: fc.option(fc.string({ maxLength: 50 }), { nil: undefined }),
   age: fc.option(fc.string({ maxLength: 50 }), { nil: undefined }),
   status: fc.option(fc.string({ maxLength: 50 }), { nil: undefined }),
   height: fc.option(fc.string({ maxLength: 50 }), { nil: undefined }),

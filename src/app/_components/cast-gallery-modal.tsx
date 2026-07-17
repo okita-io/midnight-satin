@@ -19,6 +19,27 @@ function getStats(char: NovelCharacter): Partial<CharacterStats> {
   const s = char.stats;
   if (!s || typeof s !== "object") return {};
   return {
+    consciousWant:
+      typeof s.consciousWant === "string"
+        ? s.consciousWant
+        : typeof s.conscious_want === "string"
+          ? s.conscious_want
+          : undefined,
+    unconsciousNeed:
+      typeof s.unconsciousNeed === "string"
+        ? s.unconsciousNeed
+        : typeof s.unconscious_need === "string"
+          ? s.unconscious_need
+          : undefined,
+    wound: typeof s.wound === "string" ? s.wound : undefined,
+    fear: typeof s.fear === "string" ? s.fear : undefined,
+    lieTheyBelieve:
+      typeof s.lieTheyBelieve === "string"
+        ? s.lieTheyBelieve
+        : typeof s.lie_they_believe === "string"
+          ? s.lie_they_believe
+          : undefined,
+    role: typeof s.role === "string" ? s.role : undefined,
     age: typeof s.age === "string" ? s.age : undefined,
     status: typeof s.status === "string" ? s.status : undefined,
     height: typeof s.height === "string" ? s.height : undefined,
@@ -198,7 +219,7 @@ function CharacterCard({
   );
 }
 
-/** Dossier card back - stats grid, Tastes & Temptations, secrets, background (Req 5.4, 5.7). */
+/** Dossier card back — RF romance psychology first; optional seed/otome stats if present. */
 function DossierCard({
   char,
   onTapReturn,
@@ -211,7 +232,17 @@ function DossierCard({
   const hasDislikes = stats.dislikes && stats.dislikes.length > 0;
   const hasTastes = hasFavorites || hasDislikes;
 
-  const statItems = [
+  // Romance Factory publish shape (primary for generated novels)
+  const arcItems = [
+    { label: "Wants", value: stats.consciousWant },
+    { label: "Needs", value: stats.unconsciousNeed },
+    { label: "Wound", value: stats.wound },
+    { label: "Fear", value: stats.fear },
+    { label: "Lie They Believe", value: stats.lieTheyBelieve },
+  ].filter((item) => item.value);
+
+  // Optional vitals from hand-authored / seed content
+  const vitalItems = [
     { label: "Age", value: stats.age },
     { label: "Status", value: stats.status },
     { label: "Height", value: stats.height },
@@ -248,19 +279,34 @@ function DossierCard({
         </span>
       </div>
 
-      {/* Stats grid - Age, Status, Height, Occupation, Zodiac, Blood Type, Birthday */}
-      <div className="grid grid-cols-2 gap-6 mb-8">
-        {statItems.map(({ label, value }) => (
-          <div key={label}>
-            <p className="font-ui text-xs text-text-muted uppercase tracking-wider mb-1">
-              {label}
-            </p>
-            <p className="font-body text-text-main text-lg">{value}</p>
-          </div>
-        ))}
-      </div>
+      {arcItems.length > 0 && (
+        <div className="space-y-5 mb-8">
+          {arcItems.map(({ label, value }) => (
+            <div key={label}>
+              <p className="font-ui text-xs text-text-muted uppercase tracking-wider mb-1">
+                {label}
+              </p>
+              <p className="font-body text-text-main text-base leading-relaxed">
+                {value}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
 
-      {/* Tastes & Temptations - favorites and dislikes (Req 5.7) */}
+      {vitalItems.length > 0 && (
+        <div className="grid grid-cols-2 gap-6 mb-8">
+          {vitalItems.map(({ label, value }) => (
+            <div key={label}>
+              <p className="font-ui text-xs text-text-muted uppercase tracking-wider mb-1">
+                {label}
+              </p>
+              <p className="font-body text-text-main text-lg">{value}</p>
+            </div>
+          ))}
+        </div>
+      )}
+
       {hasTastes && (
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
@@ -300,7 +346,6 @@ function DossierCard({
         </div>
       )}
 
-      {/* Known Secrets - burgundy accent bar */}
       {char.secrets.length > 0 && (
         <div className="mb-6">
           <div className="flex items-center gap-2 mb-3">
@@ -311,16 +356,22 @@ function DossierCard({
               Known Secrets
             </p>
           </div>
-          <div className="p-4 bg-void/50 border border-white/5 rounded relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-1 h-full bg-accent" />
-            <p className="font-body text-sm leading-relaxed text-text-main/90 italic pl-3">
-              &quot;{char.secrets[0]}&quot;
-            </p>
+          <div className="space-y-3">
+            {char.secrets.map((secret, i) => (
+              <div
+                key={`secret:${i}:${secret.slice(0, 24)}`}
+                className="p-4 bg-void/50 border border-white/5 rounded relative overflow-hidden"
+              >
+                <div className="absolute top-0 left-0 w-1 h-full bg-accent" />
+                <p className="font-body text-sm leading-relaxed text-text-main/90 italic pl-3">
+                  &quot;{secret}&quot;
+                </p>
+              </div>
+            ))}
           </div>
         </div>
       )}
 
-      {/* Background */}
       {char.backstory && (
         <div className="mb-6">
           <p className="font-ui text-xs text-text-muted uppercase tracking-wider mb-2">

@@ -50,7 +50,26 @@ export interface Chapter {
   updatedAt: Date;
 }
 
+/**
+ * Cast Gallery dossier stats.
+ *
+ * Romance Factory publish dossiers use the psychology fields
+ * (`consciousWant`, `unconsciousNeed`, `wound`, `fear`, `lieTheyBelieve`).
+ * Age / height / zodiac-style keys remain optional for hand-authored seed content.
+ */
 export interface CharacterStats {
+  /** RF: conscious_want */
+  consciousWant?: string;
+  /** RF: unconscious_need */
+  unconsciousNeed?: string;
+  /** RF: wound */
+  wound?: string;
+  /** RF: fear */
+  fear?: string;
+  /** RF: lie_they_believe */
+  lieTheyBelieve?: string;
+  /** Story role slug (e.g. protagonist) — optional display aid */
+  role?: string;
   age?: string;
   status?: string;
   height?: string;

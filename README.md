@@ -25,12 +25,14 @@ Open [http://localhost:3000](http://localhost:3000). Design reference files live
 
 ### Romance Factory story import
 
-From the repo root, import a **completed Romance Factory** story directory (author profile, book cover, chapters, character dossiers) into Postgres, generate cover/author/character art via [Replicate](https://replicate.com/) (recraft-v4) into `public/images/generated/`, and write a manifest at `<story>/midnightsatin_import.json`. Run against Neon using `POSTGRES_URL` from `.env.local` (or `.env`).
+From the repo root, import a **completed Romance Factory** story directory (author profile, book cover, chapters, character dossiers) into Postgres. Prefer pre-generated SDXL assets from `publish_manifest.json` + `publish_images/`; fall back to [Replicate](https://replicate.com/) (recraft-v4) only when local cover+author images are missing. Assets land under `public/images/generated/`, and a receipt is written at `<story>/midnightsatin_import.json`. Run against Neon using `POSTGRES_URL` from `.env.local` (or `.env`).
+
+Before preparing or importing a production book, use the [publishing requirements](docs/PUBLISHING_REQUIREMENTS.md), [story-bundle ingest contract](docs/ROMANCE_FACTORY_INGEST.md), and [Romance Factory handoff gaps](docs/ROMANCE_FACTORY_GAPS.md). Cast Gallery dossiers follow Romance Factory psychology fields (want / need / wound / fear / lie), not invented otome vitals.
 
 **Environment**
 
 - `POSTGRES_URL` — required unless `--dry-run`
-- `REPLICATE_API_TOKEN` — required unless `--dry-run` or `--skip-images`
+- `REPLICATE_API_TOKEN` — required only when local `publish_images/` cover+author are absent (and not `--skip-images`)
 - Optional: `ENV_FILE` or `DOTENV_CONFIG_PATH` to load a specific env file (see script)
 
 **Examples**

@@ -2,11 +2,13 @@
 /**
  * Import a completed Romance Factory story directory into Midnight Satin:
  * - Read author_profile, book cover metadata, character_dossiers, chapters
- * - Generate cover / author / character images via Replicate (recraft-v4), save under public/images/generated/
+ * - Prefer pre-generated SDXL assets from publish_manifest.json + publish_images/
+ * - Fall back to Replicate (recraft-v4) only when local cover+author images are absent
  * - Insert author, novel, chapters, and characters into Neon (POSTGRES_URL)
  * - Optionally git-add/commit new images so Vercel can deploy static assets
  *
- * Requires: .env.local in midnightsatin with POSTGRES_URL, REPLICATE_API_TOKEN, BLOB_* not required (local paths).
+ * Requires: .env.local in midnightsatin with POSTGRES_URL.
+ * REPLICATE_API_TOKEN is only required when local publish images are incomplete.
  *
  * Usage:
  *   node scripts/import-romance-factory-story.mjs --story-path /path/to/story
@@ -283,31 +285,92 @@ async function loadChapters(storyPath) {
 }
 
 /**
- * Character rows from character_dossiers.json (v2: characters map, or motivations array)
+ * Character rows from character_dossiers.json (v2: characters map, or motivations array).
+ * Preserves Romance Factory psychology fields into Cast Gallery `stats` JSONB.
  */
 function extractCharacters(dossiers) {
   if (!dossiers || typeof dossiers !== "object") return [];
   const rows = [];
+
+  function buildRow(name, cm) {
+    if (!name || !cm || typeof cm !== "object") return null;
+    const physical = String(cm.physical_description || "").trim();
+    const conscious = String(cm.conscious_want || "").trim();
+    const unconscious = String(cm.unconscious_need || "").trim();
+    const wound = String(cm.wound || "").trim();
+    const fear = String(cm.fear || "").trim();
+    const lie = String(cm.lie_they_believe || "").trim();
+    const role = String(cm.role || "").trim();
+
+    const secrets = [];
+    if (Array.isArray(cm.secrets)) {
+      for (const s of cm.secrets) {
+        const t = String(s ?? "").trim();
+        if (t) secrets.push(t);
+      }
+    } else if (cm.secret) {
+      const t = String(cm.secret).trim();
+      if (t) secrets.push(t);
+    }
+
+    /** @type {Record<string, unknown>} */
+    const stats = {};
+    if (conscious) stats.consciousWant = conscious;
+    if (unconscious) stats.unconsciousNeed = unconscious;
+    if (wound) stats.wound = wound;
+    if (fear) stats.fear = fear;
+    if (lie) stats.lieTheyBelieve = lie;
+    if (role) stats.role = role;
+
+    // Optional vitals if a publish enricher already supplied them
+    for (const key of [
+      "age",
+      "status",
+      "height",
+      "occupation",
+      "zodiacSign",
+      "bloodType",
+      "birthday",
+    ]) {
+      if (typeof cm[key] === "string" && cm[key].trim()) stats[key] = cm[key].trim();
+    }
+    if (cm.stats && typeof cm.stats === "object" && !Array.isArray(cm.stats)) {
+      for (const [k, v] of Object.entries(cm.stats)) {
+        if (typeof v === "string" && v.trim() && !(k in stats)) stats[k] = v.trim();
+        else if (Array.isArray(v) && !(k in stats)) stats[k] = v.map(String);
+      }
+    }
+    if (Array.isArray(cm.favorites) && cm.favorites.length) {
+      stats.favorites = cm.favorites.map(String).filter((s) => s.trim());
+    }
+    if (Array.isArray(cm.dislikes) && cm.dislikes.length) {
+      stats.dislikes = cm.dislikes.map(String).filter((s) => s.trim());
+    }
+
+    const description =
+      String(cm.description || "").trim() || physical || conscious || String(name);
+
+    // Prefer an explicit backstory; otherwise leave null so Cast Gallery shows RF arc fields without duplication
+    const backstory = String(cm.backstory || "").trim() || null;
+
+    return {
+      name: String(name),
+      role,
+      portrait_prompt: String(cm.portrait_prompt || "").trim(),
+      physical_description: physical,
+      secret: secrets[0] || "",
+      description,
+      backstory,
+      stats,
+      secrets,
+    };
+  }
+
   const chars = dossiers.characters;
   if (chars && typeof chars === "object" && !Array.isArray(chars)) {
     for (const [name, cm] of Object.entries(chars)) {
-      if (!name || !cm || typeof cm !== "object") continue;
-      rows.push({
-        name: String(name),
-        role: String(cm.role || ""),
-        portrait_prompt: String(cm.portrait_prompt || "").trim(),
-        physical_description: String(cm.physical_description || "").trim(),
-        secret: String(cm.secret || "").trim(),
-        description: [cm.physical_description, cm.conscious_want]
-          .filter(Boolean)
-          .map(String)
-          .join(" "),
-        backstory: String(cm.wound || cm.fear || cm.unconscious_need || "").trim() || null,
-        stats: {
-          role: String(cm.role || ""),
-        },
-        secrets: cm.secret ? [String(cm.secret)] : [],
-      });
+      const row = buildRow(name, cm);
+      if (row) rows.push(row);
     }
     return rows;
   }
@@ -315,22 +378,8 @@ function extractCharacters(dossiers) {
   if (Array.isArray(motivations)) {
     for (const m of motivations) {
       if (!m || typeof m !== "object") continue;
-      const name = m.name;
-      if (!name) continue;
-      rows.push({
-        name: String(name),
-        role: String(m.role || ""),
-        portrait_prompt: String(m.portrait_prompt || "").trim(),
-        physical_description: String(m.physical_description || "").trim(),
-        secret: String(m.secret || "").trim(),
-        description: [m.physical_description, m.conscious_want]
-          .filter(Boolean)
-          .map(String)
-          .join(" "),
-        backstory: String(m.wound || m.fear || m.unconscious_need || "").trim() || null,
-        stats: { role: String(m.role || "") },
-        secrets: m.secret ? [String(m.secret)] : [],
-      });
+      const row = buildRow(m.name, m);
+      if (row) rows.push(row);
     }
   }
   return rows;

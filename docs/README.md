@@ -10,6 +10,9 @@ Living reference for the Midnight Satin platform: stack, infrastructure, auth, a
 | [ENVIRONMENT.md](./ENVIRONMENT.md) | Env var reference and deployment checklist |
 | [E2E.md](./E2E.md) | Playwright UI visibility suite (guest + auth-gated) |
 | [SECURITY.md](./SECURITY.md) | AuthZ audit notes, webhook hardening, MCP key policy |
+| [PUBLISHING_REQUIREMENTS.md](./PUBLISHING_REQUIREMENTS.md) | Publication-ready novel, chapter, character, author, and asset requirements |
+| [ROMANCE_FACTORY_INGEST.md](./ROMANCE_FACTORY_INGEST.md) | Romance Factory story bundle and importer contract |
+| [ROMANCE_FACTORY_GAPS.md](./ROMANCE_FACTORY_GAPS.md) | Producer and ingest gaps for the finalization handoff |
 
 **Launch program:** [`.kiro/specs/launch-prep/tasks.md`](../.kiro/specs/launch-prep/tasks.md) — Clerk finish, legacy strip, security, Playwright, go-live.
 
