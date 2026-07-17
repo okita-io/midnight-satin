@@ -1,5 +1,1416 @@
 {
   "version": "2.14",
+  "children": [
+    {
+      "type": "frame",
+      "id": "artboard-news-article-mobile",
+      "x": 0,
+      "y": 0,
+      "name": "News Article Detail — Mobile 390",
+      "clip": true,
+      "width": 390,
+      "height": 1600,
+      "fill": "$color.void",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "nam-hero",
+          "clip": true,
+          "width": "fill_container",
+          "height": 500,
+          "layout": "none",
+          "children": [
+            {
+              "type": "rectangle",
+              "id": "nam-hero-image",
+              "x": 0,
+              "y": 0,
+              "fill": {
+                "type": "image",
+                "opacity": 0.76,
+                "enabled": true,
+                "url": "https://images.unsplash.com/photo-1639484614066-26f158a81e6a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODQyMzA1MzV8&ixlib=rb-4.1.0&q=80&w=1080",
+                "mode": "fill"
+              },
+              "width": 390,
+              "height": 500
+            },
+            {
+              "type": "rectangle",
+              "id": "nam-hero-bottom-fade",
+              "x": 0,
+              "y": 0,
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 0,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#05050500",
+                    "position": 0
+                  },
+                  {
+                    "color": "#05050566",
+                    "position": 0.48
+                  },
+                  {
+                    "color": "#050505",
+                    "position": 1
+                  }
+                ]
+              },
+              "width": 390,
+              "height": 500
+            },
+            {
+              "type": "rectangle",
+              "id": "nam-hero-top-fade",
+              "x": 0,
+              "y": 0,
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 180,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#050505A6",
+                    "position": 0
+                  },
+                  {
+                    "color": "#05050500",
+                    "position": 0.38
+                  }
+                ]
+              },
+              "width": 390,
+              "height": 500
+            },
+            {
+              "type": "frame",
+              "id": "nam-hero-copy",
+              "x": 24,
+              "y": 210,
+              "width": 342,
+              "layout": "vertical",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "nam-eyebrow",
+                  "fill": "$color.primary",
+                  "textGrowth": "fixed-width",
+                  "width": 342,
+                  "content": "THE GAZETTE  ·  EDITORIAL",
+                  "textAlign": "center",
+                  "fontFamily": "Cinzel",
+                  "fontSize": 10,
+                  "fontWeight": "normal",
+                  "letterSpacing": 3
+                },
+                {
+                  "type": "text",
+                  "id": "nam-title",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": 342,
+                  "content": "A Letter from the Editor: What Comes After Midnight",
+                  "lineHeight": 1.1,
+                  "textAlign": "center",
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 30,
+                  "fontWeight": "600",
+                  "fontStyle": "italic"
+                },
+                {
+                  "type": "frame",
+                  "id": "nam-attribution-row",
+                  "gap": 8,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nam-attribution",
+                      "fill": "#FFFFFFCC",
+                      "content": "From the Editor",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 12,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "icon",
+                      "id": "nam-platform-icon",
+                      "width": 14,
+                      "height": 14,
+                      "icon": "photo_camera",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "$color.primary"
+                    },
+                    {
+                      "type": "text",
+                      "id": "nam-platform",
+                      "fill": "$color.primary",
+                      "content": "Instagram",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 11,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "nam-tags",
+                  "gap": 8,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "nam-tag-0",
+                      "fill": "#121212CC",
+                      "cornerRadius": 2,
+                      "padding": [
+                        6,
+                        10
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nam-tag-0-label",
+                          "fill": "$color.primary",
+                          "content": "Editor's Letter",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 9,
+                          "fontWeight": "normal",
+                          "letterSpacing": 1
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nam-tag-1",
+                      "fill": "#121212CC",
+                      "cornerRadius": 2,
+                      "padding": [
+                        6,
+                        10
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nam-tag-1-label",
+                          "fill": "$color.primary",
+                          "content": "Inside Satin",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 9,
+                          "fontWeight": "normal",
+                          "letterSpacing": 1
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nam-tag-2",
+                      "fill": "#121212CC",
+                      "cornerRadius": 2,
+                      "padding": [
+                        6,
+                        10
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nam-tag-2-label",
+                          "fill": "$color.primary",
+                          "content": "New Release",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 9,
+                          "fontWeight": "normal",
+                          "letterSpacing": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "nam-scroll",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "padding": [
+            24,
+            24,
+            32,
+            24
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "nam-article",
+              "width": 342,
+              "layout": "vertical",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nam-back",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nam-back-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "arrow_back",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#D4AF37CC"
+                    },
+                    {
+                      "type": "text",
+                      "id": "nam-back-label",
+                      "fill": "#D4AF37CC",
+                      "content": "Back",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 12,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nam-summary",
+                  "fill": "$color.textMuted",
+                  "textGrowth": "fixed-width",
+                  "width": 342,
+                  "content": "The next chapter of Midnight Satin brings new voices, deeper worlds, and more ways for readers to shape the stories they love.",
+                  "lineHeight": 1.55,
+                  "textAlign": "center",
+                  "fontFamily": "Literata",
+                  "fontSize": 17,
+                  "fontWeight": "normal",
+                  "fontStyle": "italic"
+                },
+                {
+                  "type": "frame",
+                  "id": "nam-ornament",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "id": "nam-ornament-rule-l",
+                      "fill": "$color.primary",
+                      "width": 32,
+                      "height": 1
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "nam-ornament-diamond",
+                      "fill": "$color.void",
+                      "width": 8,
+                      "height": 8
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "nam-ornament-rule-r",
+                      "fill": "$color.primary",
+                      "width": 32,
+                      "height": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nam-heading",
+                  "fill": "$color.primary",
+                  "textGrowth": "fixed-width",
+                  "width": 342,
+                  "content": "The room beyond the page",
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 23,
+                  "fontWeight": "normal",
+                  "fontStyle": "italic"
+                },
+                {
+                  "type": "text",
+                  "id": "nam-paragraph-0",
+                  "fill": "#EAEAEAE6",
+                  "textGrowth": "fixed-width",
+                  "width": 342,
+                  "content": "When we opened the doors to Midnight Satin, we imagined a quiet room after dark: velvet chairs, candlelight, and a shelf of stories chosen for the readers who still believe anticipation is an art.",
+                  "lineHeight": 1.65,
+                  "fontFamily": "Literata",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "nam-paragraph-1",
+                  "fill": "#EAEAEAE6",
+                  "textGrowth": "fixed-width",
+                  "width": 342,
+                  "content": "That room is growing. Over the coming weeks, new authors will join the library with romances that move from rain-soaked London to gilded coastal estates. Each story remains built around the details that matter most—charged glances, impossible choices, and characters worth losing sleep over.",
+                  "lineHeight": 1.65,
+                  "fontFamily": "Literata",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "nam-paragraph-2",
+                  "fill": "#EAEAEAE6",
+                  "textGrowth": "fixed-width",
+                  "width": 342,
+                  "content": "We are also preparing more ways to take part beyond the page. Reader endorsements will shape weekly spotlights, limited campaigns will unlock special rewards, and The Gazette will continue to share the people and craft behind every release.",
+                  "lineHeight": 1.65,
+                  "fontFamily": "Literata",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "nam-quote",
+                  "width": 342,
+                  "gap": 16,
+                  "padding": [
+                    4,
+                    0,
+                    4,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nam-quote-text",
+                      "fill": "$color.textMuted",
+                      "textGrowth": "fixed-width",
+                      "width": 322,
+                      "content": "Romance has always lived in the space between what is said and what is almost confessed.",
+                      "lineHeight": 1.55,
+                      "fontFamily": "Literata",
+                      "fontSize": 15,
+                      "fontWeight": "normal",
+                      "fontStyle": "italic"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "nam-campaign",
+                  "width": 342,
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": [
+                    12,
+                    0,
+                    0,
+                    0
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nam-campaign-label",
+                      "fill": "$color.textMuted",
+                      "content": "CAMPAIGN ARTICLE VARIANT",
+                      "fontFamily": "Cinzel",
+                      "fontSize": 9,
+                      "fontWeight": "normal",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nam-campaign-cta",
+                      "height": 44,
+                      "fill": "$color.primary",
+                      "cornerRadius": 2,
+                      "padding": [
+                        12,
+                        28
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nam-campaign-cta-label",
+                          "fill": "$color.void",
+                          "content": "Visit Campaign",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 13,
+                          "fontWeight": "700",
+                          "letterSpacing": 2
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "nam-bottom-nav",
+          "width": "fill_container",
+          "height": 96,
+          "fill": "$color.navBg",
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#000000CC",
+            "offset": {
+              "x": 0,
+              "y": -10
+            },
+            "blur": 40
+          },
+          "padding": [
+            16,
+            24,
+            28,
+            24
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "end",
+          "children": [
+            {
+              "type": "frame",
+              "id": "nam-tab-home",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nam-tab-home-icon-wrap",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nam-tab-home-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "history_edu",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nam-tab-home-label",
+                  "fill": "$color.textMuted",
+                  "content": "Boudoir",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nam-tab-library",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nam-tab-library-icon-wrap",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nam-tab-library-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "local_library",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nam-tab-library-label",
+                  "fill": "$color.textMuted",
+                  "content": "Library",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nam-tab-vault",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nam-tab-vault-icon-wrap",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nam-tab-vault-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "storefront",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nam-tab-vault-label",
+                  "fill": "$color.textMuted",
+                  "content": "Vault",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nam-tab-updates",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nam-tab-updates-icon-wrap",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nam-tab-updates-icon",
+                      "width": 28,
+                      "height": 28,
+                      "icon": "newspaper",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "$color.primary"
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "nam-tab-updates-dot",
+                      "fill": "$color.primary",
+                      "width": 4,
+                      "height": 4
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nam-tab-updates-label",
+                  "fill": "$color.primary",
+                  "content": "Updates",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nam-tab-profile",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nam-tab-profile-icon-wrap",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nam-tab-profile-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "person_3",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nam-tab-profile-label",
+                  "fill": "$color.textMuted",
+                  "content": "Profile",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "artboard-news-article-tablet",
+      "x": 470,
+      "y": 0,
+      "name": "News Article Detail — Tablet 834",
+      "context": "iPad portrait. Full-width article hero; centered 672px Literata reading column; Updates nav active.",
+      "clip": true,
+      "width": 834,
+      "height": 1480,
+      "fill": "$color.void",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "nat-hero",
+          "clip": true,
+          "width": "fill_container",
+          "height": 520,
+          "layout": "none",
+          "children": [
+            {
+              "type": "rectangle",
+              "id": "nat-hero-image",
+              "x": 0,
+              "y": 0,
+              "fill": {
+                "type": "image",
+                "opacity": 0.76,
+                "enabled": true,
+                "url": "https://images.unsplash.com/photo-1639484614066-26f158a81e6a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODQyMzA1MzV8&ixlib=rb-4.1.0&q=80&w=1080",
+                "mode": "fill"
+              },
+              "width": 834,
+              "height": 520
+            },
+            {
+              "type": "rectangle",
+              "id": "nat-hero-bottom-fade",
+              "x": 0,
+              "y": 0,
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 0,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#05050500",
+                    "position": 0
+                  },
+                  {
+                    "color": "#05050566",
+                    "position": 0.48
+                  },
+                  {
+                    "color": "#050505",
+                    "position": 1
+                  }
+                ]
+              },
+              "width": 834,
+              "height": 520
+            },
+            {
+              "type": "rectangle",
+              "id": "nat-hero-top-fade",
+              "x": 0,
+              "y": 0,
+              "fill": {
+                "type": "gradient",
+                "gradientType": "linear",
+                "enabled": true,
+                "rotation": 180,
+                "size": {
+                  "height": 1
+                },
+                "colors": [
+                  {
+                    "color": "#050505A6",
+                    "position": 0
+                  },
+                  {
+                    "color": "#05050500",
+                    "position": 0.38
+                  }
+                ]
+              },
+              "width": 834,
+              "height": 520
+            },
+            {
+              "type": "frame",
+              "id": "nat-hero-copy",
+              "x": 81,
+              "y": 230,
+              "width": 672,
+              "layout": "vertical",
+              "gap": 12,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "nat-eyebrow",
+                  "fill": "$color.primary",
+                  "textGrowth": "fixed-width",
+                  "width": 672,
+                  "content": "THE GAZETTE  ·  EDITORIAL",
+                  "textAlign": "center",
+                  "fontFamily": "Cinzel",
+                  "fontSize": 10,
+                  "fontWeight": "normal",
+                  "letterSpacing": 3
+                },
+                {
+                  "type": "text",
+                  "id": "nat-title",
+                  "fill": "#FFFFFF",
+                  "textGrowth": "fixed-width",
+                  "width": 672,
+                  "content": "A Letter from the Editor: What Comes After Midnight",
+                  "lineHeight": 1.1,
+                  "textAlign": "center",
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 40,
+                  "fontWeight": "600",
+                  "fontStyle": "italic"
+                },
+                {
+                  "type": "frame",
+                  "id": "nat-attribution-row",
+                  "gap": 8,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nat-attribution",
+                      "fill": "#FFFFFFCC",
+                      "content": "From the Editor",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 12,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    },
+                    {
+                      "type": "icon",
+                      "id": "nat-platform-icon",
+                      "width": 14,
+                      "height": 14,
+                      "icon": "photo_camera",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "$color.primary"
+                    },
+                    {
+                      "type": "text",
+                      "id": "nat-platform",
+                      "fill": "$color.primary",
+                      "content": "Instagram",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 11,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "nat-tags",
+                  "gap": 8,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "nat-tag-0",
+                      "fill": "#121212CC",
+                      "cornerRadius": 2,
+                      "padding": [
+                        6,
+                        10
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nat-tag-0-label",
+                          "fill": "$color.primary",
+                          "content": "Editor's Letter",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 9,
+                          "fontWeight": "normal",
+                          "letterSpacing": 1
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nat-tag-1",
+                      "fill": "#121212CC",
+                      "cornerRadius": 2,
+                      "padding": [
+                        6,
+                        10
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nat-tag-1-label",
+                          "fill": "$color.primary",
+                          "content": "Inside Satin",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 9,
+                          "fontWeight": "normal",
+                          "letterSpacing": 1
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nat-tag-2",
+                      "fill": "#121212CC",
+                      "cornerRadius": 2,
+                      "padding": [
+                        6,
+                        10
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nat-tag-2-label",
+                          "fill": "$color.primary",
+                          "content": "New Release",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 9,
+                          "fontWeight": "normal",
+                          "letterSpacing": 1
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "nat-scroll",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "padding": [
+            32,
+            81,
+            40,
+            81
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "nat-article",
+              "width": 672,
+              "layout": "vertical",
+              "gap": 24,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nat-back",
+                  "gap": 8,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nat-back-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "arrow_back",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#D4AF37CC"
+                    },
+                    {
+                      "type": "text",
+                      "id": "nat-back-label",
+                      "fill": "#D4AF37CC",
+                      "content": "Back",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 12,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nat-summary",
+                  "fill": "$color.textMuted",
+                  "textGrowth": "fixed-width",
+                  "width": 672,
+                  "content": "The next chapter of Midnight Satin brings new voices, deeper worlds, and more ways for readers to shape the stories they love.",
+                  "lineHeight": 1.55,
+                  "textAlign": "center",
+                  "fontFamily": "Literata",
+                  "fontSize": 20,
+                  "fontWeight": "normal",
+                  "fontStyle": "italic"
+                },
+                {
+                  "type": "frame",
+                  "id": "nat-ornament",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "id": "nat-ornament-rule-l",
+                      "fill": "$color.primary",
+                      "width": 32,
+                      "height": 1
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "nat-ornament-diamond",
+                      "fill": "$color.void",
+                      "width": 8,
+                      "height": 8
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "nat-ornament-rule-r",
+                      "fill": "$color.primary",
+                      "width": 32,
+                      "height": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nat-heading",
+                  "fill": "$color.primary",
+                  "textGrowth": "fixed-width",
+                  "width": 672,
+                  "content": "The room beyond the page",
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 28,
+                  "fontWeight": "normal",
+                  "fontStyle": "italic"
+                },
+                {
+                  "type": "text",
+                  "id": "nat-paragraph-0",
+                  "fill": "#EAEAEAE6",
+                  "textGrowth": "fixed-width",
+                  "width": 672,
+                  "content": "When we opened the doors to Midnight Satin, we imagined a quiet room after dark: velvet chairs, candlelight, and a shelf of stories chosen for the readers who still believe anticipation is an art.",
+                  "lineHeight": 1.65,
+                  "fontFamily": "Literata",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "nat-paragraph-1",
+                  "fill": "#EAEAEAE6",
+                  "textGrowth": "fixed-width",
+                  "width": 672,
+                  "content": "That room is growing. Over the coming weeks, new authors will join the library with romances that move from rain-soaked London to gilded coastal estates. Each story remains built around the details that matter most—charged glances, impossible choices, and characters worth losing sleep over.",
+                  "lineHeight": 1.65,
+                  "fontFamily": "Literata",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "nat-paragraph-2",
+                  "fill": "#EAEAEAE6",
+                  "textGrowth": "fixed-width",
+                  "width": 672,
+                  "content": "We are also preparing more ways to take part beyond the page. Reader endorsements will shape weekly spotlights, limited campaigns will unlock special rewards, and The Gazette will continue to share the people and craft behind every release.",
+                  "lineHeight": 1.65,
+                  "fontFamily": "Literata",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "frame",
+                  "id": "nat-quote",
+                  "width": 672,
+                  "gap": 16,
+                  "padding": [
+                    4,
+                    0,
+                    4,
+                    16
+                  ],
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nat-quote-text",
+                      "fill": "$color.textMuted",
+                      "textGrowth": "fixed-width",
+                      "width": 652,
+                      "content": "Romance has always lived in the space between what is said and what is almost confessed.",
+                      "lineHeight": 1.55,
+                      "fontFamily": "Literata",
+                      "fontSize": 17,
+                      "fontWeight": "normal",
+                      "fontStyle": "italic"
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "nat-campaign",
+                  "width": 672,
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": [
+                    12,
+                    0,
+                    0,
+                    0
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "nat-campaign-label",
+                      "fill": "$color.textMuted",
+                      "content": "CAMPAIGN ARTICLE VARIANT",
+                      "fontFamily": "Cinzel",
+                      "fontSize": 9,
+                      "fontWeight": "normal",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "frame",
+                      "id": "nat-campaign-cta",
+                      "height": 44,
+                      "fill": "$color.primary",
+                      "cornerRadius": 2,
+                      "padding": [
+                        12,
+                        28
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "nat-campaign-cta-label",
+                          "fill": "$color.void",
+                          "content": "Visit Campaign",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 13,
+                          "fontWeight": "700",
+                          "letterSpacing": 2
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "nat-bottom-nav",
+          "width": "fill_container",
+          "height": 96,
+          "fill": "$color.navBg",
+          "effect": {
+            "type": "shadow",
+            "shadowType": "outer",
+            "color": "#000000CC",
+            "offset": {
+              "x": 0,
+              "y": -10
+            },
+            "blur": 40
+          },
+          "padding": [
+            16,
+            24,
+            28,
+            24
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "end",
+          "children": [
+            {
+              "type": "frame",
+              "id": "nat-tab-home",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nat-tab-home-icon-wrap",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nat-tab-home-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "history_edu",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nat-tab-home-label",
+                  "fill": "$color.textMuted",
+                  "content": "Boudoir",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nat-tab-library",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nat-tab-library-icon-wrap",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nat-tab-library-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "local_library",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nat-tab-library-label",
+                  "fill": "$color.textMuted",
+                  "content": "Library",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nat-tab-vault",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nat-tab-vault-icon-wrap",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nat-tab-vault-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "storefront",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nat-tab-vault-label",
+                  "fill": "$color.textMuted",
+                  "content": "Vault",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nat-tab-updates",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nat-tab-updates-icon-wrap",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nat-tab-updates-icon",
+                      "width": 28,
+                      "height": 28,
+                      "icon": "newspaper",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "$color.primary"
+                    },
+                    {
+                      "type": "ellipse",
+                      "id": "nat-tab-updates-dot",
+                      "fill": "$color.primary",
+                      "width": 4,
+                      "height": 4
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nat-tab-updates-label",
+                  "fill": "$color.primary",
+                  "content": "Updates",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "nat-tab-profile",
+              "layout": "vertical",
+              "gap": 4,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "nat-tab-profile-icon-wrap",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "nat-tab-profile-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "person_3",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "nat-tab-profile-label",
+                  "fill": "$color.textMuted",
+                  "content": "Profile",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "500",
+                  "letterSpacing": 2
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
   "variables": {
     "color.primary": {
       "type": "color",
@@ -94,1531 +1505,5 @@
       "value": 16
     }
   },
-  "children": [
-    {
-      "id": "artboard-news-article-mobile",
-      "name": "News Article Detail — Mobile 390",
-      "type": "frame",
-      "x": 0,
-      "y": 0,
-      "width": 390,
-      "height": 1600,
-      "fill": "$color.void",
-      "layout": "vertical",
-      "clip": true,
-      "stroke": {
-        "align": "inside",
-        "thickness": {
-          "left": 1,
-          "right": 1,
-          "top": 0,
-          "bottom": 0
-        },
-        "fill": "#1A1A1A"
-      },
-      "children": [
-        {
-          "type": "frame",
-          "id": "nam-hero",
-          "width": "fill_container",
-          "height": 500,
-          "layout": "none",
-          "clip": true,
-          "children": [
-            {
-              "type": "rectangle",
-              "id": "nam-hero-image",
-              "x": 0,
-              "y": 0,
-              "width": 390,
-              "height": 500,
-              "fill": {
-                "type": "image",
-                "url": "https://images.unsplash.com/photo-1639484614066-26f158a81e6a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODQyMzA1MzV8&ixlib=rb-4.1.0&q=80&w=1080",
-                "mode": "fill",
-                "opacity": 0.76
-              }
-            },
-            {
-              "type": "rectangle",
-              "id": "nam-hero-bottom-fade",
-              "x": 0,
-              "y": 0,
-              "width": 390,
-              "height": 500,
-              "fill": {
-                "type": "gradient",
-                "gradientType": "linear",
-                "rotation": 0,
-                "colors": [
-                  {
-                    "color": "#05050500",
-                    "position": 0
-                  },
-                  {
-                    "color": "#05050566",
-                    "position": 0.48
-                  },
-                  {
-                    "color": "#050505",
-                    "position": 1
-                  }
-                ]
-              }
-            },
-            {
-              "type": "rectangle",
-              "id": "nam-hero-top-fade",
-              "x": 0,
-              "y": 0,
-              "width": 390,
-              "height": 500,
-              "fill": {
-                "type": "gradient",
-                "gradientType": "linear",
-                "rotation": 180,
-                "colors": [
-                  {
-                    "color": "#050505A6",
-                    "position": 0
-                  },
-                  {
-                    "color": "#05050500",
-                    "position": 0.38
-                  }
-                ]
-              }
-            },
-            {
-              "type": "frame",
-              "id": "nam-hero-copy",
-              "x": 24,
-              "y": 210,
-              "width": 342,
-              "layout": "vertical",
-              "alignItems": "center",
-              "gap": 12,
-              "children": [
-                {
-                  "type": "text",
-                  "id": "nam-eyebrow",
-                  "content": "THE GAZETTE  ·  EDITORIAL",
-                  "fill": "$color.primary",
-                  "fontFamily": "Cinzel",
-                  "fontSize": 10,
-                  "fontWeight": "normal",
-                  "letterSpacing": 3,
-                  "textAlign": "center",
-                  "width": 342,
-                  "textGrowth": "fixed-width"
-                },
-                {
-                  "type": "text",
-                  "id": "nam-title",
-                  "content": "A Letter from the Editor: What Comes After Midnight",
-                  "fill": "#FFFFFF",
-                  "fontFamily": "Playfair Display",
-                  "fontSize": 30,
-                  "fontWeight": "600",
-                  "fontStyle": "italic",
-                  "lineHeight": 1.1,
-                  "textAlign": "center",
-                  "width": 342,
-                  "textGrowth": "fixed-width"
-                },
-                {
-                  "type": "frame",
-                  "id": "nam-attribution-row",
-                  "layout": "horizontal",
-                  "gap": 8,
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "nam-attribution",
-                      "content": "From the Editor",
-                      "fill": "#FFFFFFCC",
-                      "fontFamily": "Marcellus",
-                      "fontSize": 12,
-                      "fontWeight": "normal",
-                      "letterSpacing": 1,
-                      "textGrowth": "auto"
-                    },
-                    {
-                      "type": "icon",
-                      "id": "nam-platform-icon",
-                      "library": "Material Symbols Outlined",
-                      "icon": "photo_camera",
-                      "width": 14,
-                      "height": 14,
-                      "fill": "$color.primary",
-                      "weight": 400
-                    },
-                    {
-                      "type": "text",
-                      "id": "nam-platform",
-                      "content": "Instagram",
-                      "fill": "$color.primary",
-                      "fontFamily": "Marcellus",
-                      "fontSize": 11,
-                      "fontWeight": "normal",
-                      "letterSpacing": 1,
-                      "textGrowth": "auto"
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "nam-tags",
-                  "layout": "horizontal",
-                  "gap": 8,
-                  "justifyContent": "center",
-                  "alignItems": "center",
-                  "children": [
-                    {
-                      "type": "frame",
-                      "id": "nam-tag-0",
-                      "layout": "horizontal",
-                      "alignItems": "center",
-                      "justifyContent": "center",
-                      "padding": [
-                        6,
-                        10
-                      ],
-                      "cornerRadius": 2,
-                      "fill": "#121212CC",
-                      "stroke": {
-                        "align": "inside",
-                        "thickness": 1,
-                        "fill": "#D4AF3759"
-                      },
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "nam-tag-0-label",
-                          "content": "Editor's Letter",
-                          "fill": "$color.primary",
-                          "fontFamily": "Marcellus",
-                          "fontSize": 9,
-                          "fontWeight": "normal",
-                          "letterSpacing": 1,
-                          "textGrowth": "auto"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "frame",
-                      "id": "nam-tag-1",
-                      "layout": "horizontal",
-                      "alignItems": "center",
-                      "justifyContent": "center",
-                      "padding": [
-                        6,
-                        10
-                      ],
-                      "cornerRadius": 2,
-                      "fill": "#121212CC",
-                      "stroke": {
-                        "align": "inside",
-                        "thickness": 1,
-                        "fill": "#D4AF3759"
-                      },
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "nam-tag-1-label",
-                          "content": "Inside Satin",
-                          "fill": "$color.primary",
-                          "fontFamily": "Marcellus",
-                          "fontSize": 9,
-                          "fontWeight": "normal",
-                          "letterSpacing": 1,
-                          "textGrowth": "auto"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "frame",
-                      "id": "nam-tag-2",
-                      "layout": "horizontal",
-                      "alignItems": "center",
-                      "justifyContent": "center",
-                      "padding": [
-                        6,
-                        10
-                      ],
-                      "cornerRadius": 2,
-                      "fill": "#121212CC",
-                      "stroke": {
-                        "align": "inside",
-                        "thickness": 1,
-                        "fill": "#D4AF3759"
-                      },
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "nam-tag-2-label",
-                          "content": "New Release",
-                          "fill": "$color.primary",
-                          "fontFamily": "Marcellus",
-                          "fontSize": 9,
-                          "fontWeight": "normal",
-                          "letterSpacing": 1,
-                          "textGrowth": "auto"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "frame",
-          "id": "nam-scroll",
-          "width": "fill_container",
-          "height": "fill_container",
-          "layout": "vertical",
-          "alignItems": "center",
-          "padding": [
-            24,
-            24,
-            32,
-            24
-          ],
-          "children": [
-            {
-              "type": "frame",
-              "id": "nam-article",
-              "width": 342,
-              "layout": "vertical",
-              "gap": 20,
-              "children": [
-                {
-                  "type": "frame",
-                  "id": "nam-back",
-                  "layout": "horizontal",
-                  "alignItems": "center",
-                  "gap": 8,
-                  "children": [
-                    {
-                      "type": "icon",
-                      "id": "nam-back-icon",
-                      "library": "Material Symbols Outlined",
-                      "icon": "arrow_back",
-                      "width": 24,
-                      "height": 24,
-                      "fill": "#D4AF37CC",
-                      "weight": 400
-                    },
-                    {
-                      "type": "text",
-                      "id": "nam-back-label",
-                      "content": "Back",
-                      "fill": "#D4AF37CC",
-                      "fontFamily": "Marcellus",
-                      "fontSize": 12,
-                      "fontWeight": "normal",
-                      "letterSpacing": 1,
-                      "textGrowth": "auto"
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "id": "nam-summary",
-                  "content": "The next chapter of Midnight Satin brings new voices, deeper worlds, and more ways for readers to shape the stories they love.",
-                  "fill": "$color.textMuted",
-                  "fontFamily": "Literata",
-                  "fontSize": 17,
-                  "fontWeight": "normal",
-                  "fontStyle": "italic",
-                  "lineHeight": 1.55,
-                  "textAlign": "center",
-                  "width": 342,
-                  "textGrowth": "fixed-width"
-                },
-                {
-                  "type": "frame",
-                  "id": "nam-ornament",
-                  "width": "fill_container",
-                  "layout": "horizontal",
-                  "justifyContent": "center",
-                  "alignItems": "center",
-                  "gap": 12,
-                  "children": [
-                    {
-                      "type": "rectangle",
-                      "id": "nam-ornament-rule-l",
-                      "width": 32,
-                      "height": 1,
-                      "fill": "$color.primary"
-                    },
-                    {
-                      "type": "rectangle",
-                      "id": "nam-ornament-diamond",
-                      "width": 8,
-                      "height": 8,
-                      "fill": "$color.void",
-                      "stroke": {
-                        "align": "inside",
-                        "thickness": 1,
-                        "fill": "$color.primary"
-                      }
-                    },
-                    {
-                      "type": "rectangle",
-                      "id": "nam-ornament-rule-r",
-                      "width": 32,
-                      "height": 1,
-                      "fill": "$color.primary"
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "id": "nam-heading",
-                  "content": "The room beyond the page",
-                  "fill": "$color.primary",
-                  "fontFamily": "Playfair Display",
-                  "fontSize": 23,
-                  "fontWeight": "normal",
-                  "fontStyle": "italic",
-                  "width": 342,
-                  "textGrowth": "fixed-width"
-                },
-                {
-                  "type": "text",
-                  "id": "nam-paragraph-0",
-                  "content": "When we opened the doors to Midnight Satin, we imagined a quiet room after dark: velvet chairs, candlelight, and a shelf of stories chosen for the readers who still believe anticipation is an art.",
-                  "fill": "#EAEAEAE6",
-                  "fontFamily": "Literata",
-                  "fontSize": 16,
-                  "fontWeight": "normal",
-                  "lineHeight": 1.65,
-                  "width": 342,
-                  "textGrowth": "fixed-width"
-                },
-                {
-                  "type": "text",
-                  "id": "nam-paragraph-1",
-                  "content": "That room is growing. Over the coming weeks, new authors will join the library with romances that move from rain-soaked London to gilded coastal estates. Each story remains built around the details that matter most—charged glances, impossible choices, and characters worth losing sleep over.",
-                  "fill": "#EAEAEAE6",
-                  "fontFamily": "Literata",
-                  "fontSize": 16,
-                  "fontWeight": "normal",
-                  "lineHeight": 1.65,
-                  "width": 342,
-                  "textGrowth": "fixed-width"
-                },
-                {
-                  "type": "text",
-                  "id": "nam-paragraph-2",
-                  "content": "We are also preparing more ways to take part beyond the page. Reader endorsements will shape weekly spotlights, limited campaigns will unlock special rewards, and The Gazette will continue to share the people and craft behind every release.",
-                  "fill": "#EAEAEAE6",
-                  "fontFamily": "Literata",
-                  "fontSize": 16,
-                  "fontWeight": "normal",
-                  "lineHeight": 1.65,
-                  "width": 342,
-                  "textGrowth": "fixed-width"
-                },
-                {
-                  "type": "frame",
-                  "id": "nam-quote",
-                  "width": 342,
-                  "layout": "horizontal",
-                  "gap": 16,
-                  "padding": [
-                    4,
-                    0,
-                    4,
-                    16
-                  ],
-                  "stroke": {
-                    "align": "inside",
-                    "thickness": {
-                      "left": 2
-                    },
-                    "fill": "#D4AF3766"
-                  },
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "nam-quote-text",
-                      "content": "Romance has always lived in the space between what is said and what is almost confessed.",
-                      "fill": "$color.textMuted",
-                      "fontFamily": "Literata",
-                      "fontSize": 15,
-                      "fontWeight": "normal",
-                      "fontStyle": "italic",
-                      "lineHeight": 1.55,
-                      "width": 322,
-                      "textGrowth": "fixed-width"
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "nam-campaign",
-                  "width": 342,
-                  "layout": "vertical",
-                  "gap": 10,
-                  "alignItems": "center",
-                  "padding": [
-                    12,
-                    0,
-                    0,
-                    0
-                  ],
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "nam-campaign-label",
-                      "content": "CAMPAIGN ARTICLE VARIANT",
-                      "fill": "$color.textMuted",
-                      "fontFamily": "Cinzel",
-                      "fontSize": 9,
-                      "fontWeight": "normal",
-                      "letterSpacing": 2,
-                      "textGrowth": "auto"
-                    },
-                    {
-                      "type": "frame",
-                      "id": "nam-campaign-cta",
-                      "layout": "horizontal",
-                      "alignItems": "center",
-                      "justifyContent": "center",
-                      "height": 44,
-                      "padding": [
-                        12,
-                        28
-                      ],
-                      "cornerRadius": 2,
-                      "fill": "$color.primary",
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "nam-campaign-cta-label",
-                          "content": "Visit Campaign",
-                          "fill": "$color.void",
-                          "fontFamily": "Marcellus",
-                          "fontSize": 13,
-                          "fontWeight": "700",
-                          "letterSpacing": 2,
-                          "textGrowth": "auto"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "frame",
-          "id": "nam-bottom-nav",
-          "width": "fill_container",
-          "height": 96,
-          "fill": "$color.navBg",
-          "layout": "horizontal",
-          "justifyContent": "space_between",
-          "alignItems": "end",
-          "padding": [
-            16,
-            24,
-            28,
-            24
-          ],
-          "stroke": {
-            "align": "inside",
-            "thickness": {
-              "top": 1
-            },
-            "fill": "#1F1F1F"
-          },
-          "effect": {
-            "type": "shadow",
-            "shadowType": "outer",
-            "color": "#000000CC",
-            "offset": {
-              "x": 0,
-              "y": -10
-            },
-            "blur": 40
-          },
-          "children": [
-            {
-              "type": "frame",
-              "id": "nam-tab-home",
-              "layout": "vertical",
-              "alignItems": "center",
-              "gap": 4,
-              "children": [
-                {
-                  "type": "frame",
-                  "id": "nam-tab-home-icon-wrap",
-                  "layout": "vertical",
-                  "alignItems": "center",
-                  "gap": 4,
-                  "children": [
-                    {
-                      "type": "icon",
-                      "id": "nam-tab-home-icon",
-                      "library": "Material Symbols Outlined",
-                      "icon": "history_edu",
-                      "width": 24,
-                      "height": 24,
-                      "fill": "#FFFFFF99",
-                      "weight": 400
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "id": "nam-tab-home-label",
-                  "content": "Boudoir",
-                  "fill": "$color.textMuted",
-                  "fontFamily": "Marcellus",
-                  "fontSize": 10,
-                  "fontWeight": "500",
-                  "letterSpacing": 2,
-                  "textGrowth": "auto"
-                }
-              ]
-            },
-            {
-              "type": "frame",
-              "id": "nam-tab-library",
-              "layout": "vertical",
-              "alignItems": "center",
-              "gap": 4,
-              "children": [
-                {
-                  "type": "frame",
-                  "id": "nam-tab-library-icon-wrap",
-                  "layout": "vertical",
-                  "alignItems": "center",
-                  "gap": 4,
-                  "children": [
-                    {
-                      "type": "icon",
-                      "id": "nam-tab-library-icon",
-                      "library": "Material Symbols Outlined",
-                      "icon": "local_library",
-                      "width": 24,
-                      "height": 24,
-                      "fill": "#FFFFFF99",
-                      "weight": 400
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "id": "nam-tab-library-label",
-                  "content": "Library",
-                  "fill": "$color.textMuted",
-                  "fontFamily": "Marcellus",
-                  "fontSize": 10,
-                  "fontWeight": "500",
-                  "letterSpacing": 2,
-                  "textGrowth": "auto"
-                }
-              ]
-            },
-            {
-              "type": "frame",
-              "id": "nam-tab-vault",
-              "layout": "vertical",
-              "alignItems": "center",
-              "gap": 4,
-              "children": [
-                {
-                  "type": "frame",
-                  "id": "nam-tab-vault-icon-wrap",
-                  "layout": "vertical",
-                  "alignItems": "center",
-                  "gap": 4,
-                  "children": [
-                    {
-                      "type": "icon",
-                      "id": "nam-tab-vault-icon",
-                      "library": "Material Symbols Outlined",
-                      "icon": "storefront",
-                      "width": 24,
-                      "height": 24,
-                      "fill": "#FFFFFF99",
-                      "weight": 400
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "id": "nam-tab-vault-label",
-                  "content": "Vault",
-                  "fill": "$color.textMuted",
-                  "fontFamily": "Marcellus",
-                  "fontSize": 10,
-                  "fontWeight": "500",
-                  "letterSpacing": 2,
-                  "textGrowth": "auto"
-                }
-              ]
-            },
-            {
-              "type": "frame",
-              "id": "nam-tab-updates",
-              "layout": "vertical",
-              "alignItems": "center",
-              "gap": 4,
-              "children": [
-                {
-                  "type": "frame",
-                  "id": "nam-tab-updates-icon-wrap",
-                  "layout": "vertical",
-                  "alignItems": "center",
-                  "gap": 4,
-                  "children": [
-                    {
-                      "type": "icon",
-                      "id": "nam-tab-updates-icon",
-                      "library": "Material Symbols Outlined",
-                      "icon": "newspaper",
-                      "width": 28,
-                      "height": 28,
-                      "fill": "$color.primary",
-                      "weight": 400
-                    },
-                    {
-                      "type": "ellipse",
-                      "id": "nam-tab-updates-dot",
-                      "width": 4,
-                      "height": 4,
-                      "fill": "$color.primary"
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "id": "nam-tab-updates-label",
-                  "content": "Updates",
-                  "fill": "$color.primary",
-                  "fontFamily": "Marcellus",
-                  "fontSize": 10,
-                  "fontWeight": "500",
-                  "letterSpacing": 2,
-                  "textGrowth": "auto"
-                }
-              ]
-            },
-            {
-              "type": "frame",
-              "id": "nam-tab-profile",
-              "layout": "vertical",
-              "alignItems": "center",
-              "gap": 4,
-              "children": [
-                {
-                  "type": "frame",
-                  "id": "nam-tab-profile-icon-wrap",
-                  "layout": "vertical",
-                  "alignItems": "center",
-                  "gap": 4,
-                  "children": [
-                    {
-                      "type": "icon",
-                      "id": "nam-tab-profile-icon",
-                      "library": "Material Symbols Outlined",
-                      "icon": "person_3",
-                      "width": 24,
-                      "height": 24,
-                      "fill": "#FFFFFF99",
-                      "weight": 400
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "id": "nam-tab-profile-label",
-                  "content": "Profile",
-                  "fill": "$color.textMuted",
-                  "fontFamily": "Marcellus",
-                  "fontSize": 10,
-                  "fontWeight": "500",
-                  "letterSpacing": 2,
-                  "textGrowth": "auto"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "artboard-news-article-tablet",
-      "name": "News Article Detail — Tablet 834",
-      "context": "iPad portrait. Full-width article hero; centered 672px Literata reading column; Updates nav active.",
-      "type": "frame",
-      "x": 470,
-      "y": 0,
-      "width": 834,
-      "height": 1480,
-      "fill": "$color.void",
-      "layout": "vertical",
-      "clip": true,
-      "stroke": {
-        "align": "inside",
-        "thickness": {
-          "left": 1,
-          "right": 1,
-          "top": 0,
-          "bottom": 0
-        },
-        "fill": "#1A1A1A"
-      },
-      "children": [
-        {
-          "type": "frame",
-          "id": "nat-hero",
-          "width": "fill_container",
-          "height": 520,
-          "layout": "none",
-          "clip": true,
-          "children": [
-            {
-              "type": "rectangle",
-              "id": "nat-hero-image",
-              "x": 0,
-              "y": 0,
-              "width": 834,
-              "height": 520,
-              "fill": {
-                "type": "image",
-                "url": "https://images.unsplash.com/photo-1639484614066-26f158a81e6a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w4NDM0ODN8MHwxfHJhbmRvbXx8fHx8fHx8fDE3ODQyMzA1MzV8&ixlib=rb-4.1.0&q=80&w=1080",
-                "mode": "fill",
-                "opacity": 0.76
-              }
-            },
-            {
-              "type": "rectangle",
-              "id": "nat-hero-bottom-fade",
-              "x": 0,
-              "y": 0,
-              "width": 834,
-              "height": 520,
-              "fill": {
-                "type": "gradient",
-                "gradientType": "linear",
-                "rotation": 0,
-                "colors": [
-                  {
-                    "color": "#05050500",
-                    "position": 0
-                  },
-                  {
-                    "color": "#05050566",
-                    "position": 0.48
-                  },
-                  {
-                    "color": "#050505",
-                    "position": 1
-                  }
-                ]
-              }
-            },
-            {
-              "type": "rectangle",
-              "id": "nat-hero-top-fade",
-              "x": 0,
-              "y": 0,
-              "width": 834,
-              "height": 520,
-              "fill": {
-                "type": "gradient",
-                "gradientType": "linear",
-                "rotation": 180,
-                "colors": [
-                  {
-                    "color": "#050505A6",
-                    "position": 0
-                  },
-                  {
-                    "color": "#05050500",
-                    "position": 0.38
-                  }
-                ]
-              }
-            },
-            {
-              "type": "frame",
-              "id": "nat-hero-copy",
-              "x": 81,
-              "y": 230,
-              "width": 672,
-              "layout": "vertical",
-              "alignItems": "center",
-              "gap": 12,
-              "children": [
-                {
-                  "type": "text",
-                  "id": "nat-eyebrow",
-                  "content": "THE GAZETTE  ·  EDITORIAL",
-                  "fill": "$color.primary",
-                  "fontFamily": "Cinzel",
-                  "fontSize": 10,
-                  "fontWeight": "normal",
-                  "letterSpacing": 3,
-                  "textAlign": "center",
-                  "width": 672,
-                  "textGrowth": "fixed-width"
-                },
-                {
-                  "type": "text",
-                  "id": "nat-title",
-                  "content": "A Letter from the Editor: What Comes After Midnight",
-                  "fill": "#FFFFFF",
-                  "fontFamily": "Playfair Display",
-                  "fontSize": 40,
-                  "fontWeight": "600",
-                  "fontStyle": "italic",
-                  "lineHeight": 1.1,
-                  "textAlign": "center",
-                  "width": 672,
-                  "textGrowth": "fixed-width"
-                },
-                {
-                  "type": "frame",
-                  "id": "nat-attribution-row",
-                  "layout": "horizontal",
-                  "gap": 8,
-                  "alignItems": "center",
-                  "justifyContent": "center",
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "nat-attribution",
-                      "content": "From the Editor",
-                      "fill": "#FFFFFFCC",
-                      "fontFamily": "Marcellus",
-                      "fontSize": 12,
-                      "fontWeight": "normal",
-                      "letterSpacing": 1,
-                      "textGrowth": "auto"
-                    },
-                    {
-                      "type": "icon",
-                      "id": "nat-platform-icon",
-                      "library": "Material Symbols Outlined",
-                      "icon": "photo_camera",
-                      "width": 14,
-                      "height": 14,
-                      "fill": "$color.primary",
-                      "weight": 400
-                    },
-                    {
-                      "type": "text",
-                      "id": "nat-platform",
-                      "content": "Instagram",
-                      "fill": "$color.primary",
-                      "fontFamily": "Marcellus",
-                      "fontSize": 11,
-                      "fontWeight": "normal",
-                      "letterSpacing": 1,
-                      "textGrowth": "auto"
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "nat-tags",
-                  "layout": "horizontal",
-                  "gap": 8,
-                  "justifyContent": "center",
-                  "alignItems": "center",
-                  "children": [
-                    {
-                      "type": "frame",
-                      "id": "nat-tag-0",
-                      "layout": "horizontal",
-                      "alignItems": "center",
-                      "justifyContent": "center",
-                      "padding": [
-                        6,
-                        10
-                      ],
-                      "cornerRadius": 2,
-                      "fill": "#121212CC",
-                      "stroke": {
-                        "align": "inside",
-                        "thickness": 1,
-                        "fill": "#D4AF3759"
-                      },
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "nat-tag-0-label",
-                          "content": "Editor's Letter",
-                          "fill": "$color.primary",
-                          "fontFamily": "Marcellus",
-                          "fontSize": 9,
-                          "fontWeight": "normal",
-                          "letterSpacing": 1,
-                          "textGrowth": "auto"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "frame",
-                      "id": "nat-tag-1",
-                      "layout": "horizontal",
-                      "alignItems": "center",
-                      "justifyContent": "center",
-                      "padding": [
-                        6,
-                        10
-                      ],
-                      "cornerRadius": 2,
-                      "fill": "#121212CC",
-                      "stroke": {
-                        "align": "inside",
-                        "thickness": 1,
-                        "fill": "#D4AF3759"
-                      },
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "nat-tag-1-label",
-                          "content": "Inside Satin",
-                          "fill": "$color.primary",
-                          "fontFamily": "Marcellus",
-                          "fontSize": 9,
-                          "fontWeight": "normal",
-                          "letterSpacing": 1,
-                          "textGrowth": "auto"
-                        }
-                      ]
-                    },
-                    {
-                      "type": "frame",
-                      "id": "nat-tag-2",
-                      "layout": "horizontal",
-                      "alignItems": "center",
-                      "justifyContent": "center",
-                      "padding": [
-                        6,
-                        10
-                      ],
-                      "cornerRadius": 2,
-                      "fill": "#121212CC",
-                      "stroke": {
-                        "align": "inside",
-                        "thickness": 1,
-                        "fill": "#D4AF3759"
-                      },
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "nat-tag-2-label",
-                          "content": "New Release",
-                          "fill": "$color.primary",
-                          "fontFamily": "Marcellus",
-                          "fontSize": 9,
-                          "fontWeight": "normal",
-                          "letterSpacing": 1,
-                          "textGrowth": "auto"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "frame",
-          "id": "nat-scroll",
-          "width": "fill_container",
-          "height": "fill_container",
-          "layout": "vertical",
-          "alignItems": "center",
-          "padding": [
-            32,
-            81,
-            40,
-            81
-          ],
-          "children": [
-            {
-              "type": "frame",
-              "id": "nat-article",
-              "width": 672,
-              "layout": "vertical",
-              "gap": 24,
-              "children": [
-                {
-                  "type": "frame",
-                  "id": "nat-back",
-                  "layout": "horizontal",
-                  "alignItems": "center",
-                  "gap": 8,
-                  "children": [
-                    {
-                      "type": "icon",
-                      "id": "nat-back-icon",
-                      "library": "Material Symbols Outlined",
-                      "icon": "arrow_back",
-                      "width": 24,
-                      "height": 24,
-                      "fill": "#D4AF37CC",
-                      "weight": 400
-                    },
-                    {
-                      "type": "text",
-                      "id": "nat-back-label",
-                      "content": "Back",
-                      "fill": "#D4AF37CC",
-                      "fontFamily": "Marcellus",
-                      "fontSize": 12,
-                      "fontWeight": "normal",
-                      "letterSpacing": 1,
-                      "textGrowth": "auto"
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "id": "nat-summary",
-                  "content": "The next chapter of Midnight Satin brings new voices, deeper worlds, and more ways for readers to shape the stories they love.",
-                  "fill": "$color.textMuted",
-                  "fontFamily": "Literata",
-                  "fontSize": 20,
-                  "fontWeight": "normal",
-                  "fontStyle": "italic",
-                  "lineHeight": 1.55,
-                  "textAlign": "center",
-                  "width": 672,
-                  "textGrowth": "fixed-width"
-                },
-                {
-                  "type": "frame",
-                  "id": "nat-ornament",
-                  "width": "fill_container",
-                  "layout": "horizontal",
-                  "justifyContent": "center",
-                  "alignItems": "center",
-                  "gap": 12,
-                  "children": [
-                    {
-                      "type": "rectangle",
-                      "id": "nat-ornament-rule-l",
-                      "width": 32,
-                      "height": 1,
-                      "fill": "$color.primary"
-                    },
-                    {
-                      "type": "rectangle",
-                      "id": "nat-ornament-diamond",
-                      "width": 8,
-                      "height": 8,
-                      "fill": "$color.void",
-                      "stroke": {
-                        "align": "inside",
-                        "thickness": 1,
-                        "fill": "$color.primary"
-                      }
-                    },
-                    {
-                      "type": "rectangle",
-                      "id": "nat-ornament-rule-r",
-                      "width": 32,
-                      "height": 1,
-                      "fill": "$color.primary"
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "id": "nat-heading",
-                  "content": "The room beyond the page",
-                  "fill": "$color.primary",
-                  "fontFamily": "Playfair Display",
-                  "fontSize": 28,
-                  "fontWeight": "normal",
-                  "fontStyle": "italic",
-                  "width": 672,
-                  "textGrowth": "fixed-width"
-                },
-                {
-                  "type": "text",
-                  "id": "nat-paragraph-0",
-                  "content": "When we opened the doors to Midnight Satin, we imagined a quiet room after dark: velvet chairs, candlelight, and a shelf of stories chosen for the readers who still believe anticipation is an art.",
-                  "fill": "#EAEAEAE6",
-                  "fontFamily": "Literata",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                  "lineHeight": 1.65,
-                  "width": 672,
-                  "textGrowth": "fixed-width"
-                },
-                {
-                  "type": "text",
-                  "id": "nat-paragraph-1",
-                  "content": "That room is growing. Over the coming weeks, new authors will join the library with romances that move from rain-soaked London to gilded coastal estates. Each story remains built around the details that matter most—charged glances, impossible choices, and characters worth losing sleep over.",
-                  "fill": "#EAEAEAE6",
-                  "fontFamily": "Literata",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                  "lineHeight": 1.65,
-                  "width": 672,
-                  "textGrowth": "fixed-width"
-                },
-                {
-                  "type": "text",
-                  "id": "nat-paragraph-2",
-                  "content": "We are also preparing more ways to take part beyond the page. Reader endorsements will shape weekly spotlights, limited campaigns will unlock special rewards, and The Gazette will continue to share the people and craft behind every release.",
-                  "fill": "#EAEAEAE6",
-                  "fontFamily": "Literata",
-                  "fontSize": 18,
-                  "fontWeight": "normal",
-                  "lineHeight": 1.65,
-                  "width": 672,
-                  "textGrowth": "fixed-width"
-                },
-                {
-                  "type": "frame",
-                  "id": "nat-quote",
-                  "width": 672,
-                  "layout": "horizontal",
-                  "gap": 16,
-                  "padding": [
-                    4,
-                    0,
-                    4,
-                    16
-                  ],
-                  "stroke": {
-                    "align": "inside",
-                    "thickness": {
-                      "left": 2
-                    },
-                    "fill": "#D4AF3766"
-                  },
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "nat-quote-text",
-                      "content": "Romance has always lived in the space between what is said and what is almost confessed.",
-                      "fill": "$color.textMuted",
-                      "fontFamily": "Literata",
-                      "fontSize": 17,
-                      "fontWeight": "normal",
-                      "fontStyle": "italic",
-                      "lineHeight": 1.55,
-                      "width": 652,
-                      "textGrowth": "fixed-width"
-                    }
-                  ]
-                },
-                {
-                  "type": "frame",
-                  "id": "nat-campaign",
-                  "width": 672,
-                  "layout": "vertical",
-                  "gap": 10,
-                  "alignItems": "center",
-                  "padding": [
-                    12,
-                    0,
-                    0,
-                    0
-                  ],
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "nat-campaign-label",
-                      "content": "CAMPAIGN ARTICLE VARIANT",
-                      "fill": "$color.textMuted",
-                      "fontFamily": "Cinzel",
-                      "fontSize": 9,
-                      "fontWeight": "normal",
-                      "letterSpacing": 2,
-                      "textGrowth": "auto"
-                    },
-                    {
-                      "type": "frame",
-                      "id": "nat-campaign-cta",
-                      "layout": "horizontal",
-                      "alignItems": "center",
-                      "justifyContent": "center",
-                      "height": 44,
-                      "padding": [
-                        12,
-                        28
-                      ],
-                      "cornerRadius": 2,
-                      "fill": "$color.primary",
-                      "children": [
-                        {
-                          "type": "text",
-                          "id": "nat-campaign-cta-label",
-                          "content": "Visit Campaign",
-                          "fill": "$color.void",
-                          "fontFamily": "Marcellus",
-                          "fontSize": 13,
-                          "fontWeight": "700",
-                          "letterSpacing": 2,
-                          "textGrowth": "auto"
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "type": "frame",
-          "id": "nat-bottom-nav",
-          "width": "fill_container",
-          "height": 96,
-          "fill": "$color.navBg",
-          "layout": "horizontal",
-          "justifyContent": "space_between",
-          "alignItems": "end",
-          "padding": [
-            16,
-            24,
-            28,
-            24
-          ],
-          "stroke": {
-            "align": "inside",
-            "thickness": {
-              "top": 1
-            },
-            "fill": "#1F1F1F"
-          },
-          "effect": {
-            "type": "shadow",
-            "shadowType": "outer",
-            "color": "#000000CC",
-            "offset": {
-              "x": 0,
-              "y": -10
-            },
-            "blur": 40
-          },
-          "children": [
-            {
-              "type": "frame",
-              "id": "nat-tab-home",
-              "layout": "vertical",
-              "alignItems": "center",
-              "gap": 4,
-              "children": [
-                {
-                  "type": "frame",
-                  "id": "nat-tab-home-icon-wrap",
-                  "layout": "vertical",
-                  "alignItems": "center",
-                  "gap": 4,
-                  "children": [
-                    {
-                      "type": "icon",
-                      "id": "nat-tab-home-icon",
-                      "library": "Material Symbols Outlined",
-                      "icon": "history_edu",
-                      "width": 24,
-                      "height": 24,
-                      "fill": "#FFFFFF99",
-                      "weight": 400
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "id": "nat-tab-home-label",
-                  "content": "Boudoir",
-                  "fill": "$color.textMuted",
-                  "fontFamily": "Marcellus",
-                  "fontSize": 10,
-                  "fontWeight": "500",
-                  "letterSpacing": 2,
-                  "textGrowth": "auto"
-                }
-              ]
-            },
-            {
-              "type": "frame",
-              "id": "nat-tab-library",
-              "layout": "vertical",
-              "alignItems": "center",
-              "gap": 4,
-              "children": [
-                {
-                  "type": "frame",
-                  "id": "nat-tab-library-icon-wrap",
-                  "layout": "vertical",
-                  "alignItems": "center",
-                  "gap": 4,
-                  "children": [
-                    {
-                      "type": "icon",
-                      "id": "nat-tab-library-icon",
-                      "library": "Material Symbols Outlined",
-                      "icon": "local_library",
-                      "width": 24,
-                      "height": 24,
-                      "fill": "#FFFFFF99",
-                      "weight": 400
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "id": "nat-tab-library-label",
-                  "content": "Library",
-                  "fill": "$color.textMuted",
-                  "fontFamily": "Marcellus",
-                  "fontSize": 10,
-                  "fontWeight": "500",
-                  "letterSpacing": 2,
-                  "textGrowth": "auto"
-                }
-              ]
-            },
-            {
-              "type": "frame",
-              "id": "nat-tab-vault",
-              "layout": "vertical",
-              "alignItems": "center",
-              "gap": 4,
-              "children": [
-                {
-                  "type": "frame",
-                  "id": "nat-tab-vault-icon-wrap",
-                  "layout": "vertical",
-                  "alignItems": "center",
-                  "gap": 4,
-                  "children": [
-                    {
-                      "type": "icon",
-                      "id": "nat-tab-vault-icon",
-                      "library": "Material Symbols Outlined",
-                      "icon": "storefront",
-                      "width": 24,
-                      "height": 24,
-                      "fill": "#FFFFFF99",
-                      "weight": 400
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "id": "nat-tab-vault-label",
-                  "content": "Vault",
-                  "fill": "$color.textMuted",
-                  "fontFamily": "Marcellus",
-                  "fontSize": 10,
-                  "fontWeight": "500",
-                  "letterSpacing": 2,
-                  "textGrowth": "auto"
-                }
-              ]
-            },
-            {
-              "type": "frame",
-              "id": "nat-tab-updates",
-              "layout": "vertical",
-              "alignItems": "center",
-              "gap": 4,
-              "children": [
-                {
-                  "type": "frame",
-                  "id": "nat-tab-updates-icon-wrap",
-                  "layout": "vertical",
-                  "alignItems": "center",
-                  "gap": 4,
-                  "children": [
-                    {
-                      "type": "icon",
-                      "id": "nat-tab-updates-icon",
-                      "library": "Material Symbols Outlined",
-                      "icon": "newspaper",
-                      "width": 28,
-                      "height": 28,
-                      "fill": "$color.primary",
-                      "weight": 400
-                    },
-                    {
-                      "type": "ellipse",
-                      "id": "nat-tab-updates-dot",
-                      "width": 4,
-                      "height": 4,
-                      "fill": "$color.primary"
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "id": "nat-tab-updates-label",
-                  "content": "Updates",
-                  "fill": "$color.primary",
-                  "fontFamily": "Marcellus",
-                  "fontSize": 10,
-                  "fontWeight": "500",
-                  "letterSpacing": 2,
-                  "textGrowth": "auto"
-                }
-              ]
-            },
-            {
-              "type": "frame",
-              "id": "nat-tab-profile",
-              "layout": "vertical",
-              "alignItems": "center",
-              "gap": 4,
-              "children": [
-                {
-                  "type": "frame",
-                  "id": "nat-tab-profile-icon-wrap",
-                  "layout": "vertical",
-                  "alignItems": "center",
-                  "gap": 4,
-                  "children": [
-                    {
-                      "type": "icon",
-                      "id": "nat-tab-profile-icon",
-                      "library": "Material Symbols Outlined",
-                      "icon": "person_3",
-                      "width": 24,
-                      "height": 24,
-                      "fill": "#FFFFFF99",
-                      "weight": 400
-                    }
-                  ]
-                },
-                {
-                  "type": "text",
-                  "id": "nat-tab-profile-label",
-                  "content": "Profile",
-                  "fill": "$color.textMuted",
-                  "fontFamily": "Marcellus",
-                  "fontSize": 10,
-                  "fontWeight": "500",
-                  "letterSpacing": 2,
-                  "textGrowth": "auto"
-                }
-              ]
-            }
-          ]
-        }
-      ]
-    }
-  ]
+  "fileToken": "f9d93b90-5c50-4fbe-bb47-b9ce706ff725"
 }
