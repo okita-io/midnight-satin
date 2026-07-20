@@ -66,6 +66,8 @@ publish_images/
 
 **Current state:** The importer performs sequential `INSERT`s without a wrapping transaction. Re-running it creates duplicate authors/novels or may leave a partial import after failure. `midnightsatin_import.json` records IDs but is not read on subsequent runs.
 
+**Partial progress (MS-1):** New imports store Romance Factory `story_id` on `novels.rf_story_id` and act provenance on `chapters.rf_provenance` (migration `012_add_rf_provenance.sql`). That is the stable join key for re-import recognition; transactional upsert / update-vs-replace behavior is still outstanding.
+
 **Target ownership:** Midnight Satin ingest.
 
 **Acceptance criteria:**

@@ -36,7 +36,34 @@ export interface Novel {
   publicationDate: Date | null;
   isFeatured?: boolean;
   featuredOrder?: number | null;
+  /** Romance Factory story UUID (RF-1 / MS-1). Null for legacy imports. */
+  rfStoryId?: string | null;
   createdAt: Date;
+}
+
+/** Act-grain provenance stored on chapters.rf_provenance (RF-2 / MS-1). */
+export interface ChapterRfActProvenance {
+  act_number: number;
+  char_start: number;
+  char_end: number;
+  card_id?: string | null;
+  writer_adapter?: string | null;
+  base_version?: string | null;
+  adapter_version?: string | null;
+  editor_version?: string | null;
+  judge_version?: string | null;
+  editor_card_hit?: number | null;
+  judge_score?: number | null;
+  revisions?: number | null;
+  card?: Record<string, unknown> | null;
+}
+
+export interface ChapterRfProvenance {
+  provenance_version: string;
+  chapter_number: number;
+  coordinate_space: string;
+  rubric_version?: string | null;
+  acts: ChapterRfActProvenance[];
 }
 
 export interface Chapter {
@@ -46,6 +73,8 @@ export interface Chapter {
   title: string;
   content: string;
   isFree: boolean;
+  /** RF provenance payload (acts + stitch offsets). Null for legacy imports. */
+  rfProvenance?: ChapterRfProvenance | null;
   createdAt: Date;
   updatedAt: Date;
 }

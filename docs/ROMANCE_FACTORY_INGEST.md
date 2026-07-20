@@ -47,8 +47,11 @@ The importer recognizes:
 ├── book_cover.json
 ├── character_dossiers.json
 ├── story_outline.json
-├── manuscript_metadata.json
-├── publish_manifest.json
+├── manuscript_metadata.json   # includes story_id (RF-1)
+├── publish_manifest.json      # includes story_id (RF-1)
+├── provenance/                # RF-2 (optional; new generations)
+│   ├── story.json
+│   └── chapter_NN.json
 ├── publish_images/
 │   ├── cover.webp
 │   ├── author.webp
@@ -59,7 +62,7 @@ The importer recognizes:
 └── manuscript.txt
 ```
 
-`chapters/chapter_NN.md` is preferred over `manuscript.txt`. `publish_manifest.json` and `publish_images/` are the target asset handoff.
+`chapters/chapter_NN.md` is preferred over `manuscript.txt`. `publish_manifest.json` and `publish_images/` are the target asset handoff. `provenance/` is optional for legacy bundles; when present it populates `novels.rf_story_id` and `chapters.rf_provenance` (MS-1).
 
 Romance Factory JSONArtifact envelopes are supported. If a JSON file contains an object in `parsed_data`, the importer uses it. It can also parse a JSON object serialized inside the envelope's `text` field.
 
@@ -106,6 +109,17 @@ Unless `--reuse-author-id` is supplied, the importer inserts a new author.
 | `publication_date` | Import date |
 | `is_featured` | `--featured` |
 | `featured_order` | `--featured-order` |
+| `rf_story_id` | `provenance/story.json` → `publish_manifest.story_id` → `manuscript_metadata.story_id` (UUID; null if absent) |
+
+### Chapters
+
+| Midnight Satin column | Source |
+|---|---|
+| `chapter_number` / `title` / `content` | `chapters/chapter_NN.md` (or `manuscript.txt`) |
+| `is_free` | Chapter 1 is free; others paid (current policy) |
+| `rf_provenance` | `provenance/chapter_NN.json` normalized to `{ provenance_version, coordinate_space, rubric_version, acts[] }` (null if absent) |
+
+`acts[]` entries carry stitch offsets (`char_start` / `char_end` in `stitched_acts_stripped` space), `card_id`, and machine grades when RF emitted them. Apply migration `scripts/migrations/012_add_rf_provenance.sql` (or a fresh `schema.sql`) before importing bundles that use these columns.
 
 ### Characters
 

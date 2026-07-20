@@ -38,7 +38,7 @@ npm run db:seed           # placeholder content
 ENV_FILE=.env.production.local npm run db:seed:news
 ```
 
-Migrations are **not** auto-run on deploy. Apply new files from `scripts/migrations/` against the target Neon database before shipping code that depends on them (e.g. `010_add_clerk_user_id.sql`).
+Migrations are **not** auto-run on deploy. Apply new files from `scripts/migrations/` against the target Neon database before shipping code that depends on them (e.g. `010_add_clerk_user_id.sql`, `012_add_rf_provenance.sql` for Romance Factory `rf_story_id` / chapter provenance).
 
 **Risks:** Schema drift if migrations are skipped; `db:setup` is destructive (schema + seed) — never run against production casually.
 

@@ -23,6 +23,10 @@ import { promises as fs } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import Replicate from "replicate";
+import {
+  loadRfProvenanceDir,
+  resolveRfStoryId,
+} from "./lib/rf-provenance.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.join(__dirname, "..");
@@ -535,18 +539,25 @@ async function main() {
 
   const storySlug = slug(path.basename(storyPath));
 
-  const [authorProfileRaw, bookCoverRaw, outlineRaw, dossiersRaw, manuscriptMetaRaw] = await Promise.all([
-    readJsonIfExists(path.join(storyPath, "author_profile.json")),
-    readJsonIfExists(path.join(storyPath, "book_cover.json")),
-    readJsonIfExists(path.join(storyPath, "story_outline.json")),
-    readJsonIfExists(path.join(storyPath, "character_dossiers.json")),
-    readJsonIfExists(path.join(storyPath, "manuscript_metadata.json")),
-  ]);
+  const [authorProfileRaw, bookCoverRaw, outlineRaw, dossiersRaw, manuscriptMetaRaw, rfProvenance] =
+    await Promise.all([
+      readJsonIfExists(path.join(storyPath, "author_profile.json")),
+      readJsonIfExists(path.join(storyPath, "book_cover.json")),
+      readJsonIfExists(path.join(storyPath, "story_outline.json")),
+      readJsonIfExists(path.join(storyPath, "character_dossiers.json")),
+      readJsonIfExists(path.join(storyPath, "manuscript_metadata.json")),
+      loadRfProvenanceDir(storyPath),
+    ]);
   const authorProfile = unwrapJsonArtifact(authorProfileRaw);
   const bookCover = unwrapJsonArtifact(bookCoverRaw);
   const outline = unwrapJsonArtifact(outlineRaw);
   const dossiers = unwrapJsonArtifact(dossiersRaw);
   const manuscriptMeta = unwrapJsonArtifact(manuscriptMetaRaw);
+  const rfStoryId = resolveRfStoryId({
+    provenanceStory: rfProvenance.story,
+    publishManifest,
+    manuscriptMeta,
+  });
 
   const bcp = bookCover || (manuscriptMeta && manuscriptMeta.book_cover_prompt) || {};
   const storyArc = outline && outline.story_arc ? outline.story_arc : {};
@@ -592,6 +603,14 @@ async function main() {
 
   console.log(`Story: ${title}`);
   console.log(`  Slug: ${storySlug}  Chapters: ${chapters.length}  Characters: ${characters.length}${dryRun ? "  (dry-run)" : ""}`);
+  if (rfStoryId) {
+    console.log(`  RF story_id: ${rfStoryId}`);
+  } else {
+    console.log("  RF story_id: (absent — legacy bundle; novels.rf_story_id will be NULL)");
+  }
+  if (rfProvenance.byChapter.size) {
+    console.log(`  Provenance chapters: ${rfProvenance.byChapter.size}`);
+  }
 
   const createdFiles = [];
   const authorImagePrompt = authorPortraitPrompt
@@ -679,8 +698,8 @@ async function main() {
   } else {
     const { rows: nr } = await pool.query(
       `INSERT INTO novels
-        (title, series_id, author_id, cover_image_url, synopsis, genre_tags, publication_date, is_featured, featured_order)
-       VALUES ($1, $2, $3, $4, $5, $6::text[], $7, $8, $9)
+        (title, series_id, author_id, cover_image_url, synopsis, genre_tags, publication_date, is_featured, featured_order, rf_story_id)
+       VALUES ($1, $2, $3, $4, $5, $6::text[], $7, $8, $9, $10)
        RETURNING id`,
       [
         title,
@@ -692,6 +711,7 @@ async function main() {
         publicationDate,
         isFeatured,
         featOrder,
+        rfStoryId,
       ]
     );
     novelId = nr[0].id;
@@ -699,13 +719,21 @@ async function main() {
 
   for (const ch of chapters) {
     const isFree = ch.number === 1;
+    const chapterProvenance = rfProvenance.byChapter.get(ch.number) || null;
     if (dryRun) {
       /* skip */
     } else {
       await pool.query(
-        `INSERT INTO chapters (novel_id, chapter_number, title, content, is_free)
-         VALUES ($1, $2, $3, $4, $5)`,
-        [novelId, ch.number, ch.title, ch.content, isFree]
+        `INSERT INTO chapters (novel_id, chapter_number, title, content, is_free, rf_provenance)
+         VALUES ($1, $2, $3, $4, $5, $6::jsonb)`,
+        [
+          novelId,
+          ch.number,
+          ch.title,
+          ch.content,
+          isFree,
+          chapterProvenance ? JSON.stringify(chapterProvenance) : null,
+        ]
       );
     }
   }
@@ -758,6 +786,8 @@ async function main() {
     title,
     authorId,
     novelId,
+    rfStoryId,
+    provenanceChapters: rfProvenance.byChapter.size,
     imagePaths: {
       authorAvatar: authorAvatar || null,
       cover: coverPath,
