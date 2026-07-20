@@ -2,6 +2,7 @@
 
 import { useEffect, useEffectEvent, useRef } from "react";
 import Link from "next/link";
+import { Icon, SearchField } from "@/components/ui";
 import { novelDetailPath, authorStudyPath } from "@/lib/navigation";
 
 export interface SearchNovelHit {
@@ -99,12 +100,10 @@ export function SearchOverlay({
         <h2 className="font-header text-sm tracking-[0.15em] text-primary uppercase shrink-0">
           Search
         </h2>
-        <input
-          type="search"
+        <SearchField
           value={query}
           onChange={(e) => onQueryChange(e.target.value)}
           placeholder="Novels, authors…"
-          className="flex-1 min-w-0 px-3 py-2 rounded-sm bg-surface-highlight border border-white/10 text-text-main font-ui text-sm placeholder:text-text-muted focus:outline-none focus:ring-2 focus:ring-primary"
           aria-label="Search novels by title or authors by name"
           autoComplete="off"
         />
@@ -115,7 +114,7 @@ export function SearchOverlay({
           className="p-2 text-text-muted hover:text-text-main focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm cursor-pointer active:scale-95"
           aria-label="Close search"
         >
-          <span className="material-symbols-outlined" aria-hidden>close</span>
+          <Icon name="close" />
         </button>
       </div>
 

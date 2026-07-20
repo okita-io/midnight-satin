@@ -1,4 +1,4 @@
-# Midnight Satin
+# Midnight Satin 
 
 A premium romance reading web application — **Tactile Noir Luxury** experience. Readers discover and read AI-generated stories, unlock chapters with credits, and endorse characters. Built for agentic development: specs, design references, and agent skill requirements are documented so AI agents and subagents can contribute effectively.
 
@@ -6,11 +6,13 @@ A premium romance reading web application — **Tactile Noir Luxury** experience
 
 - **Runtime:** Next.js 16 (App Router), React 19, TypeScript
 - **Styling:** Tailwind CSS, design tokens in `globals.css`
-- **Data:** Vercel Postgres, Vercel Blob (assets), Vercel KV (caching)
-- **Auth:** Session-based (cookies/JWT), Edge middleware for protected routes
-- **Payments:** Stripe (or configured Payment_Provider) for credit packs
+- **Data:** Neon via Vercel Postgres (`@vercel/postgres`), Vercel Blob (assets), Vercel KV (caching)
+- **Auth:** Clerk (`@clerk/nextjs`) linked to Neon `readers` — migration in progress; see [docs/AUTH.md](docs/AUTH.md)
+- **Payments:** Stripe for credit packs (and optional paperback)
 - **Content:** AI-generated via MCP interface; admin dashboard at `/admin`
 - **Testing:** Vitest, fast-check (property-based), React Testing Library
+
+Full stack and infrastructure notes: **[docs/](docs/)** ([tech stack](docs/TECH_STACK.md), [infrastructure](docs/INFRASTRUCTURE.md), [environment](docs/ENVIRONMENT.md)).
 
 ## Getting started
 
@@ -23,12 +25,14 @@ Open [http://localhost:3000](http://localhost:3000). Design reference files live
 
 ### Romance Factory story import
 
-From the repo root, import a **completed Romance Factory** story directory (author profile, book cover, chapters, character dossiers) into Postgres, generate cover/author/character art via [Replicate](https://replicate.com/) (recraft-v4) into `public/images/generated/`, and write a manifest at `<story>/midnightsatin_import.json`. Run against Neon using `POSTGRES_URL` from `.env.local` (or `.env`).
+From the repo root, import a **completed Romance Factory** story directory (author profile, book cover, chapters, character dossiers) into Postgres. Prefer pre-generated SDXL assets from `publish_manifest.json` + `publish_images/`; fall back to [Replicate](https://replicate.com/) (recraft-v4) only when local cover+author images are missing. Assets land under `public/images/generated/`, and a receipt is written at `<story>/midnightsatin_import.json`. Run against Neon using `POSTGRES_URL` from `.env.local` (or `.env`).
+
+Before preparing or importing a production book, use the [publishing requirements](docs/PUBLISHING_REQUIREMENTS.md), [story-bundle ingest contract](docs/ROMANCE_FACTORY_INGEST.md), and [Romance Factory handoff gaps](docs/ROMANCE_FACTORY_GAPS.md). Cast Gallery dossiers follow Romance Factory psychology fields (want / need / wound / fear / lie), not invented otome vitals.
 
 **Environment**
 
 - `POSTGRES_URL` — required unless `--dry-run`
-- `REPLICATE_API_TOKEN` — required unless `--dry-run` or `--skip-images`
+- `REPLICATE_API_TOKEN` — required only when local `publish_images/` cover+author are absent (and not `--skip-images`)
 - Optional: `ENV_FILE` or `DOTENV_CONFIG_PATH` to load a specific env file (see script)
 
 **Examples**
@@ -53,6 +57,83 @@ node scripts/import-romance-factory-story.mjs --story-path ./stories/my-story --
 | `--max-characters <n>` | Cap character imports (default: 12) |
 | `--reuse-author-id` / `--author-id` | Attach the novel to an existing author id |
 
+### Seeding production content
+
+Use these commands to populate the **production** Neon database so first-time visitors see stories, news, and developer posts on The Boudoir and `/updates`. All scripts read `POSTGRES_URL` from `.env.local` by default; point that variable at the **production** connection string from **Vercel → Storage → Neon** (or pass a dedicated env file).
+
+**Environment**
+
+- `POSTGRES_URL` — required (Neon connection string)
+- `ENV_FILE` or `DOTENV_CONFIG_PATH` — optional path to an env file (e.g. production-only credentials)
+- `BLOB_READ_WRITE_TOKEN` — required only for `npm run db:blobs` (upload seed images to Vercel Blob)
+
+**Target production explicitly**
+
+```bash
+# Example: production credentials in a separate file (not committed)
+ENV_FILE=.env.production.local npm run db:seed:devblog
+```
+
+Confirm the masked host in script output matches your production Neon instance before relying on the result.
+
+**Placeholder story (featured novel + chapters)**
+
+Inserts one author, series, featured novel (*Whispers in the Velvet Dark*), three chapters, and two characters. Images reference `/seed/images/...` under `public/`.
+
+```bash
+npm run db:seed
+# Optional: upload seed PNGs to Blob and rewrite URLs in the DB
+npm run db:blobs
+```
+
+**News articles (THE LATEST / `/updates`)**
+
+Five placeholder articles covering all article types (see `src/lib/db/seed-news.sql`).
+
+```bash
+npm run db:seed:news
+```
+
+**Developer blog posts**
+
+Long-form editorial posts (markdown body, rendered on the article detail page). The Romance Factory post-mortem lives in `src/lib/db/seed-devblog.sql` and uses `ON CONFLICT (slug) DO UPDATE` so re-runs are safe.
+
+```bash
+npm run db:seed:devblog
+```
+
+**Arbitrary SQL seed file**
+
+```bash
+node scripts/seed-sql.mjs --file src/lib/db/seed-devblog.sql
+node scripts/seed-sql.mjs --file src/lib/db/seed-news.sql
+```
+
+**Full Romance Factory novels**
+
+For completed story bundles (not the small built-in placeholder), use [Romance Factory story import](#romance-factory-story-import) (`npm run import:romance-story`).
+
+**Suggested first-time production checklist**
+
+1. Ensure `news_articles` (and other tables) exist — apply `src/lib/db/schema.sql` or migrations on production if this is a fresh DB.
+2. `ENV_FILE=... npm run db:seed` — placeholder featured novel.
+3. `ENV_FILE=... npm run db:blobs` — optional, if you want Blob URLs instead of `/seed/images/...`.
+4. `ENV_FILE=... npm run db:seed:news` — THE LATEST section content.
+5. `ENV_FILE=... npm run db:seed:devblog` — developer editorial posts.
+6. Import real novels via Romance Factory import as they are ready.
+
+**Verify**
+
+- Home: featured novel and **THE LATEST** (ISR revalidates ~60s).
+- `/updates` — news archive.
+- `/updates/building-romance-factory-503-commits` — devblog article (after devblog seed).
+
+**Safety**
+
+- **Do not** run `npm run db:setup` against production — it drops all public tables and reapplies the schema.
+- `db:seed` and `db:seed:news` use plain `INSERT`s; a second run may fail on duplicate titles/slugs unless the SQL uses `ON CONFLICT` (devblog seed already does).
+- Romance Factory import creates **new** rows each run unless you reuse author IDs via `--reuse-author-id`.
+
 ### Payment (Stripe)
 
 For credit purchases, set:
@@ -69,7 +150,8 @@ Configure the webhook endpoint `https://your-domain/api/webhooks/payment` in Str
 - **`.cursor/rules/`** — Cursor rules (e.g. `midnight-satin-design.mdc`, always applied)
 - **`.kiro/specs/midnight-satin-platform/`** — Requirements, design doc, tasks, correctness properties
 - **`src/app/`** — Next.js App Router pages and layout
-- **`scripts/`** — Utilities: `import-romance-factory-story.mjs` (publish Romance Factory bundles; see [Romance Factory story import](#romance-factory-story-import)), `fetchStitchDesigns` for Stitch designs
+- **`scripts/`** — Utilities: `seed-db.mjs`, `seed-sql.mjs` (production content; see [Seeding production content](#seeding-production-content)), `import-romance-factory-story.mjs` ([Romance Factory story import](#romance-factory-story-import)), `fetchStitchDesigns` for Stitch designs
+- **`src/lib/db/`** — `schema.sql`, seed SQL (`seed-news.sql`, `seed-devblog.sql`)
 - **`.agents/`** — Subagent directories; place agent-specific skills and scope here (see [Subagents and parallel task division](#subagents-and-parallel-task-division))
 
 ---
@@ -97,7 +179,7 @@ Agents and subagents should have access to — or be instructed to apply — the
 | **Tailwind CSS & design tokens** | Apply the Tactile Noir Luxury design system: colors, typography, spacing, shadows, safe-area insets. | Styling any UI, creating or editing components, matching reference mockups. | Use design tokens from `reference/midnight_satin_prd.html` and `src/app/globals.css`. Mobile-first, max content width 448px (max-w-md), gold accents (#D4AF37), void (#050505), surface (#121212), burgundy (#800020). Sharp radii (2px/4px), gold-tinted shadows. |
 | **TypeScript & domain types** | Keep types aligned with the data model and server contracts. | Defining or changing types, DB types, API/MCP request/response shapes. | Copy types from the design doc (`.kiro/specs/midnight-satin-platform/design.md`) for AuthorProfile, Novel, Chapter, Character, Reader, ReadingProgress, CreditTransaction, Comment, etc. Use consistent naming (e.g. `novelId`, `authorId`). |
 | **Vercel Postgres / Blob / KV** | Implement data layer: queries, migrations, blob uploads, KV caching. | DB schema changes, content CRUD, asset uploads, caching featured/trending data. | Schema and indexes are in the design doc. Use `@vercel/postgres`, `@vercel/blob`, `@vercel/kv`. Credit-changing operations must run in transactions with row-level locking on reader balance. Cache frequently accessed data in KV with TTL 300s where specified. |
-| **Authentication & session** | Implement login, registration, session lifecycle, and route protection. | Auth flows, protected routes, Edge middleware, welcome bonus (200 credits). | Email/password with secure hashing; HTTP-only session cookies. Redirect to intended page or Boudoir after login/register. Guest access: allow browse and free chapters; prompt to sign in for unlock, endorse, Vault. See requirements 9.x and design doc auth flow. |
+| **Authentication & session** | Clerk owns identity (sign-in/up, sessions, password recovery). Neon `readers` stores app profile + credits, linked via `clerk_user_id`. | Auth UI, protected routes, Server Actions, welcome bonus (200 credits). | Use `@clerk/nextjs` (`ClerkProvider`, `proxy.ts` with `clerkMiddleware`, `/sign-in` + `/sign-up`). Resolve the app user with `getCurrentSession` / `getCurrentReader` (Clerk → Neon). Guest browse is public; protect `/profile`, `/vault`, `/admin`. Sync users via `/api/webhooks/clerk`. Do not add new email/password or JWT cookie auth. |
 | **MCP (Model Context Protocol)** | Implement or call the content-agent MCP interface and use Stitch for design assets. | Adding/updating MCP tools, content agent workflows, or fetching designs from Stitch. | MCP server at `/api/mcp`; API key auth. Tools: create_author, create_series, create_novel, create_chapter, create_character, list_content, update_content. Stitch MCP (see `.kiro/settings/mcp.json`) for design screens; use when syncing or referencing Stitch designs. |
 | **Property-based testing (fast-check)** | Write and maintain property-based tests for correctness properties. | Adding or changing behavior that affects credits, auth, reading progress, unlocks, endorsements, comments, or admin. | Each correctness property in the design doc (Properties 1–26) should have a corresponding test. Use generators in `src/__tests__/generators/` for domain types. Tag tests: `Feature: midnight-satin-platform, Property N: <short description>`. Run property tests as part of CI. |
 | **Accessibility (a11y)** | Meet WCAG 2.1 AA baseline: focus order, labels, contrast, semantics, modals. | Implementing or updating UI components, modals, navigation, Reading Room, Cast Gallery. | Requirement 21: focusable controls, visible focus, aria-label (or hidden text) for icon-only controls, semantic HTML (nav, main, header, footer, article). Focus trap in modals; restore focus on close. Contrast: text #EAEAEA on void #050505; gold on dark. |

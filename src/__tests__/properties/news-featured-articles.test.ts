@@ -46,11 +46,23 @@ const arbNewsArticleSummaryRow = fc.record({
   is_featured: fc.boolean(),
   featured_order: fc.option(fc.integer({ min: 0, max: 100 }), { nil: null }),
   published_at: fc.option(
-    fc.date({ min: new Date("2020-01-01"), max: new Date("2030-01-01") }),
+    fc.date({
+      min: new Date("2020-01-01"),
+      max: new Date("2030-01-01"),
+      noInvalidDate: true,
+    }),
     { nil: null }
   ),
-  created_at: fc.date({ min: new Date("2020-01-01"), max: new Date("2030-01-01") }),
-  updated_at: fc.date({ min: new Date("2020-01-01"), max: new Date("2030-01-01") }),
+  created_at: fc.date({
+    min: new Date("2020-01-01"),
+    max: new Date("2030-01-01"),
+    noInvalidDate: true,
+  }),
+  updated_at: fc.date({
+    min: new Date("2020-01-01"),
+    max: new Date("2030-01-01"),
+    noInvalidDate: true,
+  }),
 });
 
 

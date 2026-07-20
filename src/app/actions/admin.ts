@@ -1,5 +1,6 @@
 "use server";
 
+import { checkAdminSession } from "@/lib/auth/admin";
 import { getSession } from "@/lib/auth/session";
 import {
   createAuthor,
@@ -18,13 +19,6 @@ import {
   type CreateCharacterParams,
   type UpdateContentParams,
 } from "@/lib/admin/admin-data";
-
-function checkAdminSession(session: Awaited<ReturnType<typeof getSession>>) {
-  if (!session || session.role !== "admin") {
-    return { success: false, error: "Forbidden" };
-  }
-  return null;
-}
 
 export async function createAuthorAction(
   params: CreateAuthorParams

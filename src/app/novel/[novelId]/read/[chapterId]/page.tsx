@@ -13,6 +13,7 @@ import {
 import { getCurrentReader } from "@/app/actions/auth";
 import { ReadingRoomClient } from "@/app/_components/reading-room/reading-room-client";
 import { sitePageMetadata } from "@/lib/site-metadata";
+import { teaserContentForLockedChapter } from "@/lib/reading/veil-content";
 
 /**
  * The Reading Room — distraction-free chapter reading (Req 3.1-3.10, 15.4).
@@ -81,6 +82,11 @@ export default async function ReadingRoomPage({
   const reader = session ? await getCurrentReader() : null;
   const creditBalance = reader?.creditBalance ?? 0;
 
+  // Never serialize full locked chapter body to the client (paywall AuthZ).
+  const clientContent = isUnlocked
+    ? chapter.content
+    : teaserContentForLockedChapter(chapter.content);
+
   return (
     <ReadingRoomClient
       novelId={novelId}
@@ -88,7 +94,7 @@ export default async function ReadingRoomPage({
       chapterId={chapterId}
       chapterNumber={chapter.chapterNumber}
       chapterTitle={chapter.title}
-      content={chapter.content}
+      content={clientContent}
       prevChapterId={prevChapter?.id ?? null}
       nextChapterId={nextChapter?.id ?? null}
       isAuthenticated={!!session}

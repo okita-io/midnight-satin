@@ -1,0 +1,2274 @@
+{
+  "version": "2.14",
+  "children": [
+    {
+      "type": "frame",
+      "id": "artboard-cast-mobile",
+      "x": 0,
+      "y": 0,
+      "name": "Cast Gallery — mobile",
+      "clip": true,
+      "width": 390,
+      "height": 2420,
+      "fill": "$color.void",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "artboard-cast-mobile-top",
+          "width": "fill_container",
+          "height": 64,
+          "padding": [
+            16,
+            24
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "artboard-cast-mobile-close",
+              "width": 24,
+              "height": 24,
+              "icon": "close",
+              "library": "Material Symbols Outlined",
+              "weight": 400,
+              "fill": "#FFFFFF"
+            },
+            {
+              "type": "text",
+              "id": "artboard-cast-mobile-title",
+              "fill": "$color.primary",
+              "content": "The Cast",
+              "fontFamily": "Cinzel",
+              "fontSize": 14,
+              "fontWeight": "normal",
+              "letterSpacing": 3
+            },
+            {
+              "type": "frame",
+              "id": "artboard-cast-mobile-spacer",
+              "width": 24,
+              "height": 24
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "artboard-cast-mobile-grid",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 20,
+          "padding": [
+            8,
+            24,
+            32,
+            24
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "artboard-cast-mobile-0-card",
+              "clip": true,
+              "width": 342,
+              "height": 564,
+              "fill": "$color.surface",
+              "cornerRadius": 2,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "artboard-cast-mobile-0-img",
+                  "x": 0,
+                  "y": 0,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuDbV5TijEhfdu5lu1dP6DSAS6PvVPCnRe2F_k32RLtSk8xYkX8NodrOPWQJjua_E-yqZIzV2zWVDqQuMJtvK5YnXn9o3lU85Y963540yPYWXd-K7toH3Fz05ujkW7kSbxSg9QxMMbsYwlOehSsAWolRd2V1juQEIygZHbAr3QKmspm5mliFndhQ03-q11nhkhMNIhNtUoM_ZV7KugsvY0ItOcYl1o2azfjpKvL-49wCMwujdLxs32uEo7blAGsuDO8JQaO45xyTJc",
+                    "mode": "fill"
+                  },
+                  "width": 342,
+                  "height": 564
+                },
+                {
+                  "type": "rectangle",
+                  "id": "artboard-cast-mobile-0-vignette",
+                  "x": 0,
+                  "y": 0,
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 180,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#05050500",
+                        "position": 0
+                      },
+                      {
+                        "color": "#05050566",
+                        "position": 0.45
+                      },
+                      {
+                        "color": "#050505EE",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 342,
+                  "height": 564
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-cast-mobile-0-trophy",
+                  "x": 16,
+                  "y": 16,
+                  "width": 72,
+                  "height": 72,
+                  "layout": "vertical",
+                  "gap": 6,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-mobile-0-trophy-badge",
+                      "width": 40,
+                      "height": 40,
+                      "fill": "#121212CC",
+                      "cornerRadius": 20,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#D4AF3766",
+                        "blur": 12
+                      },
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "artboard-cast-mobile-0-trophy-icon",
+                          "width": 22,
+                          "height": 22,
+                          "icon": "emoji_events",
+                          "library": "Material Symbols Outlined",
+                          "weight": 400,
+                          "fill": "$color.primary"
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "artboard-cast-mobile-0-trophy-cap",
+                      "fill": "$color.primary",
+                      "content": "Top Pick",
+                      "fontFamily": "Cinzel",
+                      "fontSize": 10,
+                      "fontWeight": "500",
+                      "letterSpacing": 1.5
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-cast-mobile-0-endorse",
+                  "x": 274,
+                  "y": 13,
+                  "name": "Endorse button",
+                  "width": 58,
+                  "height": 75,
+                  "fill": "#800020E6",
+                  "cornerRadius": 17,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#80002059",
+                    "offset": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "blur": 20
+                  },
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    8,
+                    12
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "artboard-cast-mobile-0-rose",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "local_florist",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF"
+                    },
+                    {
+                      "type": "text",
+                      "id": "artboard-cast-mobile-0-endorse-l",
+                      "fill": "#FFFFFF",
+                      "content": "Endorse",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 10,
+                      "fontWeight": "normal",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-mobile-0-count",
+                      "height": 20,
+                      "fill": "#05050559",
+                      "cornerRadius": 999,
+                      "padding": [
+                        2,
+                        8
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-mobile-0-count-t",
+                          "fill": "$color.primary",
+                          "content": "12,384",
+                          "fontFamily": "Playfair Display",
+                          "fontSize": 10,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-cast-mobile-0-meta",
+                  "x": 0,
+                  "y": 344,
+                  "width": 342,
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": [
+                    0,
+                    24,
+                    32,
+                    24
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "artboard-cast-mobile-0-teaser",
+                      "fill": "#EAEAEA99",
+                      "textGrowth": "fixed-width",
+                      "width": 294,
+                      "content": "A brooding exile emerging from the shadows of his past, Alistair returns to a city that forgot him, determined to reclaim a legacy stolen by betrayal.",
+                      "lineHeight": 1.45,
+                      "textAlign": "center",
+                      "fontFamily": "Literata",
+                      "fontSize": 13,
+                      "fontWeight": "normal",
+                      "fontStyle": "italic"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-mobile-0-role-row",
+                      "width": 294,
+                      "gap": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "id": "artboard-cast-mobile-0-role-l",
+                          "fill": "#D4AF3780",
+                          "width": 32,
+                          "height": 1
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-mobile-0-role",
+                          "fill": "$color.primary",
+                          "content": "The Exiled Heir",
+                          "textAlign": "center",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 11,
+                          "fontWeight": "normal",
+                          "letterSpacing": 2
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "artboard-cast-mobile-0-role-r",
+                          "fill": "#D4AF3780",
+                          "width": 32,
+                          "height": 1
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "artboard-cast-mobile-0-name",
+                      "fill": "$color.textMain",
+                      "textGrowth": "fixed-width",
+                      "width": 294,
+                      "content": "Duke Alistair",
+                      "textAlign": "center",
+                      "fontFamily": "Playfair Display",
+                      "fontSize": 28,
+                      "fontWeight": "700",
+                      "fontStyle": "italic"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-mobile-0-cta",
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "artboard-cast-mobile-0-flip",
+                          "width": 14,
+                          "height": 14,
+                          "icon": "cached",
+                          "library": "Material Symbols Outlined",
+                          "weight": 400,
+                          "fill": "#FFFFFF66"
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-mobile-0-flip-l",
+                          "fill": "#FFFFFF66",
+                          "content": "Tap to reveal dossier",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 10,
+                          "fontWeight": "normal",
+                          "letterSpacing": 2
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-cast-mobile-1-card",
+              "clip": true,
+              "width": 342,
+              "height": 564,
+              "fill": "$color.surface",
+              "cornerRadius": 2,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "artboard-cast-mobile-1-img",
+                  "x": 0,
+                  "y": 0,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuDbV5TijEhfdu5lu1dP6DSAS6PvVPCnRe2F_k32RLtSk8xYkX8NodrOPWQJjua_E-yqZIzV2zWVDqQuMJtvK5YnXn9o3lU85Y963540yPYWXd-K7toH3Fz05ujkW7kSbxSg9QxMMbsYwlOehSsAWolRd2V1juQEIygZHbAr3QKmspm5mliFndhQ03-q11nhkhMNIhNtUoM_ZV7KugsvY0ItOcYl1o2azfjpKvL-49wCMwujdLxs32uEo7blAGsuDO8JQaO45xyTJc",
+                    "mode": "fill"
+                  },
+                  "width": 342,
+                  "height": 564
+                },
+                {
+                  "type": "rectangle",
+                  "id": "artboard-cast-mobile-1-vignette",
+                  "x": 0,
+                  "y": 0,
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 180,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#05050500",
+                        "position": 0
+                      },
+                      {
+                        "color": "#05050566",
+                        "position": 0.45
+                      },
+                      {
+                        "color": "#050505EE",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 342,
+                  "height": 564
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-cast-mobile-1-endorse",
+                  "x": 274,
+                  "y": 13,
+                  "name": "Endorse button",
+                  "width": 58,
+                  "height": 75,
+                  "fill": "#800020E6",
+                  "cornerRadius": 17,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#80002059",
+                    "offset": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "blur": 20
+                  },
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    8,
+                    12
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "artboard-cast-mobile-1-rose",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "local_florist",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF"
+                    },
+                    {
+                      "type": "text",
+                      "id": "artboard-cast-mobile-1-endorse-l",
+                      "fill": "#FFFFFF",
+                      "content": "Endorse",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 10,
+                      "fontWeight": "normal",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-mobile-1-count",
+                      "height": 20,
+                      "fill": "#05050559",
+                      "cornerRadius": 999,
+                      "padding": [
+                        2,
+                        8
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-mobile-1-count-t",
+                          "fill": "$color.primary",
+                          "content": "8,102",
+                          "fontFamily": "Playfair Display",
+                          "fontSize": 10,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-cast-mobile-1-meta",
+                  "x": 0,
+                  "y": 344,
+                  "width": 342,
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": [
+                    0,
+                    24,
+                    32,
+                    24
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "artboard-cast-mobile-1-teaser",
+                      "fill": "#EAEAEA99",
+                      "textGrowth": "fixed-width",
+                      "width": 294,
+                      "content": "Heiress to a fortune built on whispers, Isolde plays the ballroom like a chessboard—every smile a gambit.",
+                      "lineHeight": 1.45,
+                      "textAlign": "center",
+                      "fontFamily": "Literata",
+                      "fontSize": 13,
+                      "fontWeight": "normal",
+                      "fontStyle": "italic"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-mobile-1-role-row",
+                      "width": 294,
+                      "gap": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "id": "artboard-cast-mobile-1-role-l",
+                          "fill": "#D4AF3780",
+                          "width": 32,
+                          "height": 1
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-mobile-1-role",
+                          "fill": "$color.primary",
+                          "content": "The Heiress",
+                          "textAlign": "center",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 11,
+                          "fontWeight": "normal",
+                          "letterSpacing": 2
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "artboard-cast-mobile-1-role-r",
+                          "fill": "#D4AF3780",
+                          "width": 32,
+                          "height": 1
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "artboard-cast-mobile-1-name",
+                      "fill": "$color.textMain",
+                      "textGrowth": "fixed-width",
+                      "width": 294,
+                      "content": "Lady Isolde",
+                      "textAlign": "center",
+                      "fontFamily": "Playfair Display",
+                      "fontSize": 28,
+                      "fontWeight": "700",
+                      "fontStyle": "italic"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-mobile-1-cta",
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "artboard-cast-mobile-1-flip",
+                          "width": 14,
+                          "height": 14,
+                          "icon": "cached",
+                          "library": "Material Symbols Outlined",
+                          "weight": 400,
+                          "fill": "#FFFFFF66"
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-mobile-1-flip-l",
+                          "fill": "#FFFFFF66",
+                          "content": "Tap to reveal dossier",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 10,
+                          "fontWeight": "normal",
+                          "letterSpacing": 2
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-cast-mobile-2-card",
+              "clip": true,
+              "width": 342,
+              "height": 564,
+              "fill": "$color.surface",
+              "cornerRadius": 2,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "artboard-cast-mobile-2-img",
+                  "x": 0,
+                  "y": 0,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuDbV5TijEhfdu5lu1dP6DSAS6PvVPCnRe2F_k32RLtSk8xYkX8NodrOPWQJjua_E-yqZIzV2zWVDqQuMJtvK5YnXn9o3lU85Y963540yPYWXd-K7toH3Fz05ujkW7kSbxSg9QxMMbsYwlOehSsAWolRd2V1juQEIygZHbAr3QKmspm5mliFndhQ03-q11nhkhMNIhNtUoM_ZV7KugsvY0ItOcYl1o2azfjpKvL-49wCMwujdLxs32uEo7blAGsuDO8JQaO45xyTJc",
+                    "mode": "fill"
+                  },
+                  "width": 342,
+                  "height": 564
+                },
+                {
+                  "type": "rectangle",
+                  "id": "artboard-cast-mobile-2-vignette",
+                  "x": 0,
+                  "y": 0,
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 180,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#05050500",
+                        "position": 0
+                      },
+                      {
+                        "color": "#05050566",
+                        "position": 0.45
+                      },
+                      {
+                        "color": "#050505EE",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 342,
+                  "height": 564
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-cast-mobile-2-endorse",
+                  "x": 274,
+                  "y": 13,
+                  "name": "Endorse button",
+                  "width": 58,
+                  "height": 75,
+                  "fill": "#800020E6",
+                  "cornerRadius": 17,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#80002059",
+                    "offset": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "blur": 20
+                  },
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    8,
+                    12
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "artboard-cast-mobile-2-rose",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "local_florist",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF"
+                    },
+                    {
+                      "type": "text",
+                      "id": "artboard-cast-mobile-2-endorse-l",
+                      "fill": "#FFFFFF",
+                      "content": "Endorse",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 10,
+                      "fontWeight": "normal",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-mobile-2-count",
+                      "height": 20,
+                      "fill": "#05050559",
+                      "cornerRadius": 999,
+                      "padding": [
+                        2,
+                        8
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-mobile-2-count-t",
+                          "fill": "$color.primary",
+                          "content": "5,440",
+                          "fontFamily": "Playfair Display",
+                          "fontSize": 10,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-cast-mobile-2-meta",
+                  "x": 0,
+                  "y": 344,
+                  "width": 342,
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": [
+                    0,
+                    24,
+                    32,
+                    24
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "artboard-cast-mobile-2-teaser",
+                      "fill": "#EAEAEA99",
+                      "textGrowth": "fixed-width",
+                      "width": 294,
+                      "content": "A ghost in silk gloves. Vera trades secrets the way others trade kisses—softly, and never without a price.",
+                      "lineHeight": 1.45,
+                      "textAlign": "center",
+                      "fontFamily": "Literata",
+                      "fontSize": 13,
+                      "fontWeight": "normal",
+                      "fontStyle": "italic"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-mobile-2-role-row",
+                      "width": 294,
+                      "gap": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "id": "artboard-cast-mobile-2-role-l",
+                          "fill": "#D4AF3780",
+                          "width": 32,
+                          "height": 1
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-mobile-2-role",
+                          "fill": "$color.primary",
+                          "content": "The Spy",
+                          "textAlign": "center",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 11,
+                          "fontWeight": "normal",
+                          "letterSpacing": 2
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "artboard-cast-mobile-2-role-r",
+                          "fill": "#D4AF3780",
+                          "width": 32,
+                          "height": 1
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "artboard-cast-mobile-2-name",
+                      "fill": "$color.textMain",
+                      "textGrowth": "fixed-width",
+                      "width": 294,
+                      "content": "Vera Crowe",
+                      "textAlign": "center",
+                      "fontFamily": "Playfair Display",
+                      "fontSize": 28,
+                      "fontWeight": "700",
+                      "fontStyle": "italic"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-mobile-2-cta",
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "artboard-cast-mobile-2-flip",
+                          "width": 14,
+                          "height": 14,
+                          "icon": "cached",
+                          "library": "Material Symbols Outlined",
+                          "weight": 400,
+                          "fill": "#FFFFFF66"
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-mobile-2-flip-l",
+                          "fill": "#FFFFFF66",
+                          "content": "Tap to reveal dossier",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 10,
+                          "fontWeight": "normal",
+                          "letterSpacing": 2
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-cast-mobile-3-card",
+              "clip": true,
+              "width": 342,
+              "height": 564,
+              "fill": "$color.surface",
+              "cornerRadius": 2,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "artboard-cast-mobile-3-img",
+                  "x": 0,
+                  "y": 0,
+                  "fill": {
+                    "type": "image",
+                    "enabled": true,
+                    "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuDbV5TijEhfdu5lu1dP6DSAS6PvVPCnRe2F_k32RLtSk8xYkX8NodrOPWQJjua_E-yqZIzV2zWVDqQuMJtvK5YnXn9o3lU85Y963540yPYWXd-K7toH3Fz05ujkW7kSbxSg9QxMMbsYwlOehSsAWolRd2V1juQEIygZHbAr3QKmspm5mliFndhQ03-q11nhkhMNIhNtUoM_ZV7KugsvY0ItOcYl1o2azfjpKvL-49wCMwujdLxs32uEo7blAGsuDO8JQaO45xyTJc",
+                    "mode": "fill"
+                  },
+                  "width": 342,
+                  "height": 564
+                },
+                {
+                  "type": "rectangle",
+                  "id": "artboard-cast-mobile-3-vignette",
+                  "x": 0,
+                  "y": 0,
+                  "fill": {
+                    "type": "gradient",
+                    "gradientType": "linear",
+                    "enabled": true,
+                    "rotation": 180,
+                    "size": {
+                      "height": 1
+                    },
+                    "colors": [
+                      {
+                        "color": "#05050500",
+                        "position": 0
+                      },
+                      {
+                        "color": "#05050566",
+                        "position": 0.45
+                      },
+                      {
+                        "color": "#050505EE",
+                        "position": 1
+                      }
+                    ]
+                  },
+                  "width": 342,
+                  "height": 564
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-cast-mobile-3-endorse",
+                  "x": 274,
+                  "y": 13,
+                  "name": "Endorse button",
+                  "width": 58,
+                  "height": 75,
+                  "fill": "#800020E6",
+                  "cornerRadius": 17,
+                  "effect": {
+                    "type": "shadow",
+                    "shadowType": "outer",
+                    "color": "#80002059",
+                    "offset": {
+                      "x": 0,
+                      "y": 8
+                    },
+                    "blur": 20
+                  },
+                  "layout": "vertical",
+                  "gap": 4,
+                  "padding": [
+                    8,
+                    12
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "artboard-cast-mobile-3-rose",
+                      "width": 18,
+                      "height": 18,
+                      "icon": "local_florist",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF"
+                    },
+                    {
+                      "type": "text",
+                      "id": "artboard-cast-mobile-3-endorse-l",
+                      "fill": "#FFFFFF",
+                      "content": "Endorse",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 10,
+                      "fontWeight": "normal",
+                      "letterSpacing": 2
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-mobile-3-count",
+                      "height": 20,
+                      "fill": "#05050559",
+                      "cornerRadius": 999,
+                      "padding": [
+                        2,
+                        8
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-mobile-3-count-t",
+                          "fill": "$color.primary",
+                          "content": "3,901",
+                          "fontFamily": "Playfair Display",
+                          "fontSize": 10,
+                          "fontWeight": "700"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-cast-mobile-3-meta",
+                  "x": 0,
+                  "y": 344,
+                  "width": 342,
+                  "layout": "vertical",
+                  "gap": 10,
+                  "padding": [
+                    0,
+                    24,
+                    32,
+                    24
+                  ],
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "artboard-cast-mobile-3-teaser",
+                      "fill": "#EAEAEA99",
+                      "textGrowth": "fixed-width",
+                      "width": 294,
+                      "content": "Charm sharpened to a blade. Julian wants the title, the estate, and anything Alistair still dares to love.",
+                      "lineHeight": 1.45,
+                      "textAlign": "center",
+                      "fontFamily": "Literata",
+                      "fontSize": 13,
+                      "fontWeight": "normal",
+                      "fontStyle": "italic"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-mobile-3-role-row",
+                      "width": 294,
+                      "gap": 8,
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "rectangle",
+                          "id": "artboard-cast-mobile-3-role-l",
+                          "fill": "#D4AF3780",
+                          "width": 32,
+                          "height": 1
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-mobile-3-role",
+                          "fill": "$color.primary",
+                          "content": "The Rival",
+                          "textAlign": "center",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 11,
+                          "fontWeight": "normal",
+                          "letterSpacing": 2
+                        },
+                        {
+                          "type": "rectangle",
+                          "id": "artboard-cast-mobile-3-role-r",
+                          "fill": "#D4AF3780",
+                          "width": 32,
+                          "height": 1
+                        }
+                      ]
+                    },
+                    {
+                      "type": "text",
+                      "id": "artboard-cast-mobile-3-name",
+                      "fill": "$color.textMain",
+                      "textGrowth": "fixed-width",
+                      "width": 294,
+                      "content": "Julian Vale",
+                      "textAlign": "center",
+                      "fontFamily": "Playfair Display",
+                      "fontSize": 28,
+                      "fontWeight": "700",
+                      "fontStyle": "italic"
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-mobile-3-cta",
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "artboard-cast-mobile-3-flip",
+                          "width": 14,
+                          "height": 14,
+                          "icon": "cached",
+                          "library": "Material Symbols Outlined",
+                          "weight": 400,
+                          "fill": "#FFFFFF66"
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-mobile-3-flip-l",
+                          "fill": "#FFFFFF66",
+                          "content": "Tap to reveal dossier",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 10,
+                          "fontWeight": "normal",
+                          "letterSpacing": 2
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "artboard-cast-tablet",
+      "x": 470,
+      "y": 0,
+      "name": "Cast Gallery — tablet 2-col",
+      "clip": true,
+      "width": 834,
+      "height": 1362,
+      "fill": "$color.void",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "artboard-cast-tablet-top",
+          "width": "fill_container",
+          "height": 64,
+          "padding": [
+            16,
+            32
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "icon",
+              "id": "artboard-cast-tablet-close",
+              "width": 24,
+              "height": 24,
+              "icon": "close",
+              "library": "Material Symbols Outlined",
+              "weight": 400,
+              "fill": "#FFFFFF"
+            },
+            {
+              "type": "text",
+              "id": "artboard-cast-tablet-title",
+              "fill": "$color.primary",
+              "content": "The Cast",
+              "fontFamily": "Cinzel",
+              "fontSize": 14,
+              "fontWeight": "normal",
+              "letterSpacing": 3
+            },
+            {
+              "type": "frame",
+              "id": "artboard-cast-tablet-spacer",
+              "width": 24,
+              "height": 24
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "artboard-cast-tablet-grid",
+          "width": "fill_container",
+          "layout": "vertical",
+          "gap": 20,
+          "padding": [
+            8,
+            32,
+            32,
+            32
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "artboard-cast-tablet-r0",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "artboard-cast-tablet-0-card",
+                  "clip": true,
+                  "width": 375,
+                  "height": 619,
+                  "fill": "$color.surface",
+                  "cornerRadius": 2,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "id": "artboard-cast-tablet-0-img",
+                      "x": 0,
+                      "y": 0,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuDbV5TijEhfdu5lu1dP6DSAS6PvVPCnRe2F_k32RLtSk8xYkX8NodrOPWQJjua_E-yqZIzV2zWVDqQuMJtvK5YnXn9o3lU85Y963540yPYWXd-K7toH3Fz05ujkW7kSbxSg9QxMMbsYwlOehSsAWolRd2V1juQEIygZHbAr3QKmspm5mliFndhQ03-q11nhkhMNIhNtUoM_ZV7KugsvY0ItOcYl1o2azfjpKvL-49wCMwujdLxs32uEo7blAGsuDO8JQaO45xyTJc",
+                        "mode": "fill"
+                      },
+                      "width": 375,
+                      "height": 619
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "artboard-cast-tablet-0-vignette",
+                      "x": 0,
+                      "y": 0,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 180,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#05050500",
+                            "position": 0
+                          },
+                          {
+                            "color": "#05050566",
+                            "position": 0.45
+                          },
+                          {
+                            "color": "#050505EE",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "width": 375,
+                      "height": 619
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-tablet-0-trophy",
+                      "x": 16,
+                      "y": 16,
+                      "width": 72,
+                      "height": 72,
+                      "layout": "vertical",
+                      "gap": 6,
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "frame",
+                          "id": "artboard-cast-tablet-0-trophy-badge",
+                          "width": 40,
+                          "height": 40,
+                          "fill": "#121212CC",
+                          "cornerRadius": 20,
+                          "effect": {
+                            "type": "shadow",
+                            "shadowType": "outer",
+                            "color": "#D4AF3766",
+                            "blur": 12
+                          },
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "artboard-cast-tablet-0-trophy-icon",
+                              "width": 22,
+                              "height": 22,
+                              "icon": "emoji_events",
+                              "library": "Material Symbols Outlined",
+                              "weight": 400,
+                              "fill": "$color.primary"
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-tablet-0-trophy-cap",
+                          "fill": "$color.primary",
+                          "content": "Top Pick",
+                          "fontFamily": "Cinzel",
+                          "fontSize": 10,
+                          "fontWeight": "500",
+                          "letterSpacing": 1.5
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-tablet-0-endorse",
+                      "x": 307,
+                      "y": 13,
+                      "name": "Endorse button",
+                      "width": 58,
+                      "height": 75,
+                      "fill": "#800020E6",
+                      "cornerRadius": 17,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#80002059",
+                        "offset": {
+                          "x": 0,
+                          "y": 8
+                        },
+                        "blur": 20
+                      },
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "artboard-cast-tablet-0-rose",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "local_florist",
+                          "library": "Material Symbols Outlined",
+                          "weight": 400,
+                          "fill": "#FFFFFF"
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-tablet-0-endorse-l",
+                          "fill": "#FFFFFF",
+                          "content": "Endorse",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 10,
+                          "fontWeight": "normal",
+                          "letterSpacing": 2
+                        },
+                        {
+                          "type": "frame",
+                          "id": "artboard-cast-tablet-0-count",
+                          "height": 20,
+                          "fill": "#05050559",
+                          "cornerRadius": 999,
+                          "padding": [
+                            2,
+                            8
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "artboard-cast-tablet-0-count-t",
+                              "fill": "$color.primary",
+                              "content": "12,384",
+                              "fontFamily": "Playfair Display",
+                              "fontSize": 10,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-tablet-0-meta",
+                      "x": 0,
+                      "y": 399,
+                      "width": 375,
+                      "layout": "vertical",
+                      "gap": 10,
+                      "padding": [
+                        0,
+                        24,
+                        32,
+                        24
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-tablet-0-teaser",
+                          "fill": "#EAEAEA99",
+                          "textGrowth": "fixed-width",
+                          "width": 327,
+                          "content": "A brooding exile emerging from the shadows of his past, Alistair returns to a city that forgot him, determined to reclaim a legacy stolen by betrayal.",
+                          "lineHeight": 1.45,
+                          "textAlign": "center",
+                          "fontFamily": "Literata",
+                          "fontSize": 13,
+                          "fontWeight": "normal",
+                          "fontStyle": "italic"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "artboard-cast-tablet-0-role-row",
+                          "width": 327,
+                          "gap": 8,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "artboard-cast-tablet-0-role-l",
+                              "fill": "#D4AF3780",
+                              "width": 32,
+                              "height": 1
+                            },
+                            {
+                              "type": "text",
+                              "id": "artboard-cast-tablet-0-role",
+                              "fill": "$color.primary",
+                              "content": "The Exiled Heir",
+                              "textAlign": "center",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 11,
+                              "fontWeight": "normal",
+                              "letterSpacing": 2
+                            },
+                            {
+                              "type": "rectangle",
+                              "id": "artboard-cast-tablet-0-role-r",
+                              "fill": "#D4AF3780",
+                              "width": 32,
+                              "height": 1
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-tablet-0-name",
+                          "fill": "$color.textMain",
+                          "textGrowth": "fixed-width",
+                          "width": 327,
+                          "content": "Duke Alistair",
+                          "textAlign": "center",
+                          "fontFamily": "Playfair Display",
+                          "fontSize": 28,
+                          "fontWeight": "700",
+                          "fontStyle": "italic"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "artboard-cast-tablet-0-cta",
+                          "gap": 6,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "artboard-cast-tablet-0-flip",
+                              "width": 14,
+                              "height": 14,
+                              "icon": "cached",
+                              "library": "Material Symbols Outlined",
+                              "weight": 400,
+                              "fill": "#FFFFFF66"
+                            },
+                            {
+                              "type": "text",
+                              "id": "artboard-cast-tablet-0-flip-l",
+                              "fill": "#FFFFFF66",
+                              "content": "Tap to reveal dossier",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 10,
+                              "fontWeight": "normal",
+                              "letterSpacing": 2
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-cast-tablet-1-card",
+                  "clip": true,
+                  "width": 375,
+                  "height": 619,
+                  "fill": "$color.surface",
+                  "cornerRadius": 2,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "id": "artboard-cast-tablet-1-img",
+                      "x": 0,
+                      "y": 0,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuDbV5TijEhfdu5lu1dP6DSAS6PvVPCnRe2F_k32RLtSk8xYkX8NodrOPWQJjua_E-yqZIzV2zWVDqQuMJtvK5YnXn9o3lU85Y963540yPYWXd-K7toH3Fz05ujkW7kSbxSg9QxMMbsYwlOehSsAWolRd2V1juQEIygZHbAr3QKmspm5mliFndhQ03-q11nhkhMNIhNtUoM_ZV7KugsvY0ItOcYl1o2azfjpKvL-49wCMwujdLxs32uEo7blAGsuDO8JQaO45xyTJc",
+                        "mode": "fill"
+                      },
+                      "width": 375,
+                      "height": 619
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "artboard-cast-tablet-1-vignette",
+                      "x": 0,
+                      "y": 0,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 180,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#05050500",
+                            "position": 0
+                          },
+                          {
+                            "color": "#05050566",
+                            "position": 0.45
+                          },
+                          {
+                            "color": "#050505EE",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "width": 375,
+                      "height": 619
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-tablet-1-endorse",
+                      "x": 307,
+                      "y": 13,
+                      "name": "Endorse button",
+                      "width": 58,
+                      "height": 75,
+                      "fill": "#800020E6",
+                      "cornerRadius": 17,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#80002059",
+                        "offset": {
+                          "x": 0,
+                          "y": 8
+                        },
+                        "blur": 20
+                      },
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "artboard-cast-tablet-1-rose",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "local_florist",
+                          "library": "Material Symbols Outlined",
+                          "weight": 400,
+                          "fill": "#FFFFFF"
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-tablet-1-endorse-l",
+                          "fill": "#FFFFFF",
+                          "content": "Endorse",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 10,
+                          "fontWeight": "normal",
+                          "letterSpacing": 2
+                        },
+                        {
+                          "type": "frame",
+                          "id": "artboard-cast-tablet-1-count",
+                          "height": 20,
+                          "fill": "#05050559",
+                          "cornerRadius": 999,
+                          "padding": [
+                            2,
+                            8
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "artboard-cast-tablet-1-count-t",
+                              "fill": "$color.primary",
+                              "content": "8,102",
+                              "fontFamily": "Playfair Display",
+                              "fontSize": 10,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-tablet-1-meta",
+                      "x": 0,
+                      "y": 399,
+                      "width": 375,
+                      "layout": "vertical",
+                      "gap": 10,
+                      "padding": [
+                        0,
+                        24,
+                        32,
+                        24
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-tablet-1-teaser",
+                          "fill": "#EAEAEA99",
+                          "textGrowth": "fixed-width",
+                          "width": 327,
+                          "content": "Heiress to a fortune built on whispers, Isolde plays the ballroom like a chessboard—every smile a gambit.",
+                          "lineHeight": 1.45,
+                          "textAlign": "center",
+                          "fontFamily": "Literata",
+                          "fontSize": 13,
+                          "fontWeight": "normal",
+                          "fontStyle": "italic"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "artboard-cast-tablet-1-role-row",
+                          "width": 327,
+                          "gap": 8,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "artboard-cast-tablet-1-role-l",
+                              "fill": "#D4AF3780",
+                              "width": 32,
+                              "height": 1
+                            },
+                            {
+                              "type": "text",
+                              "id": "artboard-cast-tablet-1-role",
+                              "fill": "$color.primary",
+                              "content": "The Heiress",
+                              "textAlign": "center",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 11,
+                              "fontWeight": "normal",
+                              "letterSpacing": 2
+                            },
+                            {
+                              "type": "rectangle",
+                              "id": "artboard-cast-tablet-1-role-r",
+                              "fill": "#D4AF3780",
+                              "width": 32,
+                              "height": 1
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-tablet-1-name",
+                          "fill": "$color.textMain",
+                          "textGrowth": "fixed-width",
+                          "width": 327,
+                          "content": "Lady Isolde",
+                          "textAlign": "center",
+                          "fontFamily": "Playfair Display",
+                          "fontSize": 28,
+                          "fontWeight": "700",
+                          "fontStyle": "italic"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "artboard-cast-tablet-1-cta",
+                          "gap": 6,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "artboard-cast-tablet-1-flip",
+                              "width": 14,
+                              "height": 14,
+                              "icon": "cached",
+                              "library": "Material Symbols Outlined",
+                              "weight": 400,
+                              "fill": "#FFFFFF66"
+                            },
+                            {
+                              "type": "text",
+                              "id": "artboard-cast-tablet-1-flip-l",
+                              "fill": "#FFFFFF66",
+                              "content": "Tap to reveal dossier",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 10,
+                              "fontWeight": "normal",
+                              "letterSpacing": 2
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "artboard-cast-tablet-r1",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "artboard-cast-tablet-2-card",
+                  "clip": true,
+                  "width": 375,
+                  "height": 619,
+                  "fill": "$color.surface",
+                  "cornerRadius": 2,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "id": "artboard-cast-tablet-2-img",
+                      "x": 0,
+                      "y": 0,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuDbV5TijEhfdu5lu1dP6DSAS6PvVPCnRe2F_k32RLtSk8xYkX8NodrOPWQJjua_E-yqZIzV2zWVDqQuMJtvK5YnXn9o3lU85Y963540yPYWXd-K7toH3Fz05ujkW7kSbxSg9QxMMbsYwlOehSsAWolRd2V1juQEIygZHbAr3QKmspm5mliFndhQ03-q11nhkhMNIhNtUoM_ZV7KugsvY0ItOcYl1o2azfjpKvL-49wCMwujdLxs32uEo7blAGsuDO8JQaO45xyTJc",
+                        "mode": "fill"
+                      },
+                      "width": 375,
+                      "height": 619
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "artboard-cast-tablet-2-vignette",
+                      "x": 0,
+                      "y": 0,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 180,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#05050500",
+                            "position": 0
+                          },
+                          {
+                            "color": "#05050566",
+                            "position": 0.45
+                          },
+                          {
+                            "color": "#050505EE",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "width": 375,
+                      "height": 619
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-tablet-2-endorse",
+                      "x": 307,
+                      "y": 13,
+                      "name": "Endorse button",
+                      "width": 58,
+                      "height": 75,
+                      "fill": "#800020E6",
+                      "cornerRadius": 17,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#80002059",
+                        "offset": {
+                          "x": 0,
+                          "y": 8
+                        },
+                        "blur": 20
+                      },
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "artboard-cast-tablet-2-rose",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "local_florist",
+                          "library": "Material Symbols Outlined",
+                          "weight": 400,
+                          "fill": "#FFFFFF"
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-tablet-2-endorse-l",
+                          "fill": "#FFFFFF",
+                          "content": "Endorse",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 10,
+                          "fontWeight": "normal",
+                          "letterSpacing": 2
+                        },
+                        {
+                          "type": "frame",
+                          "id": "artboard-cast-tablet-2-count",
+                          "height": 20,
+                          "fill": "#05050559",
+                          "cornerRadius": 999,
+                          "padding": [
+                            2,
+                            8
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "artboard-cast-tablet-2-count-t",
+                              "fill": "$color.primary",
+                              "content": "5,440",
+                              "fontFamily": "Playfair Display",
+                              "fontSize": 10,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-tablet-2-meta",
+                      "x": 0,
+                      "y": 399,
+                      "width": 375,
+                      "layout": "vertical",
+                      "gap": 10,
+                      "padding": [
+                        0,
+                        24,
+                        32,
+                        24
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-tablet-2-teaser",
+                          "fill": "#EAEAEA99",
+                          "textGrowth": "fixed-width",
+                          "width": 327,
+                          "content": "A ghost in silk gloves. Vera trades secrets the way others trade kisses—softly, and never without a price.",
+                          "lineHeight": 1.45,
+                          "textAlign": "center",
+                          "fontFamily": "Literata",
+                          "fontSize": 13,
+                          "fontWeight": "normal",
+                          "fontStyle": "italic"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "artboard-cast-tablet-2-role-row",
+                          "width": 327,
+                          "gap": 8,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "artboard-cast-tablet-2-role-l",
+                              "fill": "#D4AF3780",
+                              "width": 32,
+                              "height": 1
+                            },
+                            {
+                              "type": "text",
+                              "id": "artboard-cast-tablet-2-role",
+                              "fill": "$color.primary",
+                              "content": "The Spy",
+                              "textAlign": "center",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 11,
+                              "fontWeight": "normal",
+                              "letterSpacing": 2
+                            },
+                            {
+                              "type": "rectangle",
+                              "id": "artboard-cast-tablet-2-role-r",
+                              "fill": "#D4AF3780",
+                              "width": 32,
+                              "height": 1
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-tablet-2-name",
+                          "fill": "$color.textMain",
+                          "textGrowth": "fixed-width",
+                          "width": 327,
+                          "content": "Vera Crowe",
+                          "textAlign": "center",
+                          "fontFamily": "Playfair Display",
+                          "fontSize": 28,
+                          "fontWeight": "700",
+                          "fontStyle": "italic"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "artboard-cast-tablet-2-cta",
+                          "gap": 6,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "artboard-cast-tablet-2-flip",
+                              "width": 14,
+                              "height": 14,
+                              "icon": "cached",
+                              "library": "Material Symbols Outlined",
+                              "weight": 400,
+                              "fill": "#FFFFFF66"
+                            },
+                            {
+                              "type": "text",
+                              "id": "artboard-cast-tablet-2-flip-l",
+                              "fill": "#FFFFFF66",
+                              "content": "Tap to reveal dossier",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 10,
+                              "fontWeight": "normal",
+                              "letterSpacing": 2
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "artboard-cast-tablet-3-card",
+                  "clip": true,
+                  "width": 375,
+                  "height": 619,
+                  "fill": "$color.surface",
+                  "cornerRadius": 2,
+                  "layout": "none",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "id": "artboard-cast-tablet-3-img",
+                      "x": 0,
+                      "y": 0,
+                      "fill": {
+                        "type": "image",
+                        "enabled": true,
+                        "url": "https://lh3.googleusercontent.com/aida-public/AB6AXuDbV5TijEhfdu5lu1dP6DSAS6PvVPCnRe2F_k32RLtSk8xYkX8NodrOPWQJjua_E-yqZIzV2zWVDqQuMJtvK5YnXn9o3lU85Y963540yPYWXd-K7toH3Fz05ujkW7kSbxSg9QxMMbsYwlOehSsAWolRd2V1juQEIygZHbAr3QKmspm5mliFndhQ03-q11nhkhMNIhNtUoM_ZV7KugsvY0ItOcYl1o2azfjpKvL-49wCMwujdLxs32uEo7blAGsuDO8JQaO45xyTJc",
+                        "mode": "fill"
+                      },
+                      "width": 375,
+                      "height": 619
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "artboard-cast-tablet-3-vignette",
+                      "x": 0,
+                      "y": 0,
+                      "fill": {
+                        "type": "gradient",
+                        "gradientType": "linear",
+                        "enabled": true,
+                        "rotation": 180,
+                        "size": {
+                          "height": 1
+                        },
+                        "colors": [
+                          {
+                            "color": "#05050500",
+                            "position": 0
+                          },
+                          {
+                            "color": "#05050566",
+                            "position": 0.45
+                          },
+                          {
+                            "color": "#050505EE",
+                            "position": 1
+                          }
+                        ]
+                      },
+                      "width": 375,
+                      "height": 619
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-tablet-3-endorse",
+                      "x": 307,
+                      "y": 13,
+                      "name": "Endorse button",
+                      "width": 58,
+                      "height": 75,
+                      "fill": "#800020E6",
+                      "cornerRadius": 17,
+                      "effect": {
+                        "type": "shadow",
+                        "shadowType": "outer",
+                        "color": "#80002059",
+                        "offset": {
+                          "x": 0,
+                          "y": 8
+                        },
+                        "blur": 20
+                      },
+                      "layout": "vertical",
+                      "gap": 4,
+                      "padding": [
+                        8,
+                        12
+                      ],
+                      "justifyContent": "center",
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "icon",
+                          "id": "artboard-cast-tablet-3-rose",
+                          "width": 18,
+                          "height": 18,
+                          "icon": "local_florist",
+                          "library": "Material Symbols Outlined",
+                          "weight": 400,
+                          "fill": "#FFFFFF"
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-tablet-3-endorse-l",
+                          "fill": "#FFFFFF",
+                          "content": "Endorse",
+                          "fontFamily": "Marcellus",
+                          "fontSize": 10,
+                          "fontWeight": "normal",
+                          "letterSpacing": 2
+                        },
+                        {
+                          "type": "frame",
+                          "id": "artboard-cast-tablet-3-count",
+                          "height": 20,
+                          "fill": "#05050559",
+                          "cornerRadius": 999,
+                          "padding": [
+                            2,
+                            8
+                          ],
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "text",
+                              "id": "artboard-cast-tablet-3-count-t",
+                              "fill": "$color.primary",
+                              "content": "3,901",
+                              "fontFamily": "Playfair Display",
+                              "fontSize": 10,
+                              "fontWeight": "700"
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    {
+                      "type": "frame",
+                      "id": "artboard-cast-tablet-3-meta",
+                      "x": 0,
+                      "y": 399,
+                      "width": 375,
+                      "layout": "vertical",
+                      "gap": 10,
+                      "padding": [
+                        0,
+                        24,
+                        32,
+                        24
+                      ],
+                      "alignItems": "center",
+                      "children": [
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-tablet-3-teaser",
+                          "fill": "#EAEAEA99",
+                          "textGrowth": "fixed-width",
+                          "width": 327,
+                          "content": "Charm sharpened to a blade. Julian wants the title, the estate, and anything Alistair still dares to love.",
+                          "lineHeight": 1.45,
+                          "textAlign": "center",
+                          "fontFamily": "Literata",
+                          "fontSize": 13,
+                          "fontWeight": "normal",
+                          "fontStyle": "italic"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "artboard-cast-tablet-3-role-row",
+                          "width": 327,
+                          "gap": 8,
+                          "justifyContent": "center",
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "rectangle",
+                              "id": "artboard-cast-tablet-3-role-l",
+                              "fill": "#D4AF3780",
+                              "width": 32,
+                              "height": 1
+                            },
+                            {
+                              "type": "text",
+                              "id": "artboard-cast-tablet-3-role",
+                              "fill": "$color.primary",
+                              "content": "The Rival",
+                              "textAlign": "center",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 11,
+                              "fontWeight": "normal",
+                              "letterSpacing": 2
+                            },
+                            {
+                              "type": "rectangle",
+                              "id": "artboard-cast-tablet-3-role-r",
+                              "fill": "#D4AF3780",
+                              "width": 32,
+                              "height": 1
+                            }
+                          ]
+                        },
+                        {
+                          "type": "text",
+                          "id": "artboard-cast-tablet-3-name",
+                          "fill": "$color.textMain",
+                          "textGrowth": "fixed-width",
+                          "width": 327,
+                          "content": "Julian Vale",
+                          "textAlign": "center",
+                          "fontFamily": "Playfair Display",
+                          "fontSize": 28,
+                          "fontWeight": "700",
+                          "fontStyle": "italic"
+                        },
+                        {
+                          "type": "frame",
+                          "id": "artboard-cast-tablet-3-cta",
+                          "gap": 6,
+                          "alignItems": "center",
+                          "children": [
+                            {
+                              "type": "icon",
+                              "id": "artboard-cast-tablet-3-flip",
+                              "width": 14,
+                              "height": 14,
+                              "icon": "cached",
+                              "library": "Material Symbols Outlined",
+                              "weight": 400,
+                              "fill": "#FFFFFF66"
+                            },
+                            {
+                              "type": "text",
+                              "id": "artboard-cast-tablet-3-flip-l",
+                              "fill": "#FFFFFF66",
+                              "content": "Tap to reveal dossier",
+                              "fontFamily": "Marcellus",
+                              "fontSize": 10,
+                              "fontWeight": "normal",
+                              "letterSpacing": 2
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "color.primary": {
+      "type": "color",
+      "value": "#D4AF37"
+    },
+    "color.void": {
+      "type": "color",
+      "value": "#050505"
+    },
+    "color.surface": {
+      "type": "color",
+      "value": "#121212"
+    },
+    "color.surfaceHighlight": {
+      "type": "color",
+      "value": "#1A1A1A"
+    },
+    "color.textMain": {
+      "type": "color",
+      "value": "#EAEAEA"
+    },
+    "color.textMuted": {
+      "type": "color",
+      "value": "#8A8A8A"
+    },
+    "color.accent": {
+      "type": "color",
+      "value": "#800020"
+    },
+    "color.navBg": {
+      "type": "color",
+      "value": "#080808"
+    },
+    "font.display": {
+      "type": "string",
+      "value": "Playfair Display"
+    },
+    "font.header": {
+      "type": "string",
+      "value": "Cinzel"
+    },
+    "font.heading": {
+      "type": "string",
+      "value": "Cinzel"
+    },
+    "font.body": {
+      "type": "string",
+      "value": "Literata"
+    },
+    "font.ui": {
+      "type": "string",
+      "value": "Marcellus"
+    },
+    "font.script": {
+      "type": "string",
+      "value": "Pinyon Script"
+    },
+    "radius.card": {
+      "type": "number",
+      "value": 2
+    },
+    "radius.input": {
+      "type": "number",
+      "value": 0
+    },
+    "radius.modal": {
+      "type": "number",
+      "value": 4
+    },
+    "shadow.card.offsetY": {
+      "type": "number",
+      "value": 10
+    },
+    "shadow.card.blur": {
+      "type": "number",
+      "value": 30
+    },
+    "shadow.modalGlow.blur": {
+      "type": "number",
+      "value": 20
+    },
+    "shadow.goldGlow.blur": {
+      "type": "number",
+      "value": 24
+    },
+    "space.screenPad": {
+      "type": "number",
+      "value": 24
+    },
+    "space.sectionGap": {
+      "type": "number",
+      "value": 16
+    }
+  },
+  "fileToken": "01dadbcb-9f1f-481c-b611-194205cbaa98"
+}

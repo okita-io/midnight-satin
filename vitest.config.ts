@@ -6,7 +6,8 @@ export default defineConfig({
   plugins: [react()],
   test: {
     environment: "node",
-    include: ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
+    include: ["src/**/*.test.ts", "src/**/*.test.tsx", "src/**/*.spec.ts", "src/**/*.spec.tsx"],
+    exclude: ["e2e/**", "node_modules/**", ".next/**"],
     globals: true,
     fileParallelism: false,
   },

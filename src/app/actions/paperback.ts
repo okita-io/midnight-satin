@@ -64,6 +64,14 @@ function getAllowedShippingCountries(): Stripe.Checkout.SessionCreateParams.Ship
 export async function createPaperbackCheckout(
   novelId: string
 ): Promise<PaperbackCheckoutResult> {
+  // Feature flags — fail closed when paperback purchase is disabled (launch-prep 3.6)
+  if (process.env.NEXT_PUBLIC_PAPERBACK_ENABLED !== "true") {
+    return { success: false, error: "Paperback purchases are not available." };
+  }
+  if (process.env.NEXT_PUBLIC_PAPERBACK_PURCHASE_ENABLED !== "true") {
+    return { success: false, error: "Paperback checkout is coming soon." };
+  }
+
   // 1. Verify authenticated session
   const session = await getSession();
   if (!session) {
@@ -118,6 +126,7 @@ export async function createPaperbackCheckout(
       success_url: `${baseUrl}/novel/${novelId}/paperback/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${baseUrl}/novel/${novelId}/paperback`,
       metadata: {
+        type: "paperback",
         novel_id: novelId,
         reader_id: session.readerId,
       },

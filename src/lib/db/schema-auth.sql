@@ -4,10 +4,11 @@
 CREATE TABLE IF NOT EXISTS readers (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   email TEXT UNIQUE NOT NULL,
-  password_hash TEXT NOT NULL,
+  password_hash TEXT,
   display_name TEXT,
   credit_balance INT DEFAULT 0,
   role TEXT DEFAULT 'reader',
+  clerk_user_id TEXT UNIQUE,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   last_login_at TIMESTAMPTZ
 );
@@ -22,4 +23,5 @@ CREATE TABLE IF NOT EXISTS credit_transactions (
 );
 
 CREATE INDEX IF NOT EXISTS idx_readers_email ON readers(email);
+CREATE INDEX IF NOT EXISTS idx_readers_clerk_user_id ON readers(clerk_user_id);
 CREATE INDEX IF NOT EXISTS idx_credit_transactions_reader ON credit_transactions(reader_id);

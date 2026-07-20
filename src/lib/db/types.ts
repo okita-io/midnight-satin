@@ -36,7 +36,34 @@ export interface Novel {
   publicationDate: Date | null;
   isFeatured?: boolean;
   featuredOrder?: number | null;
+  /** Romance Factory story UUID (RF-1 / MS-1). Null for legacy imports. */
+  rfStoryId?: string | null;
   createdAt: Date;
+}
+
+/** Act-grain provenance stored on chapters.rf_provenance (RF-2 / MS-1). */
+export interface ChapterRfActProvenance {
+  act_number: number;
+  char_start: number;
+  char_end: number;
+  card_id?: string | null;
+  writer_adapter?: string | null;
+  base_version?: string | null;
+  adapter_version?: string | null;
+  editor_version?: string | null;
+  judge_version?: string | null;
+  editor_card_hit?: number | null;
+  judge_score?: number | null;
+  revisions?: number | null;
+  card?: Record<string, unknown> | null;
+}
+
+export interface ChapterRfProvenance {
+  provenance_version: string;
+  chapter_number: number;
+  coordinate_space: string;
+  rubric_version?: string | null;
+  acts: ChapterRfActProvenance[];
 }
 
 export interface Chapter {
@@ -46,11 +73,32 @@ export interface Chapter {
   title: string;
   content: string;
   isFree: boolean;
+  /** RF provenance payload (acts + stitch offsets). Null for legacy imports. */
+  rfProvenance?: ChapterRfProvenance | null;
   createdAt: Date;
   updatedAt: Date;
 }
 
+/**
+ * Cast Gallery dossier stats.
+ *
+ * Romance Factory publish dossiers use the psychology fields
+ * (`consciousWant`, `unconsciousNeed`, `wound`, `fear`, `lieTheyBelieve`).
+ * Age / height / zodiac-style keys remain optional for hand-authored seed content.
+ */
 export interface CharacterStats {
+  /** RF: conscious_want */
+  consciousWant?: string;
+  /** RF: unconscious_need */
+  unconsciousNeed?: string;
+  /** RF: wound */
+  wound?: string;
+  /** RF: fear */
+  fear?: string;
+  /** RF: lie_they_believe */
+  lieTheyBelieve?: string;
+  /** Story role slug (e.g. protagonist) — optional display aid */
+  role?: string;
   age?: string;
   status?: string;
   height?: string;
@@ -91,12 +139,13 @@ export interface Reader {
 export interface ReaderDbRow {
   id: string;
   email: string;
-  password_hash: string;
+  password_hash: string | null;
   display_name: string | null;
   credit_balance: number;
   role: string;
   created_at: Date;
   last_login_at: Date | null;
+  clerk_user_id?: string | null;
 }
 
 export function readerDbRowToReader(row: ReaderDbRow): Reader {
@@ -197,58 +246,6 @@ export interface ReviewLike {
 export interface CommentThreadPage {
   comments: Comment[];
   nextCursor: string | null;
-}
-
-/** Password reset token for email password reset flow. Requirements: 2.3, 7.1 */
-export interface PasswordResetToken {
-  id: string;
-  readerId: string;
-  tokenHash: string;
-  expiresAt: Date;
-  usedAt: Date | null;
-  createdAt: Date;
-  ipAddress: string | null;
-}
-
-/** Event types for password reset security logging */
-export type PasswordResetEventType =
-  | "request_sent"
-  | "link_used"
-  | "link_expired"
-  | "invalid_token"
-  | "rate_limit"
-  | "password_changed"
-  | "email_failed"
-  | "reset_requested"
-  | "token_generated"
-  | "email_sent"
-  | "token_validated"
-  | "token_invalid"
-  | "token_expired"
-  | "token_used"
-  | "rate_limited";
-
-/**
- * Allowed reason codes for password reset log entries.
- * Whitelist ensures no sensitive data (email, token, password) is logged. Requirements: 7.4
- */
-export type PasswordResetReasonCode =
-  | "invalid"
-  | "expired"
-  | "used"
-  | "rate_limited"
-  | "email_failed"
-  | "resend_error"
-  | "token_not_found";
-
-/** Log entry for password reset security events */
-export interface PasswordResetLogEntry {
-  id: string;
-  eventType: PasswordResetEventType;
-  readerId: string | null;
-  ipAddress: string | null;
-  reasonCode: string | null;
-  createdAt: Date;
 }
 
 /** Entity types used in Property 1: Entity storage round-trip and Property 25, 26 */

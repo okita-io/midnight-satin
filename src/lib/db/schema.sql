@@ -34,8 +34,14 @@ CREATE TABLE novels (
   publication_date DATE,
   is_featured BOOLEAN DEFAULT FALSE,
   featured_order INT,
+  -- RF-1/MS-1: stable Romance Factory story UUID for cross-system joins
+  rf_story_id UUID,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
+
+CREATE UNIQUE INDEX novels_rf_story_id_uidx
+  ON novels (rf_story_id)
+  WHERE rf_story_id IS NOT NULL;
 
 CREATE TABLE chapters (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -44,6 +50,8 @@ CREATE TABLE chapters (
   title TEXT NOT NULL,
   content TEXT NOT NULL,
   is_free BOOLEAN DEFAULT FALSE,
+  -- RF-2/MS-1: act-grain provenance + stitch offsets (acts[] JSONB payload)
+  rf_provenance JSONB,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   updated_at TIMESTAMPTZ DEFAULT NOW(),
   UNIQUE(novel_id, chapter_number)
@@ -67,10 +75,11 @@ CREATE TABLE characters (
 CREATE TABLE readers (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   email TEXT UNIQUE NOT NULL,
-  password_hash TEXT NOT NULL,
+  password_hash TEXT,
   display_name TEXT,
   credit_balance INT DEFAULT 0,
   role TEXT DEFAULT 'reader',
+  clerk_user_id TEXT UNIQUE,
   created_at TIMESTAMPTZ DEFAULT NOW(),
   last_login_at TIMESTAMPTZ
 );

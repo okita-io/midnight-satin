@@ -249,27 +249,27 @@ Track these as **`reusable: true`** components in `reference/pencil/design_syste
 
 ### Phase 0 — Reference: Pencil + HTML unification (design track)
 
-- [ ] Add **`reference/pencil/`** and **naming convention** doc (screen ↔ pencil ↔ HTML ↔ app route)
-- [ ] Create **`reference/pencil/design_system.pen`** and implement the [design system pen backlog](#pencil-design-system-pen--component-backlog-from-src-audit) checklist (reusable components + variables)
-- [ ] Create **initial `.pen`** files for home + novel detail (mobile + tablet artboards per file where useful)
-- [ ] Build **shared components** in Pencil for section headers, nav, primary actions, card tiles—match **PRD type roles** (compose from `design_system.pen` where possible)
-- [ ] **Unification pass** on `reference/*.html` to match Pencil (typography, spacing, repeated chrome)
-- [ ] Update **`.cursor/rules/midnight-satin-design.mdc`** (or AGENTS) with **source-of-truth order**: Pencil → HTML → implementation
+- [x] Add **`reference/pencil/`** and **naming convention** doc (screen ↔ pencil ↔ HTML ↔ app route)
+- [x] Create **`reference/pencil/design_system.pen`** and implement the [design system pen backlog](#pencil-design-system-pen--component-backlog-from-src-audit) checklist (reusable components + variables)
+- [x] Create **initial `.pen`** files for home + novel detail (mobile + tablet artboards per file where useful)
+- [x] Build **shared components** in Pencil for section headers, nav, primary actions, card tiles—match **PRD type roles** (compose from `design_system.pen` where possible)
+- [x] **Unification pass** on `reference/*.html` to match Pencil (typography, spacing, repeated chrome) — cast endorse chrome + Literata body stack; auth HTML deferred to `the_auth.pen` / Clerk
+- [x] Update **`.cursor/rules/midnight-satin-design.mdc`** (or AGENTS) with **source-of-truth order**: Pencil → HTML → implementation
 
 ### Phase 1 — Catalog shell + highest-leverage chrome
 
-- [ ] Create `src/components/ui/` + **`README.md` catalog index**
-- [ ] `Icon` (Material Symbols wrapper) + migrate `navigation-bar`
-- [ ] `DetailSectionHeading`
-- [ ] `BackLink` / `BackButton` + migrate 2–3 critical routes (novel header, updates, reviews)
-- [ ] Add **typography matrix** to catalog README (and optionally `Text` primitive with 2–3 variants if it speeds adoption)
+- [x] Create `src/components/ui/` + **`README.md` catalog index**
+- [x] `Icon` (Material Symbols wrapper) + migrate `navigation-bar`
+- [x] `DetailSectionHeading`
+- [x] `BackLink` / `BackButton` + migrate 2–3 critical routes (novel header, updates, reviews)
+- [x] Add **typography matrix** to catalog README (and optionally `Text` primitive with 2–3 variants if it speeds adoption)
 
 ### Phase 2 — Actions, inputs, surfaces
 
-- [ ] `Button` variants
-- [ ] `TextInput` / search field alignment with `search-overlay`
-- [ ] `Card` variants tied to existing utilities
-- [ ] Promote `ShimmerPlaceholder` as catalog `Skeleton` (re-export or thin wrapper)
+- [x] `Button` variants
+- [x] `TextInput` / search field alignment with `search-overlay`
+- [x] `Card` variants tied to existing utilities
+- [x] Promote `ShimmerPlaceholder` as catalog `Skeleton` (re-export or thin wrapper)
 
 ### Phase 3 — Dialogs and empty states
 

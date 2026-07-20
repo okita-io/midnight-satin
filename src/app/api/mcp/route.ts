@@ -35,13 +35,54 @@ function getApiKey(request: NextRequest): string | null {
   return null;
 }
 
-/** Validate API key - returns 401 if invalid */
+/** Simple sliding-window rate limit per API key fingerprint (in-memory; per instance). */
+const MCP_RATE_LIMIT_WINDOW_MS = 60_000;
+const MCP_RATE_LIMIT_MAX = 120;
+const mcpRateBuckets = new Map<string, { count: number; windowStart: number }>();
+
+function fingerprintKey(key: string): string {
+  // Avoid logging the raw key; short stable hash for rate buckets / audit.
+  let h = 0;
+  for (let i = 0; i < key.length; i++) h = (Math.imul(31, h) + key.charCodeAt(i)) | 0;
+  return `mcp_${(h >>> 0).toString(16)}`;
+}
+
+function checkRateLimit(keyFingerprint: string): boolean {
+  const now = Date.now();
+  const bucket = mcpRateBuckets.get(keyFingerprint);
+  if (!bucket || now - bucket.windowStart > MCP_RATE_LIMIT_WINDOW_MS) {
+    mcpRateBuckets.set(keyFingerprint, { count: 1, windowStart: now });
+    return true;
+  }
+  if (bucket.count >= MCP_RATE_LIMIT_MAX) return false;
+  bucket.count += 1;
+  return true;
+}
+
+function auditMcp(
+  keyFingerprint: string,
+  action: string,
+  detail: Record<string, unknown>
+) {
+  console.info(
+    JSON.stringify({
+      type: "mcp_audit",
+      at: new Date().toISOString(),
+      key: keyFingerprint,
+      action,
+      ...detail,
+    })
+  );
+}
+
+/** Validate API key - returns 401 if invalid; fail closed if unset */
 function validateApiKey(request: NextRequest): NextResponse | null {
   const configuredKey = process.env.MCP_API_KEY ?? process.env.API_KEY;
   if (!configuredKey) {
+    // Production must never run MCP open; fail closed.
     return NextResponse.json(
       { jsonrpc: "2.0", error: { code: -32001, message: "MCP API key not configured" } },
-      { status: 500 }
+      { status: 503 }
     );
   }
   const provided = getApiKey(request);
@@ -51,6 +92,15 @@ function validateApiKey(request: NextRequest): NextResponse | null {
       { status: 401 }
     );
   }
+  const fp = fingerprintKey(provided);
+  if (!checkRateLimit(fp)) {
+    return NextResponse.json(
+      { jsonrpc: "2.0", error: { code: -32002, message: "Rate limit exceeded" } },
+      { status: 429 }
+    );
+  }
+  // Stash fingerprint for audit in handlers via header clone is awkward; use WeakMap on request
+  (request as NextRequest & { __mcpKeyFp?: string }).__mcpKeyFp = fp;
   return null;
 }
 
@@ -352,6 +402,19 @@ export async function POST(request: NextRequest) {
           error: { code: -32602, message: "Invalid params: tool name required" },
         });
       }
+
+      const keyFp =
+        (request as NextRequest & { __mcpKeyFp?: string }).__mcpKeyFp ?? "unknown";
+      auditMcp(keyFp, "tools/call", {
+        tool: toolName,
+        // Never log full content payloads — entity type / ids only when present
+        entityHint:
+          typeof toolArgs.id === "string"
+            ? toolArgs.id
+            : typeof toolArgs.novel_id === "string"
+              ? toolArgs.novel_id
+              : undefined,
+      });
 
       const result = await callTool(toolName, toolArgs);
       return NextResponse.json({

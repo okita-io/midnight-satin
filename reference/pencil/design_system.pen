@@ -1,5 +1,5 @@
 {
-  "version": "2.11",
+  "version": "2.14",
   "children": [
     {
       "type": "frame",
@@ -124,12 +124,7 @@
                   "id": "sw-rect-primary",
                   "fill": "$color.primary",
                   "width": 140,
-                  "height": 140,
-                  "stroke": {
-                    "align": "inside",
-                    "thickness": 1,
-                    "fill": "#FFFFFF22"
-                  }
+                  "height": 140
                 },
                 {
                   "type": "text",
@@ -167,12 +162,7 @@
                   "id": "sw-rect-void",
                   "fill": "$color.void",
                   "width": 140,
-                  "height": 140,
-                  "stroke": {
-                    "align": "inside",
-                    "thickness": 1,
-                    "fill": "#FFFFFF22"
-                  }
+                  "height": 140
                 },
                 {
                   "type": "text",
@@ -210,12 +200,7 @@
                   "id": "sw-rect-surface",
                   "fill": "$color.surface",
                   "width": 140,
-                  "height": 140,
-                  "stroke": {
-                    "align": "inside",
-                    "thickness": 1,
-                    "fill": "#FFFFFF22"
-                  }
+                  "height": 140
                 },
                 {
                   "type": "text",
@@ -253,12 +238,7 @@
                   "id": "sw-rect-surfaceHi",
                   "fill": "$color.surfaceHighlight",
                   "width": 140,
-                  "height": 140,
-                  "stroke": {
-                    "align": "inside",
-                    "thickness": 1,
-                    "fill": "#FFFFFF22"
-                  }
+                  "height": 140
                 },
                 {
                   "type": "text",
@@ -296,12 +276,7 @@
                   "id": "sw-rect-accent",
                   "fill": "$color.accent",
                   "width": 140,
-                  "height": 140,
-                  "stroke": {
-                    "align": "inside",
-                    "thickness": 1,
-                    "fill": "#FFFFFF22"
-                  }
+                  "height": 140
                 },
                 {
                   "type": "text",
@@ -339,12 +314,7 @@
                   "id": "sw-rect-textMain",
                   "fill": "$color.textMain",
                   "width": 140,
-                  "height": 140,
-                  "stroke": {
-                    "align": "inside",
-                    "thickness": 1,
-                    "fill": "#FFFFFF22"
-                  }
+                  "height": 140
                 },
                 {
                   "type": "text",
@@ -382,12 +352,7 @@
                   "id": "sw-rect-textMuted",
                   "fill": "$color.textMuted",
                   "width": 140,
-                  "height": 140,
-                  "stroke": {
-                    "align": "inside",
-                    "thickness": 1,
-                    "fill": "#FFFFFF22"
-                  }
+                  "height": 140
                 },
                 {
                   "type": "text",
@@ -425,12 +390,7 @@
                   "id": "sw-rect-navBg",
                   "fill": "$color.navBg",
                   "width": 140,
-                  "height": 140,
-                  "stroke": {
-                    "align": "inside",
-                    "thickness": 1,
-                    "fill": "#FFFFFF22"
-                  }
+                  "height": 140
                 },
                 {
                   "type": "text",
@@ -644,8 +604,7 @@
                   "content": "She closed the ledger slowly, as if the ink might still be wet.",
                   "lineHeight": 1.15,
                   "fontFamily": "Literata",
-                  "fontSize": 26,
-                  "fontWeight": "normal"
+                  "fontSize": 26
                 },
                 {
                   "type": "text",
@@ -683,8 +642,7 @@
                   "content": "Continue reading",
                   "lineHeight": 1.15,
                   "fontFamily": "Marcellus",
-                  "fontSize": 22,
-                  "fontWeight": "normal"
+                  "fontSize": 22
                 },
                 {
                   "type": "text",
@@ -754,11 +712,6 @@
           "height": 900,
           "fill": "$color.void",
           "cornerRadius": 4,
-          "stroke": {
-            "align": "inside",
-            "thickness": 2,
-            "fill": "$color.primary"
-          },
           "layout": "vertical",
           "children": [
             {
@@ -961,13 +914,6 @@
               "name": "Demo · Primary tab bar shell (390)",
               "width": 390,
               "fill": "$color.navBg",
-              "stroke": {
-                "align": "inside",
-                "thickness": {
-                  "top": 1
-                },
-                "fill": "#1F1F1F"
-              },
               "effect": {
                 "type": "shadow",
                 "shadowType": "outer",
@@ -1009,12 +955,12 @@
                           "alignItems": "center",
                           "children": [
                             {
-                              "type": "icon_font",
+                              "type": "icon",
                               "id": "nav-demo-boudoir-icon",
                               "width": 28,
                               "height": 28,
-                              "iconFontName": "history_edu",
-                              "iconFontFamily": "Material Symbols Outlined",
+                              "icon": "history_edu",
+                              "library": "Material Symbols Outlined",
                               "weight": 400,
                               "fill": "$color.primary",
                               "effect": {
@@ -1061,12 +1007,12 @@
                       "alignItems": "center",
                       "children": [
                         {
-                          "type": "icon_font",
+                          "type": "icon",
                           "id": "nav-demo-library-icon",
                           "width": 24,
                           "height": 24,
-                          "iconFontName": "local_library",
-                          "iconFontFamily": "Material Symbols Outlined",
+                          "icon": "local_library",
+                          "library": "Material Symbols Outlined",
                           "weight": 400,
                           "fill": "$color.textMuted"
                         },
@@ -1091,12 +1037,12 @@
                       "alignItems": "center",
                       "children": [
                         {
-                          "type": "icon_font",
+                          "type": "icon",
                           "id": "nav-demo-vault-icon",
                           "width": 24,
                           "height": 24,
-                          "iconFontName": "storefront",
-                          "iconFontFamily": "Material Symbols Outlined",
+                          "icon": "storefront",
+                          "library": "Material Symbols Outlined",
                           "weight": 400,
                           "fill": "$color.textMuted"
                         },
@@ -1121,12 +1067,12 @@
                       "alignItems": "center",
                       "children": [
                         {
-                          "type": "icon_font",
+                          "type": "icon",
                           "id": "nav-demo-updates-icon",
                           "width": 24,
                           "height": 24,
-                          "iconFontName": "newspaper",
-                          "iconFontFamily": "Material Symbols Outlined",
+                          "icon": "newspaper",
+                          "library": "Material Symbols Outlined",
                           "weight": 400,
                           "fill": "$color.textMuted"
                         },
@@ -1151,12 +1097,12 @@
                       "alignItems": "center",
                       "children": [
                         {
-                          "type": "icon_font",
+                          "type": "icon",
                           "id": "nav-demo-profile-icon",
                           "width": 24,
                           "height": 24,
-                          "iconFontName": "person_3",
-                          "iconFontFamily": "Material Symbols Outlined",
+                          "icon": "person_3",
+                          "library": "Material Symbols Outlined",
                           "weight": 400,
                           "fill": "$color.textMuted"
                         },
@@ -1187,15 +1133,8 @@
       "y": 0,
       "name": "DS — Reusable primitives",
       "width": 420,
-      "height": 5714,
+      "height": 1080,
       "fill": "#0A0A0A",
-      "stroke": {
-        "align": "inside",
-        "thickness": {
-          "left": 1
-        },
-        "fill": "#2A2A2A"
-      },
       "layout": "vertical",
       "gap": 32,
       "padding": [
@@ -1356,8 +1295,7 @@
               "content": "Your shelf is waiting.",
               "lineHeight": 1.05,
               "fontFamily": "$font.script",
-              "fontSize": 34,
-              "fontWeight": "normal"
+              "fontSize": 34
             }
           ]
         },
@@ -1412,12 +1350,12 @@
               "letterSpacing": 2
             },
             {
-              "type": "icon_font",
+              "type": "icon",
               "id": "reuse-ms-text-control-read-more-icon",
               "width": 16,
               "height": 16,
-              "iconFontName": "expand_more",
-              "iconFontFamily": "Material Symbols Outlined",
+              "icon": "expand_more",
+              "library": "Material Symbols Outlined",
               "weight": 400,
               "fill": "$color.primary"
             }
@@ -1467,11 +1405,6 @@
           "height": 160,
           "fill": "$color.surface",
           "cornerRadius": 2,
-          "stroke": {
-            "align": "inside",
-            "thickness": 1,
-            "fill": "#FFFFFF0D"
-          },
           "effect": {
             "type": "shadow",
             "shadowType": "outer",
@@ -1545,12 +1478,12 @@
           "alignItems": "center",
           "children": [
             {
-              "type": "icon_font",
+              "type": "icon",
               "id": "reuse-ms-nav-tab-default-icon",
               "width": 24,
               "height": 24,
-              "iconFontName": "local_library",
-              "iconFontFamily": "Material Symbols Outlined",
+              "icon": "local_library",
+              "library": "Material Symbols Outlined",
               "weight": 400,
               "fill": "$color.textMuted"
             },
@@ -1584,12 +1517,12 @@
               "alignItems": "center",
               "children": [
                 {
-                  "type": "icon_font",
+                  "type": "icon",
                   "id": "reuse-ms-nav-tab-active-icon",
                   "width": 28,
                   "height": 28,
-                  "iconFontName": "history_edu",
-                  "iconFontFamily": "Material Symbols Outlined",
+                  "icon": "history_edu",
+                  "library": "Material Symbols Outlined",
                   "weight": 400,
                   "fill": "$color.primary",
                   "effect": {
@@ -1634,13 +1567,6 @@
           "reusable": true,
           "width": "fill_container",
           "fill": "$color.navBg",
-          "stroke": {
-            "align": "inside",
-            "thickness": {
-              "top": 1
-            },
-            "fill": "#1F1F1F"
-          },
           "effect": {
             "type": "shadow",
             "shadowType": "outer",
@@ -1702,12 +1628,12 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "icon_font",
+                      "type": "icon",
                       "id": "reuse-ms-reading-hud-type-icon",
                       "width": 24,
                       "height": 24,
-                      "iconFontName": "text_fields",
-                      "iconFontFamily": "Material Symbols Outlined",
+                      "icon": "text_fields",
+                      "library": "Material Symbols Outlined",
                       "weight": 400,
                       "fill": "$color.textMuted"
                     },
@@ -1740,12 +1666,12 @@
                       "alignItems": "center",
                       "children": [
                         {
-                          "type": "icon_font",
+                          "type": "icon",
                           "id": "reuse-ms-reading-hud-prev-icon",
                           "width": 24,
                           "height": 24,
-                          "iconFontName": "skip_previous",
-                          "iconFontFamily": "Material Symbols Outlined",
+                          "icon": "skip_previous",
+                          "library": "Material Symbols Outlined",
                           "weight": 400,
                           "fill": "$color.textMain"
                         },
@@ -1770,12 +1696,12 @@
                       "alignItems": "center",
                       "children": [
                         {
-                          "type": "icon_font",
+                          "type": "icon",
                           "id": "reuse-ms-reading-hud-list-icon",
                           "width": 24,
                           "height": 24,
-                          "iconFontName": "play_circle",
-                          "iconFontFamily": "Material Symbols Outlined",
+                          "icon": "play_circle",
+                          "library": "Material Symbols Outlined",
                           "weight": 400,
                           "fill": "$color.textMain"
                         },
@@ -1800,12 +1726,12 @@
                       "alignItems": "center",
                       "children": [
                         {
-                          "type": "icon_font",
+                          "type": "icon",
                           "id": "reuse-ms-reading-hud-next-icon",
                           "width": 24,
                           "height": 24,
-                          "iconFontName": "skip_next",
-                          "iconFontFamily": "Material Symbols Outlined",
+                          "icon": "skip_next",
+                          "library": "Material Symbols Outlined",
                           "weight": 400,
                           "fill": "$color.textMain"
                         },
@@ -1832,12 +1758,12 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "icon_font",
+                      "type": "icon",
                       "id": "reuse-ms-reading-hud-notes-icon",
                       "width": 28,
                       "height": 28,
-                      "iconFontName": "history_edu",
-                      "iconFontFamily": "Material Symbols Outlined",
+                      "icon": "history_edu",
+                      "library": "Material Symbols Outlined",
                       "weight": 400,
                       "fill": "$color.primary",
                       "effect": {
@@ -1868,12 +1794,12 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "icon_font",
+                      "type": "icon",
                       "id": "reuse-ms-reading-hud-line-icon",
                       "width": 24,
                       "height": 24,
-                      "iconFontName": "format_line_spacing",
-                      "iconFontFamily": "Material Symbols Outlined",
+                      "icon": "format_line_spacing",
+                      "library": "Material Symbols Outlined",
                       "weight": 400,
                       "fill": "$color.textMuted"
                     },
@@ -1908,12 +1834,12 @@
           "alignItems": "center",
           "children": [
             {
-              "type": "icon_font",
+              "type": "icon",
               "id": "reuse-ms-admin-nav-item-default-icon",
               "width": 20,
               "height": 20,
-              "iconFontName": "auto_stories",
-              "iconFontFamily": "Material Symbols Outlined",
+              "icon": "auto_stories",
+              "library": "Material Symbols Outlined",
               "weight": 400,
               "fill": "$color.textMuted"
             },
@@ -1936,11 +1862,6 @@
           "width": "fill_container",
           "fill": "#D4AF3733",
           "cornerRadius": 2,
-          "stroke": {
-            "align": "inside",
-            "thickness": 1,
-            "fill": "#D4AF3766"
-          },
           "gap": 8,
           "padding": [
             8,
@@ -1949,12 +1870,12 @@
           "alignItems": "center",
           "children": [
             {
-              "type": "icon_font",
+              "type": "icon",
               "id": "reuse-ms-admin-nav-item-active-icon",
               "width": 20,
               "height": 20,
-              "iconFontName": "dashboard",
-              "iconFontFamily": "Material Symbols Outlined",
+              "icon": "dashboard",
+              "library": "Material Symbols Outlined",
               "weight": 400,
               "fill": "$color.primary"
             },
@@ -1979,11 +1900,6 @@
           "height": 600,
           "fill": "$color.surface",
           "cornerRadius": 2,
-          "stroke": {
-            "align": "inside",
-            "thickness": 1,
-            "fill": "#FFFFFF0D"
-          },
           "layout": "none",
           "children": [
             {
@@ -2036,7 +1952,7 @@
               "id": "reuse-ms-character-portrait-trophy",
               "x": 16,
               "y": 16,
-              "width": 56,
+              "width": 72,
               "height": 72,
               "layout": "vertical",
               "gap": 6,
@@ -2049,11 +1965,6 @@
                   "height": 40,
                   "fill": "#121212CC",
                   "cornerRadius": 20,
-                  "stroke": {
-                    "align": "inside",
-                    "thickness": 1,
-                    "fill": "$color.primary"
-                  },
                   "effect": {
                     "type": "shadow",
                     "shadowType": "outer",
@@ -2064,12 +1975,12 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "icon_font",
+                      "type": "icon",
                       "id": "reuse-ms-character-portrait-trophy-icon",
                       "width": 22,
                       "height": 22,
-                      "iconFontName": "emoji_events",
-                      "iconFontFamily": "Material Symbols Outlined",
+                      "icon": "emoji_events",
+                      "library": "Material Symbols Outlined",
                       "weight": 400,
                       "fill": "$color.primary"
                     }
@@ -2083,7 +1994,86 @@
                   "fontFamily": "Cinzel",
                   "fontSize": 10,
                   "fontWeight": "500",
-                  "letterSpacing": 2
+                  "letterSpacing": 1.5
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "reuse-ms-character-portrait-endorse",
+              "x": 290,
+              "y": 13,
+              "name": "Endorse button",
+              "width": 58,
+              "height": 75,
+              "fill": "#800020E6",
+              "cornerRadius": 17,
+              "effect": {
+                "type": "shadow",
+                "shadowType": "outer",
+                "color": "#80002059",
+                "offset": {
+                  "x": 0,
+                  "y": 8
+                },
+                "blur": 20
+              },
+              "layout": "vertical",
+              "gap": 4,
+              "padding": [
+                8,
+                12
+              ],
+              "justifyContent": "center",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "reuse-ms-character-portrait-endorse-icon",
+                  "name": "Rose icon",
+                  "width": 18,
+                  "height": 18,
+                  "icon": "local_florist",
+                  "library": "Material Symbols Outlined",
+                  "weight": 400,
+                  "fill": "#FFFFFF"
+                },
+                {
+                  "type": "text",
+                  "id": "reuse-ms-character-portrait-endorse-label",
+                  "name": "Endorse label",
+                  "fill": "#FFFFFF",
+                  "content": "Endorse",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 10,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2.2
+                },
+                {
+                  "type": "frame",
+                  "id": "reuse-ms-character-portrait-endorse-count",
+                  "name": "Count pill",
+                  "height": 20,
+                  "fill": "#05050559",
+                  "cornerRadius": 999,
+                  "padding": [
+                    2,
+                    8
+                  ],
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "text",
+                      "id": "reuse-ms-character-portrait-endorse-count-text",
+                      "name": "Count",
+                      "fill": "#D4AF37",
+                      "content": "12,384",
+                      "fontFamily": "Playfair Display",
+                      "fontSize": 10,
+                      "fontWeight": "700"
+                    }
+                  ]
                 }
               ]
             },
@@ -2192,12 +2182,12 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "icon_font",
+                      "type": "icon",
                       "id": "reuse-ms-character-portrait-cta-icon",
                       "width": 16,
                       "height": 16,
-                      "iconFontName": "cached",
-                      "iconFontFamily": "Material Symbols Outlined",
+                      "icon": "cached",
+                      "library": "Material Symbols Outlined",
                       "weight": 400,
                       "fill": "#FFFFFF66"
                     },
@@ -2214,95 +2204,6 @@
                   ]
                 }
               ]
-            },
-            {
-              "type": "frame",
-              "id": "h8FzHd",
-              "x": 290,
-              "y": 13,
-              "name": "Endorse button",
-              "width": 58,
-              "height": 75,
-              "fill": "#800020E6",
-              "cornerRadius": 17,
-              "stroke": {
-                "align": "inside",
-                "thickness": 2.5,
-                "fill": "#ffffff17"
-              },
-              "effect": {
-                "type": "shadow",
-                "shadowType": "outer",
-                "color": "#80002059",
-                "offset": {
-                  "x": 0,
-                  "y": 8
-                },
-                "blur": 20
-              },
-              "layout": "vertical",
-              "gap": 4,
-              "padding": [
-                8,
-                12
-              ],
-              "justifyContent": "center",
-              "alignItems": "center",
-              "children": [
-                {
-                  "type": "icon_font",
-                  "id": "rzjre",
-                  "name": "Rose icon",
-                  "width": 18,
-                  "height": 18,
-                  "iconFontName": "local_florist",
-                  "iconFontFamily": "Material Symbols Outlined",
-                  "weight": 400,
-                  "fill": "#FFFFFF"
-                },
-                {
-                  "type": "text",
-                  "id": "NxC0a",
-                  "name": "Endorse label",
-                  "fill": "#FFFFFF",
-                  "content": "Endorse",
-                  "fontFamily": "Marcellus",
-                  "fontSize": 10,
-                  "fontWeight": "normal",
-                  "letterSpacing": 2.2
-                },
-                {
-                  "type": "frame",
-                  "id": "MKbrO",
-                  "name": "Count pill",
-                  "height": 20,
-                  "fill": "#05050559",
-                  "cornerRadius": 999,
-                  "stroke": {
-                    "align": "inside",
-                    "thickness": 1,
-                    "fill": "#FFFFFF14"
-                  },
-                  "padding": [
-                    2,
-                    8
-                  ],
-                  "justifyContent": "center",
-                  "alignItems": "center",
-                  "children": [
-                    {
-                      "type": "text",
-                      "id": "t5ZKW",
-                      "name": "Count",
-                      "fill": "#D4AF37",
-                      "content": "12,384",
-                      "fontFamily": "Playfair Display",
-                      "fontSize": 10,
-                      "fontWeight": "700"
-                    }
-                  ]
-                }
-              ]
             }
           ]
         },
@@ -2314,11 +2215,6 @@
           "width": 358,
           "fill": "$color.surface",
           "cornerRadius": 2,
-          "stroke": {
-            "align": "inside",
-            "thickness": 1,
-            "fill": "#D4AF3733"
-          },
           "effect": {
             "type": "shadow",
             "shadowType": "outer",
@@ -2340,14 +2236,15 @@
                   "type": "frame",
                   "id": "reuse-ms-character-dossier-title-row",
                   "width": "fill_container",
+                  "gap": 8,
                   "justifyContent": "space_between",
                   "alignItems": "center",
                   "children": [
                     {
                       "type": "frame",
-                      "id": "n7zhh",
+                      "id": "reuse-ms-character-dossier-confidential-rank",
                       "name": "Confidential + Rank",
-                      "gap": 6,
+                      "gap": 8,
                       "alignItems": "center",
                       "children": [
                         {
@@ -2356,54 +2253,49 @@
                           "fill": "$color.primary",
                           "content": "Confidential",
                           "fontFamily": "Cinzel",
-                          "fontSize": 18,
+                          "fontSize": 14,
                           "fontWeight": "500",
-                          "letterSpacing": 4
+                          "letterSpacing": 1.5
                         },
                         {
                           "type": "frame",
-                          "id": "A5KNzY",
+                          "id": "reuse-ms-character-dossier-rank-pill",
                           "name": "Rank pill",
                           "height": 24,
                           "fill": "#05050599",
                           "cornerRadius": 999,
-                          "stroke": {
-                            "align": "inside",
-                            "thickness": 1,
-                            "fill": "#D4AF3733"
-                          },
-                          "gap": 6,
+                          "gap": 4,
                           "padding": [
-                            4,
-                            10
+                            3,
+                            6
                           ],
                           "alignItems": "center",
                           "children": [
                             {
-                              "type": "icon_font",
-                              "id": "Xsagf",
+                              "type": "icon",
+                              "id": "reuse-ms-character-dossier-rank-rose",
                               "name": "Rank rose",
                               "width": 14,
                               "height": 14,
-                              "iconFontName": "local_florist",
-                              "iconFontFamily": "Material Symbols Outlined",
+                              "icon": "local_florist",
+                              "library": "Material Symbols Outlined",
                               "weight": 400,
                               "fill": "#D4AF37"
                             },
                             {
                               "type": "text",
-                              "id": "M249i",
+                              "id": "reuse-ms-character-dossier-rank-label",
                               "name": "Rank label",
                               "fill": "#EAEAEA99",
                               "content": "Rank",
                               "fontFamily": "Marcellus",
                               "fontSize": 10,
                               "fontWeight": "normal",
-                              "letterSpacing": 2
+                              "letterSpacing": 1
                             },
                             {
                               "type": "text",
-                              "id": "AnqUZ",
+                              "id": "reuse-ms-character-dossier-rank-value",
                               "name": "Rank value",
                               "fill": "#D4AF37",
                               "content": "12,384",
@@ -2421,9 +2313,9 @@
                       "fill": "#FFFFFF33",
                       "content": "REF: 09-22-A",
                       "fontFamily": "Literata",
-                      "fontSize": 11,
+                      "fontSize": 10,
                       "fontWeight": "normal",
-                      "letterSpacing": 1,
+                      "letterSpacing": 0.5,
                       "fontStyle": "italic"
                     }
                   ]
@@ -2589,12 +2481,12 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "icon_font",
+                      "type": "icon",
                       "id": "reuse-ms-character-dossier-tastes-icon",
                       "width": 16,
                       "height": 16,
-                      "iconFontName": "favorite",
-                      "iconFontFamily": "Material Symbols Outlined",
+                      "icon": "favorite",
+                      "library": "Material Symbols Outlined",
                       "weight": 400,
                       "fill": "$color.primary"
                     },
@@ -2616,11 +2508,6 @@
                   "width": "fill_container",
                   "fill": "#0D0D0D",
                   "cornerRadius": 2,
-                  "stroke": {
-                    "align": "inside",
-                    "thickness": 1,
-                    "fill": "#FFFFFF0D"
-                  },
                   "layout": "vertical",
                   "gap": 8,
                   "padding": 16,
@@ -2667,12 +2554,12 @@
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "icon_font",
+                      "type": "icon",
                       "id": "reuse-ms-character-dossier-secrets-lock",
                       "width": 16,
                       "height": 16,
-                      "iconFontName": "lock",
-                      "iconFontFamily": "Material Symbols Outlined",
+                      "icon": "lock",
+                      "library": "Material Symbols Outlined",
                       "weight": 400,
                       "fill": "$color.primary"
                     },
@@ -2694,11 +2581,6 @@
                   "width": "fill_container",
                   "fill": "#0D0D0D",
                   "cornerRadius": 2,
-                  "stroke": {
-                    "align": "inside",
-                    "thickness": 1,
-                    "fill": "#FFFFFF0D"
-                  },
                   "gap": 12,
                   "padding": 16,
                   "children": [
@@ -2773,12 +2655,12 @@
               "alignItems": "center",
               "children": [
                 {
-                  "type": "icon_font",
+                  "type": "icon",
                   "id": "reuse-ms-character-dossier-footer-icon",
                   "width": 16,
                   "height": 16,
-                  "iconFontName": "undo",
-                  "iconFontFamily": "Material Symbols Outlined",
+                  "icon": "undo",
+                  "library": "Material Symbols Outlined",
                   "weight": 400,
                   "fill": "#FFFFFF4D"
                 },
@@ -2838,21 +2720,16 @@
                   "height": 96,
                   "fill": "#D4AF370D",
                   "cornerRadius": 48,
-                  "stroke": {
-                    "align": "inside",
-                    "thickness": 1,
-                    "fill": "#D4AF3733"
-                  },
                   "justifyContent": "center",
                   "alignItems": "center",
                   "children": [
                     {
-                      "type": "icon_font",
+                      "type": "icon",
                       "id": "Qqzt8",
                       "width": 40,
                       "height": 40,
-                      "iconFontName": "auto_stories",
-                      "iconFontFamily": "Material Symbols Outlined",
+                      "icon": "auto_stories",
+                      "library": "Material Symbols Outlined",
                       "fill": "#D4AF3766"
                     }
                   ]
@@ -2926,11 +2803,6 @@
             ]
           },
           "cornerRadius": 2,
-          "stroke": {
-            "align": "inside",
-            "thickness": 1,
-            "fill": "#D4AF3733"
-          },
           "gap": 12,
           "padding": 20,
           "justifyContent": "space_between",
@@ -2976,21 +2848,16 @@
               "height": 44,
               "fill": "#D4AF371A",
               "cornerRadius": 22,
-              "stroke": {
-                "align": "inside",
-                "thickness": 1,
-                "fill": "#D4AF374D"
-              },
               "justifyContent": "center",
               "alignItems": "center",
               "children": [
                 {
-                  "type": "icon_font",
+                  "type": "icon",
                   "id": "QycR9",
                   "width": 24,
                   "height": 24,
-                  "iconFontName": "diamond",
-                  "iconFontFamily": "Material Symbols Outlined",
+                  "icon": "diamond",
+                  "library": "Material Symbols Outlined",
                   "fill": "$color.primary"
                 }
               ]
@@ -3204,11 +3071,6 @@
                       "name": "t1",
                       "fill": "#05050580",
                       "cornerRadius": 2,
-                      "stroke": {
-                        "align": "inside",
-                        "thickness": 1,
-                        "fill": "#D4AF3799"
-                      },
                       "padding": [
                         6,
                         12
@@ -3232,11 +3094,6 @@
                       "name": "t2",
                       "fill": "#05050580",
                       "cornerRadius": 2,
-                      "stroke": {
-                        "align": "inside",
-                        "thickness": 1,
-                        "fill": "#D4AF3799"
-                      },
                       "padding": [
                         6,
                         12
@@ -3260,11 +3117,6 @@
                       "name": "t3",
                       "fill": "#05050580",
                       "cornerRadius": 2,
-                      "stroke": {
-                        "align": "inside",
-                        "thickness": 1,
-                        "fill": "#D4AF3799"
-                      },
                       "padding": [
                         6,
                         12
@@ -3298,11 +3150,6 @@
           "height": 160,
           "fill": "#121212",
           "cornerRadius": 2,
-          "stroke": {
-            "align": "inside",
-            "thickness": 1,
-            "fill": "#FFFFFF0D"
-          },
           "effect": {
             "type": "shadow",
             "shadowType": "outer",
@@ -3387,32 +3234,27 @@
           "name": "MS · Hero slide stack (deck)",
           "reusable": true,
           "width": "fill_container",
-          "height": 500,
+          "height": 440,
           "layout": "none",
           "children": [
             {
               "id": "U0k4Oi",
               "type": "ref",
               "ref": "j6a3AT",
-              "x": 20,
-              "y": 0,
-              "width": 358,
-              "height": 480,
-              "opacity": 0.72,
-              "descendants": {
-                "NhvZk": {
-                  "enabled": false
-                }
-              }
+              "x": 28,
+              "y": 8,
+              "width": 300,
+              "height": 400,
+              "opacity": 0.72
             },
             {
               "id": "qoqXS",
               "type": "ref",
               "ref": "j6a3AT",
               "x": 0,
-              "y": 20,
-              "width": 358,
-              "height": 480
+              "y": 28,
+              "width": 300,
+              "height": 400
             }
           ]
         },
@@ -3424,11 +3266,6 @@
           "width": "fill_container",
           "fill": "#FFFFFF08",
           "cornerRadius": 2,
-          "stroke": {
-            "align": "inside",
-            "thickness": 1,
-            "fill": "#D4AF3726"
-          },
           "effect": [
             {
               "type": "background_blur",
@@ -3487,52 +3324,52 @@
               "alignItems": "center",
               "children": [
                 {
-                  "type": "icon_font",
+                  "type": "icon",
                   "id": "jsDzr-s1",
                   "width": 16,
                   "height": 16,
-                  "iconFontName": "star",
-                  "iconFontFamily": "Material Symbols Outlined",
+                  "icon": "star",
+                  "library": "Material Symbols Outlined",
                   "weight": 400,
                   "fill": "#D4AF37"
                 },
                 {
-                  "type": "icon_font",
+                  "type": "icon",
                   "id": "jsDzr-s2",
                   "width": 16,
                   "height": 16,
-                  "iconFontName": "star",
-                  "iconFontFamily": "Material Symbols Outlined",
+                  "icon": "star",
+                  "library": "Material Symbols Outlined",
                   "weight": 400,
                   "fill": "#D4AF37"
                 },
                 {
-                  "type": "icon_font",
+                  "type": "icon",
                   "id": "jsDzr-s3",
                   "width": 16,
                   "height": 16,
-                  "iconFontName": "star",
-                  "iconFontFamily": "Material Symbols Outlined",
+                  "icon": "star",
+                  "library": "Material Symbols Outlined",
                   "weight": 400,
                   "fill": "#D4AF37"
                 },
                 {
-                  "type": "icon_font",
+                  "type": "icon",
                   "id": "jsDzr-s4",
                   "width": 16,
                   "height": 16,
-                  "iconFontName": "star",
-                  "iconFontFamily": "Material Symbols Outlined",
+                  "icon": "star",
+                  "library": "Material Symbols Outlined",
                   "weight": 400,
                   "fill": "#D4AF37"
                 },
                 {
-                  "type": "icon_font",
+                  "type": "icon",
                   "id": "jsDzr-s5",
                   "width": 16,
                   "height": 16,
-                  "iconFontName": "star",
-                  "iconFontFamily": "Material Symbols Outlined",
+                  "icon": "star",
+                  "library": "Material Symbols Outlined",
                   "weight": 400,
                   "fill": "#D4AF3733"
                 }
@@ -3557,12 +3394,12 @@
               "alignItems": "center",
               "children": [
                 {
-                  "type": "icon_font",
+                  "type": "icon",
                   "id": "jsDzr-fav",
                   "width": 18,
                   "height": 18,
-                  "iconFontName": "favorite",
-                  "iconFontFamily": "Material Symbols Outlined",
+                  "icon": "favorite",
+                  "library": "Material Symbols Outlined",
                   "weight": 400,
                   "fill": "#D4AF3780"
                 },
@@ -3588,11 +3425,6 @@
           "width": "fill_container",
           "fill": "#121212",
           "cornerRadius": 4,
-          "stroke": {
-            "align": "inside",
-            "thickness": 1,
-            "fill": "#D4AF3733"
-          },
           "effect": {
             "type": "shadow",
             "shadowType": "outer",
@@ -3640,22 +3472,17 @@
           "width": "fill_container",
           "fill": "#121212",
           "cornerRadius": 2,
-          "stroke": {
-            "align": "inside",
-            "thickness": 2,
-            "fill": "#D4AF37"
-          },
           "gap": 12,
           "padding": 12,
           "alignItems": "center",
           "children": [
             {
-              "type": "icon_font",
+              "type": "icon",
               "id": "C6G1x",
               "width": 20,
               "height": 20,
-              "iconFontName": "check_circle",
-              "iconFontFamily": "Material Symbols Outlined",
+              "icon": "check_circle",
+              "library": "Material Symbols Outlined",
               "fill": "#D4AF37"
             },
             {
@@ -3680,22 +3507,17 @@
           "width": "fill_container",
           "fill": "#121212",
           "cornerRadius": 2,
-          "stroke": {
-            "align": "inside",
-            "thickness": 2,
-            "fill": "#800020"
-          },
           "gap": 12,
           "padding": 12,
           "alignItems": "center",
           "children": [
             {
-              "type": "icon_font",
+              "type": "icon",
               "id": "n0Mrb",
               "width": 20,
               "height": 20,
-              "iconFontName": "error",
-              "iconFontFamily": "Material Symbols Outlined",
+              "icon": "error",
+              "library": "Material Symbols Outlined",
               "fill": "#800020"
             },
             {
@@ -3720,11 +3542,6 @@
           "width": "fill_container",
           "fill": "#121212",
           "cornerRadius": 2,
-          "stroke": {
-            "align": "inside",
-            "thickness": 2,
-            "fill": "#D4AF37"
-          },
           "padding": [
             10,
             12
@@ -3789,13 +3606,6 @@
           "width": "fill_container",
           "height": 84,
           "fill": "#080808",
-          "stroke": {
-            "align": "inside",
-            "thickness": {
-              "top": 1
-            },
-            "fill": "#1F1F1F"
-          },
           "effect": {
             "type": "shadow",
             "shadowType": "outer",
@@ -3891,11 +3701,6 @@
               "width": "fill_container",
               "height": 56,
               "fill": "$color.surfaceHighlight",
-              "stroke": {
-                "align": "inside",
-                "thickness": 1,
-                "fill": "$color.surfaceHighlight"
-              },
               "padding": [
                 0,
                 16
@@ -3925,11 +3730,6 @@
           "height": 52,
           "fill": "transparent",
           "cornerRadius": 2,
-          "stroke": {
-            "align": "inside",
-            "thickness": 1,
-            "fill": "$color.primary"
-          },
           "justifyContent": "center",
           "alignItems": "center",
           "children": [
@@ -3984,11 +3784,6 @@
           "height": 44,
           "fill": "transparent",
           "cornerRadius": 2,
-          "stroke": {
-            "align": "inside",
-            "thickness": 1,
-            "fill": "$color.primary"
-          },
           "justifyContent": "center",
           "alignItems": "center",
           "children": [
@@ -4013,21 +3808,16 @@
           "height": 44,
           "fill": "#FFFFFF08",
           "cornerRadius": 22,
-          "stroke": {
-            "align": "inside",
-            "thickness": 1,
-            "fill": "#FFFFFF14"
-          },
           "justifyContent": "center",
           "alignItems": "center",
           "children": [
             {
-              "type": "icon_font",
+              "type": "icon",
               "id": "reuse-ms-btn-icon-ghost-glyph",
               "width": 22,
               "height": 22,
-              "iconFontName": "favorite",
-              "iconFontFamily": "Material Symbols Outlined",
+              "icon": "favorite",
+              "library": "Material Symbols Outlined",
               "fill": "$color.primary"
             }
           ]
@@ -4043,12 +3833,12 @@
           "alignItems": "center",
           "children": [
             {
-              "type": "icon_font",
+              "type": "icon",
               "id": "reuse-ms-hud-icon-column-icon",
               "width": 26,
               "height": 26,
-              "iconFontName": "bookmark",
-              "iconFontFamily": "Material Symbols Outlined",
+              "icon": "bookmark",
+              "library": "Material Symbols Outlined",
               "fill": "$color.primary",
               "effect": {
                 "type": "shadow",
@@ -4081,11 +3871,6 @@
               "id": "reuse-ms-chip-a",
               "fill": "$color.surfaceHighlight",
               "cornerRadius": 2,
-              "stroke": {
-                "align": "inside",
-                "thickness": 1,
-                "fill": "$color.primary"
-              },
               "padding": [
                 8,
                 14
@@ -4107,11 +3892,6 @@
               "id": "reuse-ms-chip-b",
               "fill": "#FFFFFF06",
               "cornerRadius": 2,
-              "stroke": {
-                "align": "inside",
-                "thickness": 1,
-                "fill": "#FFFFFF22"
-              },
               "padding": [
                 8,
                 14
@@ -4139,11 +3919,6 @@
           "width": "fill_container",
           "fill": "#1a170e",
           "cornerRadius": 2,
-          "stroke": {
-            "align": "inside",
-            "thickness": 1,
-            "fill": "#D4AF374D"
-          },
           "effect": {
             "type": "shadow",
             "shadowType": "outer",
@@ -4168,21 +3943,16 @@
               "height": 32,
               "fill": "#D4AF370D",
               "cornerRadius": 16,
-              "stroke": {
-                "align": "inside",
-                "thickness": 1,
-                "fill": "#D4AF3733"
-              },
               "justifyContent": "center",
               "alignItems": "center",
               "children": [
                 {
-                  "type": "icon_font",
+                  "type": "icon",
                   "id": "reuse-ms-btn-veil-icon",
                   "width": 18,
                   "height": 18,
-                  "iconFontName": "visibility",
-                  "iconFontFamily": "Material Symbols Outlined",
+                  "icon": "visibility",
+                  "library": "Material Symbols Outlined",
                   "fill": "$color.primary"
                 }
               ]
@@ -4208,48 +3978,48 @@
           "alignItems": "center",
           "children": [
             {
-              "type": "icon_font",
+              "type": "icon",
               "id": "reuse-ms-stars-d1",
               "width": 16,
               "height": 16,
-              "iconFontName": "star",
-              "iconFontFamily": "Material Symbols Outlined",
+              "icon": "star",
+              "library": "Material Symbols Outlined",
               "fill": "$color.primary"
             },
             {
-              "type": "icon_font",
+              "type": "icon",
               "id": "reuse-ms-stars-d2",
               "width": 16,
               "height": 16,
-              "iconFontName": "star",
-              "iconFontFamily": "Material Symbols Outlined",
+              "icon": "star",
+              "library": "Material Symbols Outlined",
               "fill": "$color.primary"
             },
             {
-              "type": "icon_font",
+              "type": "icon",
               "id": "reuse-ms-stars-d3",
               "width": 16,
               "height": 16,
-              "iconFontName": "star",
-              "iconFontFamily": "Material Symbols Outlined",
+              "icon": "star",
+              "library": "Material Symbols Outlined",
               "fill": "$color.primary"
             },
             {
-              "type": "icon_font",
+              "type": "icon",
               "id": "reuse-ms-stars-d4",
               "width": 16,
               "height": 16,
-              "iconFontName": "star",
-              "iconFontFamily": "Material Symbols Outlined",
+              "icon": "star",
+              "library": "Material Symbols Outlined",
               "fill": "$color.primary"
             },
             {
-              "type": "icon_font",
+              "type": "icon",
               "id": "reuse-ms-stars-d5",
               "width": 16,
               "height": 16,
-              "iconFontName": "star",
-              "iconFontFamily": "Material Symbols Outlined",
+              "icon": "star",
+              "library": "Material Symbols Outlined",
               "fill": "#D4AF3733"
             }
           ]
@@ -4263,52 +4033,52 @@
           "alignItems": "center",
           "children": [
             {
-              "type": "icon_font",
+              "type": "icon",
               "id": "reuse-ms-stars-i1",
               "width": 28,
               "height": 28,
-              "iconFontName": "star",
-              "iconFontFamily": "Material Symbols Outlined",
+              "icon": "star",
+              "library": "Material Symbols Outlined",
               "weight": 400,
               "fill": "$color.primary"
             },
             {
-              "type": "icon_font",
+              "type": "icon",
               "id": "reuse-ms-stars-i2",
               "width": 28,
               "height": 28,
-              "iconFontName": "star",
-              "iconFontFamily": "Material Symbols Outlined",
+              "icon": "star",
+              "library": "Material Symbols Outlined",
               "weight": 400,
               "fill": "$color.primary"
             },
             {
-              "type": "icon_font",
+              "type": "icon",
               "id": "reuse-ms-stars-i3",
               "width": 28,
               "height": 28,
-              "iconFontName": "star",
-              "iconFontFamily": "Material Symbols Outlined",
+              "icon": "star",
+              "library": "Material Symbols Outlined",
               "weight": 400,
               "fill": "$color.primary"
             },
             {
-              "type": "icon_font",
+              "type": "icon",
               "id": "reuse-ms-stars-i4",
               "width": 28,
               "height": 28,
-              "iconFontName": "star",
-              "iconFontFamily": "Material Symbols Outlined",
+              "icon": "star",
+              "library": "Material Symbols Outlined",
               "weight": 400,
               "fill": "$color.primary"
             },
             {
-              "type": "icon_font",
+              "type": "icon",
               "id": "reuse-ms-stars-i5",
               "width": 28,
               "height": 28,
-              "iconFontName": "star",
-              "iconFontFamily": "Material Symbols Outlined",
+              "icon": "star",
+              "library": "Material Symbols Outlined",
               "weight": 400,
               "fill": "#D4AF374D"
             }
@@ -4360,11 +4130,6 @@
           "width": "fill_container",
           "fill": "$color.surface",
           "cornerRadius": 2,
-          "stroke": {
-            "align": "inside",
-            "thickness": 1,
-            "fill": "#D4AF3766"
-          },
           "layout": "vertical",
           "gap": 6,
           "padding": 14,
@@ -4417,39 +4182,39 @@
               "alignItems": "end",
               "children": [
                 {
-                  "type": "icon_font",
+                  "type": "icon",
                   "id": "reuse-ms-icon-s16",
                   "width": 16,
                   "height": 16,
-                  "iconFontName": "search",
-                  "iconFontFamily": "Material Symbols Outlined",
+                  "icon": "search",
+                  "library": "Material Symbols Outlined",
                   "fill": "$color.primary"
                 },
                 {
-                  "type": "icon_font",
+                  "type": "icon",
                   "id": "reuse-ms-icon-s18",
                   "width": 18,
                   "height": 18,
-                  "iconFontName": "search",
-                  "iconFontFamily": "Material Symbols Outlined",
+                  "icon": "search",
+                  "library": "Material Symbols Outlined",
                   "fill": "$color.primary"
                 },
                 {
-                  "type": "icon_font",
+                  "type": "icon",
                   "id": "reuse-ms-icon-s24",
                   "width": 24,
                   "height": 24,
-                  "iconFontName": "search",
-                  "iconFontFamily": "Material Symbols Outlined",
+                  "icon": "search",
+                  "library": "Material Symbols Outlined",
                   "fill": "$color.primary"
                 },
                 {
-                  "type": "icon_font",
+                  "type": "icon",
                   "id": "reuse-ms-icon-s28",
                   "width": 28,
                   "height": 28,
-                  "iconFontName": "search",
-                  "iconFontFamily": "Material Symbols Outlined",
+                  "icon": "search",
+                  "library": "Material Symbols Outlined",
                   "fill": "$color.primary"
                 }
               ]
@@ -4466,14 +4231,14 @@
           "layout": "none",
           "children": [
             {
-              "type": "icon_font",
+              "type": "icon",
               "id": "reuse-ms-icon-notify-bell",
               "x": 6,
               "y": 6,
               "width": 24,
               "height": 24,
-              "iconFontName": "notifications",
-              "iconFontFamily": "Material Symbols Outlined",
+              "icon": "notifications",
+              "library": "Material Symbols Outlined",
               "fill": "$color.textMain"
             },
             {
@@ -4483,12 +4248,7 @@
               "y": 4,
               "fill": "$color.accent",
               "width": 10,
-              "height": 10,
-              "stroke": {
-                "align": "center",
-                "thickness": 2,
-                "fill": "$color.void"
-              }
+              "height": 10
             }
           ]
         },
@@ -4529,14 +4289,14 @@
               "height": 2
             },
             {
-              "type": "icon_font",
+              "type": "icon",
               "id": "reuse-ms-decorative-rule-icon-mid",
               "x": 132,
               "y": 10,
               "width": 24,
               "height": 24,
-              "iconFontName": "diamond",
-              "iconFontFamily": "Material Symbols Outlined",
+              "icon": "diamond",
+              "library": "Material Symbols Outlined",
               "fill": "$color.primary"
             },
             {
@@ -4577,12 +4337,12 @@
           "alignItems": "center",
           "children": [
             {
-              "type": "icon_font",
+              "type": "icon",
               "id": "reuse-ms-back-control-arrow-ic",
               "width": 22,
               "height": 22,
-              "iconFontName": "arrow_back",
-              "iconFontFamily": "Material Symbols Outlined",
+              "icon": "arrow_back",
+              "library": "Material Symbols Outlined",
               "fill": "$color.textMuted"
             },
             {
@@ -4605,11 +4365,6 @@
           "width": "fill_container",
           "fill": "$color.surface",
           "cornerRadius": 2,
-          "stroke": {
-            "align": "inside",
-            "thickness": 1,
-            "fill": "#D4AF3766"
-          },
           "gap": 12,
           "padding": 12,
           "children": [
@@ -4671,12 +4426,7 @@
               "y": 12,
               "fill": "$color.surfaceHighlight",
               "width": 80,
-              "height": 88,
-              "stroke": {
-                "align": "inside",
-                "thickness": 2,
-                "fill": "$color.primary"
-              }
+              "height": 88
             },
             {
               "type": "text",
@@ -4790,5 +4540,6 @@
       "type": "number",
       "value": 24
     }
-  }
+  },
+  "fileToken": "2438c6a0-17d1-44d0-9e5e-ff12f549adb6"
 }

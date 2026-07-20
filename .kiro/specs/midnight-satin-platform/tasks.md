@@ -1,5 +1,7 @@
 # Implementation Plan: Midnight Satin Platform
 
+> **Auth note (2026-07-15):** Task 2 (JWT/bcrypt sessions) and task 17 (email password reset via Resend) are historically complete in this plan but **superseded by Clerk**. See `.kiro/specs/launch-prep/tasks.md` and `docs/AUTH.md`.
+
 ## Overview
 Build the Midnight Satin romance reading platform with Next.js 16, React 19, TypeScript, Tailwind CSS, Vercel. HTML mockups in `reference/` are the UI source of truth. Review the design doc in `.kiro/specs/midnight-satin-platform/design.md` for the architecture and requirements. and the requirements doc in `.kiro/specs/midnight-satin-platform/requirements.md` for the functionality.
 

@@ -149,17 +149,22 @@ function buildResult(
     chapterId: c.chapterId,
     readerId: c.readerId,
     parentCommentId: c.parentCommentId,
-    content: c.content,
+    content: c.isDeleted ? "" : c.content,
     likeCount: c.likeCount,
     isDeleted: c.isDeleted,
     createdAt: c.createdAt,
     updatedAt: c.updatedAt,
   }));
 
+  // Also scrub deleted bodies on the author-enriched list used by the UI.
+  const scrubbedWithAuthor = commentsWithAuthor.map((c) =>
+    c.isDeleted ? { ...c, content: "" } : c
+  );
+
   return {
     comments,
     nextCursor,
-    commentsWithAuthor,
+    commentsWithAuthor: scrubbedWithAuthor,
   };
 }
 

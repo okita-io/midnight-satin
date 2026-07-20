@@ -10,10 +10,9 @@ interface AccountActionsListProps {
 
 /**
  * AccountActionsList: Edit Display Name, Manage Email (stub), View Transactions, Logout.
- * Req 18.8. Logout clears session and redirects to Boudoir.
+ * Logout revokes Clerk session and clears legacy JWT cookie via logoutReader.
  */
 export function AccountActionsList({ showAll = true }: AccountActionsListProps) {
-
   const regularActions = showAll
     ? [
         { label: "Edit Display Name", icon: "badge" as const, href: "/profile/edit", disabled: true },
@@ -56,7 +55,7 @@ export function AccountActionsList({ showAll = true }: AccountActionsListProps) 
         <form action={logoutReader}>
           <button
             type="submit"
-            className="w-full flex items-center gap-3 px-4 py-3 text-left font-ui text-sm text-text-main hover:bg-white/5 transition-colors border-t border-white/5"
+            className="w-full flex items-center gap-3 px-4 py-3 text-left font-ui text-sm text-text-main hover:bg-white/5 transition-colors border-t border-white/5 cursor-pointer"
           >
             <span className="material-symbols-outlined text-text-muted text-xl" aria-hidden>
               logout

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { SecondaryOutlineLink } from "./_components/button-primitives";
+import { Button, ButtonLink } from "@/components/ui";
 
 /**
  * Themed error boundary: void background, gold accents, generic message.
@@ -36,21 +36,17 @@ export default function Error({
           We could not complete your request. Please try again or return to the Boudoir.
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <button
-            type="button"
-            onClick={reset}
-            className="btn-gold"
-            aria-label="Try again"
-          >
+          <Button type="button" onClick={reset} aria-label="Try again">
             Try again
-          </button>
-          <SecondaryOutlineLink
+          </Button>
+          <ButtonLink
             href="/"
+            variant="secondary"
             className="py-3 px-6 text-center"
             aria-label="Return to home"
           >
             Return home
-          </SecondaryOutlineLink>
+          </ButtonLink>
         </div>
       </div>
     </div>

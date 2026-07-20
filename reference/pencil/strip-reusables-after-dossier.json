@@ -50,12 +50,12 @@
             "alignItems": "center",
             "children": [
               {
-                "type": "icon_font",
+                "type": "icon",
                 "id": "Qqzt8",
                 "width": 40,
                 "height": 40,
-                "iconFontName": "auto_stories",
-                "iconFontFamily": "Material Symbols Outlined",
+                "icon": "auto_stories",
+                "library": "Material Symbols Outlined",
                 "fill": "#D4AF3766"
               }
             ]
@@ -188,12 +188,12 @@
         "alignItems": "center",
         "children": [
           {
-            "type": "icon_font",
+            "type": "icon",
             "id": "QycR9",
             "width": 24,
             "height": 24,
-            "iconFontName": "diamond",
-            "iconFontFamily": "Material Symbols Outlined",
+            "icon": "diamond",
+            "library": "Material Symbols Outlined",
             "fill": "$color.primary"
           }
         ]
@@ -688,52 +688,52 @@
         "alignItems": "center",
         "children": [
           {
-            "type": "icon_font",
+            "type": "icon",
             "id": "jsDzr-s1",
             "width": 16,
             "height": 16,
-            "iconFontName": "star",
-            "iconFontFamily": "Material Symbols Outlined",
+            "icon": "star",
+            "library": "Material Symbols Outlined",
             "weight": 400,
             "fill": "#D4AF37"
           },
           {
-            "type": "icon_font",
+            "type": "icon",
             "id": "jsDzr-s2",
             "width": 16,
             "height": 16,
-            "iconFontName": "star",
-            "iconFontFamily": "Material Symbols Outlined",
+            "icon": "star",
+            "library": "Material Symbols Outlined",
             "weight": 400,
             "fill": "#D4AF37"
           },
           {
-            "type": "icon_font",
+            "type": "icon",
             "id": "jsDzr-s3",
             "width": 16,
             "height": 16,
-            "iconFontName": "star",
-            "iconFontFamily": "Material Symbols Outlined",
+            "icon": "star",
+            "library": "Material Symbols Outlined",
             "weight": 400,
             "fill": "#D4AF37"
           },
           {
-            "type": "icon_font",
+            "type": "icon",
             "id": "jsDzr-s4",
             "width": 16,
             "height": 16,
-            "iconFontName": "star",
-            "iconFontFamily": "Material Symbols Outlined",
+            "icon": "star",
+            "library": "Material Symbols Outlined",
             "weight": 400,
             "fill": "#D4AF37"
           },
           {
-            "type": "icon_font",
+            "type": "icon",
             "id": "jsDzr-s5",
             "width": 16,
             "height": 16,
-            "iconFontName": "star",
-            "iconFontFamily": "Material Symbols Outlined",
+            "icon": "star",
+            "library": "Material Symbols Outlined",
             "weight": 400,
             "fill": "#D4AF3733"
           }
@@ -760,12 +760,12 @@
         "alignItems": "center",
         "children": [
           {
-            "type": "icon_font",
+            "type": "icon",
             "id": "jsDzr-fav",
             "width": 18,
             "height": 18,
-            "iconFontName": "favorite",
-            "iconFontFamily": "Material Symbols Outlined",
+            "icon": "favorite",
+            "library": "Material Symbols Outlined",
             "weight": 400,
             "fill": "#D4AF3780"
           },
@@ -854,12 +854,12 @@
     "alignItems": "center",
     "children": [
       {
-        "type": "icon_font",
+        "type": "icon",
         "id": "C6G1x",
         "width": 20,
         "height": 20,
-        "iconFontName": "check_circle",
-        "iconFontFamily": "Material Symbols Outlined",
+        "icon": "check_circle",
+        "library": "Material Symbols Outlined",
         "fill": "#D4AF37"
       },
       {
@@ -894,12 +894,12 @@
     "alignItems": "center",
     "children": [
       {
-        "type": "icon_font",
+        "type": "icon",
         "id": "n0Mrb",
         "width": 20,
         "height": 20,
-        "iconFontName": "error",
-        "iconFontFamily": "Material Symbols Outlined",
+        "icon": "error",
+        "library": "Material Symbols Outlined",
         "fill": "#800020"
       },
       {
@@ -1224,12 +1224,12 @@
     "alignItems": "center",
     "children": [
       {
-        "type": "icon_font",
+        "type": "icon",
         "id": "reuse-ms-btn-icon-ghost-glyph",
         "width": 22,
         "height": 22,
-        "iconFontName": "favorite",
-        "iconFontFamily": "Material Symbols Outlined",
+        "icon": "favorite",
+        "library": "Material Symbols Outlined",
         "fill": "$color.primary"
       }
     ]
@@ -1245,12 +1245,12 @@
     "width": 56,
     "children": [
       {
-        "type": "icon_font",
+        "type": "icon",
         "id": "reuse-ms-hud-icon-column-icon",
         "width": 26,
         "height": 26,
-        "iconFontName": "bookmark",
-        "iconFontFamily": "Material Symbols Outlined",
+        "icon": "bookmark",
+        "library": "Material Symbols Outlined",
         "fill": "$color.primary",
         "effect": {
           "type": "shadow",
@@ -1369,12 +1369,12 @@
         "alignItems": "center",
         "children": [
           {
-            "type": "icon_font",
+            "type": "icon",
             "id": "reuse-ms-btn-veil-icon",
             "width": 18,
             "height": 18,
-            "iconFontName": "visibility",
-            "iconFontFamily": "Material Symbols Outlined",
+            "icon": "visibility",
+            "library": "Material Symbols Outlined",
             "fill": "$color.primary"
           }
         ]
@@ -1401,48 +1401,48 @@
     "alignItems": "center",
     "children": [
       {
-        "type": "icon_font",
+        "type": "icon",
         "id": "reuse-ms-stars-d1",
         "width": 16,
         "height": 16,
-        "iconFontName": "star",
-        "iconFontFamily": "Material Symbols Outlined",
+        "icon": "star",
+        "library": "Material Symbols Outlined",
         "fill": "$color.primary"
       },
       {
-        "type": "icon_font",
+        "type": "icon",
         "id": "reuse-ms-stars-d2",
         "width": 16,
         "height": 16,
-        "iconFontName": "star",
-        "iconFontFamily": "Material Symbols Outlined",
+        "icon": "star",
+        "library": "Material Symbols Outlined",
         "fill": "$color.primary"
       },
       {
-        "type": "icon_font",
+        "type": "icon",
         "id": "reuse-ms-stars-d3",
         "width": 16,
         "height": 16,
-        "iconFontName": "star",
-        "iconFontFamily": "Material Symbols Outlined",
+        "icon": "star",
+        "library": "Material Symbols Outlined",
         "fill": "$color.primary"
       },
       {
-        "type": "icon_font",
+        "type": "icon",
         "id": "reuse-ms-stars-d4",
         "width": 16,
         "height": 16,
-        "iconFontName": "star",
-        "iconFontFamily": "Material Symbols Outlined",
+        "icon": "star",
+        "library": "Material Symbols Outlined",
         "fill": "$color.primary"
       },
       {
-        "type": "icon_font",
+        "type": "icon",
         "id": "reuse-ms-stars-d5",
         "width": 16,
         "height": 16,
-        "iconFontName": "star",
-        "iconFontFamily": "Material Symbols Outlined",
+        "icon": "star",
+        "library": "Material Symbols Outlined",
         "fill": "#D4AF3733"
       }
     ]
@@ -1457,52 +1457,52 @@
     "alignItems": "center",
     "children": [
       {
-        "type": "icon_font",
+        "type": "icon",
         "id": "reuse-ms-stars-i1",
         "width": 28,
         "height": 28,
-        "iconFontName": "star",
-        "iconFontFamily": "Material Symbols Outlined",
+        "icon": "star",
+        "library": "Material Symbols Outlined",
         "fill": "$color.primary",
         "weight": 400
       },
       {
-        "type": "icon_font",
+        "type": "icon",
         "id": "reuse-ms-stars-i2",
         "width": 28,
         "height": 28,
-        "iconFontName": "star",
-        "iconFontFamily": "Material Symbols Outlined",
+        "icon": "star",
+        "library": "Material Symbols Outlined",
         "fill": "$color.primary",
         "weight": 400
       },
       {
-        "type": "icon_font",
+        "type": "icon",
         "id": "reuse-ms-stars-i3",
         "width": 28,
         "height": 28,
-        "iconFontName": "star",
-        "iconFontFamily": "Material Symbols Outlined",
+        "icon": "star",
+        "library": "Material Symbols Outlined",
         "fill": "$color.primary",
         "weight": 400
       },
       {
-        "type": "icon_font",
+        "type": "icon",
         "id": "reuse-ms-stars-i4",
         "width": 28,
         "height": 28,
-        "iconFontName": "star",
-        "iconFontFamily": "Material Symbols Outlined",
+        "icon": "star",
+        "library": "Material Symbols Outlined",
         "fill": "$color.primary",
         "weight": 400
       },
       {
-        "type": "icon_font",
+        "type": "icon",
         "id": "reuse-ms-stars-i5",
         "width": 28,
         "height": 28,
-        "iconFontName": "star",
-        "iconFontFamily": "Material Symbols Outlined",
+        "icon": "star",
+        "library": "Material Symbols Outlined",
         "fill": "#D4AF374D",
         "weight": 400
       }
@@ -1611,39 +1611,39 @@
         "alignItems": "end",
         "children": [
           {
-            "type": "icon_font",
+            "type": "icon",
             "id": "reuse-ms-icon-s16",
             "width": 16,
             "height": 16,
-            "iconFontName": "search",
-            "iconFontFamily": "Material Symbols Outlined",
+            "icon": "search",
+            "library": "Material Symbols Outlined",
             "fill": "$color.primary"
           },
           {
-            "type": "icon_font",
+            "type": "icon",
             "id": "reuse-ms-icon-s18",
             "width": 18,
             "height": 18,
-            "iconFontName": "search",
-            "iconFontFamily": "Material Symbols Outlined",
+            "icon": "search",
+            "library": "Material Symbols Outlined",
             "fill": "$color.primary"
           },
           {
-            "type": "icon_font",
+            "type": "icon",
             "id": "reuse-ms-icon-s24",
             "width": 24,
             "height": 24,
-            "iconFontName": "search",
-            "iconFontFamily": "Material Symbols Outlined",
+            "icon": "search",
+            "library": "Material Symbols Outlined",
             "fill": "$color.primary"
           },
           {
-            "type": "icon_font",
+            "type": "icon",
             "id": "reuse-ms-icon-s28",
             "width": 28,
             "height": 28,
-            "iconFontName": "search",
-            "iconFontFamily": "Material Symbols Outlined",
+            "icon": "search",
+            "library": "Material Symbols Outlined",
             "fill": "$color.primary"
           }
         ]
@@ -1660,14 +1660,14 @@
     "layout": "none",
     "children": [
       {
-        "type": "icon_font",
+        "type": "icon",
         "id": "reuse-ms-icon-notify-bell",
         "x": 6,
         "y": 6,
         "width": 24,
         "height": 24,
-        "iconFontName": "notifications",
-        "iconFontFamily": "Material Symbols Outlined",
+        "icon": "notifications",
+        "library": "Material Symbols Outlined",
         "fill": "$color.textMain"
       },
       {
@@ -1715,14 +1715,14 @@
         }
       },
       {
-        "type": "icon_font",
+        "type": "icon",
         "id": "reuse-ms-decorative-rule-icon-mid",
         "x": 132,
         "y": 10,
         "width": 24,
         "height": 24,
-        "iconFontName": "diamond",
-        "iconFontFamily": "Material Symbols Outlined",
+        "icon": "diamond",
+        "library": "Material Symbols Outlined",
         "fill": "$color.primary"
       },
       {
@@ -1756,12 +1756,12 @@
     "alignItems": "center",
     "children": [
       {
-        "type": "icon_font",
+        "type": "icon",
         "id": "reuse-ms-back-control-arrow-ic",
         "width": 22,
         "height": 22,
-        "iconFontName": "arrow_back",
-        "iconFontFamily": "Material Symbols Outlined",
+        "icon": "arrow_back",
+        "library": "Material Symbols Outlined",
         "fill": "$color.textMuted"
       },
       {

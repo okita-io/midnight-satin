@@ -1,11 +1,27 @@
 #!/usr/bin/env node
 /**
- * One-off generator: HTML reference → Pencil-compatible JSON.
- * Output: midnight_satin_home.pencil (same schema as .pen per docs.pencil.dev).
+ * Generator: Boudoir (home) HTML reference → Pencil JSON.
+ * Output: midnight_satin_home.pen (mobile 390 + tablet 834).
  */
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import {
+  MOBILE_W,
+  TABLET_W,
+  VERSION,
+  artboardX,
+  bottomNav as sharedBottomNav,
+  goldPill,
+  hairlineStroke,
+  icon,
+  progressBar,
+  sectionHeaderRow,
+  shellStroke,
+  surfaceCard,
+  text,
+  variables,
+} from "./pencil-tokens.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const HERO_IMG =
@@ -19,48 +35,429 @@ const TREND2 =
 const TREND3 =
   "https://lh3.googleusercontent.com/aida-public/AB6AXuCY1pJAtpkQP521addbeH3ObF1aIwimoWU1DKFSD9KynOt_BOaB1S2m7uqIVRyb5AL0met6Ksqfu4FZnafL-cxBD6qjY4o14ty_pGBrHDuRO4Lov2i6I9nwy5NbNlT3Sb0Z0XPPrHOmPiu55QEn8xdsSKgGWRSG66m06bAJjx7x4kqvDJdvUC3QTpWrzhqiuG_-25bLbaD6dee6titau2aXK4weEE8FKdOJYuvZ8bKQLuFqEzCEhlM7TNoHI6QFNQPVD7GJVw9UTII";
 
+function affairsRow(id, coverUrl, title, progress) {
+  return surfaceCard(
+    id,
+    [
+      {
+        type: "rectangle",
+        id: `${id}-cover`,
+        width: 56,
+        height: 80,
+        cornerRadius: 2,
+        fill: { type: "image", url: coverUrl, mode: "fill" },
+      },
+      {
+        type: "frame",
+        id: `${id}-meta`,
+        layout: "vertical",
+        gap: 6,
+        width: "fill_container",
+        children: [
+          text(`${id}-title`, title, {
+            fontFamily: "Playfair Display",
+            fontSize: 14,
+            fontStyle: "italic",
+            fontWeight: "600",
+            width: 180,
+          }),
+          progressBar(`${id}-track`, {
+            fillWidth: Math.round(180 * progress),
+          }),
+        ],
+      },
+    ],
+    {
+      layout: "horizontal",
+      gap: 12,
+      padding: 12,
+      fill: "#12121266",
+      stroke: hairlineStroke(),
+    }
+  );
+}
+
+function trendCard(id, coverUrl, title, author, rating) {
+  const coverChildren = [
+    {
+      type: "rectangle",
+      id: `${id}-img`,
+      x: 0,
+      y: 0,
+      width: 160,
+      height: 240,
+      fill: { type: "image", url: coverUrl, mode: "fill" },
+    },
+  ];
+  if (rating) {
+    coverChildren.push({
+      type: "frame",
+      id: `${id}-badge`,
+      x: 108,
+      y: 8,
+      height: 22,
+      fill: "#050505CC",
+      stroke: { align: "inside", thickness: 1, fill: "#D4AF3733" },
+      cornerRadius: 2,
+      layout: "horizontal",
+      gap: 4,
+      padding: [2, 6],
+      alignItems: "center",
+      children: [
+        icon(`${id}-badge-s`, "star", { size: 12, weight: 700 }),
+        text(`${id}-badge-t`, rating, {
+          fontFamily: "Marcellus",
+          fontSize: 10,
+          fill: "#FFFFFF",
+        }),
+      ],
+    });
+  }
+  return {
+    type: "frame",
+    id,
+    layout: "vertical",
+    gap: 8,
+    width: 160,
+    children: [
+      {
+        type: "frame",
+        id: `${id}-cover`,
+        width: 160,
+        height: 240,
+        clip: true,
+        cornerRadius: 2,
+        layout: "none",
+        stroke: { align: "inside", thickness: 1, fill: "#D4AF3733" },
+        children: coverChildren,
+      },
+      text(`${id}-t`, title, {
+        fontFamily: "Playfair Display",
+        fontSize: 14,
+        fontStyle: "italic",
+        fontWeight: "700",
+        width: 160,
+      }),
+      text(`${id}-a`, author, {
+        fontFamily: "Marcellus",
+        fontSize: 11,
+        fill: "$color.textMuted",
+        width: 160,
+      }),
+    ],
+  };
+}
+
+function boudoirTabletArtboard() {
+  return {
+    id: "artboard-boudoir-tablet",
+    name: "The Boudoir — midnight_satin_home_tablet.html",
+    type: "frame",
+    context:
+      "Tablet 834pt (iPad portrait). Hero 8-col + Current Affairs 4-col, High Society row, vault teaser, bottom nav.",
+    x: artboardX(1),
+    y: 0,
+    width: TABLET_W,
+    height: 1220,
+    fill: "$color.void",
+    layout: "vertical",
+    clip: true,
+    stroke: shellStroke(),
+    children: [
+      {
+        type: "frame",
+        id: "t-header",
+        width: "fill_container",
+        height: 72,
+        layout: "horizontal",
+        justifyContent: "space_between",
+        alignItems: "center",
+        padding: [24, 40],
+        children: [
+          {
+            type: "frame",
+            id: "t-brand",
+            layout: "horizontal",
+            gap: 12,
+            alignItems: "center",
+            children: [
+              icon("t-brand-icon", "menu_book", { size: 28 }),
+              text("t-brand-label", "Midnight Satin", {
+                fontFamily: "Cinzel",
+                fontSize: 16,
+                fill: "$color.primary",
+                letterSpacing: 4,
+              }),
+            ],
+          },
+          {
+            type: "frame",
+            id: "t-header-actions",
+            layout: "horizontal",
+            gap: 20,
+            alignItems: "center",
+            children: [
+              {
+                type: "frame",
+                id: "t-credits",
+                layout: "horizontal",
+                gap: 8,
+                padding: [8, 14],
+                fill: "#1A1500",
+                stroke: { align: "inside", thickness: 1, fill: "#D4AF3733" },
+                cornerRadius: 2,
+                alignItems: "center",
+                children: [
+                  icon("t-credits-icon", "payments", { size: 16 }),
+                  text("t-credits-txt", "1,250 CREDITS", {
+                    fontFamily: "Marcellus",
+                    fontSize: 12,
+                    letterSpacing: 2,
+                  }),
+                ],
+              },
+              icon("t-search", "search", { size: 24, fill: "#FFFFFFCC" }),
+              icon("t-bell", "notifications", { size: 24, fill: "#FFFFFFCC" }),
+            ],
+          },
+        ],
+      },
+      {
+        type: "frame",
+        id: "t-main",
+        width: "fill_container",
+        layout: "vertical",
+        gap: 32,
+        padding: [16, 40, 24, 40],
+        children: [
+          {
+            type: "frame",
+            id: "t-hero-row",
+            width: "fill_container",
+            height: 480,
+            layout: "horizontal",
+            gap: 24,
+            children: [
+              {
+                type: "frame",
+                id: "t-hero",
+                width: 520,
+                height: 480,
+                layout: "none",
+                clip: true,
+                cornerRadius: 2,
+                children: [
+                  {
+                    type: "rectangle",
+                    id: "t-hero-img",
+                    x: 0,
+                    y: 0,
+                    width: 520,
+                    height: 480,
+                    fill: { type: "image", url: HERO_IMG, mode: "fill", opacity: 0.7 },
+                  },
+                  {
+                    type: "rectangle",
+                    id: "t-hero-grad",
+                    x: 0,
+                    y: 0,
+                    width: 520,
+                    height: 480,
+                    fill: {
+                      type: "gradient",
+                      gradientType: "linear",
+                      rotation: 0,
+                      colors: [
+                        { color: "#05050500", position: 0 },
+                        { color: "#050505F2", position: 1 },
+                      ],
+                    },
+                  },
+                  {
+                    type: "frame",
+                    id: "t-hero-copy",
+                    x: 40,
+                    y: 200,
+                    width: 440,
+                    layout: "vertical",
+                    gap: 12,
+                    alignItems: "center",
+                    children: [
+                      text("t-hero-eyebrow", "Editor's Choice", {
+                        fontFamily: "Cinzel",
+                        fontSize: 10,
+                        letterSpacing: 3,
+                        fill: "#FFFFFF",
+                      }),
+                      text("t-hero-title", "The Duke's Forbidden Vow", {
+                        fontFamily: "Playfair Display",
+                        fontSize: 40,
+                        fontStyle: "italic",
+                        fontWeight: "700",
+                        fill: "#FFFFFF",
+                        textAlign: "center",
+                        width: 440,
+                      }),
+                      text("t-hero-author", "By Eleanor Vane", {
+                        fontFamily: "Marcellus",
+                        fontSize: 13,
+                        fill: "#FFFFFF",
+                      }),
+                      goldPill("t-hero-cta", "START READING"),
+                    ],
+                  },
+                ],
+              },
+              {
+                type: "frame",
+                id: "t-affairs",
+                width: "fill_container",
+                height: 480,
+                layout: "vertical",
+                gap: 16,
+                children: [
+                  {
+                    type: "frame",
+                    id: "t-affairs-head",
+                    width: "fill_container",
+                    layout: "horizontal",
+                    justifyContent: "space_between",
+                    alignItems: "center",
+                    children: [
+                      text("t-affairs-title", "Current Affairs", {
+                        fontFamily: "Cinzel",
+                        fontSize: 14,
+                        fill: "$color.primary",
+                        letterSpacing: 3,
+                      }),
+                      text("t-affairs-all", "VIEW ALL", {
+                        fontFamily: "Marcellus",
+                        fontSize: 10,
+                        fill: "$color.primary",
+                        letterSpacing: 2,
+                      }),
+                    ],
+                  },
+                  affairsRow("t-aff-1", COVER_CURRENT, "Shadows of Desire", 0.65),
+                  affairsRow("t-aff-2", TREND1, "Gilded Captive", 0.3),
+                  affairsRow("t-aff-3", TREND2, "Night Court", 0.85),
+                ],
+              },
+            ],
+          },
+          {
+            type: "frame",
+            id: "t-society-head",
+            width: "fill_container",
+            layout: "horizontal",
+            justifyContent: "space_between",
+            children: [
+              text("t-society-title", "High Society", {
+                fontFamily: "Cinzel",
+                fontSize: 14,
+                fill: "$color.primary",
+                letterSpacing: 3,
+              }),
+              text("t-society-all", "VIEW ALL", {
+                fontFamily: "Marcellus",
+                fontSize: 10,
+                fill: "$color.primary",
+                letterSpacing: 2,
+              }),
+            ],
+          },
+          {
+            type: "frame",
+            id: "t-society-row",
+            width: "fill_container",
+            layout: "horizontal",
+            gap: 20,
+            children: [
+              trendCard("t-tr-1", TREND1, "Gilded Captive", "Seraphina Thorne", "4.9"),
+              trendCard("t-tr-2", TREND2, "Night Court", "Julian Vance", "4.8"),
+              trendCard("t-tr-3", TREND3, "Silk & Scandal", "Elena Rose", "4.7"),
+              trendCard("t-tr-4", COVER_CURRENT, "Shadows of Desire", "Marcus Hale", null),
+            ],
+          },
+          {
+            type: "frame",
+            id: "t-vault",
+            width: "fill_container",
+            layout: "horizontal",
+            justifyContent: "space_between",
+            alignItems: "center",
+            padding: 20,
+            cornerRadius: 2,
+            fill: {
+              type: "gradient",
+              gradientType: "linear",
+              rotation: 270,
+              colors: [
+                { color: "#1A1500", position: 0 },
+                { color: "#121212", position: 1 },
+              ],
+            },
+            stroke: { align: "inside", thickness: 1, fill: "#D4AF3733" },
+            children: [
+              {
+                type: "frame",
+                id: "t-vault-copy",
+                layout: "vertical",
+                gap: 6,
+                children: [
+                  text("t-vault-h", "The Vault", {
+                    fontFamily: "Cinzel",
+                    fontSize: 14,
+                    fill: "$color.primary",
+                    letterSpacing: 2,
+                  }),
+                  text("t-vault-p", "Unlock chapters and send roses with credits.", {
+                    fontFamily: "Literata",
+                    fontSize: 13,
+                    fill: "$color.textMuted",
+                    width: 420,
+                  }),
+                ],
+              },
+              icon("t-vault-gem", "diamond", { size: 32 }),
+            ],
+          },
+        ],
+      },
+      { type: "frame", id: "t-nav-spacer", width: "fill_container", height: 16, fill: "#00000000" },
+      sharedBottomNav("t", "home"),
+    ],
+  };
+}
+
 const doc = {
-  version: "2.10",
-  variables: {
-    "color.primary": { type: "color", value: "#D4AF37" },
-    "color.void": { type: "color", value: "#050505" },
-    "color.surface": { type: "color", value: "#121212" },
-    "color.surfaceHighlight": { type: "color", value: "#1A1A1A" },
-    "color.textMain": { type: "color", value: "#EAEAEA" },
-    "color.textMuted": { type: "color", value: "#8A8A8A" },
-    "color.accent": { type: "color", value: "#800020" },
-    "color.navBg": { type: "color", value: "#080808" },
-  },
+  version: VERSION,
+  variables,
   children: [
     {
       id: "artboard-boudoir-mobile",
       name: "The Boudoir — midnight_satin_home.html",
       type: "frame",
       context:
-        "Converted from reference/midnight_satin_home.html as a Pencil layout test. " +
-        "Mobile width 390pt; typography approximates Playfair / Cinzel / Literata / Marcellus. " +
-        "If the Pencil extension only registers .pen, rename or duplicate with .pen.",
+        "Converted from reference/midnight_satin_home.html. Mobile width 390pt.",
       x: 0,
       y: 0,
-      width: 390,
+      width: MOBILE_W,
       height: 1320,
       fill: "$color.void",
       layout: "vertical",
       clip: true,
-      stroke: {
-        align: "inside",
-        thickness: { left: 1, right: 1, top: 0, bottom: 0 },
-        fill: "#1A1A1A",
-      },
+      stroke: shellStroke(),
       children: [
         heroSection(),
         currentAffairsSection(),
         highSocietySection(),
         vaultTeaserSection(),
         { id: "spacer-nav-pad", type: "frame", width: "fill_container", height: 24, fill: "#00000000", layout: "none" },
-        bottomNav(),
+        sharedBottomNav("m", "home"),
       ],
     },
+    boudoirTabletArtboard(),
   ],
 };
 
@@ -177,9 +574,9 @@ function headerRow() {
         children: [
           {
             id: "icon-menu-book",
-            type: "icon_font",
-            iconFontFamily: "Material Symbols Outlined",
-            iconFontName: "menu_book",
+            type: "icon",
+            library: "Material Symbols Outlined",
+            icon: "menu_book",
             width: 22,
             height: 22,
             fill: "$color.primary",
@@ -206,9 +603,9 @@ function headerRow() {
         children: [
           {
             id: "icon-search",
-            type: "icon_font",
-            iconFontFamily: "Material Symbols Outlined",
-            iconFontName: "search",
+            type: "icon",
+            library: "Material Symbols Outlined",
+            icon: "search",
             width: 24,
             height: 24,
             fill: "#FFFFFFCC",
@@ -222,9 +619,9 @@ function headerRow() {
             children: [
               {
                 id: "icon-notify",
-                type: "icon_font",
-                iconFontFamily: "Material Symbols Outlined",
-                iconFontName: "notifications",
+                type: "icon",
+                library: "Material Symbols Outlined",
+                icon: "notifications",
                 x: 0,
                 y: 0,
                 width: 24,
@@ -360,9 +757,9 @@ function heroCopyBlock() {
 function starIcon(id, filled) {
   return {
     id,
-    type: "icon_font",
-    iconFontFamily: "Material Symbols Outlined",
-    iconFontName: "star",
+    type: "icon",
+    library: "Material Symbols Outlined",
+    icon: "star",
     width: 18,
     height: 18,
     fill: filled ? "$color.primary" : "#D4AF3766",
@@ -373,9 +770,9 @@ function starIcon(id, filled) {
 function starIconHalf() {
   return {
     id: "star-half",
-    type: "icon_font",
-    iconFontFamily: "Material Symbols Outlined",
-    iconFontName: "star_half",
+    type: "icon",
+    library: "Material Symbols Outlined",
+    icon: "star_half",
     width: 18,
     height: 18,
     fill: "$color.primary",
@@ -427,47 +824,10 @@ function currentAffairsSection() {
     padding: [0, 24, 32, 24],
     fill: "#00000000",
     children: [
-      {
-        id: "row-current-header",
-        type: "frame",
-        layout: "horizontal",
-        justifyContent: "space_between",
-        alignItems: "center",
-        width: "fill_container",
-        children: [
-          {
-            id: "h-current",
-            type: "text",
-            content: "Current Affairs",
-            fontFamily: "Cinzel",
-            fontSize: 13,
-            letterSpacing: 2,
-            fill: "#FFFFFFE6",
-            textGrowth: "auto",
-          },
-          {
-            id: "btn-view-all",
-            type: "text",
-            content: "View All",
-            fontFamily: "Marcellus",
-            fontSize: 10,
-            letterSpacing: 3,
-            fill: "$color.primary",
-            textGrowth: "auto",
-          },
-        ],
-      },
-      {
-        id: "card-reading",
-        type: "frame",
-        width: "fill_container",
-        layout: "horizontal",
-        gap: 16,
-        padding: 16,
-        fill: "$color.surface",
-        stroke: { align: "inside", thickness: 1, fill: "#FFFFFF0D" },
-        cornerRadius: 2,
-        children: [
+      sectionHeaderRow("row-current-header", "Current Affairs"),
+      surfaceCard(
+        "card-reading",
+        [
           {
             id: "cover-wrap",
             type: "frame",
@@ -563,21 +923,14 @@ function currentAffairsSection() {
                     fill: "$color.textMuted",
                     textGrowth: "auto",
                   },
-                  {
-                    id: "icon-play",
-                    type: "icon_font",
-                    iconFontFamily: "Material Symbols Outlined",
-                    iconFontName: "play_circle",
-                    width: 26,
-                    height: 26,
-                    fill: "$color.primary",
-                  },
+                  icon("icon-play", "play_circle", { size: 26 }),
                 ],
               },
             ],
           },
         ],
-      },
+        { layout: "horizontal", gap: 16, padding: 16 }
+      ),
     ],
   };
 }
@@ -606,15 +959,9 @@ function bookColumn(id, imgUrl, title, author, rating) {
           fill: "$color.surfaceHighlight",
         },
         {
-          id: `${id}-cover-icon`,
-          type: "icon_font",
-          iconFontFamily: "Material Symbols Outlined",
-          iconFontName: "auto_stories",
+          ...icon(`${id}-cover-icon`, "auto_stories", { size: 40, fill: "#8A8A8A" }),
           x: 45,
           y: 72,
-          width: 40,
-          height: 40,
-          fill: "#8A8A8A",
           opacity: 0.45,
         },
       ];
@@ -683,16 +1030,7 @@ function ratingBadge(text, bid) {
     padding: [2, 6],
     alignItems: "center",
     children: [
-      {
-        id: `${bid}-s`,
-        type: "icon_font",
-        iconFontFamily: "Material Symbols Outlined",
-        iconFontName: "star",
-        width: 12,
-        height: 12,
-        fill: "$color.primary",
-        weight: 700,
-      },
+      icon(`${bid}-s`, "star", { size: 12, weight: 700 }),
       {
         id: `${bid}-t`,
         type: "text",
@@ -720,21 +1058,7 @@ function highSocietySection() {
         type: "frame",
         width: "fill_container",
         padding: [0, 24, 0, 24],
-        layout: "horizontal",
-        justifyContent: "space_between",
-        alignItems: "center",
-        children: [
-          {
-            id: "h-trending",
-            type: "text",
-            content: "High Society",
-            fontFamily: "Cinzel",
-            fontSize: 13,
-            letterSpacing: 2,
-            fill: "#FFFFFFE6",
-            textGrowth: "auto",
-          },
-        ],
+        children: [sectionHeaderRow("row-trending-header", "High Society", { viewAll: false })],
       },
       {
         id: "trending-row",
@@ -824,9 +1148,9 @@ function vaultTeaserSection() {
             children: [
               {
                 id: "vault-diamond",
-                type: "icon_font",
-                iconFontFamily: "Material Symbols Outlined",
-                iconFontName: "diamond",
+                type: "icon",
+                library: "Material Symbols Outlined",
+                icon: "diamond",
                 width: 26,
                 height: 26,
                 fill: "$color.primary",
@@ -839,60 +1163,7 @@ function vaultTeaserSection() {
   };
 }
 
-function navItem(icon, label, active) {
-  return {
-    id: `nav-${label}`,
-    type: "frame",
-    layout: "vertical",
-    gap: 6,
-    alignItems: "center",
-    width: "fill_container",
-    children: [
-      {
-        id: `nav-${label}-icon`,
-        type: "icon_font",
-        iconFontFamily: "Material Symbols Outlined",
-        iconFontName: icon,
-        width: active ? 28 : 24,
-        height: active ? 28 : 24,
-        fill: active ? "$color.primary" : "$color.textMuted",
-      },
-      {
-        id: `nav-${label}-txt`,
-        type: "text",
-        content: label,
-        fontFamily: "Marcellus",
-        fontSize: 10,
-        fontWeight: "500",
-        letterSpacing: 2,
-        fill: active ? "$color.primary" : "$color.textMuted",
-        textGrowth: "auto",
-      },
-    ],
-  };
-}
 
-function bottomNav() {
-  return {
-    id: "bottom-nav",
-    type: "frame",
-    width: "fill_container",
-    height: 96,
-    fill: "$color.navBg",
-    stroke: { align: "inside", thickness: { top: 1, left: 0, right: 0, bottom: 0 }, fill: "#1F1F1F" },
-    padding: [16, 24, 28, 24],
-    layout: "horizontal",
-    justifyContent: "space_between",
-    alignItems: "end",
-    children: [
-      navItem("history_edu", "Boudoir", true),
-      navItem("local_library", "Library", false),
-      navItem("storefront", "Vault", false),
-      navItem("person_3", "Profile", false),
-    ],
-  };
-}
-
-const out = path.join(__dirname, "midnight_satin_home.pencil");
+const out = path.join(__dirname, "midnight_satin_home.pen");
 fs.writeFileSync(out, JSON.stringify(doc, null, 2), "utf8");
 console.log("Wrote", out);

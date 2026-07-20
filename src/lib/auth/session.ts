@@ -1,94 +1,45 @@
-import { SignJWT, jwtVerify } from "jose";
 import { cookies } from "next/headers";
+import type { SessionPayload } from "./session-types";
 
-const COOKIE_NAME = "midnight-satin-session";
-const JWT_SECRET = new TextEncoder().encode(
-  process.env.JWT_SECRET ?? "midnight-satin-dev-secret-change-in-production"
-);
-const JWT_ISSUER = "midnight-satin";
-const JWT_AUDIENCE = "midnight-satin-reader";
-const MAX_AGE_SEC = 60 * 60 * 24 * 30; // 30 days
+export type { SessionPayload } from "./session-types";
 
-export interface SessionPayload {
-  readerId: string;
-  email: string;
-  role: string;
-  exp: number;
-  iat: number;
-}
+/** Legacy cookie name — cleared on logout for readers still holding JWT sessions. */
+const LEGACY_COOKIE_NAME = "midnight-satin-session";
 
-/** Create a JWT for the given reader and set HTTP-only cookie. */
-export async function createSession(readerId: string, email: string, role: string): Promise<string> {
-  const exp = Math.floor(Date.now() / 1000) + MAX_AGE_SEC;
-  const token = await new SignJWT({ readerId, email, role })
-    .setProtectedHeader({ alg: "HS256" })
-    .setIssuer(JWT_ISSUER)
-    .setAudience(JWT_AUDIENCE)
-    .setIssuedAt()
-    .setExpirationTime(exp)
-    .sign(JWT_SECRET);
-
-  const cookieStore = await cookies();
-  cookieStore.set(COOKIE_NAME, token, {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: MAX_AGE_SEC,
-    path: "/",
-  });
-
-  return token;
-}
-
-/** Read and verify session from cookie. Returns null if missing or invalid. */
+/**
+ * Current app session is Clerk-backed and resolved to a Neon `readers` row.
+ * Returns null when signed out or when the Clerk↔reader link cannot be created.
+ */
 export async function getSession(): Promise<SessionPayload | null> {
-  const cookieStore = await cookies();
-  const token = cookieStore.get(COOKIE_NAME)?.value;
-  if (!token) return null;
-
   try {
-    const { payload } = await jwtVerify(token, JWT_SECRET, {
-      issuer: JWT_ISSUER,
-      audience: JWT_AUDIENCE,
-    });
-    const readerId = payload.readerId as string;
-    const email = payload.email as string;
-    const role = (payload.role as string) ?? "reader";
-    const exp = payload.exp as number;
-    const iat = payload.iat as number;
-    if (!readerId || !email) return null;
-    return { readerId, email, role, exp, iat };
+    const { ensureReaderForClerkUser } = await import("./clerk-reader");
+    const linked = await ensureReaderForClerkUser();
+    return linked?.session ?? null;
   } catch {
     return null;
   }
 }
 
-/** Remove session cookie (logout). */
+/** Require a session or throw. Prefer this in Server Actions. */
+export async function requireSession(): Promise<SessionPayload> {
+  const session = await getSession();
+  if (!session) {
+    throw new Error("Unauthorized");
+  }
+  return session;
+}
+
+/** Clear legacy JWT cookie if present (Clerk sign-out is authoritative). */
 export async function deleteSession(): Promise<void> {
-  const cookieStore = await cookies();
-  cookieStore.delete(COOKIE_NAME);
-}
-
-/** Cookie name for middleware (Edge can't use next/headers cookies() the same way). */
-export function getSessionCookieName(): string {
-  return COOKIE_NAME;
-}
-
-/** Verify a raw token string (for Edge middleware). Returns payload or null. */
-export async function verifySessionToken(token: string): Promise<SessionPayload | null> {
   try {
-    const { payload } = await jwtVerify(token, JWT_SECRET, {
-      issuer: JWT_ISSUER,
-      audience: JWT_AUDIENCE,
-    });
-    const readerId = payload.readerId as string;
-    const email = payload.email as string;
-    const role = (payload.role as string) ?? "reader";
-    const exp = payload.exp as number;
-    const iat = payload.iat as number;
-    if (!readerId || !email) return null;
-    return { readerId, email, role, exp, iat };
+    const cookieStore = await cookies();
+    cookieStore.delete(LEGACY_COOKIE_NAME);
   } catch {
-    return null;
+    // cookies() unavailable outside a request context (e.g. some tests)
   }
+}
+
+/** @deprecated Prefer Clerk UserButton / signOut. Kept for logoutReader. */
+export function getSessionCookieName(): string {
+  return LEGACY_COOKIE_NAME;
 }

@@ -4,6 +4,18 @@
  */
 
 import { OrnamentalDivider } from "./ornamental-divider";
+import {
+  FREE_PREVIEW_PARAGRAPHS,
+  VEIL_BLURRED_TEASER_PARAGRAPHS,
+  splitChapterParagraphs,
+} from "@/lib/reading/veil-content";
+
+export {
+  FREE_PREVIEW_PARAGRAPHS,
+  VEIL_BLURRED_TEASER_PARAGRAPHS,
+} from "@/lib/reading/veil-content";
+
+const ORNAMENTAL_EVERY_N_PARAGRAPHS = 4;
 
 /** Stable list keys: index + content fingerprint (avoids index-only keys when paragraphs shift). */
 function paragraphStableKey(scope: string, index: number, text: string): string {
@@ -15,15 +27,6 @@ function paragraphStableKey(scope: string, index: number, text: string): string 
   return `${scope}-${index}-${(h >>> 0).toString(36)}`;
 }
 
-const ORNAMENTAL_EVERY_N_PARAGRAPHS = 4;
-/** Free preview paragraphs before the Veil (Req 4.1). Exported for Property 17 tests. */
-export const FREE_PREVIEW_PARAGRAPHS = 5;
-/**
- * Locked content is not fully rendered: only a short blurred teaser (plus The Veil overlay).
- * Long chapters would otherwise create a huge blurred stack and make the paywall feel like
- * it fills the whole chapter. Full prose still appears after unlock (veilMode false).
- */
-export const VEIL_BLURRED_TEASER_PARAGRAPHS = 8;
 /** Blur levels: 1px/60%, 3px/40%, 6px/20% per design reference (Req 4.1). Exported for Property 17 tests. */
 export const BLUR_LEVELS: { blur: string; opacity: string }[] = [
   { blur: "blur-[1px]", opacity: "opacity-60" },
@@ -52,10 +55,7 @@ export function ChapterContent({
   veilMode = false,
   veilSlot,
 }: ChapterContentProps) {
-  const paragraphs = content.split(/\n\n+/).flatMap((p) => {
-    const t = p.trim();
-    return t ? [t] : [];
-  });
+  const paragraphs = splitChapterParagraphs(content);
 
   if (paragraphs.length === 0) {
     return (

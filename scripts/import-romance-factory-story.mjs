@@ -2,11 +2,13 @@
 /**
  * Import a completed Romance Factory story directory into Midnight Satin:
  * - Read author_profile, book cover metadata, character_dossiers, chapters
- * - Generate cover / author / character images via Replicate (recraft-v4), save under public/images/generated/
+ * - Prefer pre-generated SDXL assets from publish_manifest.json + publish_images/
+ * - Fall back to Replicate (recraft-v4) only when local cover+author images are absent
  * - Insert author, novel, chapters, and characters into Neon (POSTGRES_URL)
  * - Optionally git-add/commit new images so Vercel can deploy static assets
  *
- * Requires: .env.local in midnightsatin with POSTGRES_URL, REPLICATE_API_TOKEN, BLOB_* not required (local paths).
+ * Requires: .env.local in midnightsatin with POSTGRES_URL.
+ * REPLICATE_API_TOKEN is only required when local publish images are incomplete.
  *
  * Usage:
  *   node scripts/import-romance-factory-story.mjs --story-path /path/to/story
@@ -21,6 +23,10 @@ import { promises as fs } from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import Replicate from "replicate";
+import {
+  loadRfProvenanceDir,
+  resolveRfStoryId,
+} from "./lib/rf-provenance.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const projectRoot = path.join(__dirname, "..");
@@ -283,31 +289,92 @@ async function loadChapters(storyPath) {
 }
 
 /**
- * Character rows from character_dossiers.json (v2: characters map, or motivations array)
+ * Character rows from character_dossiers.json (v2: characters map, or motivations array).
+ * Preserves Romance Factory psychology fields into Cast Gallery `stats` JSONB.
  */
 function extractCharacters(dossiers) {
   if (!dossiers || typeof dossiers !== "object") return [];
   const rows = [];
+
+  function buildRow(name, cm) {
+    if (!name || !cm || typeof cm !== "object") return null;
+    const physical = String(cm.physical_description || "").trim();
+    const conscious = String(cm.conscious_want || "").trim();
+    const unconscious = String(cm.unconscious_need || "").trim();
+    const wound = String(cm.wound || "").trim();
+    const fear = String(cm.fear || "").trim();
+    const lie = String(cm.lie_they_believe || "").trim();
+    const role = String(cm.role || "").trim();
+
+    const secrets = [];
+    if (Array.isArray(cm.secrets)) {
+      for (const s of cm.secrets) {
+        const t = String(s ?? "").trim();
+        if (t) secrets.push(t);
+      }
+    } else if (cm.secret) {
+      const t = String(cm.secret).trim();
+      if (t) secrets.push(t);
+    }
+
+    /** @type {Record<string, unknown>} */
+    const stats = {};
+    if (conscious) stats.consciousWant = conscious;
+    if (unconscious) stats.unconsciousNeed = unconscious;
+    if (wound) stats.wound = wound;
+    if (fear) stats.fear = fear;
+    if (lie) stats.lieTheyBelieve = lie;
+    if (role) stats.role = role;
+
+    // Optional vitals if a publish enricher already supplied them
+    for (const key of [
+      "age",
+      "status",
+      "height",
+      "occupation",
+      "zodiacSign",
+      "bloodType",
+      "birthday",
+    ]) {
+      if (typeof cm[key] === "string" && cm[key].trim()) stats[key] = cm[key].trim();
+    }
+    if (cm.stats && typeof cm.stats === "object" && !Array.isArray(cm.stats)) {
+      for (const [k, v] of Object.entries(cm.stats)) {
+        if (typeof v === "string" && v.trim() && !(k in stats)) stats[k] = v.trim();
+        else if (Array.isArray(v) && !(k in stats)) stats[k] = v.map(String);
+      }
+    }
+    if (Array.isArray(cm.favorites) && cm.favorites.length) {
+      stats.favorites = cm.favorites.map(String).filter((s) => s.trim());
+    }
+    if (Array.isArray(cm.dislikes) && cm.dislikes.length) {
+      stats.dislikes = cm.dislikes.map(String).filter((s) => s.trim());
+    }
+
+    const description =
+      String(cm.description || "").trim() || physical || conscious || String(name);
+
+    // Prefer an explicit backstory; otherwise leave null so Cast Gallery shows RF arc fields without duplication
+    const backstory = String(cm.backstory || "").trim() || null;
+
+    return {
+      name: String(name),
+      role,
+      portrait_prompt: String(cm.portrait_prompt || "").trim(),
+      physical_description: physical,
+      secret: secrets[0] || "",
+      description,
+      backstory,
+      stats,
+      secrets,
+    };
+  }
+
   const chars = dossiers.characters;
   if (chars && typeof chars === "object" && !Array.isArray(chars)) {
     for (const [name, cm] of Object.entries(chars)) {
-      if (!name || !cm || typeof cm !== "object") continue;
-      rows.push({
-        name: String(name),
-        role: String(cm.role || ""),
-        portrait_prompt: String(cm.portrait_prompt || "").trim(),
-        physical_description: String(cm.physical_description || "").trim(),
-        secret: String(cm.secret || "").trim(),
-        description: [cm.physical_description, cm.conscious_want]
-          .filter(Boolean)
-          .map(String)
-          .join(" "),
-        backstory: String(cm.wound || cm.fear || cm.unconscious_need || "").trim() || null,
-        stats: {
-          role: String(cm.role || ""),
-        },
-        secrets: cm.secret ? [String(cm.secret)] : [],
-      });
+      const row = buildRow(name, cm);
+      if (row) rows.push(row);
     }
     return rows;
   }
@@ -315,22 +382,8 @@ function extractCharacters(dossiers) {
   if (Array.isArray(motivations)) {
     for (const m of motivations) {
       if (!m || typeof m !== "object") continue;
-      const name = m.name;
-      if (!name) continue;
-      rows.push({
-        name: String(name),
-        role: String(m.role || ""),
-        portrait_prompt: String(m.portrait_prompt || "").trim(),
-        physical_description: String(m.physical_description || "").trim(),
-        secret: String(m.secret || "").trim(),
-        description: [m.physical_description, m.conscious_want]
-          .filter(Boolean)
-          .map(String)
-          .join(" "),
-        backstory: String(m.wound || m.fear || m.unconscious_need || "").trim() || null,
-        stats: { role: String(m.role || "") },
-        secrets: m.secret ? [String(m.secret)] : [],
-      });
+      const row = buildRow(m.name, m);
+      if (row) rows.push(row);
     }
   }
   return rows;
@@ -486,18 +539,25 @@ async function main() {
 
   const storySlug = slug(path.basename(storyPath));
 
-  const [authorProfileRaw, bookCoverRaw, outlineRaw, dossiersRaw, manuscriptMetaRaw] = await Promise.all([
-    readJsonIfExists(path.join(storyPath, "author_profile.json")),
-    readJsonIfExists(path.join(storyPath, "book_cover.json")),
-    readJsonIfExists(path.join(storyPath, "story_outline.json")),
-    readJsonIfExists(path.join(storyPath, "character_dossiers.json")),
-    readJsonIfExists(path.join(storyPath, "manuscript_metadata.json")),
-  ]);
+  const [authorProfileRaw, bookCoverRaw, outlineRaw, dossiersRaw, manuscriptMetaRaw, rfProvenance] =
+    await Promise.all([
+      readJsonIfExists(path.join(storyPath, "author_profile.json")),
+      readJsonIfExists(path.join(storyPath, "book_cover.json")),
+      readJsonIfExists(path.join(storyPath, "story_outline.json")),
+      readJsonIfExists(path.join(storyPath, "character_dossiers.json")),
+      readJsonIfExists(path.join(storyPath, "manuscript_metadata.json")),
+      loadRfProvenanceDir(storyPath),
+    ]);
   const authorProfile = unwrapJsonArtifact(authorProfileRaw);
   const bookCover = unwrapJsonArtifact(bookCoverRaw);
   const outline = unwrapJsonArtifact(outlineRaw);
   const dossiers = unwrapJsonArtifact(dossiersRaw);
   const manuscriptMeta = unwrapJsonArtifact(manuscriptMetaRaw);
+  const rfStoryId = resolveRfStoryId({
+    provenanceStory: rfProvenance.story,
+    publishManifest,
+    manuscriptMeta,
+  });
 
   const bcp = bookCover || (manuscriptMeta && manuscriptMeta.book_cover_prompt) || {};
   const storyArc = outline && outline.story_arc ? outline.story_arc : {};
@@ -543,6 +603,14 @@ async function main() {
 
   console.log(`Story: ${title}`);
   console.log(`  Slug: ${storySlug}  Chapters: ${chapters.length}  Characters: ${characters.length}${dryRun ? "  (dry-run)" : ""}`);
+  if (rfStoryId) {
+    console.log(`  RF story_id: ${rfStoryId}`);
+  } else {
+    console.log("  RF story_id: (absent — legacy bundle; novels.rf_story_id will be NULL)");
+  }
+  if (rfProvenance.byChapter.size) {
+    console.log(`  Provenance chapters: ${rfProvenance.byChapter.size}`);
+  }
 
   const createdFiles = [];
   const authorImagePrompt = authorPortraitPrompt
@@ -630,8 +698,8 @@ async function main() {
   } else {
     const { rows: nr } = await pool.query(
       `INSERT INTO novels
-        (title, series_id, author_id, cover_image_url, synopsis, genre_tags, publication_date, is_featured, featured_order)
-       VALUES ($1, $2, $3, $4, $5, $6::text[], $7, $8, $9)
+        (title, series_id, author_id, cover_image_url, synopsis, genre_tags, publication_date, is_featured, featured_order, rf_story_id)
+       VALUES ($1, $2, $3, $4, $5, $6::text[], $7, $8, $9, $10)
        RETURNING id`,
       [
         title,
@@ -643,6 +711,7 @@ async function main() {
         publicationDate,
         isFeatured,
         featOrder,
+        rfStoryId,
       ]
     );
     novelId = nr[0].id;
@@ -650,13 +719,21 @@ async function main() {
 
   for (const ch of chapters) {
     const isFree = ch.number === 1;
+    const chapterProvenance = rfProvenance.byChapter.get(ch.number) || null;
     if (dryRun) {
       /* skip */
     } else {
       await pool.query(
-        `INSERT INTO chapters (novel_id, chapter_number, title, content, is_free)
-         VALUES ($1, $2, $3, $4, $5)`,
-        [novelId, ch.number, ch.title, ch.content, isFree]
+        `INSERT INTO chapters (novel_id, chapter_number, title, content, is_free, rf_provenance)
+         VALUES ($1, $2, $3, $4, $5, $6::jsonb)`,
+        [
+          novelId,
+          ch.number,
+          ch.title,
+          ch.content,
+          isFree,
+          chapterProvenance ? JSON.stringify(chapterProvenance) : null,
+        ]
       );
     }
   }
@@ -709,6 +786,8 @@ async function main() {
     title,
     authorId,
     novelId,
+    rfStoryId,
+    provenanceChapters: rfProvenance.byChapter.size,
     imagePaths: {
       authorAvatar: authorAvatar || null,
       cover: coverPath,

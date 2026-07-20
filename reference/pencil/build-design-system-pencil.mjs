@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
  * Midnight Satin — shared Pencil design system + slide templates.
- * Output: design_system.pen (Pencil JSON v2.11, same shape as midnight_satin_home.pen)
+ * Output: design_system.pen (Pencil JSON v2.14, same shape as midnight_satin_home.pen)
  *
  * Use when converting reference/*.html screens into Pencil: copy variables from this file
  * or open both documents and align fills/fonts to $color.* / font families below.
@@ -163,7 +163,7 @@ function typeRow(id, role, family, size, weight, sample, notes) {
 }
 
 const doc = {
-  version: "2.11",
+  version: "2.14",
   children: [
     slideFrame("slide-ds-cover", "DS — Cover", 0, [
       {
@@ -625,13 +625,13 @@ const doc = {
                         gap: 4,
                         children: [
                           {
-                            type: "icon_font",
+                            type: "icon",
                             id: "nav-demo-boudoir-icon",
                             width: 28,
                             height: 28,
                             fill: "$color.primary",
-                            iconFontName: "history_edu",
-                            iconFontFamily: "Material Symbols Outlined",
+                            icon: "history_edu",
+                            library: "Material Symbols Outlined",
                             weight: 400,
                             effect: {
                               type: "shadow",
@@ -679,13 +679,13 @@ const doc = {
                     width: 56,
                     children: [
                       {
-                        type: "icon_font",
+                        type: "icon",
                         id: "nav-demo-library-icon",
                         width: 24,
                         height: 24,
                         fill: "$color.textMuted",
-                        iconFontName: "local_library",
-                        iconFontFamily: "Material Symbols Outlined",
+                        icon: "local_library",
+                        library: "Material Symbols Outlined",
                         weight: 400,
                       },
                       {
@@ -709,13 +709,13 @@ const doc = {
                     width: 56,
                     children: [
                       {
-                        type: "icon_font",
+                        type: "icon",
                         id: "nav-demo-vault-icon",
                         width: 24,
                         height: 24,
                         fill: "$color.textMuted",
-                        iconFontName: "storefront",
-                        iconFontFamily: "Material Symbols Outlined",
+                        icon: "storefront",
+                        library: "Material Symbols Outlined",
                         weight: 400,
                       },
                       {
@@ -739,13 +739,13 @@ const doc = {
                     width: 56,
                     children: [
                       {
-                        type: "icon_font",
+                        type: "icon",
                         id: "nav-demo-updates-icon",
                         width: 24,
                         height: 24,
                         fill: "$color.textMuted",
-                        iconFontName: "newspaper",
-                        iconFontFamily: "Material Symbols Outlined",
+                        icon: "newspaper",
+                        library: "Material Symbols Outlined",
                         weight: 400,
                       },
                       {
@@ -769,13 +769,13 @@ const doc = {
                     width: 56,
                     children: [
                       {
-                        type: "icon_font",
+                        type: "icon",
                         id: "nav-demo-profile-icon",
                         width: 24,
                         height: 24,
                         fill: "$color.textMuted",
-                        iconFontName: "person_3",
-                        iconFontFamily: "Material Symbols Outlined",
+                        icon: "person_3",
+                        library: "Material Symbols Outlined",
                         weight: 400,
                       },
                       {
@@ -1021,13 +1021,13 @@ const doc = {
               letterSpacing: 2,
             },
             {
-              type: "icon_font",
+              type: "icon",
               id: "reuse-ms-text-control-read-more-icon",
               width: 16,
               height: 16,
               fill: "$color.primary",
-              iconFontName: "expand_more",
-              iconFontFamily: "Material Symbols Outlined",
+              icon: "expand_more",
+              library: "Material Symbols Outlined",
               weight: 400,
             },
           ],
@@ -1143,13 +1143,13 @@ const doc = {
           alignItems: "center",
           children: [
             {
-              type: "icon_font",
+              type: "icon",
               id: "reuse-ms-nav-tab-default-icon",
               width: 24,
               height: 24,
               fill: "$color.textMuted",
-              iconFontName: "local_library",
-              iconFontFamily: "Material Symbols Outlined",
+              icon: "local_library",
+              library: "Material Symbols Outlined",
               weight: 400,
             },
             {
@@ -1183,13 +1183,13 @@ const doc = {
               gap: 4,
               children: [
                 {
-                  type: "icon_font",
+                  type: "icon",
                   id: "reuse-ms-nav-tab-active-icon",
                   width: 28,
                   height: 28,
                   fill: "$color.primary",
-                  iconFontName: "history_edu",
-                  iconFontFamily: "Material Symbols Outlined",
+                  icon: "history_edu",
+                  library: "Material Symbols Outlined",
                   weight: 400,
                   effect: {
                     type: "shadow",
@@ -1293,13 +1293,13 @@ const doc = {
                   width: 64,
                   children: [
                     {
-                      type: "icon_font",
+                      type: "icon",
                       id: "reuse-ms-reading-hud-type-icon",
                       width: 24,
                       height: 24,
                       fill: "$color.textMuted",
-                      iconFontName: "text_fields",
-                      iconFontFamily: "Material Symbols Outlined",
+                      icon: "text_fields",
+                      library: "Material Symbols Outlined",
                       weight: 400,
                     },
                     {
@@ -1332,13 +1332,13 @@ const doc = {
                       width: 44,
                       children: [
                         {
-                          type: "icon_font",
+                          type: "icon",
                           id: "reuse-ms-reading-hud-prev-icon",
                           width: 24,
                           height: 24,
                           fill: "$color.textMain",
-                          iconFontName: "skip_previous",
-                          iconFontFamily: "Material Symbols Outlined",
+                          icon: "skip_previous",
+                          library: "Material Symbols Outlined",
                           weight: 400,
                         },
                         {
@@ -1362,13 +1362,13 @@ const doc = {
                       width: 44,
                       children: [
                         {
-                          type: "icon_font",
+                          type: "icon",
                           id: "reuse-ms-reading-hud-list-icon",
                           width: 24,
                           height: 24,
                           fill: "$color.textMain",
-                          iconFontName: "play_circle",
-                          iconFontFamily: "Material Symbols Outlined",
+                          icon: "play_circle",
+                          library: "Material Symbols Outlined",
                           weight: 400,
                         },
                         {
@@ -1392,13 +1392,13 @@ const doc = {
                       width: 44,
                       children: [
                         {
-                          type: "icon_font",
+                          type: "icon",
                           id: "reuse-ms-reading-hud-next-icon",
                           width: 24,
                           height: 24,
                           fill: "$color.textMain",
-                          iconFontName: "skip_next",
-                          iconFontFamily: "Material Symbols Outlined",
+                          icon: "skip_next",
+                          library: "Material Symbols Outlined",
                           weight: 400,
                         },
                         {
@@ -1424,13 +1424,13 @@ const doc = {
                   width: 64,
                   children: [
                     {
-                      type: "icon_font",
+                      type: "icon",
                       id: "reuse-ms-reading-hud-notes-icon",
                       width: 28,
                       height: 28,
                       fill: "$color.primary",
-                      iconFontName: "history_edu",
-                      iconFontFamily: "Material Symbols Outlined",
+                      icon: "history_edu",
+                      library: "Material Symbols Outlined",
                       weight: 400,
                       effect: {
                         type: "shadow",
@@ -1461,13 +1461,13 @@ const doc = {
                   width: 64,
                   children: [
                     {
-                      type: "icon_font",
+                      type: "icon",
                       id: "reuse-ms-reading-hud-line-icon",
                       width: 24,
                       height: 24,
                       fill: "$color.textMuted",
-                      iconFontName: "format_line_spacing",
-                      iconFontFamily: "Material Symbols Outlined",
+                      icon: "format_line_spacing",
+                      library: "Material Symbols Outlined",
                       weight: 400,
                     },
                     {
@@ -1500,13 +1500,13 @@ const doc = {
           cornerRadius: 2,
           children: [
             {
-              type: "icon_font",
+              type: "icon",
               id: "reuse-ms-admin-nav-item-default-icon",
               width: 20,
               height: 20,
               fill: "$color.textMuted",
-              iconFontName: "auto_stories",
-              iconFontFamily: "Material Symbols Outlined",
+              icon: "auto_stories",
+              library: "Material Symbols Outlined",
               weight: 400,
             },
             {
@@ -1536,13 +1536,13 @@ const doc = {
           stroke: { align: "inside", fill: "#D4AF3766", thickness: 1 },
           children: [
             {
-              type: "icon_font",
+              type: "icon",
               id: "reuse-ms-admin-nav-item-active-icon",
               width: 20,
               height: 20,
               fill: "$color.primary",
-              iconFontName: "dashboard",
-              iconFontFamily: "Material Symbols Outlined",
+              icon: "dashboard",
+              library: "Material Symbols Outlined",
               weight: 400,
             },
             {
@@ -1556,7 +1556,7 @@ const doc = {
             },
           ],
         },
-        /** Cast Gallery card front — reference/the_cast_gallery.html (~158–192): full-bleed portrait, trophy + Top Pick, bottom copy + dossier CTA. */
+        /** Cast Gallery card front — trophy top-left + Endorse rose top-right + bottom copy + dossier CTA. */
         {
           type: "frame",
           id: "reuse-ms-character-portrait",
@@ -1605,9 +1605,9 @@ const doc = {
             {
               type: "frame",
               id: "reuse-ms-character-portrait-trophy",
-              x: 286,
+              x: 16,
               y: 16,
-              width: 56,
+              width: 72,
               height: 72,
               layout: "vertical",
               gap: 6,
@@ -1634,13 +1634,13 @@ const doc = {
                   },
                   children: [
                     {
-                      type: "icon_font",
+                      type: "icon",
                       id: "reuse-ms-character-portrait-trophy-icon",
                       width: 22,
                       height: 22,
                       fill: "$color.primary",
-                      iconFontName: "emoji_events",
-                      iconFontFamily: "Material Symbols Outlined",
+                      icon: "emoji_events",
+                      library: "Material Symbols Outlined",
                       weight: 400,
                     },
                   ],
@@ -1653,7 +1653,79 @@ const doc = {
                   fontFamily: "Cinzel",
                   fontSize: 10,
                   fontWeight: "500",
-                  letterSpacing: 2,
+                  letterSpacing: 1.5,
+                },
+              ],
+            },
+            /** Top-right Endorse rose pill — matches cast portrait (trophy stays top-left). */
+            {
+              type: "frame",
+              id: "reuse-ms-character-portrait-endorse",
+              name: "Endorse button",
+              x: 290,
+              y: 13,
+              width: 58,
+              height: 75,
+              fill: "#800020E6",
+              cornerRadius: 17,
+              stroke: { align: "inside", fill: "#FFFFFF17", thickness: 2.5 },
+              effect: {
+                type: "shadow",
+                shadowType: "outer",
+                color: "#80002059",
+                offset: { x: 0, y: 8 },
+                blur: 20,
+              },
+              layout: "vertical",
+              gap: 4,
+              padding: [8, 12],
+              justifyContent: "center",
+              alignItems: "center",
+              children: [
+                {
+                  type: "icon",
+                  id: "reuse-ms-character-portrait-endorse-icon",
+                  name: "Rose icon",
+                  width: 18,
+                  height: 18,
+                  fill: "#FFFFFF",
+                  icon: "local_florist",
+                  library: "Material Symbols Outlined",
+                  weight: 400,
+                },
+                {
+                  type: "text",
+                  id: "reuse-ms-character-portrait-endorse-label",
+                  name: "Endorse label",
+                  content: "Endorse",
+                  fill: "#FFFFFF",
+                  fontFamily: "Marcellus",
+                  fontSize: 10,
+                  letterSpacing: 2.2,
+                },
+                {
+                  type: "frame",
+                  id: "reuse-ms-character-portrait-endorse-count",
+                  name: "Count pill",
+                  height: 20,
+                  fill: "#05050559",
+                  cornerRadius: 999,
+                  stroke: { align: "inside", fill: "#FFFFFF14", thickness: 1 },
+                  padding: [2, 8],
+                  justifyContent: "center",
+                  alignItems: "center",
+                  children: [
+                    {
+                      type: "text",
+                      id: "reuse-ms-character-portrait-endorse-count-text",
+                      name: "Count",
+                      content: "12,384",
+                      fill: "#D4AF37",
+                      fontFamily: "Playfair Display",
+                      fontSize: 10,
+                      fontWeight: "700",
+                    },
+                  ],
                 },
               ],
             },
@@ -1748,13 +1820,13 @@ const doc = {
                   justifyContent: "center",
                   children: [
                     {
-                      type: "icon_font",
+                      type: "icon",
                       id: "reuse-ms-character-portrait-cta-icon",
                       width: 16,
                       height: 16,
                       fill: "#FFFFFF66",
-                      iconFontName: "cached",
-                      iconFontFamily: "Material Symbols Outlined",
+                      icon: "cached",
+                      library: "Material Symbols Outlined",
                       weight: 400,
                     },
                     {
@@ -1809,16 +1881,73 @@ const doc = {
                   width: "fill_container",
                   justifyContent: "space_between",
                   alignItems: "center",
+                  gap: 8,
                   children: [
                     {
-                      type: "text",
-                      id: "reuse-ms-character-dossier-confidential",
-                      content: "Confidential",
-                      fill: "$color.primary",
-                      fontFamily: "Cinzel",
-                      fontSize: 18,
-                      fontWeight: "500",
-                      letterSpacing: 4,
+                      type: "frame",
+                      id: "reuse-ms-character-dossier-confidential-rank",
+                      name: "Confidential + Rank",
+                      layout: "horizontal",
+                      gap: 8,
+                      alignItems: "center",
+                      children: [
+                        {
+                          type: "text",
+                          id: "reuse-ms-character-dossier-confidential",
+                          content: "Confidential",
+                          fill: "$color.primary",
+                          fontFamily: "Cinzel",
+                          fontSize: 14,
+                          fontWeight: "500",
+                          letterSpacing: 1.5,
+                        },
+                        {
+                          type: "frame",
+                          id: "reuse-ms-character-dossier-rank-pill",
+                          name: "Rank pill",
+                          height: 24,
+                          fill: "#05050599",
+                          cornerRadius: 999,
+                          stroke: { align: "inside", fill: "#D4AF3733", thickness: 1 },
+                          layout: "horizontal",
+                          gap: 4,
+                          padding: [3, 6],
+                          alignItems: "center",
+                          children: [
+                            {
+                              type: "icon",
+                              id: "reuse-ms-character-dossier-rank-rose",
+                              name: "Rank rose",
+                              width: 14,
+                              height: 14,
+                              fill: "#D4AF37",
+                              icon: "local_florist",
+                              library: "Material Symbols Outlined",
+                              weight: 400,
+                            },
+                            {
+                              type: "text",
+                              id: "reuse-ms-character-dossier-rank-label",
+                              name: "Rank label",
+                              content: "Rank",
+                              fill: "#EAEAEA99",
+                              fontFamily: "Marcellus",
+                              fontSize: 10,
+                              letterSpacing: 1,
+                            },
+                            {
+                              type: "text",
+                              id: "reuse-ms-character-dossier-rank-value",
+                              name: "Rank value",
+                              content: "12,384",
+                              fill: "#D4AF37",
+                              fontFamily: "Playfair Display",
+                              fontSize: 11,
+                              fontWeight: "700",
+                            },
+                          ],
+                        },
+                      ],
                     },
                     {
                       type: "text",
@@ -1826,9 +1955,9 @@ const doc = {
                       content: "REF: 09-22-A",
                       fill: "#FFFFFF33",
                       fontFamily: "Literata",
-                      fontSize: 11,
+                      fontSize: 10,
                       fontStyle: "italic",
-                      letterSpacing: 1,
+                      letterSpacing: 0.5,
                     },
                   ],
                 },
@@ -1988,13 +2117,13 @@ const doc = {
                   alignItems: "center",
                   children: [
                     {
-                      type: "icon_font",
+                      type: "icon",
                       id: "reuse-ms-character-dossier-tastes-icon",
                       width: 16,
                       height: 16,
                       fill: "$color.primary",
-                      iconFontName: "favorite",
-                      iconFontFamily: "Material Symbols Outlined",
+                      icon: "favorite",
+                      library: "Material Symbols Outlined",
                       weight: 400,
                     },
                     {
@@ -2060,13 +2189,13 @@ const doc = {
                   alignItems: "center",
                   children: [
                     {
-                      type: "icon_font",
+                      type: "icon",
                       id: "reuse-ms-character-dossier-secrets-lock",
                       width: 16,
                       height: 16,
                       fill: "$color.primary",
-                      iconFontName: "lock",
-                      iconFontFamily: "Material Symbols Outlined",
+                      icon: "lock",
+                      library: "Material Symbols Outlined",
                       weight: 400,
                     },
                     {
@@ -2158,13 +2287,13 @@ const doc = {
               padding: [16, 0, 0, 0],
               children: [
                 {
-                  type: "icon_font",
+                  type: "icon",
                   id: "reuse-ms-character-dossier-footer-icon",
                   width: 16,
                   height: 16,
                   fill: "#FFFFFF4D",
-                  iconFontName: "undo",
-                  iconFontFamily: "Material Symbols Outlined",
+                  icon: "undo",
+                  library: "Material Symbols Outlined",
                   weight: 400,
                 },
                 {

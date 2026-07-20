@@ -1,0 +1,844 @@
+{
+  "version": "2.14",
+  "children": [
+    {
+      "type": "frame",
+      "id": "artboard-reader-mobile",
+      "x": 0,
+      "y": 0,
+      "name": "Reading Room — the_reading_room.html",
+      "clip": true,
+      "width": 390,
+      "height": 844,
+      "fill": "$color.void",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "rm-hud-top",
+          "width": "fill_container",
+          "height": 64,
+          "padding": [
+            0,
+            24
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "rm-back",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "rm-back-icon",
+                  "width": 24,
+                  "height": 24,
+                  "icon": "arrow_back",
+                  "library": "Material Symbols Outlined",
+                  "weight": 400,
+                  "fill": "#D4AF37CC"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "rm-title-block",
+              "width": 222,
+              "layout": "vertical",
+              "gap": 2,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "rm-ch-label",
+                  "fill": "$color.textMuted",
+                  "textGrowth": "fixed-width",
+                  "width": 200,
+                  "content": "Chapter IV",
+                  "textAlign": "center",
+                  "fontFamily": "Cinzel",
+                  "fontSize": 10,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "rm-ch-name",
+                  "fill": "$color.textMain",
+                  "textGrowth": "fixed-width",
+                  "width": 200,
+                  "content": "The Gilded Cage",
+                  "textAlign": "center",
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 14,
+                  "fontWeight": "normal",
+                  "fontStyle": "italic"
+                }
+              ]
+            },
+            {
+              "type": "icon",
+              "id": "rm-bm",
+              "width": 24,
+              "height": 24,
+              "icon": "bookmark_add",
+              "library": "Material Symbols Outlined",
+              "weight": 400,
+              "fill": "#D4AF37CC"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "rm-scroll",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "padding": [
+            24,
+            24,
+            32,
+            24
+          ],
+          "children": [
+            {
+              "type": "frame",
+              "id": "rm-body",
+              "width": 342,
+              "layout": "vertical",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "rm-ornament",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "id": "rm-ornament-rule-l",
+                      "fill": "$color.primary",
+                      "width": 32,
+                      "height": 1
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "rm-ornament-diamond",
+                      "fill": "$color.void",
+                      "width": 8,
+                      "height": 8
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "rm-ornament-rule-r",
+                      "fill": "$color.primary",
+                      "width": 32,
+                      "height": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "rm-h1",
+                  "fill": "$color.primary",
+                  "textGrowth": "fixed-width",
+                  "width": 342,
+                  "content": "The Gilded Cage",
+                  "textAlign": "center",
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 28,
+                  "fontWeight": "normal",
+                  "fontStyle": "italic"
+                },
+                {
+                  "type": "text",
+                  "id": "rm-sub",
+                  "fill": "$color.textMuted",
+                  "textGrowth": "fixed-width",
+                  "width": 342,
+                  "content": "Midnight Satin • Vol. 1",
+                  "textAlign": "center",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 11,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "rm-p-0",
+                  "fill": "#EAEAEAE6",
+                  "textGrowth": "fixed-width",
+                  "width": 342,
+                  "content": "The candlelight trembled against the velvet drapes as the Duke crossed the threshold. Silk whispered under Isolde's fingertips—a vow already half-broken, half-begun.",
+                  "lineHeight": 1.7,
+                  "fontFamily": "Literata",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "rm-p-1",
+                  "fill": "#EAEAEAE6",
+                  "textGrowth": "fixed-width",
+                  "width": 342,
+                  "content": "Beyond the ballroom, the night held its breath. Every glance was a ledger entry; every smile, a debt waiting to come due.",
+                  "lineHeight": 1.7,
+                  "fontFamily": "Literata",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "rm-p-2",
+                  "fill": "#EAEAEAE6",
+                  "textGrowth": "fixed-width",
+                  "width": 342,
+                  "content": "\"You came,\" he said, as if the words themselves were a confession. She did not answer with her voice. The gold of her bracelet caught the light—and the lie between them.",
+                  "lineHeight": 1.7,
+                  "fontFamily": "Literata",
+                  "fontSize": 16,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "rm-hud-bottom",
+          "width": "fill_container",
+          "fill": "$color.navBg",
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "rm-progress",
+              "clip": true,
+              "width": "fill_container",
+              "height": 4,
+              "fill": "#FFFFFF1A",
+              "cornerRadius": 2,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "rm-progress-fill",
+                  "x": 0,
+                  "y": 0,
+                  "fill": "$color.primary",
+                  "width": 136,
+                  "height": 4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "rm-tools",
+              "width": "fill_container",
+              "height": 72,
+              "padding": [
+                8,
+                16,
+                16,
+                16
+              ],
+              "justifyContent": "space_around",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "rm-tool-0",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "rm-tool-0-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "text_fields",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    },
+                    {
+                      "type": "text",
+                      "id": "rm-tool-0-label",
+                      "fill": "$color.textMuted",
+                      "content": "Type",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 9,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "rm-tool-1",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "rm-tool-1-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "list",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    },
+                    {
+                      "type": "text",
+                      "id": "rm-tool-1-label",
+                      "fill": "$color.textMuted",
+                      "content": "Chapters",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 9,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "rm-tool-2",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "rm-tool-2-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "history_edu",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    },
+                    {
+                      "type": "text",
+                      "id": "rm-tool-2-label",
+                      "fill": "$color.textMuted",
+                      "content": "Notes",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 9,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "rm-tool-3",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "rm-tool-3-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "settings",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    },
+                    {
+                      "type": "text",
+                      "id": "rm-tool-3-label",
+                      "fill": "$color.textMuted",
+                      "content": "Set",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 9,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "frame",
+      "id": "artboard-reader-tablet",
+      "x": 470,
+      "y": 0,
+      "name": "Reading Room — the_reading_room_tablet.html",
+      "context": "iPad portrait 834. Centered reading column max-w-2xl (672). HUD top/bottom; no desktop comments sidebar.",
+      "clip": true,
+      "width": 834,
+      "height": 1112,
+      "fill": "$color.void",
+      "layout": "vertical",
+      "children": [
+        {
+          "type": "frame",
+          "id": "rt-hud-top",
+          "width": "fill_container",
+          "height": 64,
+          "padding": [
+            0,
+            24
+          ],
+          "justifyContent": "space_between",
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "rt-back",
+              "gap": 8,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "icon",
+                  "id": "rt-back-icon",
+                  "width": 24,
+                  "height": 24,
+                  "icon": "arrow_back",
+                  "library": "Material Symbols Outlined",
+                  "weight": 400,
+                  "fill": "#D4AF37CC"
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "rt-title-block",
+              "width": 280,
+              "layout": "vertical",
+              "gap": 2,
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "text",
+                  "id": "rt-ch-label",
+                  "fill": "$color.textMuted",
+                  "textGrowth": "fixed-width",
+                  "width": 200,
+                  "content": "Chapter IV",
+                  "textAlign": "center",
+                  "fontFamily": "Cinzel",
+                  "fontSize": 10,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "rt-ch-name",
+                  "fill": "$color.textMain",
+                  "textGrowth": "fixed-width",
+                  "width": 200,
+                  "content": "The Gilded Cage",
+                  "textAlign": "center",
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 14,
+                  "fontWeight": "normal",
+                  "fontStyle": "italic"
+                }
+              ]
+            },
+            {
+              "type": "icon",
+              "id": "rt-bm",
+              "width": 24,
+              "height": 24,
+              "icon": "bookmark_add",
+              "library": "Material Symbols Outlined",
+              "weight": 400,
+              "fill": "#D4AF37CC"
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "rt-scroll",
+          "width": "fill_container",
+          "height": "fill_container",
+          "layout": "vertical",
+          "padding": [
+            32,
+            81,
+            40,
+            81
+          ],
+          "alignItems": "center",
+          "children": [
+            {
+              "type": "frame",
+              "id": "rt-body",
+              "width": 672,
+              "layout": "vertical",
+              "gap": 20,
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "rt-ornament",
+                  "width": "fill_container",
+                  "gap": 12,
+                  "justifyContent": "center",
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "rectangle",
+                      "id": "rt-ornament-rule-l",
+                      "fill": "$color.primary",
+                      "width": 32,
+                      "height": 1
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "rt-ornament-diamond",
+                      "fill": "$color.void",
+                      "width": 8,
+                      "height": 8
+                    },
+                    {
+                      "type": "rectangle",
+                      "id": "rt-ornament-rule-r",
+                      "fill": "$color.primary",
+                      "width": 32,
+                      "height": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "text",
+                  "id": "rt-h1",
+                  "fill": "$color.primary",
+                  "textGrowth": "fixed-width",
+                  "width": 672,
+                  "content": "The Gilded Cage",
+                  "textAlign": "center",
+                  "fontFamily": "Playfair Display",
+                  "fontSize": 36,
+                  "fontWeight": "normal",
+                  "fontStyle": "italic"
+                },
+                {
+                  "type": "text",
+                  "id": "rt-sub",
+                  "fill": "$color.textMuted",
+                  "textGrowth": "fixed-width",
+                  "width": 672,
+                  "content": "Midnight Satin • Vol. 1",
+                  "textAlign": "center",
+                  "fontFamily": "Marcellus",
+                  "fontSize": 11,
+                  "fontWeight": "normal",
+                  "letterSpacing": 2
+                },
+                {
+                  "type": "text",
+                  "id": "rt-p-0",
+                  "fill": "#EAEAEAE6",
+                  "textGrowth": "fixed-width",
+                  "width": 672,
+                  "content": "The candlelight trembled against the velvet drapes as the Duke crossed the threshold. Silk whispered under Isolde's fingertips—a vow already half-broken, half-begun.",
+                  "lineHeight": 1.7,
+                  "fontFamily": "Literata",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "rt-p-1",
+                  "fill": "#EAEAEAE6",
+                  "textGrowth": "fixed-width",
+                  "width": 672,
+                  "content": "Beyond the ballroom, the night held its breath. Every glance was a ledger entry; every smile, a debt waiting to come due.",
+                  "lineHeight": 1.7,
+                  "fontFamily": "Literata",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                },
+                {
+                  "type": "text",
+                  "id": "rt-p-2",
+                  "fill": "#EAEAEAE6",
+                  "textGrowth": "fixed-width",
+                  "width": 672,
+                  "content": "\"You came,\" he said, as if the words themselves were a confession. She did not answer with her voice. The gold of her bracelet caught the light—and the lie between them.",
+                  "lineHeight": 1.7,
+                  "fontFamily": "Literata",
+                  "fontSize": 18,
+                  "fontWeight": "normal"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "frame",
+          "id": "rt-hud-bottom",
+          "width": "fill_container",
+          "fill": "$color.navBg",
+          "layout": "vertical",
+          "children": [
+            {
+              "type": "frame",
+              "id": "rt-progress",
+              "clip": true,
+              "width": "fill_container",
+              "height": 4,
+              "fill": "#FFFFFF1A",
+              "cornerRadius": 2,
+              "layout": "none",
+              "children": [
+                {
+                  "type": "rectangle",
+                  "id": "rt-progress-fill",
+                  "x": 0,
+                  "y": 0,
+                  "fill": "$color.primary",
+                  "width": 292,
+                  "height": 4
+                }
+              ]
+            },
+            {
+              "type": "frame",
+              "id": "rt-tools",
+              "width": "fill_container",
+              "height": 72,
+              "padding": [
+                8,
+                16,
+                16,
+                16
+              ],
+              "justifyContent": "space_around",
+              "alignItems": "center",
+              "children": [
+                {
+                  "type": "frame",
+                  "id": "rt-tool-0",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "rt-tool-0-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "text_fields",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    },
+                    {
+                      "type": "text",
+                      "id": "rt-tool-0-label",
+                      "fill": "$color.textMuted",
+                      "content": "Type",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 9,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "rt-tool-1",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "rt-tool-1-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "list",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    },
+                    {
+                      "type": "text",
+                      "id": "rt-tool-1-label",
+                      "fill": "$color.textMuted",
+                      "content": "Chapters",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 9,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "rt-tool-2",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "rt-tool-2-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "history_edu",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    },
+                    {
+                      "type": "text",
+                      "id": "rt-tool-2-label",
+                      "fill": "$color.textMuted",
+                      "content": "Notes",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 9,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    }
+                  ]
+                },
+                {
+                  "type": "frame",
+                  "id": "rt-tool-3",
+                  "layout": "vertical",
+                  "gap": 4,
+                  "alignItems": "center",
+                  "children": [
+                    {
+                      "type": "icon",
+                      "id": "rt-tool-3-icon",
+                      "width": 24,
+                      "height": 24,
+                      "icon": "settings",
+                      "library": "Material Symbols Outlined",
+                      "weight": 400,
+                      "fill": "#FFFFFF99"
+                    },
+                    {
+                      "type": "text",
+                      "id": "rt-tool-3-label",
+                      "fill": "$color.textMuted",
+                      "content": "Set",
+                      "fontFamily": "Marcellus",
+                      "fontSize": 9,
+                      "fontWeight": "normal",
+                      "letterSpacing": 1
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variables": {
+    "color.primary": {
+      "type": "color",
+      "value": "#D4AF37"
+    },
+    "color.void": {
+      "type": "color",
+      "value": "#050505"
+    },
+    "color.surface": {
+      "type": "color",
+      "value": "#121212"
+    },
+    "color.surfaceHighlight": {
+      "type": "color",
+      "value": "#1A1A1A"
+    },
+    "color.textMain": {
+      "type": "color",
+      "value": "#EAEAEA"
+    },
+    "color.textMuted": {
+      "type": "color",
+      "value": "#8A8A8A"
+    },
+    "color.accent": {
+      "type": "color",
+      "value": "#800020"
+    },
+    "color.navBg": {
+      "type": "color",
+      "value": "#080808"
+    },
+    "font.display": {
+      "type": "string",
+      "value": "Playfair Display"
+    },
+    "font.header": {
+      "type": "string",
+      "value": "Cinzel"
+    },
+    "font.heading": {
+      "type": "string",
+      "value": "Cinzel"
+    },
+    "font.body": {
+      "type": "string",
+      "value": "Literata"
+    },
+    "font.ui": {
+      "type": "string",
+      "value": "Marcellus"
+    },
+    "font.script": {
+      "type": "string",
+      "value": "Pinyon Script"
+    },
+    "radius.card": {
+      "type": "number",
+      "value": 2
+    },
+    "radius.input": {
+      "type": "number",
+      "value": 0
+    },
+    "radius.modal": {
+      "type": "number",
+      "value": 4
+    },
+    "shadow.card.offsetY": {
+      "type": "number",
+      "value": 10
+    },
+    "shadow.card.blur": {
+      "type": "number",
+      "value": 30
+    },
+    "shadow.modalGlow.blur": {
+      "type": "number",
+      "value": 20
+    },
+    "shadow.goldGlow.blur": {
+      "type": "number",
+      "value": 24
+    },
+    "space.screenPad": {
+      "type": "number",
+      "value": 24
+    },
+    "space.sectionGap": {
+      "type": "number",
+      "value": 16
+    }
+  },
+  "fileToken": "81507e50-b48f-4b61-a653-8707dea2649e"
+}

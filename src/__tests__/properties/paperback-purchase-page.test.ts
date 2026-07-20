@@ -148,19 +148,19 @@ describe("Property 15: Active state displays formatted price", () => {
  * parameter pointing to `/novel/${novelId}/paperback`.
  *
  * We test the pure URL construction logic extracted from the client component:
- * `/auth/login?returnUrl=${encodeURIComponent(`/novel/${novelId}/paperback`)}`
+ * `/sign-in?redirect_url=${encodeURIComponent(`/novel/${novelId}/paperback`)}`
  */
 
 /**
  * Pure login URL construction matching the client component.
  */
 function buildLoginUrl(novelId: string): string {
-  return `/auth/login?returnUrl=${encodeURIComponent(`/novel/${novelId}/paperback`)}`;
+  return `/sign-in?redirect_url=${encodeURIComponent(`/novel/${novelId}/paperback`)}`;
 }
 
 describe("Property 16: Login prompt includes return URL", () => {
   // Feature: buy-paperback, Property 16: Login prompt includes return URL
-  it("login link starts with /auth/login?returnUrl= and decoded returnUrl equals /novel/{novelId}/paperback for any novel ID", () => {
+  it("login link starts with /sign-in?redirect_url= and decoded redirect_url equals /novel/{novelId}/paperback for any novel ID", () => {
     const novelIdArb = fc.oneof(
       // UUID-like IDs
       fc.uuid(),
@@ -172,14 +172,11 @@ describe("Property 16: Login prompt includes return URL", () => {
       fc.property(novelIdArb, (novelId: string) => {
         const loginUrl = buildLoginUrl(novelId);
 
-        // 1. URL starts with /auth/login?returnUrl=
-        expect(loginUrl.startsWith("/auth/login?returnUrl=")).toBe(true);
+        expect(loginUrl.startsWith("/sign-in?redirect_url=")).toBe(true);
 
-        // 2. Extract and decode the returnUrl parameter
-        const returnUrlEncoded = loginUrl.slice("/auth/login?returnUrl=".length);
+        const returnUrlEncoded = loginUrl.slice("/sign-in?redirect_url=".length);
         const returnUrlDecoded = decodeURIComponent(returnUrlEncoded);
 
-        // 3. Decoded returnUrl equals /novel/${novelId}/paperback
         expect(returnUrlDecoded).toBe(`/novel/${novelId}/paperback`);
       }),
       { numRuns: 100 }

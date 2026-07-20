@@ -67,7 +67,7 @@ export function TheVeil({
 
         {!isAuthenticated ? (
           <Link
-            href={`/auth/login?returnUrl=${encodeURIComponent(typeof window !== "undefined" ? window.location.pathname : "/")}`}
+            href={`/sign-in?redirect_url=${encodeURIComponent(typeof window !== "undefined" ? window.location.pathname : "/")}`}
             className={ctaShellClassName}
           >
             <div className="relative bg-[#1a170e] px-4 py-3 flex items-center justify-center">

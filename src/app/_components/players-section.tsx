@@ -7,6 +7,7 @@ import { CastGalleryModal } from "./cast-gallery-modal";
 import { AuthPrompt } from "./auth-prompt";
 import { endorseCharacter } from "@/app/actions/endorse-character";
 import type { NovelCharacter } from "@/lib/content";
+import { DetailSectionHeading } from "@/components/ui";
 import { SectionViewAllButton } from "./section-view-all";
 
 interface PlayersSectionProps {
@@ -54,12 +55,12 @@ export function PlayersSection({
   return (
     <>
       <section className="mb-10 xs:mb-12 md:mb-0">
-        <div className="flex justify-between items-end mb-4 xs:mb-6">
-          <h3 className="text-text-muted text-sm uppercase tracking-[0.2em] font-medium border-b border-primary/20 pb-2">
-            The Players
-          </h3>
-          <SectionViewAllButton onClick={() => openCastGallery(0)} />
-        </div>
+        <DetailSectionHeading
+          rowClassName="mb-4 xs:mb-6"
+          action={<SectionViewAllButton onClick={() => openCastGallery(0)} />}
+        >
+          The Players
+        </DetailSectionHeading>
         <div className={gridClass}>
           {characters.map((char, i) => (
             <CharacterPortrait
