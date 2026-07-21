@@ -16,15 +16,27 @@ const isProtectedRoute = createRouteMatcher([
 /** Provider callbacks must never require a browser session. */
 const isWebhookRoute = createRouteMatcher(["/api/webhooks(.*)"]);
 
-export default clerkMiddleware(async (auth, req) => {
-  if (isWebhookRoute(req)) {
-    return;
-  }
+/** Origins allowed to mint/use sessions (omit in local/dev so localhost works). */
+const authorizedParties =
+  process.env.VERCEL_ENV === "production"
+    ? [
+        "https://midnightsatin.app",
+        "https://beta.midnightsatin.app",
+      ]
+    : undefined;
 
-  if (isProtectedRoute(req)) {
-    await auth.protect();
-  }
-});
+export default clerkMiddleware(
+  async (auth, req) => {
+    if (isWebhookRoute(req)) {
+      return;
+    }
+
+    if (isProtectedRoute(req)) {
+      await auth.protect();
+    }
+  },
+  authorizedParties ? { authorizedParties } : undefined,
+);
 
 export const config = {
   matcher: [

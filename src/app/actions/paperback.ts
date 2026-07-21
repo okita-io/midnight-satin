@@ -6,6 +6,7 @@
  * Order recording happens via webhook on checkout.session.completed (idempotent).
  */
 
+import { getAppBaseUrl } from "@/lib/app-url";
 import { getSession } from "@/lib/auth/session";
 import { getNovel } from "@/lib/content";
 import { getNovelWordCount } from "@/lib/paperback/word-count";
@@ -96,12 +97,8 @@ export async function createPaperbackCheckout(
   const wordCount = await getNovelWordCount(novelId);
   const priceCents = calculatePaperbackPrice(wordCount);
 
-  // 5. Build URLs
-  const baseUrl =
-    process.env.NEXT_PUBLIC_APP_URL ??
-    (process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : "http://localhost:3000");
+  // 5. Build URLs — never use bare VERCEL_URL (deployment hostname)
+  const baseUrl = await getAppBaseUrl();
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 

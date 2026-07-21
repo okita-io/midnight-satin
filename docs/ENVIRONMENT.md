@@ -46,7 +46,7 @@ Without Postgres + Clerk, reader sessions and catalog data will not work as desi
 | Variable | When needed |
 |----------|-------------|
 | `STRIPE_PRICE_POUCH` / `_HANDFUL` / `_CHEST` / `_ROYAL` | Prefer Dashboard price IDs over ad-hoc amounts |
-| `NEXT_PUBLIC_APP_URL` | Absolute app URL for webhooks / share links when needed |
+| `NEXT_PUBLIC_APP_URL` | Absolute app URL for Stripe return URLs / share links. **Production must be `https://midnightsatin.app`** — never a `*.vercel.app` deployment URL (that drops Clerk cookies after checkout). |
 | `PLAYWRIGHT_BASE_URL` | Point e2e at Preview/prod instead of local `npm run dev` (see `docs/E2E.md`) |
 | `REPLICATE_API_TOKEN` | Romance Factory image generation scripts |
 | `ENV_FILE` / `DOTENV_CONFIG_PATH` | Point seed/import scripts at a non-default env file |

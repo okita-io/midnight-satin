@@ -6,6 +6,7 @@
  * Credit grant happens via webhook on checkout.session.completed (idempotent).
  */
 
+import { getAppBaseUrl } from "@/lib/app-url";
 import { getSession } from "@/lib/auth/session";
 import {
   CREDIT_PACKS,
@@ -53,12 +54,7 @@ export async function purchaseCredits(
   const priceId = getStripePriceId(packId);
 
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
-  const baseUrl =
-    process.env.NEXT_PUBLIC_APP_URL ??
-    process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : "http://localhost:3000";
+  const baseUrl = await getAppBaseUrl();
 
   try {
     const lineItems: Stripe.Checkout.SessionCreateParams["line_items"] =
