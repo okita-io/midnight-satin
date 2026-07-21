@@ -249,11 +249,13 @@ export function createPool(config?: VercelPostgresPoolConfig): VercelPool {
 
 let pool: VercelPool | undefined;
 
-export const sql: VercelPool &
+type SqlTagged = VercelPool &
   (<O extends QueryResultRow>(
     strings: TemplateStringsArray,
     ...values: Primitive[]
-  ) => Promise<QueryResult<O>>) = new Proxy(() => {}, {
+  ) => Promise<QueryResult<O>>);
+
+export const sql: SqlTagged = new Proxy(() => {}, {
   get(_, prop) {
     if (!pool) pool = createPool();
     const val = Reflect.get(pool, prop);
@@ -265,10 +267,6 @@ export const sql: VercelPool &
     // @ts-expect-error Proxy apply forwards tagged-template args to pool.sql
     return pool.sql(...argumentsList);
   },
-}) as VercelPool &
-  (<O extends QueryResultRow>(
-    strings: TemplateStringsArray,
-    ...values: Primitive[]
-  ) => Promise<QueryResult<O>>);
+}) as unknown as SqlTagged;
 
 export const db = sql;
