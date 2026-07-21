@@ -1,7 +1,11 @@
 import { SignUp } from "@clerk/nextjs";
-import { clerkAppearance } from "@/lib/auth/clerk-appearance";
 import { safeRedirectPath } from "@/lib/auth/redirect";
 
+/**
+ * Fallback route for deep links / cross-links from SignIn.
+ * Interactive CTAs use `<SignUpButton mode="modal" />` instead.
+ * Theme: Clerk Dashboard → Customization.
+ */
 export default async function SignUpPage({
   searchParams,
 }: {
@@ -13,7 +17,6 @@ export default async function SignUpPage({
   return (
     <div className="flex min-h-[70vh] items-center justify-center px-4 py-16">
       <SignUp
-        appearance={clerkAppearance}
         signInUrl={
           redirectUrl === "/"
             ? "/sign-in"

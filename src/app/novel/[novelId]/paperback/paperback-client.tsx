@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link";
+import { SignInButton } from "@clerk/nextjs";
 import { Card } from "@/components/ui";
 import { createPaperbackCheckout } from "@/app/actions/paperback";
 
@@ -211,12 +211,17 @@ export function PaperbackClient({
               </p>
             ) : (
               <p className="font-literata text-white/45 text-xs text-center max-w-sm">
-                <Link
-                  href={`/sign-in?redirect_url=${encodeURIComponent(`/novel/${novelId}/paperback`)}`}
-                  className="text-primary border-b border-primary/50 pb-0.5 hover:opacity-90"
+                <SignInButton
+                  mode="modal"
+                  forceRedirectUrl={`/novel/${novelId}/paperback`}
                 >
-                  Sign in
-                </Link>{" "}
+                  <button
+                    type="button"
+                    className="text-primary border-b border-primary/50 pb-0.5 hover:opacity-90 cursor-pointer"
+                  >
+                    Sign in
+                  </button>
+                </SignInButton>{" "}
                 so you&apos;re ready when we flip the switch.
               </p>
             )}
@@ -232,12 +237,17 @@ export function PaperbackClient({
           </button>
         ) : (
           <p className="font-literata text-white/50 text-sm text-center max-w-sm">
-            <Link
-              href={`/sign-in?redirect_url=${encodeURIComponent(`/novel/${novelId}/paperback`)}`}
-              className="text-primary border-b border-primary/50 pb-0.5 hover:opacity-90"
+            <SignInButton
+              mode="modal"
+              forceRedirectUrl={`/novel/${novelId}/paperback`}
             >
-              Sign in
-            </Link>{" "}
+              <button
+                type="button"
+                className="text-primary border-b border-primary/50 pb-0.5 hover:opacity-90 cursor-pointer"
+              >
+                Sign in
+              </button>
+            </SignInButton>{" "}
             to purchase this paperback.
           </p>
         )}

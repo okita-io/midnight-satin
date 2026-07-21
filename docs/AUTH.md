@@ -44,9 +44,9 @@ Browser
 
 | Piece | Location |
 |-------|----------|
-| `ClerkProvider` + noir appearance | `layout.tsx`, `clerk-appearance.ts` |
-| Sign-in / sign-up | `/sign-in`, `/sign-up` (`forceRedirectUrl` from `redirect_url`) |
-| Header controls | `clerk-auth-controls.tsx` (modal + current-path return) |
+| `ClerkProvider` (no code `appearance` — theme in Dashboard) | `layout.tsx` |
+| Sign-in / sign-up fallback pages | `/sign-in`, `/sign-up` (for `auth.protect()` / deep links) |
+| Header + gated CTAs | `SignInButton` / `SignUpButton` `mode="modal"` |
 | Auth prompts | `auth-prompt.tsx`, `profile-auth-prompt.tsx` |
 | Logout | Profile `logoutReader` (revokes Clerk + clears legacy JWT cookie); header `UserButton` Clerk sign-out |
 

@@ -7,6 +7,8 @@
  */
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { SignInButton } from "@clerk/nextjs";
 
 export interface TheVeilProps {
   /** Current credit balance */
@@ -28,6 +30,7 @@ export function TheVeil({
   isUnlocking = false,
   error = null,
 }: TheVeilProps) {
+  const pathname = usePathname();
   const canUnlock = isAuthenticated && creditBalance >= 5;
   const showVaultPrompt = isAuthenticated && creditBalance < 5;
 
@@ -66,16 +69,18 @@ export function TheVeil({
         </p>
 
         {!isAuthenticated ? (
-          <Link
-            href={`/sign-in?redirect_url=${encodeURIComponent(typeof window !== "undefined" ? window.location.pathname : "/")}`}
-            className={ctaShellClassName}
+          <SignInButton
+            mode="modal"
+            forceRedirectUrl={pathname && pathname.startsWith("/") ? pathname : "/"}
           >
-            <div className="relative bg-[#1a170e] px-4 py-3 flex items-center justify-center">
-              <span className="font-display font-semibold italic text-lg text-primary">
-                Sign in to unlock
-              </span>
-            </div>
-          </Link>
+            <button type="button" className={ctaShellClassName}>
+              <div className="relative bg-[#1a170e] px-4 py-3 flex items-center justify-center">
+                <span className="font-display font-semibold italic text-lg text-primary">
+                  Sign in to unlock
+                </span>
+              </div>
+            </button>
+          </SignInButton>
         ) : (
           <>
             <button

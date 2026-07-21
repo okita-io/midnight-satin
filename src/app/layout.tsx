@@ -11,7 +11,6 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import "@fontsource-variable/material-symbols-outlined";
 import "./globals.css";
 import { MainLayoutContainer } from "./_components/main-layout-container";
-import { clerkAppearance } from "@/lib/auth/clerk-appearance";
 
 const playfair = Playfair_Display({
   variable: "--font-display",
@@ -60,7 +59,7 @@ export default function RootLayout({
       <body
         className={`${playfair.variable} ${cinzel.variable} ${literata.variable} ${marcellus.variable} ${pinyon.variable} bg-void text-text-main font-body antialiased`}
       >
-        <ClerkProvider appearance={clerkAppearance}>
+        <ClerkProvider>
           <MainLayoutContainer className="mobile-container bg-silk-noise">
           {children}
           </MainLayoutContainer>
