@@ -20,8 +20,8 @@ Paperback checkout fails closed unless `NEXT_PUBLIC_PAPERBACK_ENABLED` and `NEXT
 | Endpoint | Auth | Notes |
 |----------|------|-------|
 | `/api/webhooks/clerk` | Clerk `verifyWebhook` | Missing/invalid → 400. `user.deleted` soft-unlinks only (see AUTH.md). |
-| `/api/webhooks/payment` | Stripe signature | Credits from `CREDIT_PACKS[pack_id]` (not metadata amount). Non–credit-pack events ACK 200. Misconfigured secrets → 400. |
-| `/api/webhooks/stripe` | Stripe signature | Paperback orders. Non–paperback events ACK 200. Misconfigured secrets → 400. |
+| `/api/webhooks/stripe` | Stripe signature | Unified: credit packs (`CREDIT_PACKS[pack_id]`) + paperback orders. Other events ACK 200. Misconfigured secrets → 400. |
+| `/api/webhooks/payment` | Stripe signature | Legacy alias of `/api/webhooks/stripe` — same handler / same `STRIPE_WEBHOOK_SECRET`. |
 
 Webhooks are excluded from Clerk `auth.protect()` in `src/proxy.ts`.
 

@@ -6,7 +6,7 @@ A premium romance reading web application — **Tactile Noir Luxury** experience
 
 - **Runtime:** Next.js 16 (App Router), React 19, TypeScript
 - **Styling:** Tailwind CSS, design tokens in `globals.css`
-- **Data:** Neon via Vercel Postgres (`@vercel/postgres`), Vercel Blob (assets), Vercel KV (caching)
+- **Data:** Neon (`@neondatabase/serverless` via `src/lib/db/postgres`), Vercel Blob (assets), Vercel KV (caching)
 - **Auth:** Clerk (`@clerk/nextjs`) linked to Neon `readers` — migration in progress; see [docs/AUTH.md](docs/AUTH.md)
 - **Payments:** Stripe for credit packs (and optional paperback)
 - **Content:** AI-generated via MCP interface; admin dashboard at `/admin`
@@ -142,7 +142,7 @@ For credit purchases, set:
 - `STRIPE_WEBHOOK_SECRET` — Webhook signing secret from Stripe Dashboard
 - `STRIPE_PRICE_POUCH`, `STRIPE_PRICE_HANDFUL`, `STRIPE_PRICE_CHEST`, `STRIPE_PRICE_ROYAL` — Optional; if unset, Checkout uses ad-hoc prices from pack config
 
-Configure the webhook endpoint `https://your-domain/api/webhooks/payment` in Stripe to receive `checkout.session.completed` events.
+Configure **one** Stripe webhook endpoint `https://your-domain/api/webhooks/stripe` for `checkout.session.completed` (credit packs + paperback). Do not also register `/api/webhooks/payment` — that path is only a legacy alias of the same handler.
 
 ## Project layout (reference)
 
@@ -178,7 +178,7 @@ Agents and subagents should have access to — or be instructed to apply — the
 | **Next.js App Router & RSC** | Implement routes, layouts, React Server Components, Server Actions, and data fetching (ISR/SSR). | Adding or changing pages, API routes, server actions, or middleware. | Prefer Server Components and Server Actions; use ISR (60s) for Boudoir, Library, Novel Detail, Author Study; use dynamic SSR for Reading Room, Vault, Admin. Route structure is defined in `.kiro/specs/midnight-satin-platform/design.md`. |
 | **Tailwind CSS & design tokens** | Apply the Tactile Noir Luxury design system: colors, typography, spacing, shadows, safe-area insets. | Styling any UI, creating or editing components, matching reference mockups. | Use design tokens from `reference/midnight_satin_prd.html` and `src/app/globals.css`. Mobile-first, max content width 448px (max-w-md), gold accents (#D4AF37), void (#050505), surface (#121212), burgundy (#800020). Sharp radii (2px/4px), gold-tinted shadows. |
 | **TypeScript & domain types** | Keep types aligned with the data model and server contracts. | Defining or changing types, DB types, API/MCP request/response shapes. | Copy types from the design doc (`.kiro/specs/midnight-satin-platform/design.md`) for AuthorProfile, Novel, Chapter, Character, Reader, ReadingProgress, CreditTransaction, Comment, etc. Use consistent naming (e.g. `novelId`, `authorId`). |
-| **Vercel Postgres / Blob / KV** | Implement data layer: queries, migrations, blob uploads, KV caching. | DB schema changes, content CRUD, asset uploads, caching featured/trending data. | Schema and indexes are in the design doc. Use `@vercel/postgres`, `@vercel/blob`, `@vercel/kv`. Credit-changing operations must run in transactions with row-level locking on reader balance. Cache frequently accessed data in KV with TTL 300s where specified. |
+| **Neon Postgres / Blob / KV** | Implement data layer: queries, migrations, blob uploads, KV caching. | DB schema changes, content CRUD, asset uploads, caching featured/trending data. | Schema and indexes are in the design doc. Use `@/lib/db/postgres` (`@neondatabase/serverless`), `@vercel/blob`, `@vercel/kv`. Credit-changing operations must run in transactions with row-level locking on reader balance. Cache frequently accessed data in KV with TTL 300s where specified. |
 | **Authentication & session** | Clerk owns identity (sign-in/up, sessions, password recovery). Neon `readers` stores app profile + credits, linked via `clerk_user_id`. | Auth UI, protected routes, Server Actions, welcome bonus (200 credits). | Use `@clerk/nextjs` (`ClerkProvider`, `proxy.ts` with `clerkMiddleware`, `/sign-in` + `/sign-up`). Resolve the app user with `getCurrentSession` / `getCurrentReader` (Clerk → Neon). Guest browse is public; protect `/profile`, `/vault`, `/admin`. Sync users via `/api/webhooks/clerk`. Do not add new email/password or JWT cookie auth. |
 | **MCP (Model Context Protocol)** | Implement or call the content-agent MCP interface and use Stitch for design assets. | Adding/updating MCP tools, content agent workflows, or fetching designs from Stitch. | MCP server at `/api/mcp`; API key auth. Tools: create_author, create_series, create_novel, create_chapter, create_character, list_content, update_content. Stitch MCP (see `.kiro/settings/mcp.json`) for design screens; use when syncing or referencing Stitch designs. |
 | **Property-based testing (fast-check)** | Write and maintain property-based tests for correctness properties. | Adding or changing behavior that affects credits, auth, reading progress, unlocks, endorsements, comments, or admin. | Each correctness property in the design doc (Properties 1–26) should have a corresponding test. Use generators in `src/__tests__/generators/` for domain types. Tag tests: `Feature: midnight-satin-platform, Property N: <short description>`. Run property tests as part of CI. |

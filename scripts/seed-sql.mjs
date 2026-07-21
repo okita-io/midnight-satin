@@ -8,7 +8,7 @@
  */
 
 import { readFileSync } from "fs";
-import { createPool } from "@vercel/postgres";
+import { createPool } from "./lib/postgres.mjs";
 import { config } from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";

@@ -1,6 +1,6 @@
 import type { SessionPayload } from "./session-types";
 import { readerDbRowToReader, type Reader, type ReaderDbRow } from "@/lib/db/types";
-import { sql } from "@vercel/postgres";
+import { sql } from "@/lib/db/postgres";
 
 const WELCOME_BONUS_CREDITS = 200;
 

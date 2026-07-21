@@ -36,7 +36,7 @@ Browser
 | `/admin/*` | `auth.protect()` | `requireAdminPage()` + `checkAdminSession()` | Must be Neon admin |
 | Unlock / purchase / comment / review / bookmark / follow | Public pages | Server actions `getSession()` / `requireSession()` | Edge protect would break guest browsing; fail closed in actions |
 | `/novel/.../paperback` + `/paperback/success` | Public | Checkout action requires session; success uses Stripe `session_id` | Not Edge-gated |
-| `/api/webhooks/clerk`, `/api/webhooks/stripe`, `/api/webhooks/payment` | Explicitly **not** session-protected | Signature verification (Clerk / Stripe) | Never rely on cookies |
+| `/api/webhooks/clerk`, `/api/webhooks/stripe` (legacy alias: `/api/webhooks/payment`) | Explicitly **not** session-protected | Signature verification (Clerk / Stripe) | Never rely on cookies |
 | `/api/mcp` | Public to Edge | `MCP_API_KEY` | Separate hardening (launch-prep 3.3) |
 | Legacy `/auth/*` | Public | Redirect stubs → Clerk | Remove after cutover (task 2.2) |
 

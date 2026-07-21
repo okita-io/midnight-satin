@@ -4,7 +4,7 @@
  * Requirements: 7.3, 7.4
  */
 
-import { sql } from "@vercel/postgres";
+import { sql } from "@/lib/db/postgres";
 import type { PaperbackOrder } from "./types";
 
 /** DB row shape for paperback_orders (snake_case from Postgres) */

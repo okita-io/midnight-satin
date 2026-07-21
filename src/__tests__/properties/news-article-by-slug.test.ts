@@ -66,8 +66,8 @@ const arbNewsArticleRow: fc.Arbitrary<NewsArticleRow> = fc.record({
   }),
 });
 
-// Mock @vercel/postgres before importing content.ts
-vi.mock("@vercel/postgres", () => ({
+// Mock @/lib/db/postgres before importing content.ts
+vi.mock("@/lib/db/postgres", () => ({
   sql: vi.fn(),
 }));
 
@@ -88,7 +88,7 @@ describe("Property 4: Get article by slug returns correct result", () => {
   beforeEach(async () => {
     vi.resetModules();
 
-    const vercelPostgres = await import("@vercel/postgres");
+    const vercelPostgres = await import("@/lib/db/postgres");
     sqlMock = vercelPostgres.sql as unknown as ReturnType<typeof vi.fn>;
 
     const contentModule = await import("@/lib/content");

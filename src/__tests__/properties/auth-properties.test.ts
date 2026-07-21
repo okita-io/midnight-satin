@@ -5,7 +5,7 @@
 
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { upsertReaderFromClerkWebhook } from "@/lib/auth/clerk-reader";
-import { sql } from "@vercel/postgres";
+import { sql } from "@/lib/db/postgres";
 
 const hasPostgres =
   typeof process.env.POSTGRES_URL === "string" && process.env.POSTGRES_URL.length > 0;

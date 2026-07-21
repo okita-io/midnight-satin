@@ -6,7 +6,7 @@
  * Idempotent: already-unlocked chapters return success without deducting credits.
  */
 
-import { sql } from "@vercel/postgres";
+import { sql } from "@/lib/db/postgres";
 import { getSession } from "@/lib/auth/session";
 
 const UNLOCK_COST = 5;

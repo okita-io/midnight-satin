@@ -7,7 +7,7 @@
  * Sets has_trophy when endorsement_count exceeds 1000 (Property 5).
  */
 
-import { sql } from "@vercel/postgres";
+import { sql } from "@/lib/db/postgres";
 import { getSession } from "@/lib/auth/session";
 
 const ENDORSEMENT_COST = 1;

@@ -6,7 +6,7 @@
  * Run this instead of re-running seed:test-data when you already have Replicate URLs in the DB.
  */
 
-import { createPool } from '@vercel/postgres';
+import { createPool } from './lib/postgres.mjs';
 import { config } from 'dotenv';
 import { promises as fs } from 'fs';
 import path from 'path';

@@ -1,112 +1,17 @@
 /**
- * Stripe webhook handler for paperback orders.
- * Processes checkout.session.completed events with novel_id in metadata.
- * Uses ON CONFLICT (stripe_session_id) DO NOTHING for idempotent order recording.
- * Requirements: 8.1, 8.2, 8.3, 8.4, 8.5, 8.6, 7.3, 7.4
+ * Canonical Stripe webhook endpoint.
+ *
+ * Configure ONE Dashboard endpoint:
+ *   POST https://<host>/api/webhooks/stripe
+ * Event: checkout.session.completed
+ *
+ * Handles credit-pack grants and paperback order recording
+ * (see src/lib/stripe/webhook.ts).
  */
 
-import { NextRequest, NextResponse } from "next/server";
-import Stripe from "stripe";
-import { insertPaperbackOrder } from "@/lib/db/paperback-orders";
+import type { NextRequest } from "next/server";
+import { handleStripeWebhook } from "@/lib/stripe/webhook";
 
 export async function POST(request: NextRequest) {
-  if (!process.env.STRIPE_SECRET_KEY || !process.env.STRIPE_WEBHOOK_SECRET) {
-    console.error(
-      "Stripe webhook: missing STRIPE_SECRET_KEY or STRIPE_WEBHOOK_SECRET"
-    );
-    return NextResponse.json(
-      { error: "Webhook not configured" },
-      { status: 400 }
-    );
-  }
-
-  const body = await request.text();
-  const signature = request.headers.get("stripe-signature");
-  if (!signature) {
-    return NextResponse.json(
-      { error: "Missing stripe-signature" },
-      { status: 400 }
-    );
-  }
-
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
-  let event: Stripe.Event;
-  try {
-    event = stripe.webhooks.constructEvent(
-      body,
-      signature,
-      process.env.STRIPE_WEBHOOK_SECRET!
-    );
-  } catch (err) {
-    const message = err instanceof Error ? err.message : "Invalid signature";
-    console.error("Stripe webhook signature verification failed:", message);
-    return NextResponse.json({ error: message }, { status: 400 });
-  }
-
-  // Acknowledge non-checkout events
-  if (event.type !== "checkout.session.completed") {
-    return NextResponse.json({ received: true });
-  }
-
-  const session = event.data.object as Stripe.Checkout.Session;
-  const novelId = session.metadata?.novel_id;
-  const readerId = session.metadata?.reader_id;
-  const checkoutType = session.metadata?.type;
-
-  // Not a paperback checkout (e.g. credit pack) — ACK so Stripe does not retry.
-  if (
-    checkoutType === "credit_pack" ||
-    session.metadata?.pack_id ||
-    !novelId
-  ) {
-    return NextResponse.json({ received: true });
-  }
-
-  if (!readerId) {
-    console.error("Stripe webhook: missing reader_id", { novelId });
-    return NextResponse.json(
-      { error: "Missing session metadata" },
-      { status: 400 }
-    );
-  }
-
-  const shipping =
-    session.collected_information?.shipping_details ??
-    (
-      session as Stripe.Checkout.Session & {
-        shipping_details?: {
-          name?: string | null;
-          address?: Stripe.Address | null;
-        } | null;
-      }
-    ).shipping_details ??
-    null;
-
-  try {
-    await insertPaperbackOrder({
-      readerId,
-      novelId,
-      stripeSessionId: session.id,
-      stripePaymentIntentId:
-        typeof session.payment_intent === "string"
-          ? session.payment_intent
-          : session.payment_intent?.id ?? null,
-      amountCents: session.amount_total ?? 0,
-      currency: session.currency ?? "usd",
-      shippingName: shipping?.name ?? null,
-      shippingAddress: shipping?.address
-        ? (shipping.address as unknown as Record<string, unknown>)
-        : null,
-      status: "paid",
-    });
-  } catch (err) {
-    console.error("Stripe webhook: failed to record order", err);
-    return NextResponse.json(
-      { error: "Failed to record order" },
-      { status: 500 }
-    );
-  }
-
-  return NextResponse.json({ received: true });
+  return handleStripeWebhook(request);
 }

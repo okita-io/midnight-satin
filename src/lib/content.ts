@@ -6,7 +6,7 @@
  * Trending: engagement metric (reading_progress last 7 days) with optional admin override
  */
 
-import { sql } from "@vercel/postgres";
+import { sql } from "@/lib/db/postgres";
 import type { Novel, AuthorProfile, NewsArticle, NewsArticleSummary, NewsArticleType } from "@/lib/db/types";
 import {
   cacheGetOrSet,

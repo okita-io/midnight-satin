@@ -3,7 +3,7 @@
  * Content length validation (max 800 chars) enforced at DB (CHECK) and application layer.
  */
 
-import { sql } from "@vercel/postgres";
+import { sql } from "@/lib/db/postgres";
 import type { Comment, CommentThreadPage } from "./types";
 
 /** DB row shape for comments (from SELECT with reader join) */

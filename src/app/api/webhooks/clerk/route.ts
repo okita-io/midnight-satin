@@ -1,7 +1,7 @@
 import { verifyWebhook } from "@clerk/nextjs/webhooks";
 import type { NextRequest } from "next/server";
 import { upsertReaderFromClerkWebhook } from "@/lib/auth/clerk-reader";
-import { sql } from "@vercel/postgres";
+import { sql } from "@/lib/db/postgres";
 
 /**
  * Clerk user lifecycle → Neon `readers` sync.

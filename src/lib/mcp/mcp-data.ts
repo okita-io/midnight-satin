@@ -3,9 +3,9 @@
  * Create, list, and update operations for Author_Profiles, Series, Novels, Chapters, Characters.
  * Requirements: 12.1-12.8
  */
-/* eslint-disable @typescript-eslint/no-explicit-any -- @vercel/postgres Primitive type omits arrays; pg supports them at runtime */
+/* eslint-disable @typescript-eslint/no-explicit-any -- sql params may include arrays; pg supports them at runtime */
 
-import { sql } from "@vercel/postgres";
+import { sql } from "@/lib/db/postgres";
 import type {
   AuthorProfile,
   Series,

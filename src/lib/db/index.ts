@@ -1,13 +1,13 @@
 /**
  * Midnight Satin Database Layer
- * Exports schema, types, and query helpers for Vercel Postgres
+ * Exports schema, types, and query helpers (Neon via `@/lib/db/postgres`)
  */
 
-import { sql } from "@vercel/postgres";
+import { sql } from "@/lib/db/postgres";
 import type { ReaderDbRow } from "./types";
 import { readerDbRowToReader } from "./types";
 
-export { sql } from "@vercel/postgres";
+export { sql } from "@/lib/db/postgres";
 export * from "./types";
 
 /** Get reader by id. Returns null if not found. */

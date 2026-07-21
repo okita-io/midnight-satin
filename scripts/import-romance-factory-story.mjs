@@ -16,7 +16,7 @@
  *   node scripts/import-romance-factory-story.mjs --story-path ... --skip-images --no-git
  */
 
-import { createPool } from "@vercel/postgres";
+import { createPool } from "./lib/postgres.mjs";
 import { config } from "dotenv";
 import { execSync } from "child_process";
 import { promises as fs } from "fs";

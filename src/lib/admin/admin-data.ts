@@ -4,7 +4,7 @@
  * Requirements: 13.1-13.7
  */
 
-import { sql } from "@vercel/postgres";
+import { sql } from "@/lib/db/postgres";
 import type { Reader, ReaderDbRow } from "@/lib/db/types";
 import { readerDbRowToReader } from "@/lib/db/types";
 import {

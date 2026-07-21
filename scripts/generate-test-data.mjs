@@ -12,7 +12,7 @@
  * - AI-generated images using Replicate
  */
 
-import { createPool } from '@vercel/postgres';
+import { createPool } from './lib/postgres.mjs';
 import { config } from 'dotenv';
 import { promises as fs } from 'fs';
 import path from 'path';

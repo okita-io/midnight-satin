@@ -3,7 +3,7 @@
  * Preview list: highest helpful count first, then recency.
  */
 
-import { sql } from "@vercel/postgres";
+import { sql } from "@/lib/db/postgres";
 import type { NovelReview } from "./types";
 
 export interface NovelReviewWithAuthor extends NovelReview {

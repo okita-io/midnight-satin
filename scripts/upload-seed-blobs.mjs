@@ -1,5 +1,5 @@
 import { put } from '@vercel/blob';
-import { createPool } from '@vercel/postgres';
+import { createPool } from './lib/postgres.mjs';
 import { readFileSync } from 'fs';
 import { config } from 'dotenv';
 import path from 'path';

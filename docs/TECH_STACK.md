@@ -23,7 +23,7 @@ Midnight Satin is a **single Next.js 16 monolith** (App Router). There is no sep
 | Auth (Clerk) | `/sign-in`, `/sign-up` |
 | Auth (legacy) | `/auth/login`, `/auth/register`, `/auth/forgot-password`, `/auth/reset-password` |
 | Admin | `/admin/*` (authors, novels, series, chapters, characters, comments, users) |
-| API | `/api/mcp`, `/api/webhooks/clerk`, `/api/webhooks/stripe`, `/api/webhooks/payment` |
+| API | `/api/mcp`, `/api/webhooks/clerk`, `/api/webhooks/stripe` (legacy alias `/api/webhooks/payment`) |
 
 ## Integration map
 
@@ -48,7 +48,7 @@ Deep dives: [INFRASTRUCTURE.md](./INFRASTRUCTURE.md), [AUTH.md](./AUTH.md).
 | Package | Role |
 |---------|------|
 | `@clerk/nextjs` | Authentication (Clerk → Neon `readers`) |
-| `@vercel/postgres` | Neon-backed SQL (`sql` tagged templates) |
+| `@neondatabase/serverless` | Neon SQL via `src/lib/db/postgres` (`sql` tagged templates) |
 | `@vercel/blob` | Public image storage |
 | `@vercel/kv` | Short-TTL cache (optional locally) |
 | `@vercel/analytics` / `@vercel/speed-insights` | Product analytics / Web Vitals |
@@ -105,7 +105,7 @@ See `.cursor/rules/midnight-satin-design.mdc`.
 
 ## What is intentionally not in the stack
 
-- **No ORM** — raw SQL via `@vercel/postgres`
+- **No ORM** — raw SQL via `@neondatabase/serverless` (`@/lib/db/postgres`)
 - **No automated migration runner** — numbered files under `scripts/migrations/`
 - **No CI workflows** in-repo (no `.github/workflows` at audit time)
 - **No Docker** — Vercel + Neon + Blob + KV

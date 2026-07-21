@@ -4,7 +4,7 @@ How Midnight Satin uses Vercel platform services and third-party APIs. Connectio
 
 ## Neon / Vercel Postgres
 
-**What:** Primary application database. On Vercel, “Postgres” storage is Neon-backed; the app talks to it through `@vercel/postgres` using `POSTGRES_URL`.
+**What:** Primary application database. On Vercel, Postgres is Neon-backed; the app talks to it through `@neondatabase/serverless` (compat shim at `src/lib/db/postgres.ts`) using `POSTGRES_URL` / `DATABASE_URL`.
 
 **Client:** `src/lib/db/index.ts` re-exports `sql` and small reader helpers. Most features issue tagged-template SQL directly in server actions or lib modules.
 
@@ -89,7 +89,7 @@ Safe for local dev without KV.
 
 | Flow | Entry | Webhook / persistence |
 |------|--------|------------------------|
-| Credits | `src/app/actions/purchase-credits.ts` | Payment webhook + `credit_transactions` / `processed_payment_events` |
+| Credits | `src/app/actions/purchase-credits.ts` | `/api/webhooks/stripe` → `credit_transactions` / `processed_payment_events` |
 | Paperback | `src/app/actions/paperback.ts` | `/api/webhooks/stripe` → `paperback_orders` (idempotent on `stripe_session_id`) |
 
 **Feature flags:**
@@ -150,4 +150,4 @@ Treat `MCP_API_KEY` as a privileged secret; there is no fine-grained RBAC beyond
 **Webhook endpoints to configure in vendor dashboards:**
 
 1. Clerk → `https://<host>/api/webhooks/clerk` (`user.created` / `user.updated` / `user.deleted`)
-2. Stripe → `https://<host>/api/webhooks/stripe` (and any payment webhook already wired under `/api/webhooks/payment`)
+2. Stripe → **one** endpoint `https://<host>/api/webhooks/stripe` (`checkout.session.completed` only). Unified handler covers credit packs + paperback. `/api/webhooks/payment` is a legacy alias — do not register both in the Dashboard (each endpoint gets its own `whsec_`).

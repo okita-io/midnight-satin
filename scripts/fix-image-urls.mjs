@@ -6,7 +6,7 @@
  * by matching on the entity name + novel_id slug pattern used by generate-test-data.mjs.
  */
 
-import { createPool } from '@vercel/postgres';
+import { createPool } from './lib/postgres.mjs';
 import { config } from 'dotenv';
 import { promises as fs } from 'fs';
 import path from 'path';

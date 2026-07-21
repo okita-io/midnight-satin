@@ -13,7 +13,7 @@ Place or reference skills in **this directory** (or in `.cursor/skills/` and lis
 
 ## Task scope (from `tasks.md`)
 
-- 12.2 — purchaseCredits action, `/api/webhooks/payment` route, Payment_Provider integration, idempotent credit grant
+- 12.2 — purchaseCredits action, `/api/webhooks/stripe` (unified; legacy `/api/webhooks/payment` alias), Payment_Provider integration, idempotent credit grant
 
 ## Dependencies
 

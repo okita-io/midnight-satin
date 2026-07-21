@@ -59,7 +59,7 @@ Without Postgres + Clerk, reader sessions and catalog data will not work as desi
 4. Create Clerk application → keys + webhook to `/api/webhooks/clerk`
 5. Create Blob store → `BLOB_READ_WRITE_TOKEN`
 6. (Optional) Create KV → REST URL + token
-7. Stripe keys + webhook endpoints
+7. Stripe keys + **one** webhook endpoint → `/api/webhooks/stripe` (`checkout.session.completed`)
 8. Set feature flags intentionally for production
 9. Seed content (`db:seed`, news, devblog, Romance Factory import) as needed
 
