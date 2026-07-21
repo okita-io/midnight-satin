@@ -20,6 +20,7 @@ import {
   unlockChapterInStore,
   endorseCharacterInStore,
 } from "@/lib/db/store";
+import { CHAPTER_UNLOCK_COST } from "@/lib/vault-constants";
 import type {
   AuthorProfile,
   Series,
@@ -233,7 +234,7 @@ describe("Property 24: Admin analytics accuracy", () => {
         fc.uuid(),
         fc.uuid(),
         fc.uuid(),
-        fc.integer({ min: 5, max: 100 }),
+        fc.integer({ min: CHAPTER_UNLOCK_COST, max: 100 }),
         fc.integer({ min: 0, max: 20 }),
         (readerId, authorId, novelId, balance, endorsementCount) => {
           clearStore();
@@ -304,16 +305,19 @@ describe("Property 24: Admin analytics accuracy", () => {
 
           let expectedSpent = 0;
 
-          if (balance >= 5) {
+          if (balance >= CHAPTER_UNLOCK_COST) {
             const unlockResult = unlockChapterInStore(readerId, chapterId);
             if (unlockResult.success) {
-              expectedSpent += 5;
+              expectedSpent += CHAPTER_UNLOCK_COST;
             }
           }
 
           const endorseLimit = Math.min(
             endorsementCount,
-            Math.floor((balance - (balance >= 5 ? 5 : 0)) / 1)
+            Math.floor(
+              (balance - (balance >= CHAPTER_UNLOCK_COST ? CHAPTER_UNLOCK_COST : 0)) /
+                1
+            )
           );
           for (let i = 0; i < endorseLimit; i++) {
             const result = endorseCharacterInStore(readerId, characterId);

@@ -2,12 +2,12 @@
  * Property 2: Chapter unlock credit invariant
  * Validates: Requirements 4.4, 4.5
  *
- * For any reader and any locked chapter, if the reader's credit balance is >= 5,
- * calling unlockChapter should: (a) decrease the reader's credit balance by exactly 5,
+ * For any reader and any locked chapter, if the reader's credit balance is >= CHAPTER_UNLOCK_COST,
+ * calling unlockChapter should: (a) decrease the reader's credit balance by exactly CHAPTER_UNLOCK_COST,
  * (b) create a chapter_unlock record, and (c) create a credit_transaction record of
- * type 'chapter_unlock' with amount -5. If the reader's credit balance is < 5,
- * calling unlockChapter should fail and leave the reader's credit balance unchanged
- * with no new records created.
+ * type 'chapter_unlock' with amount -CHAPTER_UNLOCK_COST. If the reader's credit balance is
+ * < CHAPTER_UNLOCK_COST, calling unlockChapter should fail and leave the reader's credit
+ * balance unchanged with no new records created.
  *
  * Property 3: Chapter unlock idempotence
  * Validates: Requirements 4.6
@@ -58,6 +58,7 @@ import {
   countPurchaseTransactionsFromStore,
   getPurchaseTransactionsFromStore,
 } from "@/lib/db/store";
+import { CHAPTER_UNLOCK_COST } from "@/lib/vault-constants";
 import type {
   ReaderRow,
   AuthorProfile,
@@ -68,7 +69,6 @@ import type {
   CharacterStats,
 } from "@/lib/db/types";
 
-const UNLOCK_COST = 5;
 const ENDORSEMENT_COST = 1;
 const TROPHY_THRESHOLD = 1000;
 
@@ -98,14 +98,14 @@ function makeCharacter(
 describe("Property 2: Chapter unlock credit invariant", () => {
   beforeEach(() => clearStore());
 
-  it("when balance >= 5: decreases balance by 5, creates unlock and transaction", () => {
+  it(`when balance >= ${CHAPTER_UNLOCK_COST}: decreases balance by ${CHAPTER_UNLOCK_COST}, creates unlock and transaction`, () => {
     fc.assert(
       fc.property(
         fc.uuid(),
         fc.uuid(),
         fc.uuid(),
         fc.uuid(),
-        fc.integer({ min: 5, max: 10000 }),
+        fc.integer({ min: CHAPTER_UNLOCK_COST, max: 10000 }),
         (readerId, authorId, novelId, chapterId, balance) => {
           const reader: ReaderRow = {
             id: readerId,
@@ -159,9 +159,9 @@ describe("Property 2: Chapter unlock credit invariant", () => {
 
           expect(result.success).toBe(true);
           if (result.success) {
-            expect(result.newBalance).toBe(balance - UNLOCK_COST);
+            expect(result.newBalance).toBe(balance - CHAPTER_UNLOCK_COST);
           }
-          expect(getReaderBalanceFromStore(readerId)).toBe(balance - UNLOCK_COST);
+          expect(getReaderBalanceFromStore(readerId)).toBe(balance - CHAPTER_UNLOCK_COST);
           expect(hasChapterUnlockFromStore(readerId, chapterId)).toBe(true);
           expect(
             countChapterUnlockTransactionsFromStore(readerId, chapterId)
@@ -172,14 +172,14 @@ describe("Property 2: Chapter unlock credit invariant", () => {
     );
   });
 
-  it("when balance < 5: fails, leaves balance unchanged, no new records", () => {
+  it(`when balance < ${CHAPTER_UNLOCK_COST}: fails, leaves balance unchanged, no new records`, () => {
     fc.assert(
       fc.property(
         fc.uuid(),
         fc.uuid(),
         fc.uuid(),
         fc.uuid(),
-        fc.integer({ min: 0, max: 4 }),
+        fc.integer({ min: 0, max: CHAPTER_UNLOCK_COST - 1 }),
         (readerId, authorId, novelId, chapterId, balance) => {
           const reader: ReaderRow = {
             id: readerId,
@@ -392,7 +392,7 @@ describe("Property 3: Chapter unlock idempotence", () => {
           if (first.success && second.success) {
             expect(second.newBalance).toBe(first.newBalance);
           }
-          expect(getReaderBalanceFromStore(readerId)).toBe(balance - UNLOCK_COST);
+          expect(getReaderBalanceFromStore(readerId)).toBe(balance - CHAPTER_UNLOCK_COST);
           expect(
             countChapterUnlockTransactionsFromStore(readerId, chapterId)
           ).toBe(1);

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { readingRoomPath } from "@/lib/navigation";
-import type { NovelChapter } from "@/lib/content";
+import type { NovelChapterSummary } from "@/lib/content";
 
 function toRoman(num: number): string {
   const map: [number, string][] = [
@@ -25,7 +25,7 @@ function toRoman(num: number): string {
 
 interface ChapterListProps {
   novelId: string;
-  chapters: NovelChapter[];
+  chapters: NovelChapterSummary[];
   unlockedIds: Set<string>;
   updatedAgo?: string | null;
 }

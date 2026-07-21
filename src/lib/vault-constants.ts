@@ -1,9 +1,15 @@
 /**
- * Shared constants for Vault (credit store) UI.
+ * Shared constants for Vault (credit store) UI and chapter unlock pricing.
  * Ensures ribbons, animations, and card styling are preserved across responsive layouts.
  * @see Linear THE-75 Property 27
  * @see Requirements 8.3, 8.5, 10.1-10.7
  */
+
+/**
+ * Credits deducted to unlock one locked chapter (early-adopter pricing).
+ * Used by unlock action, Veil UI, and property tests — keep in sync.
+ */
+export const CHAPTER_UNLOCK_COST = 1 as const;
 
 /** PopularRibbon label text (Req 8.3: "Most Popular" burgundy ribbon) */
 export const POPULAR_RIBBON_LABEL = "Most Popular" as const;

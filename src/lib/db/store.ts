@@ -20,6 +20,7 @@ import type {
   Comment,
   CommentLike,
 } from "./types";
+import { CHAPTER_UNLOCK_COST } from "@/lib/vault-constants";
 
 /** Current reading result for Property 12 (matches content.CurrentReading shape) */
 export interface CurrentReadingFromStore {
@@ -332,8 +333,6 @@ export function getCurrentReadingFromStore(
   };
 }
 
-const UNLOCK_COST = 5;
-
 /** List credit transactions for a reader (Property 2, 3) */
 function listCreditTransactionsByReader(
   readerId: string
@@ -391,8 +390,8 @@ export type UnlockChapterInStoreResult =
 
 /**
  * Unlock a locked chapter for a reader in the store (Property 2, 3).
- * Mirrors unlockChapter server action logic: deducts 5 credits, creates
- * chapter_unlock and credit_transaction. Idempotent when already unlocked.
+ * Mirrors unlockChapter server action logic: deducts CHAPTER_UNLOCK_COST credits,
+ * creates chapter_unlock and credit_transaction. Idempotent when already unlocked.
  */
 export function unlockChapterInStore(
   readerId: string,
@@ -426,21 +425,21 @@ export function unlockChapterInStore(
     return { success: false, error: "Reader not found." };
   }
   const balance = reader.creditBalance;
-  if (balance < UNLOCK_COST) {
+  if (balance < CHAPTER_UNLOCK_COST) {
     return { success: false, error: "Insufficient credits." };
   }
 
   // 4. Deduct, create transaction, create unlock
   const updatedReader: ReaderRow = {
     ...reader,
-    creditBalance: balance - UNLOCK_COST,
+    creditBalance: balance - CHAPTER_UNLOCK_COST,
   };
   storeEntity(updatedReader);
 
   const tx: CreditTransaction = {
     id: crypto.randomUUID(),
     readerId,
-    amount: -UNLOCK_COST,
+    amount: -CHAPTER_UNLOCK_COST,
     transactionType: "chapter_unlock",
     relatedEntityId: chapterId,
     createdAt: new Date(),
@@ -454,7 +453,7 @@ export function unlockChapterInStore(
   };
   storeEntity(unlock);
 
-  return { success: true, newBalance: balance - UNLOCK_COST };
+  return { success: true, newBalance: balance - CHAPTER_UNLOCK_COST };
 }
 
 const ENDORSEMENT_COST = 1;

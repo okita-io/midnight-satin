@@ -11,6 +11,7 @@
 import { useCallback, useEffect, useReducer, useRef } from "react";
 import { saveReadingProgress } from "@/app/actions/reading-progress";
 import { unlockChapter } from "@/app/actions/unlock-chapter";
+import { CHAPTER_UNLOCK_COST } from "@/lib/vault-constants";
 import { ChapterContent } from "./chapter-content";
 import { TheVeil } from "@/app/_components/the-veil";
 import {
@@ -243,7 +244,12 @@ export function ReadingRoomClient({
   );
 
   const handleUnlock = useCallback(async () => {
-    if (!isAuthenticated || state.creditBalance < 5 || state.isUnlocking) return;
+    if (
+      !isAuthenticated ||
+      state.creditBalance < CHAPTER_UNLOCK_COST ||
+      state.isUnlocking
+    )
+      return;
     dispatch({ type: "unlock_start" });
     const result = await unlockChapter(chapterId);
     if (result.success) {

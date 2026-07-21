@@ -8,8 +8,7 @@
 
 import { sql } from "@/lib/db/postgres";
 import { getSession } from "@/lib/auth/session";
-
-const UNLOCK_COST = 5;
+import { CHAPTER_UNLOCK_COST } from "@/lib/vault-constants";
 
 export type UnlockChapterResult =
   | { success: true; newBalance: number }
@@ -30,7 +29,7 @@ export async function isChapterUnlocked(
 }
 
 /**
- * Unlock a chapter for the current reader. Deducts 5 credits.
+ * Unlock a chapter for the current reader. Deducts CHAPTER_UNLOCK_COST credits.
  * Uses transaction with row-level locking on readers.credit_balance.
  * Idempotent: if already unlocked, returns success without deducting.
  */
@@ -74,7 +73,7 @@ export async function unlockChapter(
       return { success: false, error: "Reader not found." };
     }
     const balance = Number(readerRows[0].credit_balance ?? 0);
-    if (balance < UNLOCK_COST) {
+    if (balance < CHAPTER_UNLOCK_COST) {
       await client.sql`ROLLBACK`;
       return {
         success: false,
@@ -85,12 +84,12 @@ export async function unlockChapter(
     // 3. Update balance, create transaction record, create unlock record
     await client.sql`
       UPDATE readers
-      SET credit_balance = credit_balance - ${UNLOCK_COST}
+      SET credit_balance = credit_balance - ${CHAPTER_UNLOCK_COST}
       WHERE id = ${readerId}
     `;
     await client.sql`
       INSERT INTO credit_transactions (reader_id, amount, transaction_type, related_entity_id)
-      VALUES (${readerId}, ${-UNLOCK_COST}, 'chapter_unlock', ${chapterId})
+      VALUES (${readerId}, ${-CHAPTER_UNLOCK_COST}, 'chapter_unlock', ${chapterId})
     `;
     await client.sql`
       INSERT INTO chapter_unlocks (reader_id, chapter_id)
@@ -98,7 +97,7 @@ export async function unlockChapter(
     `;
     await client.sql`COMMIT`;
 
-    return { success: true, newBalance: balance - UNLOCK_COST };
+    return { success: true, newBalance: balance - CHAPTER_UNLOCK_COST };
   } catch (err) {
     try {
       await client.sql`ROLLBACK`;

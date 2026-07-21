@@ -3,12 +3,13 @@
 /**
  * The Veil — chapter paywall overlay (Req 4.1-4.6).
  * Progressive blur on content; lock icon, "The Veil is Drawn" heading (Cinzel),
- * unlock button (5 credits), balance display.
+ * unlock button (CHAPTER_UNLOCK_COST credits), balance display.
  */
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { SignInButton } from "@clerk/nextjs";
+import { CHAPTER_UNLOCK_COST } from "@/lib/vault-constants";
 
 export interface TheVeilProps {
   /** Current credit balance */
@@ -31,8 +32,8 @@ export function TheVeil({
   error = null,
 }: TheVeilProps) {
   const pathname = usePathname();
-  const canUnlock = isAuthenticated && creditBalance >= 5;
-  const showVaultPrompt = isAuthenticated && creditBalance < 5;
+  const canUnlock = isAuthenticated && creditBalance >= CHAPTER_UNLOCK_COST;
+  const showVaultPrompt = isAuthenticated && creditBalance < CHAPTER_UNLOCK_COST;
 
   const ctaShellClassName =
     "group relative w-full overflow-hidden rounded-sm bg-[#1a170e] border border-primary/30 p-[1px] transition-all [@media(hover:hover)]:hover:border-primary [@media(hover:hover)]:hover:shadow-[0px_4px_20px_rgba(212,175,55,0.15)] active:scale-[0.98]";
@@ -88,7 +89,7 @@ export function TheVeil({
               onClick={canUnlock ? onUnlock : undefined}
               disabled={isUnlocking || !canUnlock}
               className={`${ctaShellClassName} disabled:opacity-60 disabled:cursor-not-allowed disabled:[@media(hover:hover)]:hover:border-primary/30 disabled:[@media(hover:hover)]:hover:shadow-none`.trim()}
-              aria-label="Lift Veil — 5 Credits"
+              aria-label={`Lift Veil — ${CHAPTER_UNLOCK_COST} ${CHAPTER_UNLOCK_COST === 1 ? "Credit" : "Credits"}`}
             >
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
               <div className="relative bg-[#1a170e] px-4 py-3 flex items-center justify-between">
@@ -109,7 +110,7 @@ export function TheVeil({
                 </div>
                 <div className="flex items-center gap-1.5 bg-void/50 px-2 py-1 rounded border border-white/5">
                   <span className="font-heading font-semibold text-sm text-white">
-                    5
+                    {CHAPTER_UNLOCK_COST}
                   </span>
                   <span
                     className="material-symbols-outlined text-primary"

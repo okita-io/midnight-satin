@@ -260,7 +260,7 @@ interface CharacterRow {
   created_at: Date;
 }
 
-/** Chapter type for Novel Detail page. */
+/** Chapter type for Novel Detail page (includes body — Reading Room / admin only). */
 export interface NovelChapter {
   id: string;
   novelId: string;
@@ -271,6 +271,12 @@ export interface NovelChapter {
   createdAt: Date;
   updatedAt: Date;
 }
+
+/**
+ * Chapter metadata safe to serialize to the client on Novel Detail.
+ * Omits `content` so locked bodies never leak via RSC props.
+ */
+export type NovelChapterSummary = Omit<NovelChapter, "content">;
 
 /** Character type for Novel Detail. */
 export interface NovelCharacter {
@@ -295,6 +301,20 @@ function rowToChapter(row: ChapterRow): NovelChapter {
     chapterNumber: row.chapter_number,
     title: row.title,
     content: row.content,
+    isFree: row.is_free,
+    createdAt: new Date(row.created_at),
+    updatedAt: new Date(row.updated_at),
+  };
+}
+
+function rowToChapterSummary(
+  row: Omit<ChapterRow, "content">
+): NovelChapterSummary {
+  return {
+    id: row.id,
+    novelId: row.novel_id,
+    chapterNumber: row.chapter_number,
+    title: row.title,
     isFree: row.is_free,
     createdAt: new Date(row.created_at),
     updatedAt: new Date(row.updated_at),
@@ -343,6 +363,8 @@ export async function getNovel(novelId: string): Promise<NovelWithAuthorName | n
 
 /**
  * Get chapters for a novel, ordered by chapter number.
+ * Includes full `content` — use only on server paths that need the body
+ * (Reading Room, paperback word-count). Prefer `getChapterSummaries` for lists.
  */
 export async function getChapters(novelId: string): Promise<NovelChapter[]> {
   try {
@@ -356,6 +378,34 @@ export async function getChapters(novelId: string): Promise<NovelChapter[]> {
   } catch {
     return [];
   }
+}
+
+/**
+ * Get chapter metadata for a novel without body text (paywall-safe for client lists).
+ */
+export async function getChapterSummaries(
+  novelId: string
+): Promise<NovelChapterSummary[]> {
+  try {
+    const { rows } = await sql<Omit<ChapterRow, "content">>`
+      SELECT id, novel_id, chapter_number, title, is_free, created_at, updated_at
+      FROM chapters
+      WHERE novel_id = ${novelId}
+      ORDER BY chapter_number ASC
+    `;
+    return rows.map(rowToChapterSummary);
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * Strip body text from a chapter for client-safe list serialization.
+ * Used by tests to assert the Novel Detail payload shape.
+ */
+export function toChapterSummary(chapter: NovelChapter): NovelChapterSummary {
+  const { content: _content, ...summary } = chapter;
+  return summary;
 }
 
 /**

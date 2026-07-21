@@ -4,7 +4,7 @@ import { getCurrentSession } from "@/app/actions/auth";
 import { isNovelBookmarked } from "@/app/actions/bookmarks";
 import {
   getNovel,
-  getChapters,
+  getChapterSummaries,
   getCharacters,
   getLatestChapterUpdatedAt,
   getUnlockedChapterIds,
@@ -54,7 +54,7 @@ export default async function NovelDetailPage({
   const [novel, chapters, characters, latestUpdated, session, reviewPreview, reviewAggregate] =
     await Promise.all([
       getNovel(novelId),
-      getChapters(novelId),
+      getChapterSummaries(novelId),
       getCharacters(novelId),
       getLatestChapterUpdatedAt(novelId),
       getCurrentSession(),
