@@ -10,7 +10,6 @@
 
 import {
   Client,
-  neon,
   neonConfig,
   Pool,
   types,
@@ -25,6 +24,7 @@ import type {
 import ws from "ws";
 
 neonConfig.webSocketConstructor = ws;
+neonConfig.poolQueryViaFetch = true;
 
 export { types };
 export type {
@@ -186,14 +186,7 @@ export class VercelPool extends Pool {
     ...values: Primitive[]
   ): Promise<QueryResult<O>> {
     const [query, params] = sqlTemplate(strings, ...values);
-    const httpSql = neon(this.connectionString, { fullResults: true });
-    // neon() is a query function (Neon 1.x has no `.query`). Cast through
-    // unknown so tsc does not pick the tagged-template overload.
-    const runQuery = httpSql as unknown as (
-      sqlText: string,
-      values: Primitive[]
-    ) => Promise<QueryResult<O>>;
-    return runQuery(query, params);
+    return this.query<O>(query, params);
   }
 
   connect(): Promise<VercelPoolClient>;

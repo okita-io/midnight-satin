@@ -5,13 +5,13 @@
 
 import {
   Client,
-  neon,
   neonConfig,
   Pool,
 } from "@neondatabase/serverless";
 import ws from "ws";
 
 neonConfig.webSocketConstructor = ws;
+neonConfig.poolQueryViaFetch = true;
 
 export class VercelPostgresError extends Error {
   constructor(code, message) {
@@ -89,9 +89,7 @@ export class VercelPool extends Pool {
 
   async sql(strings, ...values) {
     const [query, params] = sqlTemplate(strings, ...values);
-    const httpSql = neon(this.connectionString, { fullResults: true });
-    // neon() returns a query function; Neon 1.x has no `.query` method.
-    return httpSql(query, params);
+    return this.query(query, params);
   }
 }
 
