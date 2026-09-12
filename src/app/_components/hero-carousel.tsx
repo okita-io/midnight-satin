@@ -90,8 +90,6 @@ export function HeroCarousel(props: Props) {
 
 const HERO_OVERLAY_GRADIENT_BOTTOM =
   "bg-[linear-gradient(180deg,rgba(5,5,5,0)_0%,rgba(5,5,5,0.40)_45%,#050505_100%)]";
-const HERO_OVERLAY_GRADIENT_TOP =
-  "bg-[linear-gradient(0deg,rgba(5,5,5,0.60)_0%,rgba(5,5,5,0)_50%)]";
 const HERO_OVERLAY_SHEEN =
   "bg-[linear-gradient(45deg,rgba(212,175,55,0.15)_0%,rgba(212,175,55,0)_55%)] opacity-25 mix-blend-overlay";
 
@@ -126,7 +124,6 @@ function HeroCarouselSingle({
         )}
       </div>
       <div className={`absolute inset-0 ${HERO_OVERLAY_GRADIENT_BOTTOM}`} />
-      <div className={`absolute inset-0 ${HERO_OVERLAY_GRADIENT_TOP}`} />
       <div className={`absolute inset-0 ${HERO_OVERLAY_SHEEN}`} />
 
       <div className="absolute bottom-0 left-0 right-0 px-6 pb-9 flex flex-col items-center text-center z-10">
@@ -208,7 +205,6 @@ function HeroCarouselCard({
         )}
       </div>
       <div className={`absolute inset-0 ${HERO_OVERLAY_GRADIENT_BOTTOM}`} />
-      <div className={`absolute inset-0 ${HERO_OVERLAY_GRADIENT_TOP}`} />
       <div className={`absolute inset-0 ${HERO_OVERLAY_SHEEN}`} />
 
       <div className="absolute bottom-0 left-0 right-0 px-6 pb-8 flex flex-col items-center text-center z-10">

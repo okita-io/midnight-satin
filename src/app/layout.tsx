@@ -59,7 +59,7 @@ export default function RootLayout({
       <body
         className={`${playfair.variable} ${cinzel.variable} ${literata.variable} ${marcellus.variable} ${pinyon.variable} bg-void text-text-main font-body antialiased`}
       >
-        <ClerkProvider>
+        <ClerkProvider afterSignOutUrl="/">
           <MainLayoutContainer className="mobile-container bg-silk-noise">
           {children}
           </MainLayoutContainer>

@@ -32,6 +32,7 @@ function NavTabLink({
   return (
     <Link
       href={href}
+      prefetch={false}
       className="flex flex-col items-center gap-1.5 flex-1 text-decoration-none focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-void rounded-sm transition-colors duration-300 ease-in-out cursor-pointer active:scale-95"
       aria-label={label}
       aria-current={isActive ? "page" : undefined}
