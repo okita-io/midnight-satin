@@ -9,9 +9,11 @@ import { VaultTeaserCard } from "./_components/vault-teaser-card";
 import {
   getFeaturedNovels,
   getTrendingNovels,
+  getRecentNovels,
   getCurrentReading,
   getFeaturedNewsArticles,
   getLatestNewsArticles,
+  selectHeroNovels,
 } from "@/lib/content";
 import type { NewsArticleSummary } from "@/lib/db/types";
 
@@ -26,12 +28,14 @@ export const revalidate = 60; // ISR: 60s revalidation per design doc
 export default async function BoudoirPage() {
   let featured: Awaited<ReturnType<typeof getFeaturedNovels>> = [];
   let trending: Awaited<ReturnType<typeof getTrendingNovels>> = [];
+  let recent: Awaited<ReturnType<typeof getRecentNovels>> = [];
   let session: Awaited<ReturnType<typeof getCurrentSession>> = null;
   try {
-    [session, featured, trending] = await Promise.all([
+    [session, featured, trending, recent] = await Promise.all([
       getCurrentSession(),
       getFeaturedNovels(5),
       getTrendingNovels(10),
+      getRecentNovels(5),
     ]);
   } catch {
     // DB/KV may not be configured; show empty sections
@@ -53,7 +57,7 @@ export default async function BoudoirPage() {
   }
 
   // Build search pool from featured + trending for header search
-  const allNovels = [...featured, ...trending];
+  const allNovels = [...featured, ...trending, ...recent];
   const uniqueNovels = Array.from(
     new Map(allNovels.map((n) => [n.id, n])).values()
   );
@@ -67,12 +71,20 @@ export default async function BoudoirPage() {
   );
   const searchAuthors = uniqueAuthors.map((a) => ({ id: a.id, name: a.name }));
 
-  const heroItems = featured.slice(0, 3); // Up to 3 for desktop multi-item (THE-49)
+  const heroItems = selectHeroNovels(featured, recent, 3);
+  const heroIds = new Set(heroItems.map((novel) => novel.id));
+  const highSocietyNovels = trending
+    .filter((novel) => !heroIds.has(novel.id))
+    .slice(0, 3);
   if (heroItems.length === 0) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p className="font-script text-2xl text-primary">Your shelf is waiting.</p>
-      </div>
+      <>
+        <BoudoirHeader searchNovels={searchNovels} searchAuthors={searchAuthors} />
+        <main className="flex-1 pb-24 min-h-screen flex items-center justify-center">
+          <p className="font-script text-2xl text-primary">Your shelf is waiting.</p>
+        </main>
+        <NavigationBar activeTab="boudoir" />
+      </>
     );
   }
 
@@ -90,7 +102,7 @@ export default async function BoudoirPage() {
           isAuthenticated={!!session}
         />
 
-        <HighSocietySection novels={trending.slice(0, 3)} />
+        <HighSocietySection novels={highSocietyNovels} />
 
         <section className="px-4 xs:px-6 mb-8">
           <VaultTeaserCard />

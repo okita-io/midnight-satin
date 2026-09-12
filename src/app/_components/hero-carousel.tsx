@@ -3,7 +3,9 @@ import Link from "next/link";
 import type { FeaturedNovel } from "@/lib/content";
 import { novelDetailPath } from "@/lib/navigation";
 import { readingRoomPath } from "@/lib/navigation";
+import { GRID_COLUMNS } from "@/lib/responsive/constants";
 import { StarRowDisplay } from "./star-row-display";
+import { SectionViewAllLink } from "./section-view-all";
 
 /** Responsive items-per-view configuration (THE-49). */
 export interface ItemsPerView {
@@ -54,25 +56,57 @@ export function HeroCarousel(props: Props) {
   const firstChapterId = "firstChapterId" in props ? props.firstChapterId : undefined;
   const firstChapterIds = "firstChapterIds" in props ? props.firstChapterIds : undefined;
 
+  const itemsPerView = "itemsPerView" in props ? props.itemsPerView : undefined;
+
   if (items.length === 0) return null;
 
-  // Single item: original full-width layout
-  if (items.length === 1) {
-    return (
-      <HeroCarouselSingle
-        item={items[0]}
+  const body =
+    items.length === 1 ? (
+      <HeroCarouselSingle item={items[0]} firstChapterId={firstChapterId} />
+    ) : (
+      <HeroCarouselGrid
+        items={items}
         firstChapterId={firstChapterId}
+        firstChapterIds={firstChapterIds}
+        tabletVisible={itemsPerView?.tablet ?? GRID_COLUMNS.tablet}
+        desktopVisible={itemsPerView?.desktop ?? GRID_COLUMNS.desktop}
       />
     );
-  }
 
-  // Multi-item: responsive grid
   return (
-    <section
-      className="relative w-full overflow-hidden"
-      aria-label="Editor's Choice featured novels"
-    >
-      <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-[24px] md:h-[480px] lg:grid-cols-3 lg:gap-8 lg:h-[520px]">
+    <section className="mb-2" aria-labelledby="editors-choice-heading">
+      <div className="flex items-center justify-between px-4 xs:px-6 mb-4 xs:mb-5 md:max-w-[1440px] md:mx-auto">
+        <h2
+          id="editors-choice-heading"
+          className="font-header text-sm tracking-[0.15em] uppercase text-white/90"
+        >
+          Editor&apos;s Choice
+        </h2>
+        <SectionViewAllLink href="/library" className="uppercase tracking-wider">
+          View All
+        </SectionViewAllLink>
+      </div>
+      {body}
+    </section>
+  );
+}
+
+function HeroCarouselGrid({
+  items,
+  firstChapterId,
+  firstChapterIds,
+  tabletVisible,
+  desktopVisible,
+}: {
+  items: FeaturedNovel[];
+  firstChapterId?: string;
+  firstChapterIds?: Record<string, string>;
+  tabletVisible: number;
+  desktopVisible: number;
+}) {
+  return (
+    <div className="relative w-full overflow-hidden">
+      <div className={heroGridClassName(items.length, tabletVisible, desktopVisible)}>
         {items.map((novel, index) => (
           <HeroCarouselCard
             key={novel.id}
@@ -81,17 +115,62 @@ export function HeroCarousel(props: Props) {
               firstChapterIds?.[novel.id] ?? (novel.id === items[0].id ? firstChapterId : undefined)
             }
             loading={index === 0 ? "eager" : "lazy"}
+            className={heroCardVisibilityClass(index, tabletVisible, desktopVisible)}
           />
         ))}
       </div>
-    </section>
+    </div>
   );
 }
 
+const TABLET_COL_CLASS = {
+  1: "md:grid-cols-1",
+  2: "md:grid-cols-2",
+  3: "md:grid-cols-3",
+} as const;
+
+const DESKTOP_COL_CLASS = {
+  1: "lg:grid-cols-1",
+  2: "lg:grid-cols-2",
+  3: "lg:grid-cols-3",
+} as const;
+
+function clampHeroColumns(wanted: number, itemCount: number): 1 | 2 | 3 {
+  const n = Math.min(Math.max(wanted, 1), itemCount, 3);
+  return n as 1 | 2 | 3;
+}
+
+function heroGridClassName(
+  itemCount: number,
+  tabletVisible: number,
+  desktopVisible: number
+): string {
+  const tablet = clampHeroColumns(tabletVisible, itemCount);
+  const desktop = clampHeroColumns(desktopVisible, itemCount);
+  return [
+    "grid grid-cols-1 gap-4",
+    TABLET_COL_CLASS[tablet],
+    "md:gap-[24px] md:h-[480px]",
+    DESKTOP_COL_CLASS[desktop],
+    "lg:gap-8 lg:h-[520px]",
+  ].join(" ");
+}
+
+function heroCardVisibilityClass(
+  index: number,
+  tabletVisible: number,
+  desktopVisible: number
+): string {
+  if (index >= desktopVisible) return "hidden";
+  if (index >= tabletVisible) return "hidden lg:block";
+  return "";
+}
+
+/** Bottom-only fade behind title/CTA — transparent until the lower 30%. */
 const HERO_OVERLAY_GRADIENT_BOTTOM =
-  "bg-[linear-gradient(180deg,rgba(5,5,5,0)_0%,rgba(5,5,5,0.40)_45%,#050505_100%)]";
+  "absolute inset-x-0 bottom-0 h-[30%] pointer-events-none bg-[linear-gradient(180deg,rgba(5,5,5,0)_0%,rgba(5,5,5,0.55)_45%,#050505_100%)]";
 const HERO_OVERLAY_SHEEN =
-  "bg-[linear-gradient(45deg,rgba(212,175,55,0.15)_0%,rgba(212,175,55,0)_55%)] opacity-25 mix-blend-overlay";
+  "absolute inset-0 pointer-events-none bg-[linear-gradient(45deg,rgba(212,175,55,0.15)_0%,rgba(212,175,55,0)_55%)] opacity-25 mix-blend-overlay";
 
 function HeroCarouselSingle({
   item,
@@ -105,7 +184,7 @@ function HeroCarouselSingle({
     : novelDetailPath(item.id);
 
   return (
-    <section className="relative h-[380px] xs:h-[420px] sm:h-[480px] md:h-[480px] lg:h-[520px] w-full overflow-hidden group">
+    <div className="relative h-[380px] xs:h-[420px] sm:h-[480px] md:h-[480px] lg:h-[520px] w-full overflow-hidden group">
       <div className="absolute inset-0 bg-void">
         {item.coverImageUrl ? (
           <div className="relative h-full w-full">
@@ -113,7 +192,7 @@ function HeroCarouselSingle({
               src={item.coverImageUrl}
               alt=""
               fill
-              className="object-cover opacity-60"
+              className="object-cover"
               sizes="100vw"
               priority
               unoptimized
@@ -123,18 +202,18 @@ function HeroCarouselSingle({
           <div className="h-full w-full bg-surface-highlight" />
         )}
       </div>
-      <div className={`absolute inset-0 ${HERO_OVERLAY_GRADIENT_BOTTOM}`} />
-      <div className={`absolute inset-0 ${HERO_OVERLAY_SHEEN}`} />
+      <div className={HERO_OVERLAY_GRADIENT_BOTTOM} />
+      <div className={HERO_OVERLAY_SHEEN} />
 
       <div className="absolute bottom-0 left-0 right-0 px-6 pb-9 flex flex-col items-center text-center z-10">
         <span className="font-header text-[10px] tracking-[0.4em] text-white mb-2 uppercase hero-text-shadow">
           Editor&apos;s Choice
         </span>
-        <h1
+        <h2
           className="font-display italic font-semibold text-[32px] leading-[1.15] text-white mb-1 gold-text-shadow max-w-[310px]"
         >
           {item.title}
-        </h1>
+        </h2>
         <p className="font-ui text-white text-sm mb-2 hero-text-shadow">
           By {item.authorName}
         </p>
@@ -165,7 +244,7 @@ function HeroCarouselSingle({
           </div>
         )}
       </div>
-    </section>
+    </div>
   );
 }
 
@@ -173,10 +252,12 @@ function HeroCarouselCard({
   item,
   firstChapterId,
   loading = "lazy",
+  className = "",
 }: {
   item: FeaturedNovel;
   firstChapterId?: string;
   loading?: "eager" | "lazy";
+  className?: string;
 }) {
   const ctaHref = firstChapterId
     ? readingRoomPath(item.id, firstChapterId)
@@ -185,7 +266,7 @@ function HeroCarouselCard({
   return (
     <Link
       href={ctaHref}
-      className="relative block h-full min-h-[280px] md:min-h-0 overflow-hidden group"
+      className={`relative block h-full min-h-[280px] md:min-h-0 overflow-hidden group ${className}`.trim()}
     >
       <div className="absolute inset-0 bg-void">
         {item.coverImageUrl ? (
@@ -194,7 +275,7 @@ function HeroCarouselCard({
               src={item.coverImageUrl}
               alt=""
               fill
-              className="object-cover opacity-60 [@media(hover:hover)]:group-hover:opacity-70 transition-opacity"
+              className="object-cover [@media(hover:hover)]:group-hover:brightness-110 transition-[filter]"
               sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
               priority={loading === "eager"}
               unoptimized
@@ -204,8 +285,8 @@ function HeroCarouselCard({
           <div className="h-full w-full bg-surface-highlight" />
         )}
       </div>
-      <div className={`absolute inset-0 ${HERO_OVERLAY_GRADIENT_BOTTOM}`} />
-      <div className={`absolute inset-0 ${HERO_OVERLAY_SHEEN}`} />
+      <div className={HERO_OVERLAY_GRADIENT_BOTTOM} />
+      <div className={HERO_OVERLAY_SHEEN} />
 
       <div className="absolute bottom-0 left-0 right-0 px-6 pb-8 flex flex-col items-center text-center z-10">
         <span className="font-header text-[10px] tracking-[0.4em] text-white mb-2 uppercase">

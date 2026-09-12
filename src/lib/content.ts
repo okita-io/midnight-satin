@@ -25,6 +25,43 @@ export interface NovelWithAuthor extends Novel {
 /** Alias for component compatibility (HeroCarousel, HighSocietySection). */
 export type FeaturedNovel = NovelWithAuthor;
 
+type HeroNovelRecency = {
+  id: string;
+  createdAt?: Date | null;
+  publicationDate?: Date | null;
+};
+
+function novelRecencyMs(novel: HeroNovelRecency): number {
+  const created = novel.createdAt?.getTime() ?? 0;
+  const published = novel.publicationDate?.getTime() ?? 0;
+  return Math.max(created, published);
+}
+
+/**
+ * Editor's Choice strip: unique featured + fallback titles, newest library
+ * entries first, so a fresh import fills the desktop hero instead of sitting
+ * behind older featured or trending ranks.
+ */
+export function selectHeroNovels<T extends HeroNovelRecency>(
+  featured: T[],
+  fallback: T[],
+  limit: number = 3
+): T[] {
+  const seen = new Set<string>();
+  const selected: T[] = [];
+  for (const novel of [...featured, ...fallback]) {
+    if (seen.has(novel.id)) continue;
+    seen.add(novel.id);
+    selected.push(novel);
+  }
+  selected.sort((a, b) => {
+    const recency = novelRecencyMs(b) - novelRecencyMs(a);
+    if (recency !== 0) return recency;
+    return a.id.localeCompare(b.id);
+  });
+  return selected.slice(0, limit);
+}
+
 /** Current reading for registered reader (Current Affairs section). */
 export interface CurrentReading {
   novel: NovelWithAuthor;
@@ -76,7 +113,7 @@ function rowToNovelWithAuthor(row: NovelRow & { author_name: string }): NovelWit
 /**
  * Get featured novels for hero carousel.
  * Admin-curated: novels with is_featured=true ordered by featured_order.
- * Default: most recently updated novels (by latest chapter updated_at).
+ * Default: newest library entries by created_at.
  * Cached in KV with TTL 300s.
  */
 export async function getFeaturedNovels(limit: number = 5): Promise<NovelWithAuthor[]> {
@@ -101,17 +138,12 @@ export async function getFeaturedNovels(limit: number = 5): Promise<NovelWithAut
       return curatedRows.map(rowToNovelWithAuthor);
     }
     const { rows: defaultRows } = await sql<NovelRow & { author_name: string }>`
-      WITH latest_chapter AS (
-        SELECT novel_id, MAX(updated_at) AS max_updated
-        FROM chapters GROUP BY novel_id
-      )
       SELECT n.id, n.title, n.series_id, n.author_id, n.cover_image_url,
              n.synopsis, n.genre_tags, n.rating, n.rating_count, n.publication_date, n.created_at,
              COALESCE(a.name, 'Unknown') AS author_name
       FROM novels n
-      LEFT JOIN latest_chapter lc ON n.id = lc.novel_id
       LEFT JOIN author_profiles a ON a.id = n.author_id
-      ORDER BY COALESCE(lc.max_updated, n.created_at) DESC NULLS LAST
+      ORDER BY n.created_at DESC, n.publication_date DESC NULLS LAST
       LIMIT ${limit}
     `;
     return defaultRows.map(rowToNovelWithAuthor);
@@ -217,7 +249,7 @@ export async function getAllNovels(limit: number = 100): Promise<LibraryNovel[]>
     LEFT JOIN (
       SELECT novel_id, COUNT(*) AS cnt FROM chapters GROUP BY novel_id
     ) ch ON ch.novel_id = n.id
-    ORDER BY n.created_at DESC
+    ORDER BY n.created_at DESC, n.publication_date DESC NULLS LAST, n.title ASC
     LIMIT ${limit}
   `;
   return rows.map((r) => ({
@@ -225,6 +257,22 @@ export async function getAllNovels(limit: number = 100): Promise<LibraryNovel[]>
     authorBio: r.author_bio ?? null,
     chapterCount: parseInt(r.chapter_count, 10) || 0,
   }));
+}
+
+/**
+ * Newest novels in the catalog, for filling the Boudoir hero by recency.
+ */
+export async function getRecentNovels(limit: number = 5): Promise<NovelWithAuthor[]> {
+  const { rows } = await sql<NovelRow & { author_name: string }>`
+    SELECT n.id, n.title, n.series_id, n.author_id, n.cover_image_url, n.synopsis,
+           n.genre_tags, n.rating, n.rating_count, n.publication_date, n.created_at,
+           COALESCE(a.name, 'Unknown') AS author_name
+    FROM novels n
+    LEFT JOIN author_profiles a ON a.id = n.author_id
+    ORDER BY n.created_at DESC, n.publication_date DESC NULLS LAST, n.title ASC
+    LIMIT ${limit}
+  `;
+  return rows.map(rowToNovelWithAuthor);
 }
 
 /** Novel with author name for Novel Detail page. */

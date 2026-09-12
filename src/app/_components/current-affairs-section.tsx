@@ -36,7 +36,7 @@ export function CurrentAffairsSection({
 
   return (
     <>
-      <section className="px-4 xs:px-6 md:px-6 md:max-w-[1440px] md:mx-auto mb-8 xs:mb-10 relative z-10 -mt-4">
+      <section className="px-4 xs:px-6 md:px-6 md:max-w-[1440px] md:mx-auto mb-8 xs:mb-10 relative z-10">
         <div className="flex items-center justify-between mb-4 xs:mb-6">
           <h2 className="font-header text-sm tracking-[0.15em] text-white/90">
             Current Affairs
