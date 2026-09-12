@@ -187,7 +187,8 @@ export class VercelPool extends Pool {
   ): Promise<QueryResult<O>> {
     const [query, params] = sqlTemplate(strings, ...values);
     const httpSql = neon(this.connectionString, { fullResults: true });
-    return httpSql.query(query, params) as unknown as Promise<QueryResult<O>>;
+    // neon() returns a query function; Neon 1.x has no `.query` method.
+    return httpSql(query, params) as unknown as Promise<QueryResult<O>>;
   }
 
   connect(): Promise<VercelPoolClient>;
